@@ -89,6 +89,13 @@
 	#error Current platform is unspecified or not defined.
 #endif
 
+// Detecting the exceptions enabled.
+#if( defined( __EXCEPTIONS ) || defined( __cpp_exceptions ) )
+	#define BLACK_EXCEPTIONS_ENABLED		1
+#else
+	#define BLACK_EXCEPTIONS_ENABLED		0
+#endif
+
 namespace Black
 {
 	// Declare current build mode.
