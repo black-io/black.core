@@ -49,4 +49,57 @@ namespace Black
 			return static_cast<const size_t>( GetEnumValue( value ) );
 		}
 	};
+
+	// Generic tag to prohibit copy-construction of derived types.
+	// It would be better to use private inheritance.
+	class NonCopyConstructible
+	{
+	public:
+		NonCopyConstructible() = default;
+
+	private:
+		NonCopyConstructible( const NonCopyConstructible& ) = delete;
+	};
+
+	// Generic tag to prohibit copy-assignment of derived types.
+	// It would be better to use private inheritance.
+	class NonCopyAssignable
+	{
+	private:
+		NonCopyAssignable& operator = ( const NonCopyAssignable& ) = delete;
+	};
+
+	// Generic tag to prohibit move-construction of derived types.
+	// It would be better to use private inheritance.
+	class NonMoveConstructible
+	{
+	public:
+		NonMoveConstructible() = default;
+
+	private:
+		NonMoveConstructible( NonMoveConstructible&& ) = delete;
+	};
+
+	// Generic tag to prohibit move-assignment of derived types.
+	// It would be better to use private inheritance.
+	class NonMoveAssignable
+	{
+	private:
+		NonMoveAssignable& operator = ( NonMoveAssignable&& ) = delete;
+	};
+
+	// Generic tag to prohibit copy-construction and copy-assignment of derived types.
+	// It would be better to use private inheritance.
+	class NonCopyable: private NonCopyConstructible, private NonCopyAssignable
+	{};
+
+	// Generic tag to prohibit move-construction and move-assignment of derived types.
+	// It would be better to use private inheritance.
+	class NonMovable: private NonMoveConstructible, private NonMoveAssignable
+	{};
+
+	// Generic tag to prohibit copy/move construction/assignment of derived types.
+	// It would be better to use private inheritance.
+	class NonTransferable: private NonCopyable, private NonMovable
+	{};
 }
