@@ -37,4 +37,16 @@ namespace Black
 		inline operator int64_t& ()					{ return value; };
 		inline operator const int64_t () const		{ return value; };
 	};
+
+	// Implementation for hashing object for enumeration types, which may be used with `std` containers.
+	class EnumHash
+	{
+	public:
+		// Hashing function. Uses `GetEnumValue` to produce the hash.
+		template< typename TEnumeration >
+		inline const size_t operator () ( const TEnumeration& value ) const
+		{
+			return static_cast<const size_t>( GetEnumValue( value ) );
+		}
+	};
 }
