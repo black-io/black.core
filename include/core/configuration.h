@@ -6,6 +6,7 @@
 	#define _CRT_SECURE_NO_WARNINGS 1
 #endif
 
+
 // Build mode boolean flag stubs.
 // This values may be used into `#if` checks.
 #define BLACK_DEBUG_BUILD				0
@@ -27,6 +28,7 @@
 #define BLACK_BIG_ENDIAN				0
 #define BLACK_LITTLE_ENDIAN				0
 #define BLACK_PDP_ENDIAN				0
+
 
 // Define some stuff depending on build configuration.
 #if( defined( _DEBUG ) )
@@ -56,6 +58,7 @@
 	#undef BLACK_RELEASE_BUILD
 	#define BLACK_RELEASE_BUILD	1
 #endif
+
 
 // Define some stuff depending on build platform.
 #if( defined( _WIN32 ) )
@@ -89,12 +92,14 @@
 	#error Current platform is unspecified or not defined.
 #endif
 
+
 // Detecting the exceptions enabled.
-#if( defined( __EXCEPTIONS ) || defined( __cpp_exceptions ) )
+#if( defined( __cpp_exceptions ) || defined( __EXCEPTIONS ) )
 	#define BLACK_EXCEPTIONS_ENABLED		1
 #else
 	#define BLACK_EXCEPTIONS_ENABLED		0
 #endif
+
 
 namespace Black
 {
@@ -134,4 +139,7 @@ namespace Black
 	#else
 		#error The `BUILD_ENDIANNESS` constatnt needs to be defined for curent platform.
 	#endif
+
+	// Declare current exceptions support.
+	constexpr bool USE_EXCEPTIONS	= BLACK_EXCEPTIONS_ENABLED != 0;
 }
