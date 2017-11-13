@@ -5,7 +5,7 @@
 namespace Black
 {
 // Core library.
-namespace Core
+inline namespace Core
 {}
 }
 
@@ -52,3 +52,7 @@ namespace Core
 // Include core stuff.
 #include "core/constants.h"
 #include "core/macros.h"
+#include "type-traits/std-constants.h"
+#include "type-traits/std-types.h"
+#include "types/generic-types.h"
+#include "utils/generic-utils.h"
