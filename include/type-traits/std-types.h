@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace TypeTraits
+{
 	// Underlying enumeration type.
 	template< typename TEnumeration >
 	using UnderlyingType = typename std::underlying_type<TEnumeration>::type;
@@ -16,5 +18,6 @@ inline namespace Core
 	// Conditional type switch.
 	template< bool CONDITION, typename TTrueType = void >
 	using EnableIf = typename std::enable_if<CONDITION, TTrueType>::type;
+}
 }
 }
