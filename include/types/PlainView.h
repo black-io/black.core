@@ -5,7 +5,11 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Types
+{
 	/**
+		@brief	The more flexible view of plain elements.
+		The `plain view` is one more helper class to simplify the controlling of plain arrays.
 	*/
 	template< typename TStoredType >
 	class PlainView final
@@ -34,7 +38,7 @@ inline namespace Core
 		PlainView( Element* head, const size_t length );
 
 		template< typename TOtherType, typename = Conditional<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		PlainView( const PlainView<TOtherType>& other );
+		PlainView( const PlainView<TOtherType>& other ) : PlainView( other.m_head, other.m_tail ) {};
 
 		template< size_t ARRAY_LENGTH >
 		PlainView( Element elements[ ARRAY_LENGTH ] ) : PlainView{ elements, ARRAY_LENGTH } {};
@@ -50,43 +54,47 @@ inline namespace Core
 		inline PlainView& operator = ( PlainView& )			= default;
 
 		template< typename TOtherType, typename = Conditional<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		inline PlainView& operator = ( const PlainView<TOtherType>& other );
+		inline PlainView& operator = ( const PlainView<TOtherType>& other )				{ return CopyAndSwap( *this, other ); };
 
 		template< size_t ARRAY_LENGTH >
-		inline PlainView& operator = ( Element elements[ ARRAY_LENGTH ] );
+		inline PlainView& operator = ( Element elements[ ARRAY_LENGTH ] )				{ return CopyAndSwap( *this, elements ); };
 
 		template< size_t ARRAY_LENGTH >
-		inline PlainView& operator = ( std::array<Element, ARRAY_LENGTH>& elements );
+		inline PlainView& operator = ( std::array<Element, ARRAY_LENGTH>& elements )	{ return CopyAndSwap( *this, elements ); };
 
 		template< typename TAllocator >
-		inline PlainView& operator = ( std::vector<Element, TAllocator>& elements );
+		inline PlainView& operator = ( std::vector<Element, TAllocator>& elements )		{ return CopyAndSwap( *this, elements ); };
 
 	// Public interface.
 	public:
-		//
+		// Swap the content of views.
+		inline void Swap( PlainView& other );
+
+
+		// Checks the view is empty.
 		inline const bool IsEmpty() const;
 
-		//
+		// Checks the iterator is inside of view.
 		inline const bool IsInside( Iterator value ) const;
 
 
-		//
-		inline TStoredType* GetElement( const size_t index ) const;
+		// Get the element at position.
+		inline TStoredType& GetElement( const size_t index ) const;
 
-		//
+		// Get the head of view - the iterator to first element.
 		inline Iterator GetHead() const				{ return m_head; };
 
-		//
+		// Get the tail of view - the iterator next of last element, which may not be dereferenced.
 		inline Iterator GetTail() const				{ return m_tail; };
 
-		//
+		// Get the view data.
 		inline TStoredType* GetData() const			{ return m_head; };
 
-		//
-		inline const size_t GetLength() const		{ return m_size; };
+		// Get the length of view.
+		inline const size_t GetLength() const		{ return m_length; };
 
-		//
-		inline const size_t GetUsedBytes() const	{ return m_size * ELEMENT_SIZE; };
+		// Get the number of bytes the elements of view stored.
+		inline const size_t GetUsedBytes() const	{ return m_length * ELEMENT_SIZE; };
 
 
 		inline explicit operator const bool () const					{ return !IsEmpty(); };
@@ -117,9 +125,10 @@ inline namespace Core
 		inline size_type size() const						{ return GetLength(); };
 
 	private:
-		TStoredType*	m_head	= nullptr;	// Head of view.
-		TStoredType*	m_tail	= nullptr;	// Tail of view.
-		size_t			m_size	= 0;		// Size of view.
+		TStoredType*	m_head		= nullptr;	// Head of view.
+		TStoredType*	m_tail		= nullptr;	// Tail of view.
+		size_t			m_length	= 0;		// Number of elements in view.
 	};
+}
 }
 }
