@@ -43,6 +43,14 @@
 #endif
 
 
+// Regular 'assume' statement.
+#if( BLACK_WINDOWS_DESKTOP_PLATFORM || BLACK_WINDOWS_MOBILE_PLATFORM )
+	#define BLACK_ASSUME( ... )	__assume( __VA_ARGS__ )
+#else
+	#define BLACK_ASSUME( ... )
+#endif
+
+
 // Shunting the logging subsystem by default.
 #if( !defined( BLACK_LOG_CRITICAL ) )
 	#define BLACK_LOG_CRITICAL( ... )
