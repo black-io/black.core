@@ -38,16 +38,16 @@ inline namespace Types
 		PlainView( Element* head, const size_t length );
 
 		template< typename TOtherType, typename = Conditional<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		PlainView( const PlainView<TOtherType>& other ) : PlainView( other.m_head, other.m_tail ) {};
+		explicit PlainView( const PlainView<TOtherType>& other ) : PlainView( other.m_head, other.m_tail ) {};
 
 		template< size_t ARRAY_LENGTH >
-		PlainView( Element elements[ ARRAY_LENGTH ] ) : PlainView{ elements, ARRAY_LENGTH } {};
+		explicit PlainView( Element elements[ ARRAY_LENGTH ] ) : PlainView{ elements, ARRAY_LENGTH } {};
 
 		template< size_t ARRAY_LENGTH >
-		PlainView( std::array<Element, ARRAY_LENGTH>& elements ) : PlainView{ elements.data(), ARRAY_LENGTH } {};
+		explicit PlainView( std::array<Element, ARRAY_LENGTH>& elements ) : PlainView{ elements.data(), ARRAY_LENGTH } {};
 
 		template< typename TAllocator >
-		PlainView( std::vector<Element, TAllocator>& elements ) : PlainView{ elements.data(), elements.size() } {};
+		explicit PlainView( std::vector<Element, TAllocator>& elements ) : PlainView{ elements.data(), elements.size() } {};
 
 
 		inline PlainView& operator = ( const PlainView& )	= default;
