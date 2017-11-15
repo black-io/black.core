@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Types
+{
 	/**
 		@brief	Core C++ Guideline `not_null` type.
 		Assigning of `nullptr` to instance of this type will cause termination of execution.
@@ -51,5 +53,6 @@ inline namespace Core
 	private:
 		TStoredType*	m_stored_pointer;
 	};
+}
 }
 }
