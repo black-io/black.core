@@ -43,16 +43,16 @@ inline namespace Types
 		PlainVector( std::initializer_list<TStoredType> elements );
 
 		template< typename TOtherType, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		PlainVector( PlainView<TOtherType> elements );
+		explicit PlainVector( PlainView<TOtherType> elements );
 
 		template< typename TOtherType, size_t ARRAY_LENGTH, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		PlainVector( TOtherType elements[ ARRAY_LENGTH ] );
+		explicit PlainVector( TOtherType elements[ ARRAY_LENGTH ] );
 
 		template< typename TOtherType, size_t ARRAY_LENGTH, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		PlainVector( const std::array<TOtherType, ARRAY_LENGTH>& elements );
+		explicit PlainVector( const std::array<TOtherType, ARRAY_LENGTH>& elements );
 
 		template< typename TOtherType, typename TAllocator, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		PlainVector( const std::vector<TOtherType, TAllocator>& elements );
+		explicit PlainVector( const std::vector<TOtherType, TAllocator>& elements );
 
 
 		~PlainVector();
@@ -76,8 +76,26 @@ inline namespace Types
 
 	// Public interface.
 	public:
+		// Invalidate the used memory making it free.
+		inline void Invalidate();
+
+		// Copy the elements from given view.
+		inline void CopyFrom( const PlainView<TStoredType>& other );
+
 		// Swap the content of views.
 		inline void Swap( PlainView& other );
+
+		// Set the number of currently allocated elements.
+		inline void SetSize( const size_t new_size );
+
+		// Set the desired capacity. Takes no effect in case the capacity already fits the desired value.
+		inline void ReserveCapacity( const size_t desired_size );
+
+		// Set the capacity.
+		inline void SetCapacity( const size_t new_size );
+
+		// Set the capacity equal to current size.
+		inline void ShrinkToFitSize();
 
 
 		// Checks the view is empty.
@@ -113,6 +131,9 @@ inline namespace Types
 
 		// Get the length of view.
 		inline const size_t GetLength() const		{ return m_length; };
+
+		// Get the capacity of vector.
+		inline const size_t GetCapacity() const		{ return m_capacity; };
 
 		// Get the number of bytes the elements of view stored.
 		inline const size_t GetUsedBytes() const	{ return m_length * ELEMENT_SIZE; };
