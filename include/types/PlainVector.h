@@ -38,9 +38,9 @@ inline namespace Types
 		PlainVector( PlainVector&& )		= default;
 		explicit PlainVector( const size_t length );
 		PlainVector( const size_t length, const TStoredType& proto );
-		PlainVector( TStoredType* elements, const size_t length );
-		PlainVector( TStoredType* head, TStoredType* tail );
-		PlainVector( std::initializer_list<TStoredType> elements );
+		PlainVector( ConstIterator head, ConstIterator tail );
+		PlainVector( ConstIterator elements, const size_t length ) : PlainVector{ elements, elements + length } {};
+		PlainVector( std::initializer_list<TStoredType> elements ) : PlainView{ elements.begin(), elements.end() } {};
 
 		template< typename TOtherType, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
 		explicit PlainVector( PlainView<TOtherType> elements );
@@ -79,14 +79,11 @@ inline namespace Types
 		// Invalidate the used memory making it free.
 		inline void Invalidate();
 
-		// Copy the elements from given view.
-		inline void CopyFrom( const PlainView<TStoredType>& other );
-
 		// Swap the content of views.
 		inline void Swap( PlainView& other );
 
 		// Set the number of currently allocated elements.
-		inline void SetSize( const size_t new_size );
+		inline void SetLength( const size_t new_size );
 
 		// Set the desired capacity. Takes no effect in case the capacity already fits the desired value.
 		inline void ReserveCapacity( const size_t desired_size );
@@ -155,6 +152,30 @@ inline namespace Types
 
 	// STL-conformance interface.
 	public:
+		using value_type		= Element;
+		using size_type			= std::size_t;
+		using difference_type	= std::ptrdiff_t;
+		using reference			= value_type&;
+		using const_reference	= const value_type&;
+		using pointer			= value_type*;
+		using const_pointer		= const value_type*;
+		using iterator			= Iterator;
+		using const_iterator	= ConstIterator;
+
+
+		inline void reserve( const size_type capacity )				{ ReserveCapacity( capacity ); };
+		inline void resize( const size_type length )				{ SetLength( length ); };
+		inline const bool empty() const								{ return IsEmpty(); };
+		inline reference at( const size_type index )				{ return GetElement( index ); };
+		inline iterator begin()										{ return GetHead(); };
+		inline iterator end()										{ return GetTail(); };
+		inline pointer data()										{ return GetData(); };
+		inline const_reference at( const size_type index ) const	{ return GetElement( index ); };
+		inline const_iterator begin() const							{ return GetHead(); };
+		inline const_iterator end() const							{ return GetTail(); };
+		inline const_pointer data() const							{ return GetData(); };
+		inline size_type size() const								{ return GetLength(); };
+		inline size_type capacity() const							{ return GetCapacity(); };
 
 	// Private interface.
 	private:
