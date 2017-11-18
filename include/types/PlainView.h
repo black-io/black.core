@@ -117,6 +117,7 @@ inline namespace Types
 		using iterator			= Iterator;
 
 
+		inline void swap( PlainView& other )				{ Swap( other ); };
 		inline const bool empty() const						{ return IsEmpty(); };
 		inline reference at( const size_type index ) const	{ return GetElement( index ); };
 		inline iterator begin() const						{ return GetHead(); };
