@@ -42,10 +42,10 @@ inline namespace Types
 		constexpr RegularStringView() = default;
 		constexpr RegularStringView( const RegularStringView& ) = default;
 		constexpr RegularStringView( const Char* chars, const size_t length ) : m_memory{ chars }, m_length{ length } {};
-		RegularStringView( const Char* chars ) : m_memory{ chars }, m_length{ CharTraits::length( chars ) } {};
+		inline RegularStringView( const Char* chars ) : m_memory{ chars }, m_length{ CharTraits::length( chars ) } {};
 
 		template< typename TOtherTraits, typename TAllocator >
-		RegularStringView( const std::basic_string<Char, TOtherTraits, TAllocator>& other ) : RegularStringView{ other.data(), other.size() } {};
+		inline RegularStringView( const std::basic_string<Char, TOtherTraits, TAllocator>& other ) : RegularStringView{ other.data(), other.size() } {};
 
 
 		constexpr RegularStringView& operator = ( const RegularStringView& ) = default;
