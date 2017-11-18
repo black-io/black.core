@@ -80,7 +80,7 @@ inline namespace Types
 		inline void Invalidate();
 
 		// Swap the content of views.
-		inline void Swap( PlainVector<TStoredType>& other );
+		inline void Swap( PlainVector& other );
 
 		// Set the number of currently allocated elements.
 		inline void SetLength( const size_t length );
@@ -166,6 +166,7 @@ inline namespace Types
 		inline void reserve( const size_type capacity )				{ ReserveCapacity( capacity ); };
 		inline void resize( const size_type length )				{ SetLength( length ); };
 		inline void clear()											{ m_length = 0; };
+		inline void swap( PlainVector& other )						{ Swap( other ); };
 		inline const bool empty() const								{ return IsEmpty(); };
 		inline reference at( const size_type index )				{ return GetElement( index ); };
 		inline iterator begin()										{ return GetHead(); };
