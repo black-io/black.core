@@ -62,7 +62,7 @@ inline namespace PlatformSpecific
 		@return					Formatted string view with same memory as `target_buffer`.
 		@retval	empty view		In case the arguments can not be formated into target buffer.
 	*/
-	const StringView WriteArguments( StringView target_buffer, const StringView format, va_list arguments );
+	StringView WriteArguments( StringView target_buffer, const StringView format, va_list arguments );
 
 	/**
 		@brief	Read the `arguments` from `source_buffer` according to `format` specification.
