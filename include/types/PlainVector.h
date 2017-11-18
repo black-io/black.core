@@ -43,16 +43,16 @@ inline namespace Types
 		PlainVector( std::initializer_list<TStoredType> elements ) : PlainView{ elements.begin(), elements.end() } {};
 
 		template< typename TOtherType, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		explicit PlainVector( PlainView<TOtherType> elements );
+		explicit PlainVector( PlainView<TOtherType> elements ) : PlainView( elements.GetHead(), elements.GetTail() ) {};
 
 		template< typename TOtherType, size_t ARRAY_LENGTH, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		explicit PlainVector( TOtherType elements[ ARRAY_LENGTH ] );
+		explicit PlainVector( TOtherType elements[ ARRAY_LENGTH ] ) : PlainView( elements, ARRAY_LENGTH ) {};
 
 		template< typename TOtherType, size_t ARRAY_LENGTH, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		explicit PlainVector( const std::array<TOtherType, ARRAY_LENGTH>& elements );
+		explicit PlainVector( const std::array<TOtherType, ARRAY_LENGTH>& elements ) : PlainView( elements.begin(), elements.end() ) {};
 
 		template< typename TOtherType, typename TAllocator, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		explicit PlainVector( const std::vector<TOtherType, TAllocator>& elements );
+		explicit PlainVector( const std::vector<TOtherType, TAllocator>& elements ) : PlainView( elements.begin(), elements.end() ) {};
 
 
 		~PlainVector();
@@ -80,19 +80,19 @@ inline namespace Types
 		inline void Invalidate();
 
 		// Swap the content of views.
-		inline void Swap( PlainView& other );
+		inline void Swap( PlainVector<TStoredType>& other );
 
 		// Set the number of currently allocated elements.
-		inline void SetLength( const size_t new_size );
+		inline void SetLength( const size_t length );
 
 		// Set the desired capacity. Takes no effect in case the capacity already fits the desired value.
-		inline void ReserveCapacity( const size_t desired_size );
+		inline void ReserveCapacity( const size_t capacity );
 
 		// Set the capacity.
-		inline void SetCapacity( const size_t new_size );
+		inline void SetCapacity( const size_t capacity );
 
-		// Set the capacity equal to current size.
-		inline void ShrinkToFitSize();
+		// Set the capacity equal to current length.
+		inline void ShrinkToFitLength();
 
 
 		// Checks the view is empty.
@@ -109,22 +109,22 @@ inline namespace Types
 		inline const TStoredType& GetElement( const size_t index ) const;
 
 		// Get the head of view - the iterator to first element.
-		inline Iterator GetHead()					{ return m_head; };
+		inline Iterator GetHead()					{ return m_memory; };
 
 		// Get the tail of view - the iterator next of last element, which may not be dereferenced.
-		inline Iterator GetTail()					{ return m_tail; };
+		inline Iterator GetTail()					{ return m_memory + m_length; };
 
 		// Get the head of view - the iterator to first element.
-		inline ConstIterator GetHead() const		{ return m_head; };
+		inline ConstIterator GetHead() const		{ return m_memory; };
 
 		// Get the tail of view - the iterator next of last element, which may not be dereferenced.
-		inline ConstIterator GetTail() const		{ return m_tail; };
+		inline ConstIterator GetTail() const		{ return m_memory + m_length; };
 
 		// Get the view data.
-		inline TStoredType* GetData()				{ return m_head; };
+		inline TStoredType* GetData()				{ return m_memory; };
 
 		// Get the view data.
-		inline const TStoredType* GetData() const	{ return m_head; };
+		inline const TStoredType* GetData() const	{ return m_memory; };
 
 		// Get the length of view.
 		inline const size_t GetLength() const		{ return m_length; };
@@ -165,6 +165,7 @@ inline namespace Types
 
 		inline void reserve( const size_type capacity )				{ ReserveCapacity( capacity ); };
 		inline void resize( const size_type length )				{ SetLength( length ); };
+		inline void clear()											{ m_length = 0; };
 		inline const bool empty() const								{ return IsEmpty(); };
 		inline reference at( const size_type index )				{ return GetElement( index ); };
 		inline iterator begin()										{ return GetHead(); };
@@ -179,6 +180,12 @@ inline namespace Types
 
 	// Private interface.
 	private:
+		// Construct the desired amount of additional elements, using the construction arguments.
+		template< typename... TArguments >
+		void ConstructElements( const size_t length, TArguments... arguments );
+
+		// Copy the elements.
+		void CopyElements( const TStoredType* elements, const size_t elements_length );
 
 	private:
 		TStoredType*	m_memory	= nullptr;	// Stored elements.
