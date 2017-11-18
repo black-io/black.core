@@ -99,7 +99,7 @@ inline namespace Types
 		inline const bool IsEmpty() const;
 
 		// Checks the iterator is inside of view.
-		inline const bool IsInside( Iterator value ) const;
+		inline const bool IsInside( ConstIterator value ) const;
 
 
 		// Get the element at position.
@@ -182,10 +182,10 @@ inline namespace Types
 	private:
 		// Construct the desired amount of additional elements, using the construction arguments.
 		template< typename... TArguments >
-		void ConstructElements( const size_t length, TArguments... arguments );
+		inline void ConstructElements( const size_t length, TArguments... arguments );
 
 		// Copy the elements.
-		void CopyElements( const TStoredType* elements, const size_t elements_length );
+		inline void CopyElements( const TStoredType* elements, const size_t elements_length );
 
 	private:
 		TStoredType*	m_memory	= nullptr;	// Stored elements.
