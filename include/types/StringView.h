@@ -266,6 +266,49 @@ inline namespace Types
 
 		constexpr const_reference operator [] ( const size_type index ) const	{ return at( index ); };
 
+		constexpr const bool operator == ( const RegularStringView& other ) const		{ return compare( other ) == 0; };
+		constexpr const bool operator != ( const RegularStringView& other ) const		{ return compare( other ) != 0; };
+		constexpr const bool operator < ( const RegularStringView& other ) const		{ return compare( other ) < 0; };
+		constexpr const bool operator <= ( const RegularStringView& other ) const		{ return compare( other ) <= 0; };
+		constexpr const bool operator > ( const RegularStringView& other ) const		{ return compare( other ) > 0; };
+		constexpr const bool operator >= ( const RegularStringView& other ) const		{ return compare( other ) >= 0; };
+
+		template< typename TOtherTraits, typename TAllocator >
+		constexpr const bool operator == ( const std::basic_string<TCharType, TOtherTraits, TAllocator>& other ) const
+		{
+			return operator==( RegularStringView<TCharType, TChatTraits>{ other } );
+		}
+
+		template< typename TOtherTraits, typename TAllocator >
+		constexpr const bool operator != ( const std::basic_string<TCharType, TOtherTraits, TAllocator>& other ) const
+		{
+			return operator!=( RegularStringView<TCharType, TChatTraits>{ other } );
+		}
+
+		template< typename TOtherTraits, typename TAllocator >
+		constexpr const bool operator < ( const std::basic_string<TCharType, TOtherTraits, TAllocator>& other ) const
+		{
+			return operator<( RegularStringView<TCharType, TChatTraits>{ other } );
+		}
+
+		template< typename TOtherTraits, typename TAllocator >
+		constexpr const bool operator <= ( const std::basic_string<TCharType, TOtherTraits, TAllocator>& other ) const
+		{
+			return operator<=( RegularStringView<TCharType, TChatTraits>{ other } );
+		}
+
+		template< typename TOtherTraits, typename TAllocator >
+		constexpr const bool operator > ( const std::basic_string<TCharType, TOtherTraits, TAllocator>& other ) const
+		{
+			return operator>( RegularStringView<TCharType, TChatTraits>{ other } );
+		}
+
+		template< typename TOtherTraits, typename TAllocator >
+		constexpr const bool operator >= ( const std::basic_string<TCharType, TOtherTraits, TAllocator>& other ) const
+		{
+			return operator>=( RegularStringView<TCharType, TChatTraits>{ other } );
+		}
+
 	private:
 		const TCharType*	m_memory	= nullptr;
 		size_t				m_length	= 0;
