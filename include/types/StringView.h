@@ -21,8 +21,8 @@ inline namespace Types
 		static_assert( Black::IS_SAME<TCharType, typename std::char_traits<TCharType>::char_type>, "Traits character type have to be same as `TCharType`." );
 
 
-		using traits_type				= CharTraits;
-		using value_type				= Char;
+		using traits_type				= TChatTraits;
+		using value_type				= TCharType;
 		using pointer					= value_type*;
 		using const_pointer				= const value_type*;
 		using reference					= value_type&;
@@ -91,6 +91,31 @@ inline namespace Types
 		constexpr const int32_t compare( const value_type* chars ) const;
 		constexpr const int32_t compare( const size_type this_index, const size_type this_length, const value_type* chars ) const;
 		constexpr const int32_t compare( const size_type this_index, const size_type this_length, const value_type* chars, const size_type other_length ) const;
+
+		constexpr const size_type find( const RegularStringView& pattern, const size_type from_index = 0 ) const;
+		constexpr const size_type find( const value_type pattern, const size_type from_index = 0 ) const;
+		constexpr const size_type find( const value_type* pattern, const size_type from_index, const size_type pattern_length ) const;
+		constexpr const size_type find( const value_type* pattern, const size_type from_index = 0 ) const;
+		constexpr const size_type rfind( const RegularStringView& pattern, const size_type from_index = npos ) const;
+		constexpr const size_type rfind( const value_type pattern, const size_type from_index = npos ) const;
+		constexpr const size_type rfind( const value_type* pattern, const size_type from_index, const size_type pattern_length ) const;
+		constexpr const size_type rfind( const value_type* pattern, const size_type from_index = npos ) const;
+		constexpr const size_type find_first_of( const RegularStringView& pattern, const size_type from_index = 0 ) const;
+		constexpr const size_type find_first_of( const value_type pattern, const size_type from_index = 0 ) const;
+		constexpr const size_type find_first_of( const value_type* pattern, const size_type from_index, const size_type pattern_length ) const;
+		constexpr const size_type find_first_of( const value_type* pattern, const size_type from_index = 0 ) const;
+		constexpr const size_type find_last_of( const RegularStringView& pattern, const size_type from_index = npos ) const;
+		constexpr const size_type find_last_of( const value_type pattern, const size_type from_index = npos ) const;
+		constexpr const size_type find_last_of( const value_type* pattern, const size_type from_index, const size_type pattern_length ) const;
+		constexpr const size_type find_last_of( const value_type* pattern, const size_type from_index = npos ) const;
+		constexpr const size_type find_first_not_of( const RegularStringView& pattern, const size_type from_index = 0 ) const;
+		constexpr const size_type find_first_not_of( const value_type pattern, const size_type from_index = 0 ) const;
+		constexpr const size_type find_first_not_of( const value_type* pattern, const size_type from_index, const size_type pattern_length ) const;
+		constexpr const size_type find_first_not_of( const value_type* pattern, const size_type from_index = 0 ) const;
+		constexpr const size_type find_last_not_of( const RegularStringView& pattern, const size_type from_index = npos ) const;
+		constexpr const size_type find_last_not_of( const value_type pattern, const size_type from_index = npos ) const;
+		constexpr const size_type find_last_not_of( const value_type* pattern, const size_type from_index, const size_type pattern_length ) const;
+		constexpr const size_type find_last_not_of( const value_type* pattern, const size_type from_index = npos ) const;
 
 
 		constexpr const_reference operator [] ( const size_type index ) const	{ return at( index ); };
