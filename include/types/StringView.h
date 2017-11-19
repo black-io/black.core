@@ -18,7 +18,7 @@ inline namespace Types
 	// STL-conformance inner entities.
 	public:
 		static_assert( Black::IS_PLAIN<TCharType>, "The `TCharType` have to be plain type." );
-		static_assert( Black::IS_SAME<TCharType, typename std::char_traits<TCharType>::char_type>, "Traits character type have to be same as `TCharType`." );
+		static_assert( Black::IS_SAME<TCharType, typename TChatTraits::char_type>, "Traits character type have to be same as `TCharType`." );
 
 
 		using traits_type				= TChatTraits;
