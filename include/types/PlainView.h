@@ -16,7 +16,8 @@ inline namespace Types
 	{
 	// Inner entities.
 	public:
-		static_assert( !IS_REFERENCE<TStoredType>, "Element type may not be reference type." );
+		static_assert( !IS_REFERENCE<TStoredType>,	"Element type may not be reference type." );
+		static_assert( IS_PLAIN<TStoredType>,		"Element type should be plain(PoD) type." );
 
 
 		// Size of single element of view.
