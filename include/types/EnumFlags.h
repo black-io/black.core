@@ -47,49 +47,52 @@ inline namespace Types
 		EnumFlags( const EnumFlags& )	= default;
 		EnumFlags( EnumFlags&& )		= default;
 		explicit EnumFlags( const Bits flags ) : m_flags{ flags } {};
-		EnumFlags( std::initializer_list<TEnumeration> flags );
+		EnumFlags( std::initializer_list<TEnumeration> flags )
+		{
+			std::for_each( flags.begin(), flags.end(), [this]( const TEnumeration flag ) { SetFlag( flag ); } );
+		}
 
 
-		inline EnumFlags& operator = ( const EnumFlags& )			= default;
-		inline EnumFlags& operator = ( EnumFlags&& )				= default;
-		inline EnumFlags& operator = ( const TEnumeration flag );
-		inline EnumFlags& operator = ( std::initializer_list<TEnumeration> flags );
+		inline EnumFlags& operator = ( const EnumFlags& )							= default;
+		inline EnumFlags& operator = ( EnumFlags&& )								= default;
+		inline EnumFlags& operator = ( const TEnumeration flag )					{ m_flags = GetBits( flag ); return *this; };
+		inline EnumFlags& operator = ( std::initializer_list<TEnumeration> flags )	{ return Black::CopyAndSwap( *this, flags ); };
 
 	// Public interface.
 	public:
 		// Clear the flags.
-		inline void Clear();
+		inline void Clear()													{ m_flags = 0; };
 
 		// Inverse the flags.
-		inline void Inverse();
+		inline void Inverse()												{ m_flags = ~m_flags; };
 
 		// Get the state of inversed flags.
-		inline EnumFlags GetInverted() const;
+		inline EnumFlags GetInverted() const								{ return EnumFlags<TEnumeration>{ ~m_flags }; };
 
 		// Set the flag.
-		inline void SetFlag( const TEnumeration flag );
+		inline void SetFlag( const TEnumeration flag )						{ m_flags |= GetBits( flag ); };
 
 		// Unset the flag.
-		inline void UnsetFlag( const TEnumeration flag );
+		inline void UnsetFlag( const TEnumeration flag )					{ m_flags &= ~GetBits( flag ); };
 
 		// Set the flag.
 		template< TEnumeration FLAG >
-		inline void SetFlag();
+		inline void SetFlag()												{ m_flags |= GetBits( FLAG ); };
 
 		// Unset the flag.
 		template< TEnumeration FLAG >
-		inline void UnsetFlag();
+		inline void UnsetFlag()												{ m_flags &= ~GetBits( FLAG ); };
 
 
 		// Check that all flags are unset.
-		inline const bool IsEmpty() const;
+		inline const bool IsEmpty() const									{ return m_flags != 0; };
 
 		// Check that the flag is set.
-		inline const bool IsFlagSet( const TEnumeration flag ) const;
+		inline const bool IsFlagSet( const TEnumeration flag ) const		{ return ( m_flags & GetBits( flag ) ) != 0; };
 
 		// Check that the flag is set.
 		template< TEnumeration FLAG >
-		inline const bool IsFlagSet() const;
+		inline const bool IsFlagSet() const									{ return ( m_flags & GetBits( FLAG ) ) != 0; };
 
 
 		inline const bool operator [] ( const TEnumeration flag ) const		{ return IsFlagSet( flag ); };
