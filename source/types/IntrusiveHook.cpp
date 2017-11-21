@@ -49,6 +49,7 @@ inline namespace Types
 
 	void IntrusiveHook::Invalidate()
 	{
+		CRET( m_liinks.empty() );
 		for( auto link : m_liinks )
 		{
 			link->InvalidateIntrusiveLink();
