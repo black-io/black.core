@@ -51,7 +51,7 @@ inline namespace Types
 
 
 		inline PlainView& operator = ( const PlainView& )	= default;
-		inline PlainView& operator = ( PlainView& )			= default;
+		inline PlainView& operator = ( PlainView&& )		= default;
 
 		template< typename TOtherType, typename = Conditional<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
 		inline PlainView& operator = ( const PlainView<TOtherType>& other )				{ return CopyAndSwap( *this, other ); };
