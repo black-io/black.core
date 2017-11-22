@@ -1,6 +1,28 @@
 #pragma once
 
 
+// Shunting the logging subsystem by default.
+#if( !defined( BLACK_LOG_CRITICAL ) )
+	#define BLACK_LOG_CRITICAL( ... )
+#endif
+
+#if( !defined( BLACK_LOG_ERROR ) )
+	#define BLACK_LOG_ERROR( ... )
+#endif
+
+#if( !defined( BLACK_LOG_WARNING ) )
+	#define BLACK_LOG_WARNING( ... )
+#endif
+
+#if( !defined( BLACK_LOG_DEBUG ) )
+	#define BLACK_LOG_DEBUG( ... )
+#endif
+
+#if( !defined( BLACK_LOGS_CLOSE ) )
+	#define BLACK_LOGS_CLOSE( ... )
+#endif
+
+
 // Regular 'conditional return' statement.
 #define CRET( CONDITION, ... )	if( CONDITION ) { return __VA_ARGS__; }
 
@@ -9,6 +31,13 @@
 
 // Regular 'conditional break' statement.
 #define CBRK( CONDITION )		if( CONDITION ) { break; }
+
+#define CRETM( CONDITION, RESULT, CHANNEL, FORMAT, ... )	if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; }
+#define CCONM( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; }
+#define CBRKM( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; }
+#define CRETW( CONDITION, RESULT, CHANNEL, FORMAT, ... )	if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; }
+#define CCONW( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; }
+#define CBRKW( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; }
 
 
 // Regular 'debug-only' code statement.
@@ -51,16 +80,6 @@
 #endif
 
 
-// Shunting the logging subsystem by default.
-#if( !defined( BLACK_LOG_CRITICAL ) )
-	#define BLACK_LOG_CRITICAL( ... )
-#endif
-
-#if( !defined( BLACK_LOGS_CLOSE ) )
-	#define BLACK_LOGS_CLOSE( ... )
-#endif
-
-
 // Code logics separation macros.
 #define BLACK_STRING_MACRO( EXPRESSION )	#EXPRESSION
 #define BLACK_STRINGIFICATION( EXPRESSION )	BLACK_STRING_MACRO( EXPRESSION )
@@ -87,9 +106,17 @@ if( !( __VA_ARGS__ ) )																								\
 
 
 #if( BLACK_RELEASE_BUILD )
+	#define CRETD( CONDITION, RESULT, CHANNEL, FORMAT, ... )	CRET( CONDITION, RESULT )
+	#define CCOND( CONDITION, CHANNEL, FORMAT, ... )			CCON( CONDITION )
+	#define CBRKD( CONDITION, CHANNEL, FORMAT, ... )			CBRK( CONDITION )
+
 	#define EXPECTS_DEBUG( ... )
 	#define ENSURES_DEBUG( ... )
 #else
-	#define EXPECTS_DEBUG( ... )	EXPECTS( __VA_ARGS__ )
-	#define ENSURES_DEBUG( ... )	ENSURES( __VA_ARGS__ )
+	#define CRETD( CONDITION, RESULT, CHANNEL, FORMAT, ... )	if( CONDITION ){ BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; }
+	#define CCOND( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; }
+	#define CBRKD( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; }
+
+	#define EXPECTS_DEBUG( ... )								EXPECTS( __VA_ARGS__ )
+	#define ENSURES_DEBUG( ... )								ENSURES( __VA_ARGS__ )
 #endif
