@@ -28,7 +28,7 @@ inline namespace Types
 	{
 	// Inner entities.
 	public:
-		static_assert( std::is_enum<TFlagsEnum>::value, "`TEnumeration` have to be enumeration type." );
+		static_assert( std::is_enum<TEnumeration>::value, "`TEnumeration` have to be enumeration type." );
 
 
 		// The underlying type of enumeration.

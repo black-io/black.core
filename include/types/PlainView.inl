@@ -8,7 +8,7 @@ inline namespace Core
 inline namespace Types
 {
 	template< typename TStoredType >
-	PlainView<TStoredType>::PlainView( PlainView<TStoredType>::Element* head, PlainView<TStoredType>::Element* tail )
+	PlainView<TStoredType>::PlainView( typename PlainView<TStoredType>::Element* head, typename PlainView<TStoredType>::Element* tail )
 		: m_head{ head }
 		, m_tail{ tail }
 		, m_length{ tail - head }
@@ -17,7 +17,7 @@ inline namespace Types
 	}
 
 	template< typename TStoredType >
-	PlainView<TStoredType>::PlainView( PlainView<TStoredType>::Element* head, const size_t length )
+	PlainView<TStoredType>::PlainView( typename PlainView<TStoredType>::Element* head, const size_t length )
 		: m_head{ head }
 		, m_tail{ head + length }
 		, m_length{ length }

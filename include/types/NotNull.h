@@ -35,7 +35,7 @@ inline namespace Types
 		inline TStoredType* get() const	{ BLACK_ASSUME( m_stored_pointer != nullptr ); return m_stored_pointer; };
 
 		template< typename TCastingType >
-		inline EnableIf<IS_CONVERTIBLE<TDerivedType*, TStoredType*>, TCastingType*> get() const	{ return static_cast<TCastingType*>( get() ); };
+		inline EnableIf<IS_CONVERTIBLE<TCastingType*, TStoredType*>, TCastingType*> get() const	{ return static_cast<TCastingType*>( get() ); };
 
 
 		inline TStoredType* operator -> () const											{ return get(); };

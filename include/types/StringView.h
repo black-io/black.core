@@ -39,16 +39,16 @@ inline namespace Types
 
 	// Construction interface.
 	public:
-		constexpr RegularStringView() = default;
-		constexpr RegularStringView( const RegularStringView& ) = default;
-		constexpr RegularStringView( const Char* chars, const size_t length ) : m_memory{ chars }, m_length{ length } {};
-		inline RegularStringView( const Char* chars ) : m_memory{ chars }, m_length{ CharTraits::length( chars ) } {};
+		constexpr RegularStringView()							= default;
+		constexpr RegularStringView( const RegularStringView& )	= default;
+		constexpr RegularStringView( const value_type* chars, const size_t length ) : m_memory{ chars }, m_length{ length } {};
+		inline RegularStringView( const value_type* chars ) : m_memory{ chars }, m_length{ CharTraits::length( chars ) } {};
 
 		template< typename TOtherTraits, typename TAllocator >
-		inline RegularStringView( const std::basic_string<Char, TOtherTraits, TAllocator>& other ) : RegularStringView{ other.data(), other.size() } {};
+		inline RegularStringView( const std::basic_string<value_type, TOtherTraits, TAllocator>& other ) : RegularStringView{ other.data(), other.size() } {};
 
 
-		constexpr RegularStringView& operator = ( const RegularStringView& ) = default;
+		inline RegularStringView& operator = ( const RegularStringView& ) = default;
 
 	// STL-conformance interface.
 	public:
@@ -71,7 +71,7 @@ inline namespace Types
 		constexpr size_type max_size() const						{ return numeric_limits<size_type>::max(); };
 		constexpr bool empty() const								{ return m_length == 0; };
 
-		constexpr void remove_prefix( const size_type skip_length )
+		inline void remove_prefix( const size_type skip_length )
 		{
 			EXPECTS( skip_length < m_length );
 
@@ -79,14 +79,14 @@ inline namespace Types
 			m_length -= skip_length;
 		}
 
-		constexpr void remove_suffix( const size_type skip_length )
+		inline void remove_suffix( const size_type skip_length )
 		{
 			EXPECTS( skip_length < m_length );
 
 			m_length -= skip_length;
 		}
 
-		constexpr void swap( RegularStringView& other )
+		inline void swap( RegularStringView& other )
 		{
 			std::swap( m_memory, other.m_memory );
 			std::swap( m_length, other.m_length );
