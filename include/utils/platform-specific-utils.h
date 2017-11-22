@@ -16,7 +16,7 @@ inline namespace PlatformSpecific
 		@aram	dest_memory		Pointer to destination memory with `bytes_to_copy` bytes length or higher.
 		@param	length			Number of bytes to be copied.
 	*/
-	void CopyMemory( const void* source_memory, void* dest_memory, const size_t length );
+	void CopyMemory( void* dest_memory, const void* source_memory, const size_t length );
 
 	/**
 		@brief	Fill every byte of `memory` with `pattern`.
@@ -28,14 +28,14 @@ inline namespace PlatformSpecific
 	void FillMemory( void* memory, const int32_t pattern, const size_t length );
 
 	/**
-		@brief	Fill every byte of `memory` with `pattern`.
+		@brief	Fill every byte of `memory` with zero value.
 		May cause potentially unsafe behavior if invalid arguments passed.
 		@note	This function is same as `FillMemory`, but it may not be dropped while compiler optimizations.
 		@param	memory	Head of memory to be filled.
 		@param	pattern	Filling pattern.
 		@param	length	Number of bytes in `memory` to be filled.
 	*/
-	void SequredFillMemory( void* memory, const int32_t pattern, const size_t length );
+	void SequredZeroMemory( void* memory, const size_t length );
 
 	/**
 		@brief	Compare the two memory blocks checking its identity.
@@ -48,6 +48,7 @@ inline namespace PlatformSpecific
 	const bool IsMemoryEqual( const void* left_memory, const void* right_memory, const size_t length );
 }
 }
+
 
 inline namespace TextUtils
 {
@@ -62,7 +63,7 @@ inline namespace PlatformSpecific
 		@return					Formatted string view with same memory as `target_buffer`.
 		@retval	empty view		In case the arguments can not be formated into target buffer.
 	*/
-	StringView WriteArguments( StringView target_buffer, const StringView format, va_list arguments );
+	Black::StringView WriteArguments( Black::PlainView<char> target_buffer, const Black::StringView format, va_list arguments );
 
 	/**
 		@brief	Read the `arguments` from `source_buffer` according to `format` specification.
@@ -73,7 +74,7 @@ inline namespace PlatformSpecific
 		@return					Number of readen arguments.
 		@retval	0				If no argument was read.
 	*/
-	const size_t ReadArguments( const StringView soure_buffer, const StringView format, va_list arguments );
+	const size_t ReadArguments( const Black::StringView source_buffer, const Black::StringView format, va_list arguments );
 }
 }
 }
