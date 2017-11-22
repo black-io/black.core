@@ -43,7 +43,7 @@ inline namespace PlatformSpecific
 		@param	left_memory		Memory head to compare.
 		@param	right_memory	Memory head to compare.
 		@param	length			The length in bytes to compare.
-		@return					The value returned is flag that the left and right memory streams are equal.
+		@return					The value returned is flag that the left and right memory streams is equal.
 	*/
 	const bool IsMemoryEqual( const void* left_memory, const void* right_memory, const size_t length );
 }
