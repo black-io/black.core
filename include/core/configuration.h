@@ -22,6 +22,7 @@
 #define BLACK_ANDROID_PLATFORM			0
 #define BLACK_IOS_PLATFORM				0
 #define BLACK_WINDOWS_MOBILE_PLATFORM	0
+#define BLACK_TIZEN_PLATFORM			0
 
 // Endianness boolean flag stubs.
 // This values may be used into `#if` checks.
@@ -125,6 +126,8 @@ namespace Black
 	constexpr PlatformType BUILD_PLATFORM	= PlatformType::Ios;
 	#elif( BLACK_WINDOWS_MOBILE_PLATFORM )
 	constexpr PlatformType BUILD_PLATFORM	= PlatformType::WindowsMobile;
+	#elif( BLACK_TIZEN_PLATFORM )
+	constexpr PlatformType BUILD_PLATFORM	= PlatformType::Tizen;
 	#else
 		#error The `BUILD_PLATFORM` constant needs to be defined for current platform.
 	#endif
