@@ -32,11 +32,22 @@
 // Regular 'conditional break' statement.
 #define CBRK( CONDITION )		if( CONDITION ) { break; }
 
+// 'conditional return' statement with error reporting.
 #define CRETM( CONDITION, RESULT, CHANNEL, FORMAT, ... )	if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; }
+
+// 'conditional continue' statement with error reporting.
 #define CCONM( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; }
+
+// 'conditional break' statement with error reporting.
 #define CBRKM( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; }
+
+// 'conditional return' statement with warning reporting.
 #define CRETW( CONDITION, RESULT, CHANNEL, FORMAT, ... )	if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; }
+
+// 'conditional continue' statement with warning reporting.
 #define CCONW( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; }
+
+// 'conditional break' statement with warning reporting.
 #define CBRKW( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; }
 
 
