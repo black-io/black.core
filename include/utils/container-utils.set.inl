@@ -23,7 +23,7 @@ inline namespace Utils
 	inline const bool RemoveItem( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
 	{
 		auto found_item = storage.find( item );
-		CRET( storage.end() == found_item, false );
+		CRET( found_item == storage.end(), false );
 		storage.erase( found_item );
 		return true;
 	}
