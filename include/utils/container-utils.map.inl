@@ -20,6 +20,12 @@ inline namespace Utils
 	}
 
 	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
+	inline const bool UniqueAdd( std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key, TItem&& item )
+	{
+		return std::get<1>( storage.insert( std::make_pair( key, std::move( item ) ) ) );
+	}
+
+	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
 	inline const bool RemoveItem( std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key )
 	{
 		auto found_item = storage.find( key );

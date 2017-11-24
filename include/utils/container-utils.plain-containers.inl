@@ -39,12 +39,29 @@ inline namespace Utils
 		return true;
 	}
 
+	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool UniqueAdd( TStorage<TItem, TAllocator>& storage, TItem&& item )
+	{
+		CRET( IsItemExists( storage, item ), false );
+		storage.push_back( std::move( item ) );
+		return true;
+	}
+
 	template< typename TItem, typename TAllocator >
 	inline const size_t UniqueAddIndexed( std::vector<TItem, TAllocator>& storage, const TItem& item )
 	{
 		auto found_item = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_item != std::end( storage ), std::distance( std::begin( storage ), found_item ) );
 		storage.push_back( item );
+		return storage.size() - 1;
+	}
+
+	template< typename TItem, typename TAllocator >
+	inline const size_t UniqueAddIndexed( std::vector<TItem, TAllocator>& storage, TItem&& item )
+	{
+		auto found_item = std::find( std::begin( storage ), std::end( storage ), item );
+		CRET( found_item != std::end( storage ), std::distance( std::begin( storage ), found_item ) );
+		storage.push_back( std::move( item ) );
 		return storage.size() - 1;
 	}
 

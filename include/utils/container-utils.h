@@ -106,12 +106,36 @@ inline namespace Utils
 		@param	storage		The storage to add.
 		@param	item		The item to add.
 		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TStorage	Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` if item successfully inserted into storage.
+	*/
+	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool UniqueAdd( TStorage<TItem, TAllocator>& storage, TItem&& item );
+
+	/**
+		@brief	Uniquely insert the item into storage.
+		@param	storage		The storage to add.
+		@param	item		The item to add.
+		@tparam	TItem		Type of storage content and type of item as well.
 		@tparam	TPredicate	Predicate used by storage.
 		@tparam	TAllocator	Allocator used by storage.
 		@return				`true` if item successfully inserted into storage.
 	*/
 	template< typename TItem, typename TPredicate, typename TAllocator >
 	inline const bool UniqueAdd( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item );
+
+	/**
+		@brief	Uniquely insert the item into storage.
+		@param	storage		The storage to add.
+		@param	item		The item to add.
+		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TPredicate	Predicate used by storage.
+		@tparam	TAllocator	Allocator used by storage.
+		@return				`true` if item successfully inserted into storage.
+	*/
+	template< typename TItem, typename TPredicate, typename TAllocator >
+	inline const bool UniqueAdd( std::set<TItem, TPredicate, TAllocator>& storage, TItem&& item );
 
 	/**
 		@brief	Uniquely insert the item into storage.
@@ -131,6 +155,19 @@ inline namespace Utils
 		@param	storage		The storage to add.
 		@param	key			The key for item to add.
 		@param	item		The item to add.
+		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TPredicate	Predicate used by storage.
+		@tparam	TAllocator	Allocator used by storage.
+		@return				`true` if item successfully inserted into storage.
+	*/
+	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
+	inline const bool UniqueAdd( std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key, TItem&& item );
+
+	/**
+		@brief	Uniquely insert the item into storage.
+		@param	storage		The storage to add.
+		@param	key			The key for item to add.
+		@param	item		The item to add.
 		@tparam	TKey		Type of keys used by storage.
 		@tparam	TItem		Type of storage content and type of item as well.
 		@tparam	THash		Hash used by storage.
@@ -143,6 +180,21 @@ inline namespace Utils
 
 	/**
 		@brief	Uniquely insert the item into storage.
+		@param	storage		The storage to add.
+		@param	key			The key for item to add.
+		@param	item		The item to add.
+		@tparam	TKey		Type of keys used by storage.
+		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	THash		Hash used by storage.
+		@tparam	TPredicate	Predicate used by storage.
+		@tparam	TAllocator	Allocator used by storage.
+		@return				`true` if item successfully inserted into storage.
+	*/
+	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator >
+	inline const bool UniqueAdd( std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key, TItem&& item );
+
+	/**
+		@brief	Uniquely insert the item into storage.
 		@note	Unlike the `UniqueAdd` function, this one will return the positional number of item in storage.
 		@param	storage		The storage to add.
 		@param	item		The item to add.
@@ -152,6 +204,18 @@ inline namespace Utils
 	*/
 	template< typename TItem, typename TAllocator >
 	inline const size_t UniqueAddIndexed( std::vector<TItem, TAllocator>& storage, const TItem& item );
+
+	/**
+		@brief	Uniquely insert the item into storage.
+		@note	Unlike the `UniqueAdd` function, this one will return the positional number of item in storage.
+		@param	storage		The storage to add.
+		@param	item		The item to add.
+		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TAllocator	Allocator used by storage.
+		@return				index of item in storage.
+	*/
+	template< typename TItem, typename TAllocator >
+	inline const size_t UniqueAddIndexed( std::vector<TItem, TAllocator>& storage, TItem&& item );
 
 	/**
 		@brief	Removes the single item from storage.
