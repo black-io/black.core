@@ -10,82 +10,82 @@ inline namespace Utils
 	/**
 		@brief	Copies memory from source to destination.
 		Affects directly to memory, calls no constructors!
-		@aram	dest_ref		Reference to destination object.
-		@param	source_ref		Reference to source object.
-		@tparam	TValueType		Type of given objects. Helps determinate size of memory to copy.
+		@aram	dest_ref	Reference to destination object.
+		@param	source_ref	Reference to source object.
+		@tparam	TValue		Type of given objects. Helps determinate size of memory to copy.
 	*/
-	template< typename TValueType >
-	inline void CopyMemory( TValueType& dest_ref, const TValueType& source_ref );
+	template< typename TValue >
+	inline void CopyMemory( TValue& dest_ref, const TValue& source_ref );
 
 	/**
 		@brief	Fills every byte of `target_ref` with `pattern` byte.
 		Affects directly to memory, calls no destructors!
-		@param	target_ref		Reference to object, which memory will be filed.
-		@param	pattern			Value the memory will be filled with. Note, only first byte of value will be used.
-		@tparam	TValueType		Type of passed object. Helps determinate size of memory to fill.
+		@param	target_ref	Reference to object, which memory will be filed.
+		@param	pattern		Value the memory will be filled with. Note, only first byte of value will be used.
+		@tparam	TValue		Type of passed object. Helps determinate size of memory to fill.
 	*/
-	template< typename TValueType >
-	inline void FillMemory( TValueType& target_ref, const int32_t pattern );
+	template< typename TValue >
+	inline void FillMemory( TValue& target_ref, const int32_t pattern );
 
 	/**
 		@brief	Fills every byte of `target_array` array with `pattern` byte.
 		Affects directly to memory, calls no destructors!
 		@param	target_array	Reference to array of objects, which memory will be filed.
 		@param	pattern			Value the memory will be filled with. Note, only first byte of value will be used.
-		@tparam	TValueType		Type of passed object. Helps determinate size of memory to fill.
+		@tparam	TValue			Type of passed object. Helps determinate size of memory to fill.
 		@tparam	ARRAY_LENGTH	Number of elements in array.
 	*/
-	template< typename TValueType, size_t ARRAY_LENGTH >
-	inline void FillMemory( TValueType (&target_array)[ ARRAY_LENGTH ], const int32_t pattern );
+	template< typename TValue, size_t ARRAY_LENGTH >
+	inline void FillMemory( TValue (&target_array)[ ARRAY_LENGTH ], const int32_t pattern );
 
 	/**
 		@brief	Fills every byte of `target_ref` with zero.
 		Affects directly to memory, calls no destructors!
-		@param	target_ref		Reference to object, which memory will be filed.
-		@tparam	TValueType		Type of passed object. Helps determinate size of memory to fill.
+		@param	target_ref	Reference to object, which memory will be filed.
+		@tparam	TValue		Type of passed object. Helps determinate size of memory to fill.
 	*/
-	template< typename TValueType >
-	inline void ZeroMemory( TValueType& target_ref );
+	template< typename TValue >
+	inline void ZeroMemory( TValue& target_ref );
 
 	/**
 		@brief	Fills every byte of `target_array` array with zero.
 		Affects directly to memory, calls no destructors!
 		@param	target_array	Reference to array of objects, which memory will be filed.
-		@tparam	TValueType		Type of passed object. Helps determinate size of memory to fill.
+		@tparam	TValue			Type of passed object. Helps determinate size of memory to fill.
 		@tparam	ARRAY_LENGTH	Number of elements in array.
 	*/
-	template< typename TValueType, size_t ARRAY_LENGTH >
-	inline void ZeroMemory( TValueType (&target_array)[ ARRAY_LENGTH ] );
+	template< typename TValue, size_t ARRAY_LENGTH >
+	inline void ZeroMemory( TValue (&target_array)[ ARRAY_LENGTH ] );
 
 	/**
 		@brief	Fills every byte of `target_ref` with zero.
 		Affects directly to memory, calls no destructors!
 		@note	This function is same as `FillMemory`, but it may not be dropped while compiler optimizations.
-		@param	target_ref		Reference to object, which memory will be filed.
-		@tparam	TValueType		Type of passed object. Helps determinate size of memory to fill.
+		@param	target_ref	Reference to object, which memory will be filed.
+		@tparam	TValue		Type of passed object. Helps determinate size of memory to fill.
 	*/
-	template< typename TValueType >
-	inline void SequredZeroMemory( TValueType& target_ref );
+	template< typename TValue >
+	inline void SequredZeroMemory( TValue& target_ref );
 
 	/**
 		@brief	Fills every byte of `target_array` array with zero.
 		Affects directly to memory, calls no destructors!
 		@param	target_array	Reference to array of objects, which memory will be filed.
-		@tparam	TValueType		Type of passed object. Helps determinate size of memory to fill.
+		@tparam	TValue			Type of passed object. Helps determinate size of memory to fill.
 		@tparam	ARRAY_LENGTH	Number of elements in array.
 	*/
-	template< typename TValueType >
-	inline void SequredZeroMemory( TValueType (&target_array)[ ARRAY_LENGTH ] );
+	template< typename TValue, size_t ARRAY_LENGTH >
+	inline void SequredZeroMemory( TValue (&target_array)[ ARRAY_LENGTH ] );
 
 	/**
 		@brief	Compare the memory of two object checking its identity.
 		May cause potentially unsafe behavior if invalid arguments passed.
-		@param	left_ref		Left-sided object to check.
-		@param	right_ref		Right-sided object to check.
-		@return					The value returned is flag that the memory of left and right objects is equal.
+		@param	left_ref	Left-sided object to check.
+		@param	right_ref	Right-sided object to check.
+		@return				The value returned is flag that the memory of left and right objects is equal.
 	*/
-	template< typename TValueType >
-	inline const bool IsMemoryEqual( const TValueType& left_ref, const TValueType& right_ref );
+	template< typename TValue >
+	inline const bool IsMemoryEqual( const TValue& left_ref, const TValue& right_ref );
 }
 
 

@@ -7,52 +7,52 @@ inline namespace Core
 {
 inline namespace Utils
 {
-	template< typename TValueType >
-	inline void CopyMemory( TValueType& dest_ref, const TValueType& source_ref )
+	template< typename TValue >
+	inline void CopyMemory( TValue& dest_ref, const TValue& source_ref )
 	{
-		CopyMemory( &dest_ref, &source_ref, sizeof( TValueType ) );
+		CopyMemory( &dest_ref, &source_ref, sizeof( TValue ) );
 	}
 
-	template< typename TValueType >
-	inline void FillMemory( TValueType& target_ref, const int32_t pattern )
+	template< typename TValue >
+	inline void FillMemory( TValue& target_ref, const int32_t pattern )
 	{
-		FillMemory( &target_ref, pattern, sizeof( TValueType ) );
+		FillMemory( &target_ref, pattern, sizeof( TValue ) );
 	}
 
-	template< typename TValueType, size_t ARRAY_LENGTH >
-	inline void FillMemory( TValueType (&target_array)[ ARRAY_LENGTH ], const int32_t pattern )
+	template< typename TValue, size_t ARRAY_LENGTH >
+	inline void FillMemory( TValue (&target_array)[ ARRAY_LENGTH ], const int32_t pattern )
 	{
-		FillMemory( target_array, pattern, sizeof( TValueType ) * ARRAY_LENGTH );
+		FillMemory( target_array, pattern, sizeof( TValue ) * ARRAY_LENGTH );
 	}
 
-	template< typename TValueType >
-	inline void ZeroMemory( TValueType& target_ref )
+	template< typename TValue >
+	inline void ZeroMemory( TValue& target_ref )
 	{
-		FillMemory( &target_ref, 0, sizeof( TValueType ) );
+		FillMemory( &target_ref, 0, sizeof( TValue ) );
 	}
 
-	template< typename TValueType, size_t ARRAY_LENGTH >
-	inline void ZeroMemory( TValueType (&target_array)[ ARRAY_LENGTH ] )
+	template< typename TValue, size_t ARRAY_LENGTH >
+	inline void ZeroMemory( TValue (&target_array)[ ARRAY_LENGTH ] )
 	{
-		FillMemory( target_array, 0, sizeof( TValueType ) * ARRAY_LENGTH );
+		FillMemory( target_array, 0, sizeof( TValue ) * ARRAY_LENGTH );
 	}
 
-	template< typename TValueType >
-	inline void SequredZeroMemory( TValueType& target_ref )
+	template< typename TValue >
+	inline void SequredZeroMemory( TValue& target_ref )
 	{
-		SequredZeroMemory( &target_ref, sizeof( TValueType ) );
+		SequredZeroMemory( &target_ref, sizeof( TValue ) );
 	}
 
-	template< typename TValueType, size_t ARRAY_LENGTH >
-	inline void SequredZeroMemory( TValueType (&target_array)[ ARRAY_LENGTH ] )
+	template< typename TValue, size_t ARRAY_LENGTH >
+	inline void SequredZeroMemory( TValue (&target_array)[ ARRAY_LENGTH ] )
 	{
-		SequredZeroMemory( target_array, sizeof( TValueType ) * ARRAY_LENGTH );
+		SequredZeroMemory( target_array, sizeof( TValue ) * ARRAY_LENGTH );
 	}
 
-	template< typename TValueType >
-	inline const bool IsMemoryEqual( const TValueType& left_ref, const TValueType& right_ref )
+	template< typename TValue >
+	inline const bool IsMemoryEqual( const TValue& left_ref, const TValue& right_ref )
 	{
-		return IsMemoryEqual( &left_ref, right_ref, sizeof( TValueType ) );
+		return IsMemoryEqual( &left_ref, right_ref, sizeof( TValue ) );
 	}
 }
 
