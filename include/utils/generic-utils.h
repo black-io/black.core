@@ -83,7 +83,7 @@ namespace Black
 		@return				Returns endian-dependent 4-byte unsigned integer value.
 	*/
 	template< PlatformEndianness ENDIANNESS = BUILD_ENDIANNESS >
-	constexpr uint32_t GetPackedBytes(
+	constexpr uint64_t GetPackedBytes(
 		const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4,
 		const uint8_t b5, const uint8_t b6, const uint8_t b7, const uint8_t b8
 	);
