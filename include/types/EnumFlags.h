@@ -88,11 +88,11 @@ inline namespace Types
 		inline const bool IsEmpty() const									{ return m_flags != 0; };
 
 		// Check that the flag is set.
-		inline const bool IsFlagSet( const TEnumeration flag ) const		{ return ( m_flags & GetBits( flag ) ) != 0; };
+		inline const bool HasFlag( const TEnumeration flag ) const			{ return ( m_flags & GetBits( flag ) ) != 0; };
 
 		// Check that the flag is set.
 		template< TEnumeration FLAG >
-		inline const bool IsFlagSet() const									{ return ( m_flags & GetBits( FLAG ) ) != 0; };
+		inline const bool HasFlag() const									{ return ( m_flags & GetBits( FLAG ) ) != 0; };
 
 
 		inline const bool operator [] ( const TEnumeration flag ) const		{ return IsFlagSet( flag ); };
