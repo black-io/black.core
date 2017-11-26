@@ -45,14 +45,51 @@ inline namespace Core
 #include <condition_variable>
 #include <typeinfo>
 
-// Most basic third-party libraries.
+// Most core third-party libraries.
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
-// Include core stuff.
+// Most core stuff.
 #include "core/constants.h"
 #include "core/macros.h"
 #include "type-traits/std-constants.h"
 #include "type-traits/std-types.h"
 #include "types/generic-types.h"
 #include "utils/generic-utils.h"
+
+// Core types.
+#include "types/NotNull.h"
+#include "types/PlainView.h"
+#include "types/PlainVector.h"
+#include "types/StringView.h"
+#include "types/EnumFlags.h"
+#include "types/IntrusiveHook.h"
+#include "types/IntrusiveLink.h"
+#include "types/RingBuffer.h"
+
+// Core utils.
+#include "utils/platform-specific-utils.h"
+#include "utils/platform-utils.h"
+#include "utils/container-utils.h"
+#include "utils/text-utils.const.h"
+#include "utils/text-utils.h"
+#include "utils/tuple-utils.h"
+#include "utils/hash-utils.h"
+
+// Platform-specific definitions.
+#include "platform/platform.h"
+
+// Inline implementations.
+#include "utils/hash-utils.inl"
+#include "utils/tuple-utils.inl"
+#include "utils/text-utils.inl"
+#include "utils/container-utils.plain-containers.inl"
+#include "utils/container-utils.set.inl"
+#include "utils/container-utils.map.inl"
+#include "utils/container-utils.unordered_map.inl"
+#include "utils/platform-utils.inl"
+#include "types/RingBuffer.inl"
+#include "types/IntrusiveLink.inl"
+#include "types/PlainVector.inl"
+#include "types/PlainView.inl"
+#include "utils/generic-utils.inl"
