@@ -7,13 +7,13 @@ inline namespace Core
 {
 inline namespace Concurrency
 {
-	void SpinLock::Lock() const
+	inline void SpinLock::Lock() const
 	{
 		AcquireLock();
 		++m_locks_count;
 	}
 
-	void SpinLock::Unlock() const
+	inline void SpinLock::Unlock() const
 	{
 		const auto this_thread_id = std::this_thread::get_id();
 		// Prevent abnormal usage of spin-lock.

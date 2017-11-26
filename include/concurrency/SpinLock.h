@@ -17,10 +17,10 @@ inline namespace Concurrency
 	{
 	public:
 		// @see	Mutex::Lock()
-		virtual void Lock() const override;
+		virtual inline void Lock() const override;
 
 		// @see	Mutex::Unlock()
-		virtual void Unlock() const override;
+		virtual inline void Unlock() const override;
 
 	private:
 		// Latching the lock.
