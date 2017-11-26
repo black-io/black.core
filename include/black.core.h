@@ -76,6 +76,9 @@ inline namespace Core
 #include "utils/tuple-utils.h"
 #include "utils/hash-utils.h"
 
+// Core subsystems.
+#include "concurrency/concurrency.h"
+
 // Platform-specific definitions.
 #include "platform/platform.h"
 
