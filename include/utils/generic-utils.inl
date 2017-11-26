@@ -48,7 +48,7 @@ namespace Black
 
 		TValue result;
 		const uint8_t* bytes	= reinterpret_cast<const uint8_t*>( &value );
-		uint8_t* result_bytes	= reinterpret_cast<const uint8_t*>( &result );
+		uint8_t* result_bytes	= reinterpret_cast<uint8_t*>( &result );
 
 		for( size_t index = 0; index < value_length; ++index )
 		{
