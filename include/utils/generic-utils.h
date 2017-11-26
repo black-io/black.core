@@ -74,7 +74,7 @@ namespace Black
 		@return				Returns endian-dependent 4-byte unsigned integer value.
 	*/
 	template< PlatformEndianness ENDIANNESS = BUILD_ENDIANNESS >
-	constexpr uint32_t GetPackedBytes( const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4 );
+	inline uint32_t GetPackedBytes( const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4 );
 
 	/**
 		@brief	Packs 4 bytes into single 4-byte value.
@@ -83,10 +83,21 @@ namespace Black
 		@return				Returns endian-dependent 4-byte unsigned integer value.
 	*/
 	template< PlatformEndianness ENDIANNESS = BUILD_ENDIANNESS >
-	constexpr uint64_t GetPackedBytes(
+	inline uint64_t GetPackedBytes(
 		const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4,
 		const uint8_t b5, const uint8_t b6, const uint8_t b7, const uint8_t b8
 	);
+
+	/**
+		@brief	Transform the byte-order of value from native to requested.
+		This function does nothing if native byte-order is same as requested.
+		@param	value		The value to be transformed.
+		@tparam	TValue		Type of value to transform.
+		@tparam	ENDIANNESS	The requested endianness.
+		return				The value returned is an transformed representation of input value.
+	*/
+	template< PlatformEndianness ENDIANNESS, typename TValue >
+	inline const TValue GetTransformedEndianness( const TValue value );
 
 	/**
 		@brief	Translation from `std::chrono` time into `double` seconds.
@@ -117,7 +128,7 @@ namespace Black
 		@return				Return the number of elements in container.
 	*/
 	template< typename TContainer >
-	constexpr const size_t GetElementsNumber( const TContainer& container )
+	constexpr const size_t GetLength( const TContainer& container )
 	{
 		return container.size();
 	}
@@ -128,7 +139,7 @@ namespace Black
 		@return				Return the dimension of `container`.
 	*/
 	template< typename TArrayElement, size_t ARRAY_SIZE >
-	constexpr const size_t GetElementsNumber( const TArrayElement (&container)[ ARRAY_SIZE ] )
+	constexpr const size_t GetLength( const TArrayElement (&container)[ ARRAY_SIZE ] )
 	{
 		return ARRAY_SIZE;
 	}
@@ -137,7 +148,7 @@ namespace Black
 		@brief	Copying-swap assignation paradigm implementation.
 
 		@tparam	TValue		The type of entities to assign.
-		@tparam	TArguments	Construction arguments to asign operation.
+		@tparam	TArguments	Construction arguments to assign operation.
 		@param	left		The left operand of assign operation.
 		@param	arguments	Number of arguments to construct the right operand.
 		@return				The value returned is an `left` operand after the assignation.
