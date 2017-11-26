@@ -6,7 +6,9 @@ namespace Black
 {
 // Core library.
 inline namespace Core
-{}
+{
+
+}
 }
 
 // Environment configuration.
