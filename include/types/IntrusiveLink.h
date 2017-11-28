@@ -7,6 +7,8 @@ inline namespace Core
 {
 inline namespace Types
 {
+namespace Traits
+{
 	// Intrusive link.
 	template< typename TLinkedType, bool USE_LINKING = Black::IS_BASE_OF<IntrusiveHook, TLinkedType> >
 	class IntrusiveLink;
@@ -58,6 +60,11 @@ inline namespace Types
 		// Empty stub for functional symmetry.
 		virtual void InvalidateIntrusiveLink() override	{};
 	};
+}
+
+	// Intrusive link.
+	template< typename TLinkedType >
+	using IntrusiveLink = Traits::IntrusiveLink<TLinkedType>;
 }
 }
 }

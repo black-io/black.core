@@ -7,6 +7,8 @@ inline namespace Core
 {
 inline namespace Types
 {
+namespace Traits
+{
 	template< typename TLinkedType >
 	IntrusiveLink<TLinkedType, true>::IntrusiveLink( const IntrusiveLink& other )
 		: IntrusiveLink{ other.m_hook }
@@ -61,6 +63,7 @@ inline namespace Types
 		CRET( m_hook == nullptr );
 		m_hook->RemoveIntrusiveLink( this );
 	}
+}
 }
 }
 }
