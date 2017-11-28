@@ -19,7 +19,6 @@ inline namespace Types
 		// Regular intrusive link.
 		class RegularIntrusiveLink
 		{
-			friend class IntrusiveHook;
 		public:
 			// Used by intrusive hook to invalidate the link.
 			virtual void InvalidateIntrusiveLink() = 0;
