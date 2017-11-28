@@ -42,7 +42,7 @@ inline namespace Types
 		constexpr RegularStringView()							= default;
 		constexpr RegularStringView( const RegularStringView& )	= default;
 		constexpr RegularStringView( const value_type* chars, const size_t length ) : m_memory{ chars }, m_length{ length } {};
-		inline RegularStringView( const value_type* chars ) : m_memory{ chars }, m_length{ CharTraits::length( chars ) } {};
+		inline RegularStringView( const value_type* chars ) : m_memory{ chars }, m_length{ TChatTraits::length( chars ) } {};
 
 		template< typename TOtherTraits, typename TAllocator >
 		inline RegularStringView( const std::basic_string<value_type, TOtherTraits, TAllocator>& other ) : RegularStringView{ other.data(), other.size() } {};
