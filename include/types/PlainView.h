@@ -41,7 +41,7 @@ inline namespace Types
 		explicit PlainView( const PlainView<TOtherType>& other ) : PlainView( other.m_head, other.m_tail ) {};
 
 		template< size_t ARRAY_LENGTH >
-		explicit PlainView( Element elements[ ARRAY_LENGTH ] ) : PlainView{ elements, ARRAY_LENGTH } {};
+		explicit PlainView( Element (&elements)[ ARRAY_LENGTH ] ) : PlainView{ elements, ARRAY_LENGTH } {};
 
 		template< size_t ARRAY_LENGTH >
 		explicit PlainView( std::array<Element, ARRAY_LENGTH>& elements ) : PlainView{ elements.data(), ARRAY_LENGTH } {};
