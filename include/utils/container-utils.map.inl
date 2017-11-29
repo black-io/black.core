@@ -31,6 +31,7 @@ inline namespace Utils
 		auto found_item = storage.find( key );
 		CRET( found_item == storage.end(), false );
 		storage.erase( found_item );
+		return true;
 	}
 
 	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
