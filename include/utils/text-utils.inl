@@ -170,9 +170,9 @@ inline namespace TextUtils
 		using String = std::basic_string<TChar, TTraits, TAllocator>;
 
 		CRET( string_buffer.empty() || pattern.empty(), 0 );
-		const stored_parts		= parts.size();
-		size_t part_begin		= 0;
-		size_t pattern_begin	= string_buffer.find( pattern, part_begin );
+		const size_t stored_parts	= parts.size();
+		size_t part_begin			= 0;
+		size_t pattern_begin		= string_buffer.find( pattern, part_begin );
 		CRET( flags.HasFlag<TextSplittingFlag::OnlySplitted>() && ( pattern_begin == String::npos ), 0 );
 
 		while( pattern_begin < string_buffer.size() )
@@ -194,6 +194,70 @@ inline namespace TextUtils
 		}
 
 		return parts.size() - stored_parts;
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
+	inline std::basic_string<TChar, TTraits, TAllocator> JoinString(
+		const TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
+		const TChar* pattern,
+		const TextJoiningFlags flags = { TextJoiningFlag::DropEmpty }
+	)
+	{
+		return JoinString( parts, Black::RegularStringView<TChar>{ pattern }, flags );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
+	inline std::basic_string<TChar, TTraits, TAllocator> JoinString(
+		const TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
+		const std::basic_string<TChar, TTraits, TAllocator>& pattern,
+		const TextJoiningFlags flags = { TextJoiningFlag::DropEmpty }
+	)
+	{
+		return JoinString( parts, Black::RegularStringView<TChar>{ pattern }, flags );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
+	inline const size_t SplitString(
+		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
+		const TChar* string_buffer,
+		const TChar* pattern,
+		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
+	)
+	{
+		return SplitString( parts, Black::RegularStringView<TChar>{ string_buffer }, Black::RegularStringView<TChar>{ pattern }, flags );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
+	inline const size_t SplitString(
+		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
+		const std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
+		const std::basic_string<TChar, TTraits, TAllocator>& pattern,
+		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
+	)
+	{
+		return SplitString( parts, Black::RegularStringView<TChar>{ string_buffer }, Black::RegularStringView<TChar>{ pattern }, flags );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
+	inline const size_t SplitString(
+		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
+		const TChar* string_buffer,
+		const std::basic_string<TChar, TTraits, TAllocator>& pattern,
+		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
+	)
+	{
+		return SplitString( parts, Black::RegularStringView<TChar>{ string_buffer }, Black::RegularStringView<TChar>{ pattern }, flags );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
+	inline const size_t SplitString(
+		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
+		const std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
+		const TChar* pattern,
+		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
+	)
+	{
+		return SplitString( parts, Black::RegularStringView<TChar>{ string_buffer }, Black::RegularStringView<TChar>{ pattern }, flags );
 	}
 }
 }

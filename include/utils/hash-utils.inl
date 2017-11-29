@@ -23,6 +23,13 @@ inline namespace HashUtils
 
 		return result;
 	}
+
+	// @TEMP: Temporary decision until the `PlainView::As` will be available.
+	template< typename TValue >
+	inline const uint32_t GetUnreliableHash( const TValue* data, const size_t data_length, const uint32_t seed = 0 )
+	{
+		return GetUnreliableHash( Black::PlainView<const uint8_t>{ reinterpret_cast<const uint8_t*>( data ), data_length * sizeof( TValue ) }, seed );
+	}
 }
 }
 }
