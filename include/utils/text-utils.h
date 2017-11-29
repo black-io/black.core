@@ -17,8 +17,11 @@ inline namespace TextUtils
 		@tparam	TArguments	Types of passed arguments.
 		@return				The value returned is an formatted string.
 	*/
-	template< typename TChar, typename... TArguments >
-	inline std::basic_string<TChar> FormatString( Black::RegularStringView<TChar> format, const TArguments&... arguments );
+	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
+	inline std::basic_string<TChar, TTraits, TAllocator> FormatString(
+		const std::basic_string<TChar, TTraits, TAllocator>& format,
+		const TArguments&... arguments
+	);
 
 	/**
 		@brief	Format the arguments into string.
@@ -31,8 +34,12 @@ inline namespace TextUtils
 		@tparam	TArguments	Types of passed arguments.
 		@return				The value returned is an string view into `buffer` with formatted arguments.
 	*/
-	template< typename TChar, typename... TArguments >
-	inline Black::RegularStringView<TChar> FormatString( Black::PlainView<TChar> buffer, Black::RegularStringView<TChar> format, const TArguments&... arguments );
+	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
+	inline Black::RegularStringView<TChar> FormatString(
+		Black::PlainView<TChar> buffer,
+		const std::basic_string<TChar, TTraits, TAllocator>& format,
+		const TArguments&... arguments
+	);
 
 	/**
 		@brief	Replace some string pattern with given replacement inside string buffer.

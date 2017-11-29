@@ -7,23 +7,36 @@ inline namespace Core
 {
 inline namespace TextUtils
 {
-	template< typename TChar, typename... TArguments >
-	inline std::basic_string<TChar> FormatString( Black::RegularStringView<TChar> format, const TArguments&... arguments )
+	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
+	inline std::basic_string<TChar, TTraits, TAllocator> FormatString(
+		const std::basic_string<TChar, TTraits, TAllocator>& format,
+		const TArguments&... arguments
+	)
 	{
-		return fmt::format( std::basic_string<TChar>{ format.begin(), format.end() }, arguments... );
+		return fmt::format( format, arguments... );
 	}
 
 	template< typename TChar, typename... TArguments >
-	inline Black::RegularStringView<TChar> FormatString( Black::PlainView<TChar> buffer, Black::RegularStringView<TChar> format, const TArguments&... arguments )
+	inline std::basic_string<TChar> FormatString( const TChar* format, const TArguments&... arguments )
+	{
+		return fmt::format( std::basic_string<TChar>{ format }, arguments... );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
+	inline Black::RegularStringView<TChar> FormatString(
+		Black::PlainView<TChar> buffer,
+		const std::basic_string<TChar, TTraits, TAllocator>& format,
+		const TArguments&... arguments
+	)
 	{
 		// @FIXME: Implement this stuff.
 		return {};
 	}
 
 	template< typename TChar, typename... TArguments >
-	inline std::basic_string<TChar> FormatString( const TChar* format, const TArguments&... arguments )
+	inline Black::RegularStringView<TChar> FormatString( Black::PlainView<TChar> buffer, const char* format, const TArguments&... arguments )
 	{
-		return FormatString( Black::RegularStringView<TChar>{ format }, arguments... );
+		return FormatString( buffer, std::basic_string<TChar>{ format } );
 	}
 
 	template< typename TChar, typename TTraits, typename TAllocator >

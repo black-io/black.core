@@ -32,8 +32,11 @@ inline namespace TextUtils
 		@tparam	TArguments	Types of passed arguments.
 		@return				The value returned is an formatted string.
 	*/
-	template< typename TChar, typename... TArguments >
-	inline std::basic_string<TChar> FormatString( Black::RegularStringView<TChar> format, const std::tuple<TArguments...>& arguments );
+	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
+	inline std::basic_string<TChar, TTraits, TAllocator> FormatString(
+		const std::basic_string<TChar, TTraits, TAllocator>& format,
+		const std::tuple<TArguments...>& arguments
+	);
 }
 }
 }
