@@ -10,7 +10,7 @@ inline namespace TextUtils
 	template< typename TChar, typename... TArguments >
 	inline std::basic_string<TChar> FormatString( Black::RegularStringView<TChar> format, const TArguments&... arguments )
 	{
-		return fmt::format( { format.begin(), format.end() }, arguments... );
+		return fmt::format( std::basic_string<TChar>{ format.begin(), format.end() }, arguments... );
 	}
 
 	template< typename TChar, typename... TArguments >
@@ -18,6 +18,12 @@ inline namespace TextUtils
 	{
 		// @FIXME: Implement this stuff.
 		return {};
+	}
+
+	template< typename TChar, typename... TArguments >
+	inline std::basic_string<TChar> FormatString( const TChar* format, const TArguments&... arguments )
+	{
+		return FormatString( Black::RegularStringView<TChar>{ format }, arguments... );
 	}
 
 	template< typename TChar, typename TTraits, typename TAllocator >
