@@ -50,6 +50,8 @@ inline namespace Types
 
 		inline RegularStringView& operator = ( const RegularStringView& ) = default;
 
+		inline operator std::basic_string<TCharType> () const		{ return { begin(), end() }; };
+
 	// STL-conformance interface.
 	public:
 		constexpr const_iterator begin() const						{ return cbegin(); };
