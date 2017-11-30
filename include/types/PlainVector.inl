@@ -146,7 +146,7 @@ inline namespace Types
 
 		SetLength( elements_length );
 		CRET( elements_length == 0 );
-		Black::CopyMemory( elements, m_memory, GetUsedBytes() );
+		Black::CopyMemory( m_memory, elements, GetUsedBytes() );
 	}
 }
 }
