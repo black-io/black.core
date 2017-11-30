@@ -61,7 +61,7 @@ namespace Black
 		@return					Returns value of `TEnumeration` underlying type.
 	*/
 	template< typename TEnumeration >
-	inline const auto GetEnumValue( const TEnumeration& value )
+	constexpr const auto GetEnumValue( const TEnumeration& value )
 	{
 		static_assert( Black::IS_ENUMERATION<TEnumeration>, "`TEnumeration` template argument should be an enumeration." );
 		return static_cast< const Black::UnderlyingType<TEnumeration> >( value );
