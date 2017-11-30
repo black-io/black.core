@@ -10,7 +10,7 @@ inline namespace Types
 namespace Traits
 {
 	// Intrusive link.
-	template< typename TLinkedType, bool USE_LINKING = Black::IS_BASE_OF<Black::IntrusiveHook, TLinkedType> >
+	template< typename TLinkedType, bool USE_LINKING >
 	class IntrusiveLink;
 
 	// Positive specification for intrusive link.
@@ -58,14 +58,14 @@ namespace Traits
 		virtual void SetHook( const TLinkedType* hook )	{};
 
 		// Empty stub for functional symmetry.
-		virtual void InvalidateIntrusiveLink() override	{};
+		virtual void InvalidateIntrusiveLink() {};
 	};
 }
 
 
 	// Intrusive link.
 	template< typename TLinkedType >
-	using IntrusiveLink = Traits::IntrusiveLink<TLinkedType>;
+	using IntrusiveLink = Traits::IntrusiveLink<TLinkedType, Black::IS_BASE_OF<Black::IntrusiveHook, TLinkedType>>;
 }
 }
 }
