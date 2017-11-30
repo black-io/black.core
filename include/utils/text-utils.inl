@@ -93,7 +93,7 @@ inline namespace TextUtils
 	inline std::basic_string<TChar> GetTrimmedString( Black::RegularStringView<TChar>& string_buffer )
 	{
 		std::locale used_locale;
-		decltype( auto ) char_traits	= std::use_facet< std::ctype<TCharType> >( used_locale );
+		decltype( auto ) char_traits	= std::use_facet< std::ctype<TChar> >( used_locale );
 		auto space_filter				= [&char_traits]( const TChar& symbol ) -> bool
 		{
 			return !char_traits.is( std::ctype_base::space, symbol );
@@ -112,7 +112,7 @@ inline namespace TextUtils
 	inline void MakeTrimmedString( std::basic_string<TChar, TTraits, TAllocator>& string_buffer )
 	{
 		std::locale used_locale;
-		decltype( auto ) char_traits	= std::use_facet< std::ctype<TCharType> >( used_locale );
+		decltype( auto ) char_traits	= std::use_facet< std::ctype<TChar> >( used_locale );
 		auto space_filter				= [&char_traits]( const TChar& symbol ) -> bool
 		{
 			return !char_traits.is( std::ctype_base::space, symbol );
@@ -152,8 +152,8 @@ inline namespace TextUtils
 				CCON( flags.HasFlag<TextJoiningFlag::DropEmpty>() && part.empty() );
 			}
 
-			String& used_part	= ( flags.HasFlag<TextJoiningFlag::Trim>() )? trimmed_part : part;
-			result				+= ( result.empty() )? used_part : pattern + used_part;
+			const String& used_part	= ( flags.HasFlag<TextJoiningFlag::Trim>() )? trimmed_part : part;
+			result					+= ( result.empty() )? used_part : pattern + used_part;
 		}
 
 		return result;
@@ -196,10 +196,48 @@ inline namespace TextUtils
 		return parts.size() - stored_parts;
 	}
 
+	template< typename TChar >
+	inline std::basic_string<TChar> GetUpperCase( const TChar* const string_buffer )
+	{
+		return GetUpperCase( Black::RegularStringView<TChar>{ string_buffer } );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator >
+	inline std::basic_string<TChar> GetUpperCase( const std::basic_string<TChar, TTraits, TAllocator>& string_buffer )
+	{
+		return GetUpperCase( Black::RegularStringView<TChar>{ string_buffer } );
+	}
+
+	template< typename TChar >
+	inline std::basic_string<TChar> GetLowerCase( const TChar* const string_buffer )
+	{
+		return GetLowerCase( Black::RegularStringView<TChar>{ string_buffer } );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator >
+	inline std::basic_string<TChar> GetLowerCase( const std::basic_string<TChar, TTraits, TAllocator>& string_buffer )
+	{
+		return GetLowerCase( Black::RegularStringView<TChar>{ string_buffer } );
+	}
+
+	template< typename TChar >
+	inline std::basic_string<TChar> GetTrimmedString( const TChar* const string_buffer )
+	{
+		return GetTrimmedString( Black::RegularStringView<TChar>{ string_buffer } );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator >
+	inline std::basic_string<TChar> GetTrimmedString( const std::basic_string<TChar, TTraits, TAllocator>& string_buffer )
+	{
+		std::basic_string<TChar, TTraits, TAllocator> result{ string_buffer };
+		MakeTrimmedString( result );
+		return result;
+	}
+
 	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
 	inline std::basic_string<TChar, TTraits, TAllocator> JoinString(
 		const TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		const TChar* pattern,
+		const TChar* const pattern,
 		const TextJoiningFlags flags = { TextJoiningFlag::DropEmpty }
 	)
 	{
@@ -219,8 +257,8 @@ inline namespace TextUtils
 	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
 	inline const size_t SplitString(
 		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		const TChar* string_buffer,
-		const TChar* pattern,
+		const TChar* const string_buffer,
+		const TChar* const pattern,
 		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
 	)
 	{
@@ -241,7 +279,7 @@ inline namespace TextUtils
 	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
 	inline const size_t SplitString(
 		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		const TChar* string_buffer,
+		const TChar* const string_buffer,
 		const std::basic_string<TChar, TTraits, TAllocator>& pattern,
 		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
 	)
@@ -253,7 +291,7 @@ inline namespace TextUtils
 	inline const size_t SplitString(
 		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
 		const std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
-		const TChar* pattern,
+		const TChar* const pattern,
 		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
 	)
 	{
