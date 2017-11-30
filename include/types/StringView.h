@@ -41,8 +41,8 @@ inline namespace Types
 	public:
 		constexpr RegularStringView()							= default;
 		constexpr RegularStringView( const RegularStringView& )	= default;
-		constexpr RegularStringView( const value_type* chars, const size_t length ) : m_memory{ chars }, m_length{ length } {};
-		inline RegularStringView( const value_type* chars ) : m_memory{ chars }, m_length{ TChatTraits::length( chars ) } {};
+		constexpr RegularStringView( const value_type* const chars, const size_t length ) : m_memory{ chars }, m_length{ length } {};
+		inline RegularStringView( const value_type* const chars ) : m_memory{ chars }, m_length{ TChatTraits::length( chars ) } {};
 
 		template< typename TOtherTraits, typename TAllocator >
 		inline RegularStringView( const std::basic_string<value_type, TOtherTraits, TAllocator>& other ) : RegularStringView{ other.data(), other.size() } {};
@@ -172,7 +172,7 @@ inline namespace Types
 				}
 				else
 				{
-					CRET( std::distance( cursor, end() ) < pattern.length(), npos );
+					CRET( std::distance( cursor, end() ) < difference_type( pattern.length() ), npos );
 					pattern_cursor	= pattern.begin();
 					match_begin		= end();
 				}
@@ -265,6 +265,12 @@ inline namespace Types
 		inline const size_type find_last_not_of( const value_type* pattern, const size_type from_index, const size_type pattern_length ) const;
 		inline const size_type find_last_not_of( const value_type* pattern, const size_type from_index = npos ) const;
 
+
+		template< typename TTraits, typename TAllocator >
+		inline std::basic_string<TCharType, TTraits, TAllocator> operator + ( const std::basic_string<TCharType, TTraits, TAllocator>& value )
+		{
+			return std::basic_string<TCharType, TTraits, TAllocator>{ begin(), end() } + value;
+		}
 
 		constexpr const_reference operator [] ( const size_type index ) const	{ return at( index ); };
 
