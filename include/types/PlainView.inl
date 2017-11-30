@@ -11,7 +11,7 @@ inline namespace Types
 	PlainView<TStoredType>::PlainView( typename PlainView<TStoredType>::Element* head, typename PlainView<TStoredType>::Element* tail )
 		: m_head{ head }
 		, m_tail{ tail }
-		, m_length{ tail - head }
+		, m_length{ static_cast<size_t>( tail - head ) }
 	{
 		EXPECTS( ( !head && !tail ) || ( tail >= head ) );
 	}
