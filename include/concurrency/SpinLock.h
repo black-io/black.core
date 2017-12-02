@@ -32,7 +32,7 @@ inline namespace Concurrency
 	private:
 		mutable std::atomic_flag	m_latch			= ATOMIC_FLAG_INIT;	// Latch for spins.
 		mutable std::thread::id		m_lock_owner;						// Thread that latched the lock.
-		mutable int32_t				m_locks_count	= 0;				// In order of recursive locks.
+		mutable volatile int32_t	m_locks_count	= 0;				// In order of recursive locks.
 	};
 }
 }
