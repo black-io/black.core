@@ -37,7 +37,7 @@ inline namespace Utils
 	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator >
 	inline void DeletePointersAndClear( std::unordered_map<TKey, TItem*, THash, TPredicate, TAllocator>& storage )
 	{
-		using MappedItem = decltype( storage )::value_type;
+		using MappedItem = typename std::unordered_map<TKey, TItem*, THash, TPredicate, TAllocator>::value_type;
 
 		CRET( storage.empty() );
 		std::for_each( storage.begin(), storage.end(), []( const MappedItem& value ){ delete value.second; } );
