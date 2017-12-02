@@ -153,7 +153,7 @@ inline namespace Types
 		inline const size_type find( const RegularStringView& pattern, const size_type from_index = 0 ) const
 		{
 			EXPECTS( !pattern.empty() );
-			EXPECTS( from_index < m_length );
+			CRET( from_index >= m_length, npos );
 			CRET( ( m_length - from_index ) < pattern.length(), npos );
 
 			auto match_begin	= end();
