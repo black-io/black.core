@@ -44,16 +44,19 @@ inline namespace Types
 		PlainVector( std::initializer_list<TStoredType> elements ) : PlainView{ elements.begin(), elements.end() } {};
 
 		template< typename TOtherType, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		explicit PlainVector( PlainView<TOtherType> elements ) : PlainView( elements.GetHead(), elements.GetTail() ) {};
+		explicit PlainVector( PlainView<TOtherType> elements ) : PlainVector( elements.GetHead(), elements.GetTail() ) {};
+
+		template< typename TOtherType, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		explicit PlainVector( PlainView<const TOtherType> elements ) : PlainVector( elements.GetHead(), elements.GetTail() ) {};
 
 		template< typename TOtherType, size_t ARRAY_LENGTH, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		explicit PlainVector( TOtherType elements[ ARRAY_LENGTH ] ) : PlainView( elements, ARRAY_LENGTH ) {};
+		explicit PlainVector( TOtherType elements[ ARRAY_LENGTH ] ) : PlainVector( elements, ARRAY_LENGTH ) {};
 
 		template< typename TOtherType, size_t ARRAY_LENGTH, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		explicit PlainVector( const std::array<TOtherType, ARRAY_LENGTH>& elements ) : PlainView( elements.begin(), elements.end() ) {};
+		explicit PlainVector( const std::array<TOtherType, ARRAY_LENGTH>& elements ) : PlainVector( elements.data(), ARRAY_LENGTH ) {};
 
 		template< typename TOtherType, typename TAllocator, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
-		explicit PlainVector( const std::vector<TOtherType, TAllocator>& elements ) : PlainView( elements.begin(), elements.end() ) {};
+		explicit PlainVector( const std::vector<TOtherType, TAllocator>& elements ) : PlainVector( elements.data(), elements.size() ) {};
 
 
 		~PlainVector();
@@ -65,6 +68,9 @@ inline namespace Types
 
 		template< typename TOtherType, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
 		inline PlainVector& operator = ( PlainView<TOtherType> elements )						{ return CopyAndSwap( *this, elements ); };
+
+		template< typename TOtherType, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		inline PlainVector& operator = ( PlainView<const TOtherType> elements )					{ return CopyAndSwap( *this, elements ); };
 
 		template< typename TOtherType, size_t ARRAY_LENGTH, typename = EnableIf<IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
 		inline PlainVector& operator = ( TOtherType elements[ ARRAY_LENGTH ] )					{ return CopyAndSwap( *this, elements ); };
