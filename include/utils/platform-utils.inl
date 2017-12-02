@@ -38,15 +38,15 @@ inline namespace Utils
 	}
 
 	template< typename TValue >
-	inline void SequredZeroMemory( TValue& target_ref )
+	inline void SecuredZeroMemory( TValue& target_ref )
 	{
-		SequredZeroMemory( &target_ref, sizeof( TValue ) );
+		SecuredZeroMemory( &target_ref, sizeof( TValue ) );
 	}
 
 	template< typename TValue, size_t ARRAY_LENGTH >
-	inline void SequredZeroMemory( TValue (&target_array)[ ARRAY_LENGTH ] )
+	inline void SecuredZeroMemory( TValue (&target_array)[ ARRAY_LENGTH ] )
 	{
-		SequredZeroMemory( target_array, sizeof( TValue ) * ARRAY_LENGTH );
+		SecuredZeroMemory( target_array, sizeof( TValue ) * ARRAY_LENGTH );
 	}
 
 	template< typename TValue >

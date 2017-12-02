@@ -35,7 +35,7 @@ inline namespace PlatformSpecific
 		@param	pattern	Filling pattern.
 		@param	length	Number of bytes in `memory` to be filled.
 	*/
-	void SequredZeroMemory( void* memory, const size_t length );
+	void SecuredZeroMemory( void* memory, const size_t length );
 
 	/**
 		@brief	Compare the two memory blocks checking its identity.

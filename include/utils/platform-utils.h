@@ -65,7 +65,7 @@ inline namespace Utils
 		@tparam	TValue		Type of passed object. Helps determinate size of memory to fill.
 	*/
 	template< typename TValue >
-	inline void SequredZeroMemory( TValue& target_ref );
+	inline void SecuredZeroMemory( TValue& target_ref );
 
 	/**
 		@brief	Fills every byte of `target_array` array with zero.
@@ -75,7 +75,7 @@ inline namespace Utils
 		@tparam	ARRAY_LENGTH	Number of elements in array.
 	*/
 	template< typename TValue, size_t ARRAY_LENGTH >
-	inline void SequredZeroMemory( TValue (&target_array)[ ARRAY_LENGTH ] );
+	inline void SecuredZeroMemory( TValue (&target_array)[ ARRAY_LENGTH ] );
 
 	/**
 		@brief	Compare the memory of two object checking its identity.
