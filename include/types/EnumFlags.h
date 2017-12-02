@@ -67,7 +67,7 @@ inline namespace Types
 		inline void Inverse()												{ m_flags = ~m_flags; };
 
 		// Get the state of inversed flags.
-		inline EnumFlags GetInverted() const								{ return EnumFlags<TEnumeration>{ ~m_flags }; };
+		inline EnumFlags GetInverted() const								{ return EnumFlags( ~m_flags ); };
 
 		// Set the flag.
 		inline void SetFlag( const TEnumeration flag )						{ m_flags |= GetBits( flag ); };
@@ -85,7 +85,7 @@ inline namespace Types
 
 
 		// Check that all flags are unset.
-		inline const bool IsEmpty() const									{ return m_flags != 0; };
+		inline const bool IsEmpty() const									{ return m_flags == 0; };
 
 		// Check that the flag is set.
 		inline const bool HasFlag( const TEnumeration flag ) const			{ return ( m_flags & GetBits( flag ) ) != 0; };
@@ -95,7 +95,7 @@ inline namespace Types
 		inline const bool HasFlag() const									{ return ( m_flags & GetBits( FLAG ) ) != 0; };
 
 
-		inline const bool operator [] ( const TEnumeration flag ) const		{ return IsFlagSet( flag ); };
+		inline const bool operator [] ( const TEnumeration flag ) const		{ return HasFlag( flag ); };
 
 		inline operator const Bits& () const								{ return m_flags; };
 
@@ -107,25 +107,25 @@ inline namespace Types
 		inline const bool operator != ( const TEnumeration flag ) const		{ return m_flags != GetBits( flag ); };
 		inline const bool operator != ( const EnumFlags& other ) const		{ return m_flags != other.m_flags; };
 
-		inline const bool operator && ( const TEnumeration flag ) const		{ return IsFlagSet( flag ); };
+		inline const bool operator && ( const TEnumeration flag ) const		{ return HasFlag( flag ); };
 		inline const bool operator && ( const EnumFlags& other ) const		{ return ( m_flags & other.m_flags ) == other.m_flags; };
 
-		inline EnumFlags operator + ( const EnumFlags& other ) const		{ return EnumFlags{ m_flags | other.m_flags }; };
-		inline EnumFlags operator - ( const EnumFlags& other ) const		{ return EnumFlags{ m_flags & ~other.m_flags }; };
-		inline EnumFlags operator + ( const TEnumeration flag ) const		{ return EnumFlags{ m_flags | GetBits( flag ) }; };
-		inline EnumFlags operator - ( const TEnumeration flag ) const		{ return EnumFlags{ m_flags & ~GetBits( flag ) }; };
+		inline EnumFlags operator + ( const EnumFlags& other ) const		{ return EnumFlags( m_flags | other.m_flags ); };
+		inline EnumFlags operator - ( const EnumFlags& other ) const		{ return EnumFlags( m_flags & ~other.m_flags ); };
+		inline EnumFlags operator + ( const TEnumeration flag ) const		{ return EnumFlags( m_flags | GetBits( flag ) ); };
+		inline EnumFlags operator - ( const TEnumeration flag ) const		{ return EnumFlags( m_flags & ~GetBits( flag ) ); };
 
-		inline EnumFlags& operator += ( const EnumFlags& other ) const		{ m_flags = m_flags | other.m_flags; return *this; };
-		inline EnumFlags& operator -= ( const EnumFlags& other ) const		{ m_flags = m_flags & ~other.m_flags; return *this; };
-		inline EnumFlags& operator += ( const TEnumeration flag ) const		{ m_flags = m_flags | GetBits( flag ); return *this; };
-		inline EnumFlags& operator -= ( const TEnumeration flag ) const		{ m_flags = m_flags & ~GetBits( flag ); return *this; };
+		inline EnumFlags& operator += ( const EnumFlags& other )			{ m_flags = m_flags | other.m_flags; return *this; };
+		inline EnumFlags& operator -= ( const EnumFlags& other )			{ m_flags = m_flags & ~other.m_flags; return *this; };
+		inline EnumFlags& operator += ( const TEnumeration flag )			{ SetFlag( flag ); return *this; };
+		inline EnumFlags& operator -= ( const TEnumeration flag )			{ UnsetFlag( flag ); return *this; };
 
 	private:
 		// Transform the enumeration value into bits.
 		static constexpr Bits GetBits( const TEnumeration flag )			{ return Black::GetEnumValue( flag ); };
 
 	private:
-		Bits m_flags;	// Bits for enumeration flags.
+		Bits m_flags = 0;	// Bits for enumeration flags.
 	};
 }
 }
