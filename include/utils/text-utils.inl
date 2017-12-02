@@ -16,12 +16,6 @@ inline namespace TextUtils
 		return fmt::format( format, arguments... );
 	}
 
-	template< typename TChar, typename... TArguments >
-	inline std::basic_string<TChar> FormatString( const TChar* format, const TArguments&... arguments )
-	{
-		return fmt::format( std::basic_string<TChar>{ format }, arguments... );
-	}
-
 	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
 	inline Black::RegularStringView<TChar> FormatString(
 		Black::PlainView<TChar> buffer,
@@ -31,12 +25,6 @@ inline namespace TextUtils
 	{
 		// @FIXME: Implement this stuff.
 		return {};
-	}
-
-	template< typename TChar, typename... TArguments >
-	inline Black::RegularStringView<TChar> FormatString( Black::PlainView<TChar> buffer, const char* format, const TArguments&... arguments )
-	{
-		return FormatString( buffer, std::basic_string<TChar>{ format } );
 	}
 
 	template< typename TChar, typename TTraits, typename TAllocator >
@@ -50,7 +38,7 @@ inline namespace TextUtils
 		const size_t pattern_length		= pattern.length();
 		size_t pattern_position			= string_buffer.find( pattern );
 
-		while( std::basic_string<TCharType, TCharTraits, TStringAllocator>::npos != pattern_position )
+		while( std::basic_string<TChar, TTraits, TAllocator>::npos != pattern_position )
 		{
 			string_buffer.replace( pattern_position, pattern_length, replacement );
 			pattern_position = string_buffer.find( pattern, pattern_position + replacement_length );
@@ -194,6 +182,58 @@ inline namespace TextUtils
 		}
 
 		return parts.size() - stored_parts;
+	}
+
+	template< typename TChar, typename... TArguments >
+	inline std::basic_string<TChar> FormatString( const TChar* format, const TArguments&... arguments )
+	{
+		return fmt::format( std::basic_string<TChar>{ format }, arguments... );
+	}
+
+	template< typename TChar, typename... TArguments >
+	inline Black::RegularStringView<TChar> FormatString( Black::PlainView<TChar> buffer, const char* format, const TArguments&... arguments )
+	{
+		return FormatString( buffer, std::basic_string<TChar>{ format } );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator >
+	inline void ReplaceSubstring(
+		std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
+		const TChar* pattern,
+		const TChar* replacement
+	)
+	{
+		ReplaceSubstring( string_buffer, Black::RegularStringView<TChar>{ pattern }, Black::RegularStringView<TChar>{ replacement } );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator >
+	inline void ReplaceSubstring(
+		std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
+		const std::basic_string<TChar, TTraits, TAllocator>& pattern,
+		const TChar* replacement
+	)
+	{
+		ReplaceSubstring( string_buffer, Black::RegularStringView<TChar>{ pattern }, Black::RegularStringView<TChar>{ replacement } );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator >
+	inline void ReplaceSubstring(
+		std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
+		const TChar* pattern,
+		const std::basic_string<TChar, TTraits, TAllocator>& replacement
+	)
+	{
+		ReplaceSubstring( string_buffer, Black::RegularStringView<TChar>{ pattern }, Black::RegularStringView<TChar>{ replacement } );
+	}
+
+	template< typename TChar, typename TTraits, typename TAllocator >
+	inline void ReplaceSubstring(
+		std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
+		const std::basic_string<TChar, TTraits, TAllocator>& pattern,
+		const std::basic_string<TChar, TTraits, TAllocator>& replacement
+	)
+	{
+		ReplaceSubstring( string_buffer, Black::RegularStringView<TChar>{ pattern }, Black::RegularStringView<TChar>{ replacement } );
 	}
 
 	template< typename TChar >
