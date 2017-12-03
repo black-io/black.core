@@ -41,7 +41,7 @@ inline namespace TypeTraits
 
 	// Function type check.
 	template< typename TCondition >
-	constexpr bool IS_FUNCTION = std::is_function<TCondtion>::value;
+	constexpr bool IS_FUNCTION = std::is_function<TCondition>::value;
 
 	// Pointer type condition.
 	template< typename TCondition >
