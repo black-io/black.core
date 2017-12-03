@@ -70,7 +70,7 @@ inline namespace Types
 
 		constexpr size_type length() const							{ return m_length; };
 		constexpr size_type size() const							{ return length(); };
-		constexpr size_type max_size() const						{ return numeric_limits<size_type>::max(); };
+		constexpr size_type max_size() const						{ return std::numeric_limits<size_type>::max(); };
 		constexpr bool empty() const								{ return m_length == 0; };
 
 		inline void remove_prefix( const size_type skip_length )
@@ -230,7 +230,7 @@ inline namespace Types
 		{
 			const size_type offset = std::min( from_index, m_length - 1 );
 
-			for( size_type index = offset; index >= 0; --index )
+			for( difference_type index = offset; index >= 0; --index )
 			{
 				CRET( traits_type::eq( m_memory[ index ], pattern ), index );
 			}
