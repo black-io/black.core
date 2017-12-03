@@ -11,7 +11,7 @@ inline namespace Platform
 {
 inline namespace Android
 {
-	// Used version of JNI interface.
+	// JNI version, used by Black framework.
 	constexpr int32_t JNI_VERSION = JNI_VERSION_1_6;
 }
 }
