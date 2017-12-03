@@ -64,7 +64,7 @@ inline namespace TextUtils
 		@return					The value returned is and converted string.
 	*/
 	template< typename TChar >
-	inline std::basic_string<TChar> GetUpperCase( Black::RegularStringView<TChar>& string_buffer );
+	inline std::basic_string<TChar> GetUpperCase( Black::RegularStringView<TChar> string_buffer );
 
 	/**
 		@brief	Convert each char of string into upper-case form.
@@ -83,7 +83,7 @@ inline namespace TextUtils
 		@return					The value returned is and converted string.
 	*/
 	template< typename TChar >
-	inline std::basic_string<TChar> GetLowerCase( Black::RegularStringView<TChar>& string_buffer );
+	inline std::basic_string<TChar> GetLowerCase( Black::RegularStringView<TChar> string_buffer );
 
 	/**
 		@brief	Convert each char of string into lower-case form.
@@ -102,7 +102,7 @@ inline namespace TextUtils
 		@return					The value returned is and trimmed string.
 	*/
 	template< typename TChar >
-	inline std::basic_string<TChar> GetTrimmedString( Black::RegularStringView<TChar>& string_buffer );
+	inline std::basic_string<TChar> GetTrimmedString( Black::RegularStringView<TChar> string_buffer );
 
 	/**
 		@brief	Remove the non-printable chars from left and right of string.

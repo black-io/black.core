@@ -198,7 +198,7 @@ inline namespace TextUtils
 	}
 
 	template< typename TChar >
-	inline std::basic_string<TChar> GetUpperCase( Black::RegularStringView<TChar>& string_buffer )
+	inline std::basic_string<TChar> GetUpperCase( Black::RegularStringView<TChar> string_buffer )
 	{
 		std::basic_string<TChar> result{ string_buffer.begin(), string_buffer.end() };
 		MakeUpperCase( result );
@@ -214,7 +214,7 @@ inline namespace TextUtils
 	}
 
 	template< typename TChar >
-	inline std::basic_string<TChar> GetLowerCase( Black::RegularStringView<TChar>& string_buffer )
+	inline std::basic_string<TChar> GetLowerCase( Black::RegularStringView<TChar> string_buffer )
 	{
 		std::basic_string<TChar> result{ string_buffer.begin(), string_buffer.end() };
 		MakeLowerCase( result );
@@ -230,7 +230,7 @@ inline namespace TextUtils
 	}
 
 	template< typename TChar >
-	inline std::basic_string<TChar> GetTrimmedString( Black::RegularStringView<TChar>& string_buffer )
+	inline std::basic_string<TChar> GetTrimmedString( Black::RegularStringView<TChar> string_buffer )
 	{
 		CRET( string_buffer.empty(), {} );
 
