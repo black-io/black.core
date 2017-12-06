@@ -69,6 +69,7 @@ inline namespace Core
 #include "types/IntrusiveLink.h"
 #include "types/RingBuffer.h"
 #include "types/StaticString.h"
+#include "types/DebugName.h"
 
 // Core utils.
 #include "utils/platform-specific-utils.h"
