@@ -58,11 +58,6 @@ inline namespace Types
 		template< char... OTHER_CHARS >
 		constexpr bool operator != ( StaticString<OTHER_CHARS...> other ) const	{ return !IsEqual( other ); };
 	};
-
-
-	// Transform the string literal into static string.
-	template< char... CHARS >
-	constexpr StaticString<CHARS...> operator "" ToStaticString ()	{ return {} }
 }
 }
 }
