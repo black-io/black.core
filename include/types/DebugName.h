@@ -23,7 +23,7 @@ namespace Traits
 
 
 		// Fake name getter for non-debug configurations.
-		inline std::string GetName() const					{ return {}; };
+		constexpr const char* const GetName() const			{ return "n/a"; };
 
 
 		inline DebugName& operator = ( const DebugName& )	= default;
@@ -49,7 +49,7 @@ namespace Traits
 
 
 		// Get the name.
-		inline const std::string& GetName() const				{ return m_name; };
+		inline const char* const GetName() const				{ return m_name.data(); };
 
 
 		inline DebugName& operator = ( const DebugName& )		= default;
