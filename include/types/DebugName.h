@@ -32,7 +32,7 @@ namespace Traits
 		inline DebugName& operator = ( Black::StringView )	{ return *this; };
 		inline DebugName& operator = ( const char* const )	{ return *this; };
 
-		inline std::string operator * () const				{ return {}; };
+		constexpr const char* const operator * () const		{ return GetName(); };
 	};
 
 	// Explicit specialization for Debug name in Debug build configuration.
@@ -58,7 +58,7 @@ namespace Traits
 		inline DebugName& operator = ( Black::StringView name )	{ m_name = { name.begin(), name.end() }; return *this; };
 		inline DebugName& operator = ( const char* const name )	{ m_name = name; return *this; };
 
-		inline const std::string& operator * () const			{ return m_name; };
+		inline const char* const operator * () const			{ return GetName(); };
 
 	private:
 		std::string	m_name;	// Stored name.
