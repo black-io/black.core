@@ -80,6 +80,9 @@ inline namespace Core
 #include "utils/tuple-utils.h"
 #include "utils/hash-utils.h"
 
+// Core traits for types.
+#include "type-traits/StaticStrings.Combine.h"
+
 // Core subsystems.
 #include "concurrency/concurrency.h"
 
