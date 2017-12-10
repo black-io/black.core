@@ -80,8 +80,14 @@ inline namespace Core
 #include "utils/tuple-utils.h"
 #include "utils/hash-utils.h"
 
-// Core traits for types.
+// Type traits.
 #include "type-traits/StaticStrings.Join.h"
+#include "type-traits/StaticStrings.IsEqual.h"
+#include "type-traits/StaticStrings.IsStartsWith.h"
+#include "type-traits/StaticStrings.IsEndsWith.h"
+#include "type-traits/StaticStrings.RemovePrefix.h"
+#include "type-traits/StaticStrings.RemoveSufix.h"
+#include "type-traits/StaticStrings.Substring.h"
 
 // Core subsystems.
 #include "concurrency/concurrency.h"
