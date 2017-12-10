@@ -81,7 +81,7 @@ inline namespace Core
 #include "utils/hash-utils.h"
 
 // Core traits for types.
-#include "type-traits/StaticStrings.Combine.h"
+#include "type-traits/StaticStrings.Join.h"
 
 // Core subsystems.
 #include "concurrency/concurrency.h"
