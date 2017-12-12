@@ -83,10 +83,11 @@ inline namespace Core
 // Type traits.
 #include "type-traits/StaticStrings.Join.h"
 #include "type-traits/StaticStrings.IsEqual.h"
+#include "type-traits/StaticStrings.Bisect.h"
+#include "type-traits/StaticStrings.RemoveSufix.h"
+#include "type-traits/StaticStrings.RemovePrefix.h"
 #include "type-traits/StaticStrings.IsStartsWith.h"
 #include "type-traits/StaticStrings.IsEndsWith.h"
-#include "type-traits/StaticStrings.RemovePrefix.h"
-#include "type-traits/StaticStrings.RemoveSufix.h"
 #include "type-traits/StaticStrings.Substring.h"
 
 // Core subsystems.
