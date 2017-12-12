@@ -21,6 +21,12 @@ inline namespace Types
 			return sizeof...( CHARS );
 		}
 
+		// Check that the string is empty.
+		constexpr static const bool IsEmpty()
+		{
+			return GetLength() == 0;
+		}
+
 		// Get the regular string.
 		inline static const char* const GetData()
 		{
