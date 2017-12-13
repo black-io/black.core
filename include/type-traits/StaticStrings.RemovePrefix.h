@@ -9,10 +9,9 @@ inline namespace TextUtils
 {
 namespace StaticStrings
 {
-namespace Traits
-{
-
-}
+	// Remove the string prefix.
+	template< size_t PREFIX_LENGTH, typename TString >
+	using RemovePrefix = typename Bisect<PREFIX_LENGTH, TString>::RightString;
 }
 }
 }

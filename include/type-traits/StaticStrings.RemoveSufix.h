@@ -42,9 +42,7 @@ namespace Traits
 	{};
 }
 
-	/**
-		@brief	Remove the string suffix.
-	*/
+	// Remove the string suffix.
 	template< size_t SUFFIX_LENGTH, typename TString >
 	using RemoveSuffix = typename Traits::SafeRemoveSuffix<SUFFIX_LENGTH, TString>::String;
 }
