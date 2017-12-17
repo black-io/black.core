@@ -40,10 +40,7 @@ namespace Traits
 }
 
 
-	/**
-		@brief	Join the collection of static strings.
-		This trait may be used to concatenate one static string with another.
-	*/
+	// Join the collection of static strings.
 	template< typename... TStrings >
 	using Join = typename Traits::Join<TStrings...>::String;
 }

@@ -32,9 +32,7 @@ namespace Traits
 }
 
 
-	/**
-		@brief	Check that the left and right static strings are equal.
-	*/
+	// Check that the left and right static strings are equal.
 	template< typename TLeft, typename TRight >
 	constexpr bool IS_EQUAL = Traits::IsEqual<TLeft, TRight>::value;
 }
