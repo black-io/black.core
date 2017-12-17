@@ -16,26 +16,26 @@ inline namespace Types
 	struct StaticString final
 	{
 		// Get the length of string.
-		constexpr static const size_t GetLength()
+		static constexpr const size_t GetLength()
 		{
 			return sizeof...( CHARS );
 		}
 
 		// Check that the string is empty.
-		constexpr static const bool IsEmpty()
+		static constexpr const bool IsEmpty()
 		{
 			return GetLength() == 0;
 		}
 
 		// Get the regular string.
-		inline static const char* const GetData()
+		static inline const char* const GetData()
 		{
-			constexpr static const char data[] = { CHARS..., 0 };
+			static constexpr const char data[] = { CHARS..., 0 };
 			return data;
 		}
 
 		// Get the char at given index. Return `0` for any invalid index.
-		inline static const char GetChar( const size_t index )
+		static inline const char GetChar( const size_t index )
 		{
 			return ( index < GetLength() )? GetData()[ index ] : 0;
 		}

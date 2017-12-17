@@ -12,7 +12,7 @@ namespace StaticStrings
 namespace Traits
 {
 	// Test for string prefix check.
-	template< typename TString, typename TPrefixString >
+	template< typename TString, typename TPattern >
 	struct IsStartsWith;
 
 	// The way to shortcut the empty strings.
@@ -44,14 +44,14 @@ namespace Traits
 		using StringPrefix = typename Bisect<sizeof...( PATTERN_CHARS ), false, Black::StaticString<>, Black::StaticString<STRING_CHARS...>>::LeftString;
 
 		// Test the equality of string prefix with pattern.
-		constexpr static const bool value = IsEqual<Black::StaticString<PATTERN_CHARS...>, StringPrefix>::value;
+		static constexpr bool value = IsEqual<Black::StaticString<PATTERN_CHARS...>, StringPrefix>::value;
 	};
 }
 
 
 	// Check that the static string starts with given pattern.
-	template< typename TString, typename TPrefixString >
-	constexpr bool IS_STARTS_WITH = Traits::IsStartsWith<TString, TPrefixString>::value;
+	template< typename TString, typename TPattern >
+	constexpr bool IS_STARTS_WITH = Traits::IsStartsWith<TString, TPattern>::value;
 }
 }
 }
