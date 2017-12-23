@@ -91,15 +91,21 @@ namespace Black
 	// Generic tag to prohibit copy-construction and copy-assignment of derived types.
 	// It would be better to use private inheritance.
 	class NonCopyable: private NonCopyConstructible, private NonCopyAssignable
-	{};
+	{
+
+	};
 
 	// Generic tag to prohibit move-construction and move-assignment of derived types.
 	// It would be better to use private inheritance.
 	class NonMovable: private NonMoveConstructible, private NonMoveAssignable
-	{};
+	{
+
+	};
 
 	// Generic tag to prohibit copy/move construction/assignment of derived types.
 	// It would be better to use private inheritance.
 	class NonTransferable: private NonCopyable, private NonMovable
-	{};
+	{
+
+	};
 }
