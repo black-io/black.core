@@ -50,6 +50,15 @@ namespace Black
 		}
 	};
 
+	// Tagging type to mark the operation variant, that will ignore internal failures.
+	struct IgnoreFailure final
+	{
+
+	};
+
+	// Tagging object to mark the operation variant, that will ignore internal failures.
+	constexpr IgnoreFailure IGNORE_FALURES = {};
+
 	// Generic tag to prohibit copy-construction of derived types.
 	// It would be better to use private inheritance.
 	class NonCopyConstructible
