@@ -81,6 +81,9 @@
 	#undef BLACK_LITTLE_ENDIAN
 	#define BLACK_LITTLE_ENDIAN				1
 
+	// Force JNI to use standard plain types.
+	#define HAVE_INTTYPES_H					1
+
 	// Early access to `size_t` specification.
 	#include <stddef.h>
 #elif( defined( __iOS__ ) )
