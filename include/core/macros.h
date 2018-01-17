@@ -24,31 +24,31 @@
 
 
 // Regular 'conditional return' statement.
-#define CRET( CONDITION, ... )	if( CONDITION ) { return __VA_ARGS__; }
+#define CRET( CONDITION, ... )								{ if( CONDITION ) { return __VA_ARGS__; } }
 
 // Regular 'conditional continue' statement.
-#define CCON( CONDITION )		if( CONDITION ) { continue; }
+#define CCON( CONDITION )									{ if( CONDITION ) { continue; } }
 
 // Regular 'conditional break' statement.
-#define CBRK( CONDITION )		if( CONDITION ) { break; }
+#define CBRK( CONDITION )									{ if( CONDITION ) { break; } }
 
 // 'conditional return' statement with error reporting.
-#define CRETM( CONDITION, RESULT, CHANNEL, FORMAT, ... )	if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; }
+#define CRETM( CONDITION, RESULT, CHANNEL, FORMAT, ... )	{ if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; } }
 
 // 'conditional continue' statement with error reporting.
-#define CCONM( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; }
+#define CCONM( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; } }
 
 // 'conditional break' statement with error reporting.
-#define CBRKM( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; }
+#define CBRKM( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; } }
 
 // 'conditional return' statement with warning reporting.
-#define CRETW( CONDITION, RESULT, CHANNEL, FORMAT, ... )	if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; }
+#define CRETW( CONDITION, RESULT, CHANNEL, FORMAT, ... )	{ if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; } }
 
 // 'conditional continue' statement with warning reporting.
-#define CCONW( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; }
+#define CCONW( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; } }
 
 // 'conditional break' statement with warning reporting.
-#define CBRKW( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; }
+#define CBRKW( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; } }
 
 
 // Regular 'debug-only' code statement.
@@ -91,28 +91,33 @@
 #endif
 
 
-// Code logics separation macros.
+// String from arbitrary expression.
 #define BLACK_STRING_MACRO( EXPRESSION )	#EXPRESSION
 #define BLACK_STRINGIFICATION( EXPRESSION )	BLACK_STRING_MACRO( EXPRESSION )
 
 
-// Regular expectation and insurance.
-#define EXPECTS( ... )																								\
-if( !( __VA_ARGS__ ) )																								\
-{																													\
-	BLACK_LOG_CRITICAL( "Black", "Unexpected result of `" BLACK_STRINGIFICATION( __VA_ARGS__ ) "` expression." );	\
-	BLACK_LOGS_CLOSE();																								\
-	BLACK_DEBUG_BREAK();																							\
-	BLACK_RUNTIME_FAILURE( BLACK_STRINGIFICATION( __VA_ARGS__ ) " failed." );										\
+// Regular expectation.
+#define EXPECTS( ... )																									\
+{																														\
+	if( !( __VA_ARGS__ ) )																								\
+	{																													\
+		BLACK_LOG_CRITICAL( "Black", "Unexpected result of `" BLACK_STRINGIFICATION( __VA_ARGS__ ) "` expression." );	\
+		BLACK_LOGS_CLOSE();																								\
+		BLACK_DEBUG_BREAK();																							\
+		BLACK_RUNTIME_FAILURE( BLACK_STRINGIFICATION( __VA_ARGS__ ) " failed." );										\
+	}																													\
 }
 
-#define ENSURES( ... )																								\
-if( !( __VA_ARGS__ ) )																								\
-{																													\
-	BLACK_LOG_CRITICAL( "Black", "Unexpected result of `" BLACK_STRINGIFICATION( __VA_ARGS__ ) "` expression." );	\
-	BLACK_LOGS_CLOSE();																								\
-	BLACK_DEBUG_BREAK();																							\
-	BLACK_RUNTIME_FAILURE( BLACK_STRINGIFICATION( __VA_ARGS__ ) " failed." );										\
+// Regular insurance.
+#define ENSURES( ... )																									\
+{																														\
+	if( !( __VA_ARGS__ ) )																								\
+	{																													\
+		BLACK_LOG_CRITICAL( "Black", "Unexpected result of `" BLACK_STRINGIFICATION( __VA_ARGS__ ) "` expression." );	\
+		BLACK_LOGS_CLOSE();																								\
+		BLACK_DEBUG_BREAK();																							\
+		BLACK_RUNTIME_FAILURE( BLACK_STRINGIFICATION( __VA_ARGS__ ) " failed." );										\
+	}																													\
 }
 
 
@@ -124,9 +129,9 @@ if( !( __VA_ARGS__ ) )																								\
 	#define EXPECTS_DEBUG( ... )
 	#define ENSURES_DEBUG( ... )
 #else
-	#define CRETD( CONDITION, RESULT, CHANNEL, FORMAT, ... )	if( CONDITION ){ BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; }
-	#define CCOND( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; }
-	#define CBRKD( CONDITION, CHANNEL, FORMAT, ... )			if( CONDITION ){ BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; }
+	#define CRETD( CONDITION, RESULT, CHANNEL, FORMAT, ... )	{ if( CONDITION ){ BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; } }
+	#define CCOND( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; } }
+	#define CBRKD( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; } }
 
 	#define EXPECTS_DEBUG( ... )								EXPECTS( __VA_ARGS__ )
 	#define ENSURES_DEBUG( ... )								ENSURES( __VA_ARGS__ )
