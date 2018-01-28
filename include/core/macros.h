@@ -23,6 +23,10 @@
 #endif
 
 
+// Regular SFINAE statement for function templates.
+#define BLACK_SFINAE( CONDITION )	char (*)[ CONDITION ] = 0
+
+
 // Regular 'conditional return' statement.
 #define CRET( CONDITION, ... )								{ if( CONDITION ) { return __VA_ARGS__; } }
 
