@@ -13,6 +13,8 @@ inline namespace Platform
 }
 
 
+#include "functions.h"
+
 // Select the implementation of platform-specific code.
 #if( BLACK_WINDOWS_DESKTOP_PLATFORM )
 	#include "../platform.windows/platform.windows.h"

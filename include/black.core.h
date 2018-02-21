@@ -72,7 +72,6 @@ inline namespace Core
 #include "types/DebugName.h"
 
 // Core utils.
-#include "utils/platform-specific-utils.h"
 #include "utils/platform-utils.h"
 #include "utils/container-utils.h"
 #include "utils/text-utils.const.h"
