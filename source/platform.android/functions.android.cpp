@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Utils
+inline namespace Platform
 {
 inline namespace PlatformSpecific
 {
@@ -29,14 +29,7 @@ inline namespace PlatformSpecific
 	{
 		return ::memcmp( left_memory, right_memory, length ) == 0;
 	}
-}
-}
 
-
-inline namespace TextUtils
-{
-inline namespace PlatformSpecific
-{
 	Black::StringView WriteArguments( Black::PlainView<char> target_buffer, const Black::StringView format, va_list arguments )
 	{
 		const int32_t status = ::vsnprintf( target_buffer.GetData(), target_buffer.GetLength(), format.data(), arguments );

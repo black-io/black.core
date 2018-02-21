@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Utils
+inline namespace Platform
 {
 inline namespace PlatformSpecific
 {
@@ -46,14 +46,7 @@ inline namespace PlatformSpecific
 		@return					The value returned is flag that the left and right memory streams is equal.
 	*/
 	const bool IsMemoryEqual( const void* left_memory, const void* right_memory, const size_t length );
-}
-}
 
-
-inline namespace TextUtils
-{
-inline namespace PlatformSpecific
-{
 	/**
 		@brief	Format the `arguments` into `target_buffer` according to `format` specification.
 		May cause potentially unsafe behavior if invalid arguments passed.
