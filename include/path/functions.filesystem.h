@@ -80,6 +80,16 @@ inline namespace FileSystem
 	const bool IsValidFilesystemPath( Black::StringView path );
 
 	/**
+		@brief	Check that the path leads to valid filesystem entity.
+		@note	The behavior of function is platform-specific.
+		The function may operate with relative paths as well as with global ones.
+
+		@param	path	Suggested path to check.
+		@return			`true` if path leads to valid filesystem entity.
+	*/
+	const bool IsValidFilesystemEntityPath( Black::StringView path );
+
+	/**
 		@brief	Check that the path leads to valid filesystem folder.
 		@note	The behavior of function is platform-specific.
 		The function may operate with relative paths as well as with global ones.
@@ -143,6 +153,16 @@ inline namespace FileSystem
 		@return						`true` when the file is moved. `false` in case of error.
 	*/
 	const bool MoveFile( Black::StringView source_path, Black::StringView destination_path );
+
+	/**
+		@brief	Get the size of existing file by given path.
+		@note	The behavior of function is platform-specific.
+
+		@brief	path	Suggested path to file. Have to be valid path, which leads to valid file at filesystem.
+		@return			The value returned is an valid size (in bytes) of file by path.
+		@retval	0		In case of some error.
+	*/
+	Black::size64_t GetFileSize( Black::StringView path );
 
 	/**
 		@brief	Get the GMT local time-stamp of last filesystem entity modification.
