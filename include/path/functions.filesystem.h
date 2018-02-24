@@ -80,16 +80,6 @@ inline namespace FileSystem
 	const bool IsValidFilesystemPath( Black::StringView path );
 
 	/**
-		@brief	Check that the path leads to valid filesystem entity.
-		@note	The behavior of function is platform-specific.
-		The function may operate with relative paths as well as with global ones.
-
-		@param	path	Suggested path to check.
-		@return			`true` if path leads to valid filesystem entity.
-	*/
-	const bool IsValidFilesystemEntityPath( Black::StringView path );
-
-	/**
 		@brief	Check that the path leads to valid filesystem folder.
 		@note	The behavior of function is platform-specific.
 		The function may operate with relative paths as well as with global ones.
