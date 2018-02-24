@@ -97,56 +97,126 @@ inline namespace Path
 	std::string ExtractPathTail( std::string& path );
 
 	/**
+		@brief	Get the normalized path of given one.
+		The function is very similar to `MakeNormalizedPath`, except the normalized path is returned.
+
+		@param	path	Suggested path to be normalized.
+		@return			The value returned is an normalized variant of suggested path.
 	*/
 	std::string GetNormalizedPath( Black::StringView path );
 
 	/**
+		@brief	Get the absolute path of given one.
+		The function is very similar to `MakeAbsolutePath`, except the absolute path is returned.
+
+		@param	path	Suggested path to be transformed.
+		@return			The value returned is an absolute variant of suggested path.
 	*/
-	std::string GetAbsoluteString( Black::StringView path );
+	std::string GetAbsolutePath( Black::StringView path );
 
 	/**
+		@brief	Get the relative path from given one, using some root as common part.
+		The function is very similar to `MakeRelativePath`, except the relative path is returned.
+
+		@param	path	Suggested path to be converted.
+		@param	root	The path to be used as common root.
+		@return			The value returned is an relative path, where the `JoinPath( root, result )` will be equal to `path`.
 	*/
 	std::string GetRelativePath( Black::StringView path, Black::StringView root );
 
 	/**
+		@brief	Get the common root path between two given paths.
+		@Note	The function may return empty path in case the suggested paths has not common root.
+
+		@param	left_path	The first path.
+		@param	right_path	The second path.
+		@return				The value returned is an common root, which is same between two given paths.
+		@retval	{}			In case the suggested paths has no common root.
 	*/
 	std::string GetCommonPath( Black::StringView left_path, Black::StringView right_path );
 
 	/**
+		@brief	Get the new path, joining the tail to given one.
+		The function is very similar to `AddPathTail`, except the result path is returned.
+
+		@param	path	Suggested path to be extended.
+		@param	tail	The tail to extend the path.
+		@return			The value returned is an result of joining the `path` with `tail`.
 	*/
 	std::string JoinPath( Black::StringView path, Black::StringView tail );
 
 	/**
+		@brief	Get the new path, joining the parts of given collection.
+		The function is very similar to `AddPathTail`, except the result path is returned.
+
+		@param	parts	Collection of parts to be joined into path.
+		@return			The value returned is an result of sequential joining the `parts`.
 	*/
 	std::string JoinPath( const std::vector<Black::StringView>& parts );
 
 	/**
+		@brief	Split the given path into [Directory, Basename] pair.
+		Formally, the basename is an tail of path.
+
+		@param	path	Suggested path to be splitted.
+		@return			The value returned is an pair of [Directory, Basename] parts.
 	*/
 	std::pair<std::string, std::string> SplitPathBasename( Black::StringView path );
 
 	/**
+		@brief	Split the given path into [Path, Extension] pair.
+		The path extension is the last part of path after the last dot symbol.
+
+		@param	path	Suggested path to be splitted.
+		@return			The value returned is an pair of [Path, Extension] parts.
 	*/
 	std::pair<std::string, std::string> SplitPathExtension( Black::StringView path );
 
 	/**
+		@brief	Split the given path into [Drive, Directory] pair.
+		Commonly, the path drive is well known on 'Windows' platform.
+		Also, the UNC may be considered as path drive.
+
+		@param	path	Suggested path to be splitted.
+		@return			The value returned is an pair of [Drive, Directory] parts.
 	*/
 	std::pair<std::string, std::string> SplitPathDrive( Black::StringView path );
 
 	/**
+		@brief	Get the basename of path.
+		This function is very similar to `SplitPathBasename`, except the result is only basename of path.
+
+		@param	path	Suggested path to get the basename.
+		@return			The value returned is an basename of suggested path.
 	*/
 	std::string GetPathBasename( Black::StringView path );
 
 	/**
+		@brief	Get the path directory.
+		This function is very similar to `SplitPathBasename`, except the result is only directory of path.
+
+		@param	path	Suggested path to get the directory.
+		@return			The value returned is an directory of suggested path.
 	*/
-	std::string GetPathDirectoryName( Black::StringView path );
+	std::string GetPathDirectory( Black::StringView path );
 
 	/**
-	*/
-	std::string GetPathDrive( Black::StringView path );
+		@brief	Get the path extension.
+		This function is very similar to `SplitPathExtension`, except the result is only extension of path.
 
-	/**
+		@param	path	Suggested path to get the extension.
+		@return			The value returned is an extension of suggested path.
 	*/
 	std::string GetPathExtension( Black::StringView path );
+
+	/**
+		@brief	Get the path drive.
+		This function is very similar to `SplitPathDrive`, except the result is only drive of path.
+
+		@param	path	Suggested path to get the drive.
+		@return			The value returned is an drive of suggested path.
+	*/
+	std::string GetPathDrive( Black::StringView path );
 }
 }
 }
