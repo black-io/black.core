@@ -45,7 +45,7 @@ inline namespace Path
 
 	/**
 		@brief	Transform the path to normalized variant.
-		The function collapses any redundant patterns, so that "A//B", "A/B/", "A/./B" or "A/foo/../B" will be transformed into "A/B".
+		The function collapses any redundant patterns, so that "A//B", "A/B/", "A/./B" or "A/FOO/../B" will be transformed into "A/B".
 
 		@param	path	Suggested path to be normalized.
 	*/
