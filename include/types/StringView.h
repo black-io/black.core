@@ -110,7 +110,7 @@ inline namespace Types
 			return { m_memory + from_index, std::min( sub_length, m_length - from_index ) };
 		}
 
-		constexpr const int32_t compare( const RegularStringView& other ) const
+		inline const int32_t compare( const RegularStringView& other ) const
 		{
 			const size_type max_length	= std::min( m_length, other.length() );
 			auto compare_result			= traits_type::compare( m_memory, other.data(), max_length );
@@ -124,7 +124,7 @@ inline namespace Types
 			return substr( this_index, this_length ).compare( other );
 		}
 
-		constexpr const int32_t compare(
+		inline const int32_t compare(
 			const size_type this_index,
 			const size_type this_length,
 			const RegularStringView& other,
@@ -135,17 +135,17 @@ inline namespace Types
 			return substr( this_index, this_length ).compare( other.substr( other_index, other_length ) );
 		}
 
-		constexpr const int32_t compare( const value_type* chars ) const
+		inline const int32_t compare( const value_type* chars ) const
 		{
 			return compare( RegularStringView<TCharType, TChatTraits>{ chars } );
 		}
 
-		constexpr const int32_t compare( const size_type this_index, const size_type this_length, const value_type* chars ) const
+		inline const int32_t compare( const size_type this_index, const size_type this_length, const value_type* chars ) const
 		{
 			return substr( this_index, this_length ).compare( RegularStringView<TCharType, TChatTraits>{ chars } );
 		}
 
-		constexpr const int32_t compare( const size_type this_index, const size_type this_length, const value_type* chars, const size_type other_length ) const
+		inline const int32_t compare( const size_type this_index, const size_type this_length, const value_type* chars, const size_type other_length ) const
 		{
 			return substr( this_index, this_length ).compare( RegularStringView<TCharType, TChatTraits>{ chars, other_length } );
 		}
@@ -272,14 +272,14 @@ inline namespace Types
 			return std::basic_string<TCharType, TTraits, TAllocator>{ begin(), end() } + value;
 		}
 
-		constexpr const_reference operator [] ( const size_type index ) const	{ return at( index ); };
+		constexpr const_reference operator [] ( const size_type index ) const		{ return at( index ); };
 
-		constexpr const bool operator == ( const RegularStringView& other ) const		{ return compare( other ) == 0; };
-		constexpr const bool operator != ( const RegularStringView& other ) const		{ return compare( other ) != 0; };
-		constexpr const bool operator < ( const RegularStringView& other ) const		{ return compare( other ) < 0; };
-		constexpr const bool operator <= ( const RegularStringView& other ) const		{ return compare( other ) <= 0; };
-		constexpr const bool operator > ( const RegularStringView& other ) const		{ return compare( other ) > 0; };
-		constexpr const bool operator >= ( const RegularStringView& other ) const		{ return compare( other ) >= 0; };
+		inline const bool operator == ( const RegularStringView& other ) const		{ return compare( other ) == 0; };
+		inline const bool operator != ( const RegularStringView& other ) const		{ return compare( other ) != 0; };
+		inline const bool operator < ( const RegularStringView& other ) const		{ return compare( other ) < 0; };
+		inline const bool operator <= ( const RegularStringView& other ) const		{ return compare( other ) <= 0; };
+		inline const bool operator > ( const RegularStringView& other ) const		{ return compare( other ) > 0; };
+		inline const bool operator >= ( const RegularStringView& other ) const		{ return compare( other ) >= 0; };
 
 		template< typename TOtherTraits, typename TAllocator >
 		constexpr const bool operator == ( const std::basic_string<TCharType, TOtherTraits, TAllocator>& other ) const
@@ -333,6 +333,17 @@ inline namespace Types
 
 	//
 	using StringViewU32	= RegularStringView<char32_t>;
+
+	// Stream output operator for any regular string view.
+	template< typename TCharType, typename TChatTraits = std::char_traits<TCharType> >
+	inline std::basic_ostream<TCharType, TChatTraits>& operator << (
+		std::basic_ostream<TCharType, TChatTraits>& left,
+		const RegularStringView<TCharType, TChatTraits> right
+	)
+	{
+		left << right.data();
+		return left;
+	}
 }
 }
 }
