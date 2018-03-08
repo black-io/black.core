@@ -59,6 +59,26 @@ namespace Black
 	// Tagging object to mark the operation variant, that will ignore internal failures.
 	constexpr IgnoreFailure IGNORE_FALURES = {};
 
+	// Pointer to arbitrary global function.
+	template< typename TResult, typename... TArguments >
+	using GlobalFunctionPointer					= TResult (*)( TArguments... );
+
+	// Pointer to arbitrary member-function.
+	template< class THost, typename TResult, typename... TArguments >
+	using MemberFunctionPointer					= TResult (THost::*)( TArguments... );
+
+	// Pointer to arbitrary constant member-function.
+	template< class THost, typename TResult, typename... TArguments >
+	using MemberConstFunctionPointer			= TResult (THost::*)( TArguments... ) const;
+
+	// Pointer to arbitrary volatile member-function.
+	template< class THost, typename TResult, typename... TArguments >
+	using MemberVolatileFunctionPointer			= TResult (THost::*)( TArguments... ) volatile;
+
+	// Pointer to arbitrary volatile and constant member-function.
+	template< class THost, typename TResult, typename... TArguments >
+	using MemberConstVolatileFunctionPointer	= TResult (THost::*)( TArguments... ) const volatile;
+
 	// Generic tag to prohibit copy-construction of derived types.
 	// It would be better to use private inheritance.
 	class NonCopyConstructible
