@@ -70,6 +70,7 @@ inline namespace Core
 #include "types/RingBuffer.h"
 #include "types/StaticString.h"
 #include "types/DebugName.h"
+#include "types/ScopedPointer.h"
 
 // Core utils.
 #include "utils/platform-utils.h"
@@ -104,8 +105,10 @@ inline namespace Core
 #include "utils/container-utils.map.inl"
 #include "utils/container-utils.unordered_map.inl"
 #include "utils/platform-utils.inl"
+
 #include "types/RingBuffer.inl"
 #include "types/IntrusiveLink.inl"
 #include "types/PlainVector.inl"
 #include "types/PlainView.inl"
+
 #include "utils/generic-utils.inl"
