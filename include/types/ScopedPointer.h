@@ -7,7 +7,20 @@ inline namespace Core
 {
 inline namespace Types
 {
-	// Scoped pointer implementation.
+	/**
+		@brief	Scoped smart pointer implementation.
+		The 'scoped' means the smart pointer will be utilized only in those scope, where it was constructed.
+		The scoped pointer can't be transferred between scopes. It can't be copied or even moved between instances.
+		Moreover, the `std::swap` function is prohibited for scoped pointers.
+		However, all that restrictions guaranties the controlled memory will be freed once the scope finished.
+
+		The scoped pointer is designed to be generally used as local variable. It does not designed to be used in dynamic memory.
+		The scoped pointer may be constructed using only the value to be stored, or the pointer also may consume the optional deleter to call it
+		in order to free the stored memory.
+
+		@tparam	TStoredValue	Type of pointer to be stored in.
+		@tparam	TDeleter		Type of deleter to be used in order to free stored memory.
+	*/
 	template< typename TStoredValue, typename TDeleter = std::default_delete<TStoredValue> >
 	class ScopedPointer final : private Black::NonTransferable
 	{
