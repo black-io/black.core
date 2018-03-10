@@ -84,6 +84,14 @@ inline namespace Types
 		inline void UnsetFlag()												{ m_flags &= ~GetBits( FLAG ); };
 
 
+		// Set the state of flag to desired.
+		inline void SetFlag( const TEnumeration flag, const bool is_set )	{ if( is_set ) { SetFlag( flag ); } else { UnsetFlag( flag ); }; };
+
+		// Set the state of flag to desired.
+		template< TEnumeration FLAG >
+		inline void SetFlag( const bool is_set )							{ if( is_set ) { SetFlag<FLAG>(); } else { UnsetFlag<FLAG>(); }; };
+
+
 		// Check that all flags are unset.
 		inline const bool IsEmpty() const									{ return m_flags == 0; };
 
