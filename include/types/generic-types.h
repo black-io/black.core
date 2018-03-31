@@ -13,7 +13,7 @@ namespace Black
 	using size32_t		= uint32_t;
 
 	// Regular 64-bit size specification. Always may be separated to high and low part, as well as be casted to `size_t`.
-	union size64_t
+	union size64_t final
 	{
 		int64_t			value	= 0;	// Total size, 8 bytes length.
 
@@ -39,7 +39,7 @@ namespace Black
 	};
 
 	// Implementation for hashing object for enumeration types, which may be used with `std` containers.
-	class EnumHash
+	class EnumHash final
 	{
 	public:
 		// Hashing function. Uses `GetEnumValue` to produce the hash.
