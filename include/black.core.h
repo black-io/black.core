@@ -46,6 +46,7 @@ inline namespace Core
 #include <atomic>
 #include <condition_variable>
 #include <typeinfo>
+#include <typeindex>
 
 // Most core third-party libraries.
 #include <fmt/format.h>
