@@ -16,7 +16,7 @@ inline namespace Types
 	public:
 		static_assert( !IS_REFERENCE<TStoredType>,	"Element type may not be reference type." );
 		static_assert( !IS_CONST<TStoredType>,		"Element type may not be constant." );
-		static_assert( IS_PLAIN<TStoredType>,		"Element type should be plain(PoD) type." );
+		static_assert( IS_PLAIN<TStoredType>,		"Element type should be plain (PoD) type." );
 
 
 		// Size of single element of view.
@@ -35,8 +35,8 @@ inline namespace Types
 	// Construction interface.
 	public:
 		PlainVector()						= default;
-		PlainVector( const PlainVector& )	= default;
-		PlainVector( PlainVector&& )		= default;
+		PlainVector( const PlainVector& other );
+		PlainVector( PlainVector&& other );
 		explicit PlainVector( const size_t length );
 		PlainVector( const size_t length, const TStoredType& proto );
 		PlainVector( ConstIterator head, ConstIterator tail );
@@ -62,8 +62,8 @@ inline namespace Types
 		~PlainVector();
 
 
-		inline PlainVector& operator = ( const PlainVector& )									= default;
-		inline PlainVector& operator = ( PlainVector&& )										= default;
+		inline PlainVector& operator = ( const PlainVector& other );
+		inline PlainVector& operator = ( PlainVector&& other );
 		inline PlainVector& operator = ( std::initializer_list<TStoredType> elements )			{ return CopyAndSwap( *this, elements ); };
 
 		template< typename TOtherType, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >

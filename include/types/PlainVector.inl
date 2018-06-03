@@ -8,6 +8,20 @@ inline namespace Core
 inline namespace Types
 {
 	template< typename TStoredType >
+	PlainVector<TStoredType>::PlainVector( const PlainVector& other )
+	{
+		CRET( other.IsEmpty() );
+		SetLength( other.GetLength() );
+		Black::CopyMemory( m_memory, other.m_memory, GetUsedBytes() );
+	}
+
+	template< typename TStoredType >
+	PlainVector<TStoredType>::PlainVector( PlainVector&& other )
+	{
+		Swap( other );
+	}
+
+	template< typename TStoredType >
 	PlainVector<TStoredType>::PlainVector( const size_t length )
 	{
 		SetLength( length );
@@ -31,6 +45,29 @@ inline namespace Types
 	PlainVector<TStoredType>::~PlainVector()
 	{
 		Invalidate();
+	}
+
+	template< typename TStoredType >
+	inline PlainVector<TStoredType>& PlainVector<TStoredType>::operator=( const PlainVector<TStoredType>& other )
+	{
+		CRET( other == *this, *this );
+
+		Invalidate();
+		SetLength( other.GetLength() );
+		Black::CopyMemory( m_memory, other.m_memory, GetUsedBytes() );
+
+		return *this;
+	}
+
+	template< typename TStoredType >
+	inline PlainVector<TStoredType>& PlainVector<TStoredType>::operator=( PlainVector<TStoredType>&& other )
+	{
+		CRET( other == *this, *this );
+
+		Invalidate();
+		Swap( other );
+
+		return *this;
 	}
 
 	template< typename TStoredType >
