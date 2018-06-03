@@ -29,6 +29,17 @@ inline namespace Types
 		// Iterator of view.
 		using Iterator		= Element*;
 
+	// Friendship interface.
+	public:
+		// 'Range-based for loop' interface, the `begin( __range )` statement.
+		friend inline Iterator begin( const PlainView& range )			{ return range.GetHead(); };
+
+		// 'Range-based for loop' interface, the `end( __range )` statement.
+		friend inline Iterator end( const PlainView& range )			{ return range.GetTail(); };
+
+		// 'Swap' interface.
+		friend inline void swap( PlainView& left, PlainView& right )	{ left.Swap( right ); };
+
 	// Construction interface.
 	public:
 		PlainView()						= default;

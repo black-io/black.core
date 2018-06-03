@@ -32,6 +32,23 @@ inline namespace Types
 		// Iterator of view.
 		using ConstIterator	= const Element*;
 
+	// Friendship interface.
+	public:
+		// 'Range-based for loop' interface, the `begin( __range )` statement.
+		friend inline Iterator begin( PlainVector& range )					{ return range.GetHead(); };
+
+		// 'Range-based for loop' interface, the `end( __range )` statement.
+		friend inline Iterator end( PlainVector& range )					{ return range.GetTail(); };
+
+		// 'Range-based for loop' interface, the `begin( __range )` statement.
+		friend inline ConstIterator begin( const PlainVector& range )		{ return range.GetHead(); };
+
+		// 'Range-based for loop' interface, the `end( __range )` statement.
+		friend inline ConstIterator end( const PlainVector& range )			{ return range.GetTail(); };
+
+		// 'Swap' interface.
+		friend inline void swap( PlainVector& left, PlainVector& right )	{ left.Swap( right ); };
+
 	// Construction interface.
 	public:
 		PlainVector()						= default;
