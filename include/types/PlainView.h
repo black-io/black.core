@@ -33,7 +33,7 @@ inline namespace Types
 	public:
 		PlainView()						= default;
 		PlainView( const PlainView& )	= default;
-		PlainView( PlainView&& )		= default;
+		PlainView( PlainView&& other );
 		PlainView( Element* head, Element* tail );
 		PlainView( Element* head, const size_t length );
 
@@ -51,7 +51,7 @@ inline namespace Types
 
 
 		inline PlainView& operator = ( const PlainView& )	= default;
-		inline PlainView& operator = ( PlainView&& )		= default;
+		inline PlainView& operator = ( PlainView&& other );
 
 		template< typename TOtherType, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
 		inline PlainView& operator = ( const PlainView<TOtherType>& other )				{ return CopyAndSwap( *this, other ); };
@@ -67,6 +67,9 @@ inline namespace Types
 
 	// Public interface.
 	public:
+		// Invalidate the view making it empty.
+		inline void Invalidate();
+
 		// Swap the content of views.
 		inline void Swap( PlainView& other );
 

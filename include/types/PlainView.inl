@@ -8,6 +8,12 @@ inline namespace Core
 inline namespace Types
 {
 	template< typename TStoredType >
+	PlainView<TStoredType>::PlainView( PlainView<TStoredType>&& other )
+	{
+		Swap( other );
+	}
+
+	template< typename TStoredType >
 	PlainView<TStoredType>::PlainView( typename PlainView<TStoredType>::Element* head, typename PlainView<TStoredType>::Element* tail )
 		: m_head{ head }
 		, m_tail{ tail }
@@ -23,6 +29,25 @@ inline namespace Types
 		, m_length{ length }
 	{
 		EXPECTS( ( head != nullptr ) || ( length == 0 ) );
+	}
+
+	template< typename TStoredType >
+	inline PlainView<TStoredType>& PlainView<TStoredType>::operator=( PlainView<TStoredType>&& other )
+	{
+		CRET( *this == other, *this );
+
+		Invalidate();
+		Swap( other );
+
+		return *this;
+	}
+
+	template< typename TStoredType >
+	inline void PlainView<TStoredType>::Invalidate()
+	{
+		m_head		= nullptr;
+		m_tail		= nullptr;
+		m_length	= 0;
 	}
 
 	template< typename TStoredType >
