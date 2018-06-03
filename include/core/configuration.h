@@ -65,21 +65,12 @@
 #if( defined( _WIN32 ) )
 	#undef BLACK_WINDOWS_DESKTOP_PLATFORM
 	#define BLACK_WINDOWS_DESKTOP_PLATFORM	1
-
-	#undef BLACK_LITTLE_ENDIAN
-	#define BLACK_LITTLE_ENDIAN				1
 #elif( defined( __MACOSX__ ) )
 	#undef BLACK_MAC_OS_PLATFORM
 	#define BLACK_MAC_OS_PLATFORM			1
-
-	#undef BLACK_BIG_ENDIAN
-	#define BLACK_BIG_ENDIAN				1
 #elif( defined( __ANDROID__ ) )
 	#undef BLACK_ANDROID_PLATFORM
 	#define BLACK_ANDROID_PLATFORM			1
-
-	#undef BLACK_LITTLE_ENDIAN
-	#define BLACK_LITTLE_ENDIAN				1
 
 	// Force JNI to use standard plain types.
 	#define HAVE_INTTYPES_H					1
@@ -89,15 +80,37 @@
 #elif( defined( __iOS__ ) )
 	#undef BLACK_IOS_PLATFORM
 	#define BLACK_IOS_PLATFORM				1
-
-	#undef BLACK_BIG_ENDIAN
-	#define BLACK_BIG_ENDIAN				1
 #else
 	#error Current platform is unspecified or not defined.
 #endif
 
 
-// Detecting the exceptions enabled.
+// Detecting the system byte-order (endianness).
+#if( defined( _MSC_VER ) )
+	#if( defined( _M_PPC ) )
+		#undef BLACK_BIG_ENDIAN
+		#define BLACK_BIG_ENDIAN			1
+	#else
+		#undef BLACK_LITTLE_ENDIAN
+		#define BLACK_LITTLE_ENDIAN			1
+	#endif
+#elif( defined( __clang__ ) || defined( __GNUC__ ) )
+	#if( defined( __BIG_ENDIAN__ ) )
+		#undef BLACK_BIG_ENDIAN
+		#define BLACK_BIG_ENDIAN			1
+	#else
+		#undef BLACK_LITTLE_ENDIAN
+		#define BLACK_LITTLE_ENDIAN			1
+	#endif
+#elif( defined( __s390x__ ) )
+	#undef BLACK_BIG_ENDIAN
+	#define BLACK_BIG_ENDIAN				1
+#else
+	#error It's unable to detect the system byte-order (endianness).
+#endif
+
+
+// Detecting whether the exceptions enabled.
 #if( defined( __cpp_exceptions ) || defined( __EXCEPTIONS ) )
 	#define BLACK_EXCEPTIONS_ENABLED		1
 #else
@@ -112,8 +125,10 @@ namespace Black
 	constexpr BuildMode BUILD_CONFIGURATION	= BuildMode::Debug;
 	#elif( BLACK_DRAFT_BUILD )
 	constexpr BuildMode BUILD_CONFIGURATION	= BuildMode::Draft;
-	#else
+	#elif( BLACK_RELEASE_BUILD )
 	constexpr BuildMode BUILD_CONFIGURATION	= BuildMode::Release;
+	#else
+		#error The `BUILD_CONFIGURATION` constant needs to be defined for current platform.
 	#endif
 
 	// Declare current platform.
