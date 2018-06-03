@@ -119,22 +119,42 @@ namespace Black
 
 	// Generic tag to prohibit copy-construction and copy-assignment of derived types.
 	// It would be better to use private inheritance.
-	class NonCopyable: private NonCopyConstructible, private NonCopyAssignable
+	class NonCopyable
 	{
+	public:
+		NonCopyable() = default;
 
+	private:
+		NonCopyable( const NonCopyable& )				= delete;
+
+		NonCopyable& operator = ( const NonCopyable& )	= delete;
 	};
 
 	// Generic tag to prohibit move-construction and move-assignment of derived types.
 	// It would be better to use private inheritance.
-	class NonMovable: private NonMoveConstructible, private NonMoveAssignable
+	class NonMovable
 	{
+	public:
+		NonMovable() = default;
 
+	private:
+		NonMovable( NonMovable&& )				= delete;
+
+		NonMovable& operator = ( NonMovable&& )	= delete;
 	};
 
 	// Generic tag to prohibit copy/move construction/assignment of derived types.
 	// It would be better to use private inheritance.
-	class NonTransferable: private NonCopyable, private NonMovable
+	class NonTransferable
 	{
+	public:
+		NonTransferable() = default;
 
+	private:
+		NonTransferable( const NonTransferable& )				= delete;
+		NonTransferable( NonTransferable&& )					= delete;
+
+		NonTransferable& operator = ( const NonTransferable& )	= delete;
+		NonTransferable& operator = ( NonTransferable&& )		= delete;
 	};
 }
