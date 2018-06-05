@@ -53,9 +53,10 @@ inline namespace Types
 	template< typename TStoredType >
 	inline void PlainView<TStoredType>::Swap( PlainView& other )
 	{
-		std::swap( m_head, other.m_head );
-		std::swap( m_tail, other.m_tail );
-		std::swap( m_length, other.m_length );
+		using std::swap;
+		swap( m_head, other.m_head );
+		swap( m_tail, other.m_tail );
+		swap( m_length, other.m_length );
 	}
 
 	template< typename TStoredType >

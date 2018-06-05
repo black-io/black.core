@@ -81,9 +81,10 @@ inline namespace Types
 	template< typename TStoredType >
 	inline void PlainVector<TStoredType>::Swap( PlainVector<TStoredType>& other )
 	{
-		std::swap( m_memory, other.m_memory );
-		std::swap( m_capacity, other.m_capacity );
-		std::swap( m_length, other.m_length );
+		using std::swap;
+		swap( m_memory, other.m_memory );
+		swap( m_capacity, other.m_capacity );
+		swap( m_length, other.m_length );
 	}
 
 	template< typename TStoredType >
