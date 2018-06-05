@@ -81,9 +81,6 @@ inline namespace Types
 		// Invalidate the view making it empty.
 		inline void Invalidate();
 
-		// Swap the content of views.
-		inline void Swap( PlainView& other );
-
 
 		// Checks the view is empty.
 		inline const bool IsEmpty() const;
@@ -138,6 +135,11 @@ inline namespace Types
 		inline iterator end() const							{ return GetTail(); };
 		inline pointer data() const							{ return GetData(); };
 		inline size_type size() const						{ return GetLength(); };
+
+	// Private interface.
+	private:
+		// Swap the content of views.
+		inline void Swap( PlainView& other );
 
 	private:
 		TStoredType*	m_head		= nullptr;	// Head of view.

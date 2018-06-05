@@ -103,9 +103,6 @@ inline namespace Types
 		// Invalidate the used memory making it free.
 		inline void Invalidate();
 
-		// Swap the content of views.
-		inline void Swap( PlainVector& other );
-
 		// Set the number of currently allocated elements.
 		inline void SetLength( const size_t length );
 
@@ -205,6 +202,9 @@ inline namespace Types
 
 	// Private interface.
 	private:
+		// Swap the content of views.
+		inline void Swap( PlainVector& other );
+
 		// Construct the desired amount of additional elements, using the construction arguments.
 		template< typename... TArguments >
 		inline void ConstructElements( const size_t length, TArguments... arguments );
