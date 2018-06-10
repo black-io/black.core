@@ -52,7 +52,7 @@ namespace Traits
 	}
 
 	template< typename TChar, typename... TArguments >
-	inline std::basic_string<TChar> FormatString( const char* format, const std::tuple<TArguments...>& arguments )
+	inline std::basic_string<TChar> FormatString( const TChar* format, const std::tuple<TArguments...>& arguments )
 	{
 		return Traits::FormatString( std::basic_string<TChar>{ format }, arguments, std::index_sequence_for<TArguments...>{} );
 	}
