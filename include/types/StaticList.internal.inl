@@ -12,7 +12,7 @@ namespace Internal
 	template< typename TInterface >
 	inline void StaticListBasicNode<TInterface>::PlugIntoList()
 	{
-		m_next_node = std::exchange( Black::StaticList<TInterface>::s_root_node, this );
+		m_next_node = std::exchange( Black::StaticList<TInterface>::GetRootNode(), this );
 	}
 }
 }

@@ -49,12 +49,9 @@ inline namespace Types
 
 	// Private state.
 	private:
-		// The root of static list.
-		static Internal::StaticListBasicNode<TInterface>*	s_root_node;
+		// Get the root node.
+		static Internal::StaticListBasicNode<TInterface>*& GetRootNode();
 	};
-
-	template< typename TInterface >
-	Internal::StaticListBasicNode<TInterface>* StaticList<TInterface>::s_root_node = nullptr;
 }
 }
 }
