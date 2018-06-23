@@ -57,7 +57,14 @@ namespace Black
 	};
 
 	// Tagging object to mark the operation variant, that will ignore internal failures.
-	constexpr IgnoreFailure IGNORE_FALURES = {};
+	constexpr IgnoreFailure IGNORE_FALURE = {};
+
+	// Tagging type to mark the operation variant, that will use in-place construction.
+	struct ConstructInplace final
+	{};
+
+	// Tagging object to mark the operation variant, that will use in-place construction.
+	constexpr ConstructInplace CONSTRUCT_INPLACE = {};
 
 	// Pointer to arbitrary global function.
 	template< typename TResult, typename... TArguments >
