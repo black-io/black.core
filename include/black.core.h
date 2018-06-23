@@ -73,6 +73,13 @@ inline namespace Core
 #include "types/DebugName.h"
 #include "types/ScopedPointer.h"
 
+// Generic static list.
+#include "types/StaticList.forwards.h"
+#include "types/StaticList.internal.h"
+#include "types/StaticList.iterator.h"
+#include "types/StaticListNode.h"
+#include "types/StaticList.h"
+
 // Core utils.
 #include "utils/platform-utils.h"
 #include "utils/container-utils.h"
@@ -107,6 +114,10 @@ inline namespace Core
 #include "utils/container-utils.unordered_map.inl"
 #include "utils/platform-utils.inl"
 
+#include "types/StaticList.inl"
+#include "types/StaticListNode.inl"
+#include "types/StaticList.iterator.inl"
+#include "types/StaticList.internal.inl"
 #include "types/RingBuffer.inl"
 #include "types/IntrusiveLink.inl"
 #include "types/PlainVector.inl"
