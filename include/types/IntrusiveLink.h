@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Types
 {
-namespace Traits
+namespace Internal
 {
 	// Intrusive link.
 	template< typename TLinkedType, bool USE_LINKING >
@@ -65,7 +65,7 @@ namespace Traits
 
 	// Intrusive link.
 	template< typename TLinkedType >
-	using IntrusiveLink = Traits::IntrusiveLink<TLinkedType, Black::IS_BASE_OF<Black::IntrusiveHook, TLinkedType>>;
+	using IntrusiveLink = Internal::IntrusiveLink<TLinkedType, Black::IS_BASE_OF<Black::IntrusiveHook, TLinkedType>>;
 }
 }
 }

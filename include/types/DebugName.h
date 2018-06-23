@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Types
 {
-namespace Traits
+namespace Internal
 {
 	// Default implementation of debug name.
 	template< Black::BuildMode >
@@ -71,7 +71,7 @@ namespace Traits
 		Debug names are visible only in Debug build configuration. For any other configuration such names will be empty.
 		Ideally, any code about debug names may be omitted out of code for non-Debug build configurations.
 	*/
-	using DebugName = Traits::DebugName<Black::BUILD_CONFIGURATION>;
+	using DebugName = Internal::DebugName<Black::BUILD_CONFIGURATION>;
 }
 }
 }

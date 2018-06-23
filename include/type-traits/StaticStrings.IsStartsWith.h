@@ -9,7 +9,7 @@ inline namespace TextUtils
 {
 namespace StaticStrings
 {
-namespace Traits
+namespace Internal
 {
 	// Test for string prefix check.
 	template< typename TString, typename TPattern >
@@ -51,7 +51,7 @@ namespace Traits
 
 	// Check that the static string starts with given pattern.
 	template< typename TString, typename TPattern >
-	constexpr bool IS_STARTS_WITH = Traits::IsStartsWith<TString, TPattern>::value;
+	constexpr bool IS_STARTS_WITH = Internal::IsStartsWith<TString, TPattern>::value;
 }
 }
 }

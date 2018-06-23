@@ -9,7 +9,7 @@ inline namespace TextUtils
 {
 namespace StaticStrings
 {
-namespace Traits
+namespace Internal
 {
 	// Test for equal strings.
 	// There is no easy way to use combination of 'same-type' checks. The types have to be recognized as static strings and compared by chars.
@@ -34,7 +34,7 @@ namespace Traits
 
 	// Check that the left and right static strings are equal.
 	template< typename TLeft, typename TRight >
-	constexpr bool IS_EQUAL = Traits::IsEqual<TLeft, TRight>::value;
+	constexpr bool IS_EQUAL = Internal::IsEqual<TLeft, TRight>::value;
 }
 }
 }

@@ -9,7 +9,7 @@ inline namespace TextUtils
 {
 namespace StaticStrings
 {
-namespace Traits
+namespace Internal
 {
 	// Bisect the static string.
 	template< size_t POSITION, bool IS_ENDED, typename TLeftString, typename TRightString >
@@ -51,7 +51,7 @@ namespace Traits
 		Each of inner types represents the part of given static string being bisected at given position.
 	*/
 	template< size_t POSITION, typename TString >
-	using Bisect = Traits::Bisect<POSITION, POSITION == 0, Black::StaticString<>, TString>;
+	using Bisect = Internal::Bisect<POSITION, POSITION == 0, Black::StaticString<>, TString>;
 }
 }
 }

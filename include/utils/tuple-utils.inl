@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Utils
 {
-namespace Traits
+namespace Internal
 {
 	template< typename TFunction, typename... TArguments, size_t... INDICES >
 	void ForEach( std::tuple<TArguments...>& elements, const TFunction& function, std::index_sequence<INDICES...> )
@@ -28,7 +28,7 @@ namespace Traits
 
 inline namespace TextUtils
 {
-namespace Traits
+namespace Internal
 {
 	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments, size_t... INDICES >
 	inline std::basic_string<TChar, TTraits, TAllocator> FormatString(

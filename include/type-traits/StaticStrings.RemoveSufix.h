@@ -9,7 +9,7 @@ inline namespace TextUtils
 {
 namespace StaticStrings
 {
-namespace Traits
+namespace Internal
 {
 	// Remove the string suffix.
 	template< size_t SUFFIX_LENGTH, bool IS_ENABLED, char... CHARS >
@@ -44,7 +44,7 @@ namespace Traits
 
 	// Remove the string suffix.
 	template< size_t SUFFIX_LENGTH, typename TString >
-	using RemoveSuffix = typename Traits::SafeRemoveSuffix<SUFFIX_LENGTH, TString>::String;
+	using RemoveSuffix = typename Internal::SafeRemoveSuffix<SUFFIX_LENGTH, TString>::String;
 }
 }
 }

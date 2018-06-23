@@ -9,7 +9,7 @@ inline namespace TextUtils
 {
 namespace StaticStrings
 {
-namespace Traits
+namespace Internal
 {
 	// Substring extracting trait.
 	template< size_t POSITION, size_t LENGTH, typename TString >
@@ -38,7 +38,7 @@ namespace Traits
 
 	// Get the substring from initial static string.
 	template< size_t POSITION, size_t LENGTH, typename TString >
-	using Substring = typename Traits::Substring<POSITION, LENGTH, TString>::String;
+	using Substring = typename Internal::Substring<POSITION, LENGTH, TString>::String;
 }
 }
 }

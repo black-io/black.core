@@ -9,7 +9,7 @@ inline namespace TextUtils
 {
 namespace StaticStrings
 {
-namespace Traits
+namespace Internal
 {
 	// Combine the collection of static strings.
 	template< typename... TStrings >
@@ -42,7 +42,7 @@ namespace Traits
 
 	// Join the collection of static strings.
 	template< typename... TStrings >
-	using Join = typename Traits::Join<TStrings...>::String;
+	using Join = typename Internal::Join<TStrings...>::String;
 }
 }
 }

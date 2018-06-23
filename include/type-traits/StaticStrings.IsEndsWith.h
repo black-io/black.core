@@ -9,7 +9,7 @@ inline namespace TextUtils
 {
 namespace StaticStrings
 {
-namespace Traits
+namespace Internal
 {
 	// Test for string suffix check.
 	template< typename TString, typename TPattern >
@@ -54,7 +54,7 @@ namespace Traits
 
 	// Check that the static string ends with given pattern.
 	template< typename TString, typename TPattern >
-	constexpr bool IS_ENDS_WITH = Traits::IsEndsWith<TString, TPattern>::value;
+	constexpr bool IS_ENDS_WITH = Internal::IsEndsWith<TString, TPattern>::value;
 }
 }
 }

@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Types
 {
-namespace Traits
+namespace Internal
 {
 	template< typename TLinkedType >
 	IntrusiveLink<TLinkedType, true>::IntrusiveLink( const IntrusiveLink& other )
