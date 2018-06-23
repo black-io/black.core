@@ -142,6 +142,18 @@ inline namespace TypeTraits
 	// Type conversion check.
 	template< typename TSourceType, typename TDestinationType >
 	constexpr bool IS_CONVERTIBLE = std::is_convertible<TSourceType, TDestinationType>::value;
+
+	// Whether the type can be constructed using number of argument types.
+	template< typename TImplementation, typename... TArguments >
+	constexpr bool IS_CONSTRUCTIBLE = std::is_constructible<TImplementation, TArguments...>::value;
+
+	// Whether the type can be constructed using number of argument types.
+	template< typename TImplementation, typename... TArguments >
+	constexpr bool IS_TRIVIALLY_CONSTRUCTIBLE = std::is_trivially_constructible<TImplementation, TArguments...>::value;
+
+	// Whether the type has nothrow constructor with given number of arguments.
+	template< typename TImplementation, typename... TArguments >
+	constexpr bool IS_NOTHROW_CONSTRUCTIBLE = std::is_nothrow_constructible<TImplementation, TArguments...>::value;
 }
 }
 }
