@@ -21,7 +21,7 @@ namespace Internal
 	template< typename TFunction, typename... TArguments >
 	void ForEach( std::tuple<TArguments...>& elements, const TFunction& function )
 	{
-		Traits::ForEach( elements, function, std::index_sequence_for<TArguments...>{} );
+		Internal::ForEach( elements, function, std::index_sequence_for<TArguments...>{} );
 	}
 }
 
@@ -48,13 +48,13 @@ namespace Internal
 		const std::tuple<TArguments...>& arguments
 	)
 	{
-		return Traits::FormatString( format, arguments, std::index_sequence_for<TArguments...>{} );
+		return Internal::FormatString( format, arguments, std::index_sequence_for<TArguments...>{} );
 	}
 
 	template< typename TChar, typename... TArguments >
 	inline std::basic_string<TChar> FormatString( const TChar* format, const std::tuple<TArguments...>& arguments )
 	{
-		return Traits::FormatString( std::basic_string<TChar>{ format }, arguments, std::index_sequence_for<TArguments...>{} );
+		return Internal::FormatString( std::basic_string<TChar>{ format }, arguments, std::index_sequence_for<TArguments...>{} );
 	}
 }
 }
