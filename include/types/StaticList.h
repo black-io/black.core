@@ -42,10 +42,14 @@ inline namespace Types
 		void Clear();
 
 		// Get the head of list.
-		inline Iterator GetHead() const									{ return Iterator{ GetRootNode() }; };
+		inline Iterator GetHead() const			{ return Iterator{ GetRootNode() }; };
 
 		// Get the tail f list.
-		inline Iterator GetTail() const									{ return Iterator{ nullptr }; };
+		inline Iterator GetTail() const			{ return Iterator{ nullptr }; };
+
+
+		// Check whether the list is empty.
+		inline const bool IsEmpty() const		{ return GetRootNode() == nullptr; };
 
 	// Private state.
 	private:
