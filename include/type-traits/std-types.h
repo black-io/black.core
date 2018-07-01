@@ -18,6 +18,10 @@ inline namespace TypeTraits
 	// Conditional type switch.
 	template< bool CONDITION, typename TTrueType = void >
 	using EnableIf = typename std::enable_if<CONDITION, TTrueType>::type;
+
+	// Remove the `const` type qualifier.
+	template< typename TConstType >
+	using RemoveConst = typename std::remove_const<TConstType>::type;
 }
 }
 }
