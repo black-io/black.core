@@ -45,7 +45,7 @@ namespace Internal
 		virtual void Invalidate() override						{ Destroy(); };
 
 		// Get the stored interface.
-		virtual const TInterface& GetInterface() const override	{ return GetImplementation(); };
+		virtual TInterface& GetInterface() const override		{ return GetImplementation(); };
 
 	private:
 		static constexpr size_t STORAGE_ALIGNMENT	= alignof( TImplementation );

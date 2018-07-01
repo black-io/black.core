@@ -22,12 +22,18 @@ inline namespace Types
 
 		// Regular iterator for list.
 		using Iterator			= Internal::StaticListIterator<TInterface>;
+		using ConstIterator		= Internal::StaticListIterator<const TInterface>;
 		using iterator			= Iterator;
-		using const_iterator	= Iterator;
+		using const_iterator	= ConstIterator;
+
 
 		// Ranged for-loop interface.
-		friend inline Iterator begin( const StaticList& static_list )	{ return static_list.GetHead(); };
-		friend inline Iterator end( const StaticList& static_list )		{ return static_list.GetTail(); };
+		friend inline Iterator begin( StaticList& static_list )					{ return static_list.GetHead(); };
+		friend inline Iterator end( StaticList& static_list )					{ return static_list.GetTail(); };
+
+		friend inline ConstIterator begin( const StaticList& static_list )		{ return static_list.GetHead(); };
+		friend inline ConstIterator end( const StaticList& static_list )		{ return static_list.GetTail(); };
+
 
 		// Grant access to root of list.
 		friend class Internal::StaticListBasicNode<TInterface>;
@@ -42,10 +48,16 @@ inline namespace Types
 		void Clear();
 
 		// Get the head of list.
-		inline Iterator GetHead() const			{ return Iterator{ GetRootNode() }; };
+		inline Iterator GetHead()				{ return Iterator{ GetRootNode() }; };
 
 		// Get the tail f list.
-		inline Iterator GetTail() const			{ return Iterator{ nullptr }; };
+		inline Iterator GetTail()				{ return Iterator{ nullptr }; };
+
+		// Get the head of list.
+		inline ConstIterator GetHead() const	{ return ConstIterator{ GetRootNode() }; };
+
+		// Get the tail f list.
+		inline ConstIterator GetTail() const	{ return ConstIterator{ nullptr }; };
 
 
 		// Check whether the list is empty.

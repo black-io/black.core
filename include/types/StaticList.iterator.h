@@ -16,9 +16,9 @@ namespace Internal
 	public:
 		using self_type			= StaticListIterator;
 		using difference_type	= size_t;
-        using value_type		= const TInterface;
-        using pointer			= const TInterface*;
-        using reference			= const TInterface&;
+        using value_type		= Black::RemoveConst<TInterface>;
+        using pointer			= TInterface*;
+        using reference			= TInterface&;
         using iterator_category	= std::forward_iterator_tag;
 
 	// Friendship interface.
@@ -66,7 +66,7 @@ namespace Internal
 
 	// Private state.
 	private:
-		StaticListBasicNode<TInterface>*	m_current_node = nullptr;
+		StaticListBasicNode<value_type>*	m_current_node = nullptr;
 	};
 }
 }

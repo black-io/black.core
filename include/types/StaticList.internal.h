@@ -35,13 +35,13 @@ namespace Internal
 		virtual void Invalidate() = 0;
 
 		// Get the stored interface.
-		virtual const TInterface& GetInterface() const = 0;
+		virtual TInterface& GetInterface() const = 0;
 
 		// Get the debug name (only for debug purposes).
 		inline const char* const GetDebugName() const	{ return *m_name; };
 
 
-		inline const TInterface* operator -> () const	{ return &GetInterface(); };
+		inline TInterface* operator -> () const			{ return &GetInterface(); };
 
 	// Inheritance interface.
 	protected:
