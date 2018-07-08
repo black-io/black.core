@@ -17,9 +17,7 @@ namespace Internal
 		DebugName()											= default;
 		DebugName( const DebugName& )						= default;
 		DebugName( DebugName&& )							= default;
-		DebugName( std::string&& )							{};
-		DebugName( Black::StringView )						{};
-		DebugName( const char* const )						{};
+		DebugName( ... )									{};
 
 
 		// Fake name getter for non-debug configurations.
