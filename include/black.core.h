@@ -73,6 +73,11 @@ inline namespace Core
 #include "types/DebugName.h"
 #include "types/ScopedPointer.h"
 
+// Generic bit view.
+#include "types/BitView.internal.h"
+#include "types/BitView.iterator.h"
+#include "types/BitView.h"
+
 // Generic static list.
 #include "types/StaticList.forwards.h"
 #include "types/StaticList.internal.h"
@@ -114,6 +119,9 @@ inline namespace Core
 #include "utils/container-utils.unordered_map.inl"
 #include "utils/platform-utils.inl"
 
+#include "types/BitView.inl"
+#include "types/BitView.iterator.inl"
+#include "types/BitView.internal.inl"
 #include "types/StaticList.inl"
 #include "types/StaticListNode.inl"
 #include "types/StaticList.iterator.inl"
