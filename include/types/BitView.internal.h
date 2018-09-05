@@ -132,7 +132,7 @@ namespace Internal
 		inline const bool IsValid() const;
 
 
-		inline explicit operator const bool () const;
+		inline operator const bool () const;
 		inline const bool operator ! () const;
 
 
