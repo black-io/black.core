@@ -156,8 +156,11 @@ namespace Black
 	template< typename TValue, typename... TArguments >
 	inline TValue& CopyAndSwap( TValue& left, TArguments... arguments )
 	{
+		using std::swap;
+
 		TValue temp{ std::forward<TArguments>( arguments )... };
-		std::swap( left, temp );
+		swap( left, temp );
+
 		return left;
 	}
 }
