@@ -28,13 +28,12 @@ inline namespace Types
 
 	// Construction and assignment.
 	public:
+		ScopedPointer()	= delete;
+
 		inline explicit ScopedPointer( TStoredValue* value ) : m_value{ value } {};
 
 		template< typename TCustomDeleter >
 		inline explicit ScopedPointer( TStoredValue* value, TCustomDeleter deleter ) : m_value{ value, std::forward<TCustomDeleter>( deleter ) } {};
-
-
-		ScopedPointer()	= delete;
 
 	// Public interface.
 	public:
