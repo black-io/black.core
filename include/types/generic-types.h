@@ -61,7 +61,9 @@ namespace Black
 
 	// Tagging type to mark the operation variant, that will use in-place construction.
 	struct ConstructInplace final
-	{};
+	{
+
+	};
 
 	// Tagging object to mark the operation variant, that will use in-place construction.
 	constexpr ConstructInplace CONSTRUCT_INPLACE = {};
@@ -164,4 +166,32 @@ namespace Black
 		NonTransferable& operator = ( const NonTransferable& )	= delete;
 		NonTransferable& operator = ( NonTransferable&& )		= delete;
 	};
+
+	// Scope exit handler may be used to invoke some function just before leaving current scope.
+	template< typename TFunction >
+	class ScopeExitHandler final
+	{
+	public:
+		ScopeExitHandler()							= delete;
+		ScopeExitHandler( const ScopeExitHandler& )	= default;
+		ScopeExitHandler( ScopeExitHandler&& )		= default;
+		explicit ScopeExitHandler( TFunction function ) : m_function{ std::move( function ) } {};
+		~ScopeExitHandler() { CRET( m_is_canceled ); m_function(); };
+
+
+		ScopeExitHandler& operator = ( ScopeExitHandler&& )			= default;
+		ScopeExitHandler& operator = ( const ScopeExitHandler& )	= default;
+
+
+		// Cancel the handling.
+		inline void Cancel() { m_is_canceled = true; };
+
+	private:
+		TFunction	m_function;
+		bool		m_is_canceled	= false;
+	};
+
+	// Get the scope exit handler.
+	template< typename TFunction >
+	inline ScopeExitHandler<TFunction> GetScopeExitHandler( TFunction function ) { return ScopeExitHandler<TFunction>{ std::move( function ) }; };
 }
