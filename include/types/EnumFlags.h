@@ -118,6 +118,8 @@ inline namespace Types
 		inline const bool operator && ( const TEnumeration flag ) const		{ return HasFlag( flag ); };
 		inline const bool operator && ( const EnumFlags& other ) const		{ return ( m_flags & other.m_flags ) == other.m_flags; };
 
+		inline EnumFlags operator & ( const EnumFlags& other ) const		{ return EnumFlags( m_flags & other.m_flags ); };
+
 		inline EnumFlags operator + ( const EnumFlags& other ) const		{ return EnumFlags( m_flags | other.m_flags ); };
 		inline EnumFlags operator - ( const EnumFlags& other ) const		{ return EnumFlags( m_flags & ~other.m_flags ); };
 		inline EnumFlags operator + ( const TEnumeration flag ) const		{ return EnumFlags( m_flags | GetBits( flag ) ); };
