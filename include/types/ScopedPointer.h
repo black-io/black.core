@@ -33,7 +33,7 @@ inline namespace Types
 		inline explicit ScopedPointer( TStoredValue* value ) : m_value{ value } {};
 
 		template< typename TCustomDeleter >
-		inline explicit ScopedPointer( TStoredValue* value, TCustomDeleter deleter ) : m_value{ value, std::forward<TCustomDeleter>( deleter ) } {};
+		inline explicit ScopedPointer( TStoredValue* value, TCustomDeleter&& deleter ) : m_value{ value, std::forward<TCustomDeleter>( deleter ) } {};
 
 	// Public interface.
 	public:
