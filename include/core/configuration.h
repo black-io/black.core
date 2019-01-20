@@ -3,7 +3,12 @@
 
 // Disable windows CRT `symbol deprecated` (C4996) warnings.
 #if( !defined( _CRT_SECURE_NO_WARNINGS ) )
-	#define _CRT_SECURE_NO_WARNINGS 1
+	#define _CRT_SECURE_NO_WARNINGS	1
+#endif
+
+// Disable windows STD `unsafe iterators` (C4996) warnings.
+#if( !defined( _SCL_SECURE_NO_WARNINGS ) )
+	#define _SCL_SECURE_NO_WARNINGS	1
 #endif
 
 
