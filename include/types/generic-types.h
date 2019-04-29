@@ -9,6 +9,26 @@ namespace Black
 	// Regular time duration specification.
 	using TimeDuration	= std::chrono::duration<Time>;
 
+	// Pointer to arbitrary global function.
+	template< typename TResult, typename... TArguments >
+	using GlobalFunctionPointer					= TResult (*)( TArguments... );
+
+	// Pointer to arbitrary member-function.
+	template< class THost, typename TResult, typename... TArguments >
+	using MemberFunctionPointer					= TResult (THost::*)( TArguments... );
+
+	// Pointer to arbitrary constant member-function.
+	template< class THost, typename TResult, typename... TArguments >
+	using MemberConstFunctionPointer			= TResult (THost::*)( TArguments... ) const;
+
+	// Pointer to arbitrary volatile member-function.
+	template< class THost, typename TResult, typename... TArguments >
+	using MemberVolatileFunctionPointer			= TResult (THost::*)( TArguments... ) volatile;
+
+	// Pointer to arbitrary volatile and constant member-function.
+	template< class THost, typename TResult, typename... TArguments >
+	using MemberConstVolatileFunctionPointer	= TResult (THost::*)( TArguments... ) const volatile;
+
 	// Regular 32-bit size specification.
 	using size32_t		= uint32_t;
 
@@ -23,7 +43,7 @@ namespace Black
 			int32_t		hi;				// Upper 4-byte part of total size.
 		};
 
-		size64_t() {};
+		size64_t() = default;
 		size64_t( const int64_t value ) : value{ value } {};
 		size64_t( const size32_t lo_part, const int32_t hi_part )
 		{
@@ -38,16 +58,23 @@ namespace Black
 		inline operator const int64_t () const		{ return value; };
 	};
 
-	// Implementation for hashing object for enumeration types, which may be used with `std` containers.
-	class EnumHash final
+	// Trivial collection of types.
+	template< typename... TTypes >
+	struct TypesCollection final
 	{
-	public:
-		// Hashing function. Uses `GetEnumValue` to produce the hash.
-		template< typename TEnumeration >
-		inline const size_t operator () ( const TEnumeration& value ) const
-		{
-			return static_cast<const size_t>( GetEnumValue( value ) );
-		}
+		// Length of collection.
+		static constexpr const size_t LENGTH = sizeof...( TTypes );
+	};
+
+	// Empty trivial types collection.
+	using TypesEmptyCollection = TypesCollection<>;
+
+	// Collection of types which memory is combined in same block of memory.
+	template< typename... TTypes >
+	struct TypesUnion final
+	{
+		// Length of collection.
+		static constexpr const size_t LENGTH = sizeof...( TTypes );
 	};
 
 	// Tagging type to mark the operation variant, that will ignore internal failures.
@@ -68,25 +95,17 @@ namespace Black
 	// Tagging object to mark the operation variant, that will use in-place construction.
 	constexpr ConstructInplace CONSTRUCT_INPLACE = {};
 
-	// Pointer to arbitrary global function.
-	template< typename TResult, typename... TArguments >
-	using GlobalFunctionPointer					= TResult (*)( TArguments... );
-
-	// Pointer to arbitrary member-function.
-	template< class THost, typename TResult, typename... TArguments >
-	using MemberFunctionPointer					= TResult (THost::*)( TArguments... );
-
-	// Pointer to arbitrary constant member-function.
-	template< class THost, typename TResult, typename... TArguments >
-	using MemberConstFunctionPointer			= TResult (THost::*)( TArguments... ) const;
-
-	// Pointer to arbitrary volatile member-function.
-	template< class THost, typename TResult, typename... TArguments >
-	using MemberVolatileFunctionPointer			= TResult (THost::*)( TArguments... ) volatile;
-
-	// Pointer to arbitrary volatile and constant member-function.
-	template< class THost, typename TResult, typename... TArguments >
-	using MemberConstVolatileFunctionPointer	= TResult (THost::*)( TArguments... ) const volatile;
+	// Implementation for hashing object for enumeration types, which may be used with `std` containers.
+	class EnumHash final
+	{
+	public:
+		// Hashing function. Uses `GetEnumValue` to produce the hash.
+		template< typename TEnumeration >
+		inline const size_t operator () ( const TEnumeration& value ) const
+		{
+			return static_cast<const size_t>( GetEnumValue( value ) );
+		}
+	};
 
 	// Generic tag to prohibit copy-construction of derived types.
 	// It would be better to use private inheritance.
