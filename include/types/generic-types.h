@@ -58,25 +58,6 @@ namespace Black
 		inline operator const int64_t () const		{ return value; };
 	};
 
-	// Trivial collection of types.
-	template< typename... TTypes >
-	struct TypesCollection final
-	{
-		// Length of collection.
-		static constexpr const size_t LENGTH = sizeof...( TTypes );
-	};
-
-	// Empty trivial types collection.
-	using TypesEmptyCollection = TypesCollection<>;
-
-	// Collection of types which memory is combined in same block of memory.
-	template< typename... TTypes >
-	struct TypesUnion final
-	{
-		// Length of collection.
-		static constexpr const size_t LENGTH = sizeof...( TTypes );
-	};
-
 	// Tagging type to mark the operation variant, that will ignore internal failures.
 	struct IgnoreFailure final
 	{
