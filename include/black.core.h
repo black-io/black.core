@@ -21,10 +21,11 @@ inline namespace Core
 #include <cstdint>
 #include <cstdarg>
 #include <csignal>
+#include <cstdlib>
+#include <cuchar>
 #include <exception>
 #include <limits>
 #include <locale>
-#include <codecvt>
 #include <string>
 #include <ostream>
 #include <array>
@@ -37,6 +38,7 @@ inline namespace Core
 #include <set>
 #include <map>
 #include <unordered_map>
+#include <functional>
 #include <algorithm>
 #include <numeric>
 #include <iterator>
@@ -57,8 +59,9 @@ inline namespace Core
 #include "core/macros.h"
 #include "type-traits/std-constants.h"
 #include "type-traits/std-types.h"
-#include "types/generic-types.h"
 #include "utils/generic-utils.h"
+#include "types/generic-types.h"
+#include "utils/time-utils.h"
 
 // Core types.
 #include "types/NotNull.h"
