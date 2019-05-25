@@ -61,7 +61,7 @@ namespace Black
 		@return					Returns value of `TEnumeration` underlying type.
 	*/
 	template< typename TEnumeration >
-	constexpr const auto GetEnumValue( const TEnumeration& value )
+	constexpr const auto GetEnumValue( const TEnumeration value )
 	{
 		static_assert( Black::IS_ENUMERATION<TEnumeration>, "`TEnumeration` template argument should be an enumeration." );
 		return static_cast< const Black::UnderlyingType<TEnumeration> >( value );
@@ -98,28 +98,6 @@ namespace Black
 	*/
 	template< PlatformEndianness ENDIANNESS, typename TValue >
 	inline const TValue GetTransformedEndianness( const TValue value );
-
-	/**
-		@brief	Translation from `std::chrono` time into `double` seconds.
-		@param	duration	Time interval, represented in `std::chrono` format.
-		@return				Return value is an equivalent amount of seconds, including fractions of second.
-	*/
-	template< typename TCounterType, typename TPeriodType >
-	inline const Time GetSecondsFromDuration( const std::chrono::duration<TCounterType, TPeriodType>& duration )
-	{
-		return std::chrono::duration_cast<TimeDuration>( duration ).count();
-	}
-
-	/**
-		@brief	Translation from `Time` seconds into `std::chrono` time.
-		@param	seconds		Time interval, represented by amount of seconds.
-		@return				Return value is an `std::chrono::nanoseconds` equivalent of `seconds`.
-	*/
-	template< typename TCounterType = int64_t, typename TPeriodType = std::nano >
-	inline auto GetDurationFromSeconds( const Time seconds )
-	{
-		return std::chrono::duration_cast<std::chrono::duration<TCounterType, TPeriodType>>( TimeDuration{ seconds } );
-	}
 
 	/**
 		@brief		Return the number of elements in arbitrary container.
