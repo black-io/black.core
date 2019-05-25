@@ -22,6 +22,10 @@ inline namespace TypeTraits
 	// Remove the `const` type qualifier.
 	template< typename TConstType >
 	using RemoveConst = typename std::remove_const<TConstType>::type;
+
+	// Decay the type.
+	template< typename TDecoratedType >
+	using Decay = typename std::decay<TDecoratedType>::type;
 }
 }
 }
