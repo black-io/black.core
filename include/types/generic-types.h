@@ -82,9 +82,9 @@ namespace Black
 	public:
 		// Hashing function. Uses `GetEnumValue` to produce the hash.
 		template< typename TEnumeration >
-		inline const size_t operator () ( const TEnumeration& value ) const
+		inline const size_t operator () ( TEnumeration&& value ) const
 		{
-			return static_cast<const size_t>( GetEnumValue( value ) );
+			return static_cast<const size_t>( GetEnumValue( std::forward<TEnumeration>( value ) ) );
 		}
 	};
 
