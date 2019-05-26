@@ -18,11 +18,11 @@ inline namespace Core
 // Make some of STL stuff included by default.
 #include <stdint.h>
 #include <stdarg.h>
+#include <uchar.h>
 #include <cstdint>
 #include <cstdarg>
 #include <csignal>
 #include <cstdlib>
-#include <cuchar>
 #include <exception>
 #include <limits>
 #include <locale>
