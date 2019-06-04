@@ -81,7 +81,7 @@
 
 // Regular 'in-code manual failure' statement.
 #if( BLACK_EXCEPTIONS_ENABLED )
-	#define BLACK_RUNTIME_FAILURE( ... )	std::runtime_error{ __VA_ARGS__ }
+	#define BLACK_RUNTIME_FAILURE( ... )	throw std::runtime_error{ __VA_ARGS__ }
 #else
 	#define BLACK_RUNTIME_FAILURE( ... )	std::abort()
 #endif
