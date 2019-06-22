@@ -35,7 +35,7 @@ inline namespace Types
 		using difference_type			= std::ptrdiff_t;
 
 
-		static constexpr size_type npos	= -1;
+		static constexpr const size_type npos	= static_cast<size_type>( -1 );
 
 	// Construction interface.
 	public:
