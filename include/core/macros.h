@@ -79,14 +79,6 @@
 #endif
 
 
-// Regular 'in-code manual failure' statement.
-#if( BLACK_EXCEPTIONS_ENABLED )
-	#define BLACK_RUNTIME_FAILURE( ... )	throw std::runtime_error{ __VA_ARGS__ }
-#else
-	#define BLACK_RUNTIME_FAILURE( ... )	std::abort()
-#endif
-
-
 // Regular 'assume' statement.
 #if( BLACK_WINDOWS_DESKTOP_PLATFORM || BLACK_WINDOWS_MOBILE_PLATFORM )
 	#define BLACK_ASSUME( ... )	__assume( __VA_ARGS__ )
@@ -108,7 +100,7 @@
 		BLACK_LOG_CRITICAL( "Black", "Unexpected result of `" BLACK_STRINGIFICATION( __VA_ARGS__ ) "` expression." );	\
 		BLACK_LOGS_CLOSE();																								\
 		BLACK_DEBUG_BREAK();																							\
-		BLACK_RUNTIME_FAILURE( BLACK_STRINGIFICATION( __VA_ARGS__ ) " failed." );										\
+		std::abort();																									\
 	}																													\
 }
 
@@ -120,7 +112,7 @@
 		BLACK_LOG_CRITICAL( "Black", "Unexpected result of `" BLACK_STRINGIFICATION( __VA_ARGS__ ) "` expression." );	\
 		BLACK_LOGS_CLOSE();																								\
 		BLACK_DEBUG_BREAK();																							\
-		BLACK_RUNTIME_FAILURE( BLACK_STRINGIFICATION( __VA_ARGS__ ) " failed." );										\
+		std::abort();																									\
 	}																													\
 }
 
