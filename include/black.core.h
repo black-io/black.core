@@ -68,6 +68,8 @@ inline namespace Core
 #include "types/PlainView.h"
 #include "types/PlainVector.h"
 #include "types/StringView.h"
+#include "types/EnumFlags.struct.h"
+#include "types/EnumFlags.internal.h"
 #include "types/EnumFlags.h"
 #include "types/IntrusiveHook.h"
 #include "types/IntrusiveLink.h"

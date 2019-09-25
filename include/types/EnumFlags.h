@@ -9,8 +9,12 @@ inline namespace Types
 {
 	/**
 		@brief	Storage for bit flags based on corresponded enumeration type.
-		Some restrictions are imposed for enumeration type in order to be used as template parameter for `EnumFlags`.
-		* Each element of enumeration type have to be a bit mask, but not the number of bit.
+		The enumerations with bit-mask values may be passed to `TEnumeration` as is of via `Black::BitmaskEnumeration` template instantiation.
+		The enumerations with ordinal values should be passed via `Black::OrdinalEnumeration` instantiation.
+
+		The `TProjection` template parameter may be used to represent the bits as structured information.
+		If the parameter is set, the `operator ->` and `operator *` may be used to access the bits like the value of `TProjection` type.
+		It may be useful in case the enumeration represents the bits of bit-field structure.
 
 		Each flag may be set/unset/checked using various functions and operators.
 		`operator +`/`operator +=` can be used to set some flag, like `SetFlag` functions.
@@ -22,120 +26,70 @@ inline namespace Types
 		`explicit operator bool` and `operator !` can be used to check that some flags are set or the instance is empty.
 
 		@tparam	TEnumeration	Enumeration type, which is supposed to use as bit flags.
+		@tparam	TProjection		The possible type to project the bit flags into some kind of bit-field structure.
 	*/
-	template< typename TEnumeration >
-	class EnumFlags final
+	template< typename TEnumeration, typename TProjection = void >
+	class EnumFlags final : public Internal::EnumFlagsAdaptor<TEnumeration, TProjection>
 	{
-	// Inner entities.
 	public:
-		static_assert( std::is_enum<TEnumeration>::value, "`TEnumeration` have to be enumeration type." );
+		// SERVICE USE ONLY. The type of bit storage interface.
+		using Storage		= typename Internal::EnumFlagsAdaptor<TEnumeration, TProjection>::Storage;
 
+		// SERVICE USE ONLY. The type of enumeration traits.
+		using Traits		= typename Storage::Traits;
 
-		// The underlying type of enumeration.
-		using Bits = Black::UnderlyingType<TEnumeration>;
+		// The type of given enumeration.
+		using Enumeration	= typename Traits::Enumeration;
 
+		// The type of raw bit storage.
+		using Bits			= typename Traits::BitStorage;
 
-		// 'None bits set' state specification.
-		static constexpr Bits NONE_BITS	= Bits( 0 );
-
-		// 'All bits set' state specification.
-		static constexpr Bits ALL_BITS	= ~NONE_BITS;
-
-	// Construction interface.
+	// Construction and assignment.
 	public:
-		EnumFlags()						= default;
-		EnumFlags( const EnumFlags& )	= default;
-		EnumFlags( EnumFlags&& )		= default;
-		explicit EnumFlags( const Bits flags ) : m_flags{ flags } {};
-		EnumFlags( std::initializer_list<TEnumeration> flags )
-		{
-			std::for_each( flags.begin(), flags.end(), [this]( const TEnumeration flag ) { SetFlag( flag ); } );
-		}
+		EnumFlags()												= default;
+		EnumFlags( const EnumFlags& )							= default;
+		EnumFlags( EnumFlags&& )								= default;
+		explicit EnumFlags( const Bits flags )					{ Storage::m_bits = flags; };
+		EnumFlags( std::initializer_list<Enumeration> flags )	{ Storage::SetFlags( flags ); };
 
 
 		inline EnumFlags& operator = ( const EnumFlags& )							= default;
 		inline EnumFlags& operator = ( EnumFlags&& )								= default;
-		inline EnumFlags& operator = ( const TEnumeration flag )					{ m_flags = GetBits( flag ); return *this; };
-		inline EnumFlags& operator = ( std::initializer_list<TEnumeration> flags )	{ return Black::CopyAndSwap( *this, flags ); };
+		inline EnumFlags& operator = ( const Enumeration flag )						{ Storage::m_bits = Traits::GetBit( flag ); return *this; };
+		inline EnumFlags& operator = ( std::initializer_list<Enumeration> flags )	{ return Black::CopyAndSwap( *this, flags ); };
 
 	// Public interface.
 	public:
-		// Clear the flags.
-		inline void Clear()													{ m_flags = 0; };
-
-		// Inverse the flags.
-		inline void Inverse()												{ m_flags = ~m_flags; };
-
-		// Get the state of inversed flags.
-		inline EnumFlags GetInverted() const								{ return EnumFlags( ~m_flags ); };
-
-		// Set the flag.
-		inline void SetFlag( const TEnumeration flag )						{ m_flags |= GetBits( flag ); };
-
-		// Unset the flag.
-		inline void UnsetFlag( const TEnumeration flag )					{ m_flags &= ~GetBits( flag ); };
-
-		// Set the flag.
-		template< TEnumeration FLAG >
-		inline void SetFlag()												{ m_flags |= GetBits( FLAG ); };
-
-		// Unset the flag.
-		template< TEnumeration FLAG >
-		inline void UnsetFlag()												{ m_flags &= ~GetBits( FLAG ); };
+		// Get the inverted state of flags.
+		inline EnumFlags GetInverted() const								{ return EnumFlags{ Traits::GetInverted( Storage::m_bits ) }; };
 
 
-		// Set the state of flag to desired.
-		inline void SetFlag( const TEnumeration flag, const bool is_set )	{ if( is_set ) { SetFlag( flag ); } else { UnsetFlag( flag ); }; };
+		inline const bool operator [] ( const Enumeration flag ) const		{ return Storage::HasFlag( flag ); };
 
-		// Set the state of flag to desired.
-		template< TEnumeration FLAG >
-		inline void SetFlag( const bool is_set )							{ if( is_set ) { SetFlag<FLAG>(); } else { UnsetFlag<FLAG>(); }; };
+		inline operator const Bits& () const								{ return Storage::m_bits; };
 
+		inline explicit operator const bool () const						{ return Storage::IsEmpty(); };
+		inline const bool operator ! () const								{ return !Storage::IsEmpty(); };
 
-		// Check that all flags are unset.
-		inline const bool IsEmpty() const									{ return m_flags == 0; };
+		inline const bool operator == ( const Enumeration flag ) const		{ return Storage::m_bits == Traits::GetBit( flag ); };
+		inline const bool operator == ( const EnumFlags& other ) const		{ return Storage::m_bits == other.m_bits; };
+		inline const bool operator != ( const Enumeration flag ) const		{ return Storage::m_bits != Traits::GetBit( flag ); };
+		inline const bool operator != ( const EnumFlags& other ) const		{ return Storage::m_bits != other.m_bits; };
 
-		// Check that the flag is set.
-		inline const bool HasFlag( const TEnumeration flag ) const			{ return ( m_flags & GetBits( flag ) ) != 0; };
+		inline const bool operator && ( const Enumeration flag ) const		{ return Storage::HasFlag( flag ); };
+		inline const bool operator && ( const EnumFlags& other ) const		{ return Storage::HasAllBits( other.m_bits ); };
 
-		// Check that the flag is set.
-		template< TEnumeration FLAG >
-		inline const bool HasFlag() const									{ return ( m_flags & GetBits( FLAG ) ) != 0; };
+		inline EnumFlags operator & ( const EnumFlags& other ) const		{ return EnumFlags{ Traits::Conjunction( Storage::m_bits, other.m_bits ) }; };
 
+		inline EnumFlags operator + ( const EnumFlags& other ) const		{ return EnumFlags{ Traits::Disjunction( Storage::m_bits, other.m_bits ) }; };
+		inline EnumFlags operator - ( const EnumFlags& other ) const		{ return EnumFlags{ Traits::Nonimplication( Storage::m_bits, other.m_bits ) }; };
+		inline EnumFlags operator + ( const Enumeration flag ) const		{ return EnumFlags{ Traits::SetBit( Storage::m_bits, flag ) }; };
+		inline EnumFlags operator - ( const Enumeration flag ) const		{ return EnumFlags{ Traits::UnsetBit( Storage::m_bits, flag ) }; };
 
-		inline const bool operator [] ( const TEnumeration flag ) const		{ return HasFlag( flag ); };
-
-		inline operator const Bits& () const								{ return m_flags; };
-
-		inline explicit operator const bool () const						{ return m_flags != 0; };
-		inline const bool operator ! () const								{ return m_flags == 0; };
-
-		inline const bool operator == ( const TEnumeration flag ) const		{ return m_flags == GetBits( flag ); };
-		inline const bool operator == ( const EnumFlags& other ) const		{ return m_flags == other.m_flags; };
-		inline const bool operator != ( const TEnumeration flag ) const		{ return m_flags != GetBits( flag ); };
-		inline const bool operator != ( const EnumFlags& other ) const		{ return m_flags != other.m_flags; };
-
-		inline const bool operator && ( const TEnumeration flag ) const		{ return HasFlag( flag ); };
-		inline const bool operator && ( const EnumFlags& other ) const		{ return ( m_flags & other.m_flags ) == other.m_flags; };
-
-		inline EnumFlags operator & ( const EnumFlags& other ) const		{ return EnumFlags( m_flags & other.m_flags ); };
-
-		inline EnumFlags operator + ( const EnumFlags& other ) const		{ return EnumFlags( m_flags | other.m_flags ); };
-		inline EnumFlags operator - ( const EnumFlags& other ) const		{ return EnumFlags( m_flags & ~other.m_flags ); };
-		inline EnumFlags operator + ( const TEnumeration flag ) const		{ return EnumFlags( m_flags | GetBits( flag ) ); };
-		inline EnumFlags operator - ( const TEnumeration flag ) const		{ return EnumFlags( m_flags & ~GetBits( flag ) ); };
-
-		inline EnumFlags& operator += ( const EnumFlags& other )			{ m_flags = m_flags | other.m_flags; return *this; };
-		inline EnumFlags& operator -= ( const EnumFlags& other )			{ m_flags = m_flags & ~other.m_flags; return *this; };
-		inline EnumFlags& operator += ( const TEnumeration flag )			{ SetFlag( flag ); return *this; };
-		inline EnumFlags& operator -= ( const TEnumeration flag )			{ UnsetFlag( flag ); return *this; };
-
-	private:
-		// Transform the enumeration value into bits.
-		static constexpr Bits GetBits( const TEnumeration flag )			{ return Black::GetEnumValue( flag ); };
-
-	private:
-		Bits m_flags = 0;	// Bits for enumeration flags.
+		inline EnumFlags& operator += ( const EnumFlags& other )			{ Storage::SetBit( other.m_bits ); return *this; };
+		inline EnumFlags& operator -= ( const EnumFlags& other )			{ Storage::UnsetBit( other.m_bits ); return *this; };
+		inline EnumFlags& operator += ( const Enumeration flag )			{ Storage::SetFlag( flag ); return *this; };
+		inline EnumFlags& operator -= ( const Enumeration flag )			{ Storage::UnsetFlag( flag ); return *this; };
 	};
 }
 }
