@@ -59,19 +59,13 @@ namespace Black
 	};
 
 	// Tagging type to mark the operation variant, that will ignore internal failures.
-	struct IgnoreFailure final
-	{
-
-	};
+	enum class IgnoreFailure;
 
 	// Tagging object to mark the operation variant, that will ignore internal failures.
 	constexpr IgnoreFailure IGNORE_FALURE = {};
 
 	// Tagging type to mark the operation variant, that will use in-place construction.
-	struct ConstructInplace final
-	{
-
-	};
+	enum class ConstructInplace;
 
 	// Tagging object to mark the operation variant, that will use in-place construction.
 	constexpr ConstructInplace CONSTRUCT_INPLACE = {};
@@ -191,7 +185,35 @@ namespace Black
 		bool		m_is_canceled	= false;
 	};
 
-	// Get the scope exit handler.
-	template< typename TFunction >
-	inline ScopeExitHandler<TFunction> GetScopeExitHandler( TFunction function ) { return ScopeExitHandler<TFunction>{ std::move( function ) }; };
+	// Regular bit storage for requested number of bits. The number of bits should be 8, 16, 32 or 64 only.
+	template< size_t MAX_BITS >
+	struct BitStorage;
+
+	// Terminal branch for 8-bit storage.
+	template<>
+	struct BitStorage<8>
+	{
+		using Bits = uint8_t;
+	};
+
+	// Terminal branch for 16-bit storage.
+	template<>
+	struct BitStorage<16>
+	{
+		using Bits = uint16_t;
+	};
+
+	// Terminal branch for 32-bit storage.
+	template<>
+	struct BitStorage<32>
+	{
+		using Bits = uint32_t;
+	};
+
+	// Terminal branch for 64-bit storage.
+	template<>
+	struct BitStorage<64>
+	{
+		using Bits = uint64_t;
+	};
 }
