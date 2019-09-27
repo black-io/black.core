@@ -10,48 +10,74 @@ inline namespace Types
 	/**
 		@brief	Core C++ Guideline `not_null` type.
 		Assigning of `nullptr` to instance of this type will cause termination of execution.
-		@tparam	TStoredType	Type of stored pointer.
+		@tparam	TPointer	Type of stored pointer.
 	*/
-	template< typename TStoredType >
-	class NotNull
+	template< typename TPointer >
+	class NotNull final
 	{
+	// Service inner types and predicates.
 	public:
+		// Whether the type could be casted to `TPointer`.
+		template< typename TOther >
+		static inline constexpr bool IS_CONVERTIBLE_FROM		= std::is_convertible_v<TOther, TPointer>;
+
+		// Whether the `TPointer` could be casted to type.
+		template< typename TOther >
+		static inline constexpr bool IS_CONVERTIBLE_TO			= std::is_convertible_v<TPointer, TOther>;
+
+	// Construction and assignment.
+	public:
+		static_assert( std::is_assignable_v<TPointer&, std::nullptr_t>, "`TPointer` should be able to accept `nullptr` value." );
+		static_assert( !std::is_same_v<TPointer, std::nullptr_t>, "`TPointer` should not be the type of `nullptr`." );
+
+		NotNull()					= delete;
 		NotNull( const NotNull& )	= default;
 		NotNull( NotNull&& )		= default;
-		NotNull( TStoredType* new_pointer ) : m_stored_pointer{ new_pointer } { EXPECTS( m_stored_pointer != nullptr ); };
-
-		template< typename TDerivedType, typename = EnableIf<IS_CONVERTIBLE<TDerivedType*, TStoredType*>> >
-		NotNull( const NotNull<TDerivedType>& other ) : m_stored_pointer( other.m_stored_pointer ) {};
-
-
-		inline NotNull& operator = ( const NotNull& other )		= default;
-		inline NotNull& operator = ( NotNull&& other )			= default;
-		inline NotNull& operator = ( TStoredType* new_pointer )	{ EXPECTS( new_pointer != nullptr ); m_stored_pointer = new_pointer; return *this; };
-
-		template< typename TDerivedType, typename = EnableIf<IS_CONVERTIBLE<TDerivedType*, TStoredType*>> >
-		inline NotNull& operator = ( const NotNull<TDerivedType>& other )	{ m_stored_pointer = other.m_stored_pointer; return *this; };
-
-
-		inline TStoredType* get() const	{ BLACK_ASSUME( m_stored_pointer != nullptr ); return m_stored_pointer; };
-
-		template< typename TCastingType >
-		inline EnableIf<IS_CONVERTIBLE<TCastingType*, TStoredType*>, TCastingType*> get() const	{ return static_cast<TCastingType*>( get() ); };
-
-
-		inline TStoredType* operator -> () const											{ return get(); };
-		inline Conditional<IS_VOID<TStoredType>, uint8_t, TStoredType>& operator * () const	{ return *get(); };
-		inline operator TStoredType* () const												{ return get(); };
-
-	private:
-		NotNull()					= delete;
 		NotNull( std::nullptr_t )	= delete;
-		NotNull( int )				= delete;
+		constexpr NotNull( TPointer pointer ) : m_pointer{ std::move( pointer ) } { EXPECTS( m_pointer != nullptr ); };
 
-		NotNull& operator = ( std::nullptr_t )	= delete;
-		NotNull& operator = ( int )				= delete;
+		template< typename TOther, typename = std::enable_if_t<IS_CONVERTIBLE_FROM<TOther>> >
+		constexpr NotNull( TOther&& other ) : m_pointer( std::forward<TOther>( other ) ) { EXPECTS( m_pointer != nullptr ); };
 
+		template< typename TOther, typename = std::enable_if_t<IS_CONVERTIBLE_FROM<TOther>> >
+		constexpr NotNull( const NotNull<TOther>& other ) : m_pointer( other.m_pointer ) { EXPECTS( m_pointer != nullptr ); };
+
+
+		inline NotNull& operator = ( const NotNull& )					= default;
+		inline NotNull& operator = ( NotNull&& )						= default;
+		inline NotNull& operator = ( TPointer pointer )					{ return Black::CopyAndSwap( *this, pointer ); };
+		inline NotNull& operator = ( std::nullptr_t )					= delete;
+
+		template< typename TOther, typename = std::enable_if_t<IS_CONVERTIBLE_FROM<TOther>> >
+		inline NotNull& operator = ( TOther other )						{ return Black::CopyAndSwap( *this, other ); };
+
+		template< typename TOther, typename = std::enable_if_t<IS_CONVERTIBLE_FROM<TOther>> >
+		inline NotNull& operator = ( const NotNull<TOther>& other )		{ return Black::CopyAndSwap( *this, other ); };
+
+	// Public interface.
+	public:
+		constexpr TPointer Get() const	{ ENSURES_DEBUG( m_pointer != nullptr ); return m_pointer; };
+
+		template< typename TOther >
+		constexpr auto Get() const -> decltype( static_cast<TOther>( std::declval<TPointer>() ) )	{ return static_cast<TOther>( Get() ); };
+
+
+		constexpr operator TPointer () const			{ return Get(); };
+		constexpr TPointer operator -> () const			{ return Get(); };
+		constexpr decltype( auto ) operator * () const	{ return *Get(); };
+
+
+		NotNull& operator += ( ptrdiff_t )	= delete;
+		NotNull& operator ++ ()				= delete;
+		NotNull operator ++ ( int )			= delete;
+		NotNull& operator -= ( ptrdiff_t )	= delete;
+		NotNull& operator -- ()				= delete;
+		NotNull operator -- ( int )			= delete;
+		void operator [] ( size_t )			= delete;
+
+	// Private state.
 	private:
-		TStoredType*	m_stored_pointer;
+		TPointer	m_pointer;	// Stored pointer.
 	};
 }
 }
