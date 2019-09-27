@@ -15,16 +15,6 @@ inline namespace Types
 	template< typename TPointer >
 	class NotNull final
 	{
-	// Service inner types and predicates.
-	public:
-		// Whether the type could be casted to `TPointer`.
-		template< typename TOther >
-		static inline constexpr bool IS_CONVERTIBLE_FROM		= std::is_convertible_v<TOther, TPointer>;
-
-		// Whether the `TPointer` could be casted to type.
-		template< typename TOther >
-		static inline constexpr bool IS_CONVERTIBLE_TO			= std::is_convertible_v<TPointer, TOther>;
-
 	// Construction and assignment.
 	public:
 		static_assert( std::is_assignable_v<TPointer&, std::nullptr_t>, "`TPointer` should be able to accept `nullptr` value." );
@@ -36,10 +26,10 @@ inline namespace Types
 		NotNull( std::nullptr_t )	= delete;
 		constexpr NotNull( TPointer pointer ) : m_pointer{ std::move( pointer ) } { EXPECTS( m_pointer != nullptr ); };
 
-		template< typename TOther, typename = std::enable_if_t<IS_CONVERTIBLE_FROM<TOther>> >
+		template< typename TOther, typename = std::enable_if_t<std::is_convertible_v<TOther, TPointer>> >
 		constexpr NotNull( TOther&& other ) : m_pointer( std::forward<TOther>( other ) ) { EXPECTS( m_pointer != nullptr ); };
 
-		template< typename TOther, typename = std::enable_if_t<IS_CONVERTIBLE_FROM<TOther>> >
+		template< typename TOther, typename = std::enable_if_t<std::is_convertible_v<TOther, TPointer>> >
 		constexpr NotNull( const NotNull<TOther>& other ) : m_pointer( other.m_pointer ) { EXPECTS( m_pointer != nullptr ); };
 
 
@@ -48,10 +38,10 @@ inline namespace Types
 		inline NotNull& operator = ( TPointer pointer )					{ return Black::CopyAndSwap( *this, pointer ); };
 		inline NotNull& operator = ( std::nullptr_t )					= delete;
 
-		template< typename TOther, typename = std::enable_if_t<IS_CONVERTIBLE_FROM<TOther>> >
+		template< typename TOther, typename = std::enable_if_t<std::is_convertible_v<TOther, TPointer>> >
 		inline NotNull& operator = ( TOther other )						{ return Black::CopyAndSwap( *this, other ); };
 
-		template< typename TOther, typename = std::enable_if_t<IS_CONVERTIBLE_FROM<TOther>> >
+		template< typename TOther, typename = std::enable_if_t<std::is_convertible_v<TOther, TPointer>> >
 		inline NotNull& operator = ( const NotNull<TOther>& other )		{ return Black::CopyAndSwap( *this, other ); };
 
 	// Public interface.
