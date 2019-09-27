@@ -35,16 +35,16 @@ inline namespace Types
 		return *this;
 	}
 
-	void IntrusiveHook::AddIntrusiveLink( Black::NotNull<RegularIntrusiveLink> link ) const
+	void IntrusiveHook::AddIntrusiveLink( Black::NotNull<RegularIntrusiveLink*> link ) const
 	{
-		EXPECTS_DEBUG( !Black::IsItemExists( m_liinks, link.get() ) );
-		Black::UniqueAdd( m_liinks, link.get() );
+		EXPECTS_DEBUG( !Black::IsItemExists( m_liinks, link.Get() ) );
+		Black::UniqueAdd( m_liinks, link.Get() );
 	}
 
-	void IntrusiveHook::RemoveIntrusiveLink( Black::NotNull<RegularIntrusiveLink> link ) const
+	void IntrusiveHook::RemoveIntrusiveLink( Black::NotNull<RegularIntrusiveLink*> link ) const
 	{
-		EXPECTS_DEBUG( Black::IsItemExists( m_liinks, link.get() ) );
-		Black::RemoveItem( m_liinks, link.get() );
+		EXPECTS_DEBUG( Black::IsItemExists( m_liinks, link.Get() ) );
+		Black::RemoveItem( m_liinks, link.Get() );
 	}
 
 	void IntrusiveHook::Invalidate()

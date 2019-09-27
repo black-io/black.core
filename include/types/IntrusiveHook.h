@@ -32,11 +32,11 @@ inline namespace Types
 
 		// Add the link into hook.
 		// This is a service function, it may be used only by intrusive link.
-		void AddIntrusiveLink( Black::NotNull<RegularIntrusiveLink> link ) const;
+		void AddIntrusiveLink( Black::NotNull<RegularIntrusiveLink*> link ) const;
 
 		// Remove the link form hook.
 		// This is a service function, it may be used only by intrusive link.
-		void RemoveIntrusiveLink( Black::NotNull<RegularIntrusiveLink> link ) const;
+		void RemoveIntrusiveLink( Black::NotNull<RegularIntrusiveLink*> link ) const;
 
 	// Construction interface.
 	protected:
