@@ -13,11 +13,11 @@ namespace Internal
 	template< typename TEnumeration, typename = int >
 	struct OrdinalEnumBitStorage;
 
-	// Terminal branch. Detect the bit storage via `MAX_BITS` constant of enumeration.
+	// Terminal branch. Detect the bit storage via `MaxBits` constant of enumeration.
 	template< typename TEnumeration >
-	struct OrdinalEnumBitStorage<TEnumeration, decltype( TEnumeration::MAX_BITS, 0 )>
+	struct OrdinalEnumBitStorage<TEnumeration, decltype( TEnumeration::MaxBits, 0 )>
 	{
-		static constexpr size_t	MAX_BITS = Black::GetEnumValue( TEnumeration::MAX_BITS );
+		static constexpr size_t	MAX_BITS = Black::GetEnumValue( TEnumeration::MaxBits );
 		static_assert( MAX_BITS > 0, "The maximum number of bits should be above 0." );
 		static_assert( MAX_BITS <= 64, "The maximum number of bits may not be below 64." );
 
@@ -25,11 +25,11 @@ namespace Internal
 		using Bits = typename Black::BitStorage<Black::GetAlignedSize( MAX_BITS, 8 )>::Bits;
 	};
 
-	// Terminal branch. Detect the bit storage via `MAX_VALUE` constant of enumeration.
+	// Terminal branch. Detect the bit storage via `MaxValue` constant of enumeration.
 	template< typename TEnumeration >
-	struct OrdinalEnumBitStorage<TEnumeration, decltype( TEnumeration::MAX_VALUE, 0 )>
+	struct OrdinalEnumBitStorage<TEnumeration, decltype( TEnumeration::MaxValue, 0 )>
 	{
-		static constexpr size_t	MAX_VALUE	= Black::GetEnumValue( TEnumeration::MAX_VALUE );
+		static constexpr size_t	MAX_VALUE	= Black::GetEnumValue( TEnumeration::MaxValue );
 		static_assert( MAX_VALUE > 0, "The maximum value should be above 0." );
 
 		static constexpr bool	IS_UINT64	= MAX_VALUE > std::numeric_limits<uint32_t>::max();
