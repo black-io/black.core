@@ -300,7 +300,7 @@ inline namespace TextUtils
 			}
 
 			const String& used_part	= ( flags.HasFlag<TextJoiningFlag::Trim>() )? trimmed_part : part;
-			result					+= ( result.empty() )? used_part : pattern + used_part;
+			result					+= ( result.empty() )? used_part : String{ pattern } + used_part;
 		}
 
 		return result;
@@ -325,7 +325,7 @@ inline namespace TextUtils
 		while( part_begin < string_buffer.size() )
 		{
 			const size_t part_length	= ( pattern_begin == String::npos )? String::npos : pattern_begin - part_begin;
-			String part					= string_buffer.substr( part_begin, part_length );
+			String part					= String{ string_buffer.substr( part_begin, part_length ) };
 			part_begin					= ( pattern_begin == String::npos )? string_buffer.length() : pattern_begin + pattern.length();
 			pattern_begin				= string_buffer.find( pattern, part_begin );
 
