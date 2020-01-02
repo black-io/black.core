@@ -106,13 +106,13 @@ inline namespace TextUtils
 
 	/**
 		@brief	Remove the non-printable chars from left and right of string.
+		The function accepts any type of rearrangeable string, e.g. `std::string` or `Black::StringView`.
+
 		@param	string_buffer	Input string to be trimmed.
-		@tparam TChar			Type of string character.
-		@tparam	TTraits			String traits.
-		@tparam	TAllocator		String allocator.
+		@tparam TStringBuffer	Acceptable type of regular rearrangeable string.
 	*/
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void MakeTrimmedString( std::basic_string<TChar, TTraits, TAllocator>& string_buffer );
+	template< typename TStringBuffer >
+	inline void MakeTrimmedString( TStringBuffer& string_buffer );
 
 	/**
 		@brief	Join the string parts into single string using pattern.
@@ -146,11 +146,11 @@ inline namespace TextUtils
 		@tparam	TStorage	Type of `fragments_storage`, `std::vector`, `std::list` or `std::deque` may be used here.
 		@return
 	*/
-	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
+	template< typename TStorage, typename TStringBuffer, typename TPattern >
 	inline const size_t SplitString(
-		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		Black::RegularStringView<TChar> string_buffer,
-		Black::RegularStringView<TChar> pattern,
+		TStorage& parts,
+		const TStringBuffer& string_buffer,
+		const TPattern& pattern,
 		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
 	);
 }
