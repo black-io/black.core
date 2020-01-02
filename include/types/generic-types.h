@@ -29,6 +29,10 @@ namespace Black
 	template< class THost, typename TResult, typename... TArguments >
 	using MemberConstVolatileFunctionPointer	= TResult (THost::*)( TArguments... ) const volatile;
 
+	// Trivial common selection between Debug and Non-debug implementations.
+	template< typename RelaseImplementation, typename DebugImplementation >
+	using BuildModeDependent = std::conditional_t<Black::BUILD_CONFIGURATION == Black::BuildMode::Release, RelaseImplementation, DebugImplementation>;
+
 	// Regular 32-bit size specification.
 	using size32_t		= uint32_t;
 
