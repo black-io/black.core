@@ -26,7 +26,7 @@ inline namespace HashUtils
 	}
 
 	template< typename TChar, typename TTraits >
-	inline const uint32_t GetUnreliableHash( Black::RegularStringView<TChar, TTraits> data, const uint32_t seed = 0 )
+	inline const uint32_t GetUnreliableHash( std::basic_string_view<TChar, TTraits> data, const uint32_t seed = 0 )
 	{
 		return GetUnreliableHash( data.data(), data.length() * sizeof( TChar ), seed );
 	}
