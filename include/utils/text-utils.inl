@@ -95,26 +95,6 @@ inline namespace TextUtils
 		return GetTrimmedString( Black::RegularStringView<TChar>{ string_buffer } );
 	}
 
-	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
-	inline std::basic_string<TChar, TTraits, TAllocator> JoinString(
-		const TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		const TChar* const pattern,
-		const TextJoiningFlags flags = { TextJoiningFlag::DropEmpty }
-	)
-	{
-		return JoinString( parts, Black::RegularStringView<TChar>{ pattern }, flags );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
-	inline std::basic_string<TChar, TTraits, TAllocator> JoinString(
-		const TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		const std::basic_string<TChar, TTraits, TAllocator>& pattern,
-		const TextJoiningFlags flags = { TextJoiningFlag::DropEmpty }
-	)
-	{
-		return JoinString( parts, Black::RegularStringView<TChar>{ pattern }, flags );
-	}
-
 	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
 	inline std::basic_string<TChar, TTraits, TAllocator> FormatString(
 		const std::basic_string<TChar, TTraits, TAllocator>& format,
@@ -236,38 +216,6 @@ inline namespace TextUtils
 		const size_t result_length		= std::distance( found_begin, found_end );
 		TStringBuffer buffer{ buffer_view.substr( result_position, result_length ) };
 		std::swap( string_buffer, buffer );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
-	inline std::basic_string<TChar, TTraits, TAllocator> JoinString(
-		const TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		Black::RegularStringView<TChar> pattern,
-		const TextJoiningFlags flags
-	)
-	{
-		using String = std::basic_string<TChar, TTraits, TAllocator>;
-
-		CRET( parts.empty(), {} );
-		String result;
-
-		String trimmed_part;
-		for( auto& part : parts )
-		{
-			if( flags.HasFlag<TextJoiningFlag::Trim>() )
-			{
-				trimmed_part = GetTrimmedString( part );
-				CCON( flags.HasFlag<TextJoiningFlag::DropEmpty>() && trimmed_part.empty() );
-			}
-			else
-			{
-				CCON( flags.HasFlag<TextJoiningFlag::DropEmpty>() && part.empty() );
-			}
-
-			const String& used_part	= ( flags.HasFlag<TextJoiningFlag::Trim>() )? trimmed_part : part;
-			result					+= ( result.empty() )? used_part : String{ pattern } + used_part;
-		}
-
-		return result;
 	}
 }
 }
