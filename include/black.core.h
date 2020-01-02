@@ -93,6 +93,7 @@ inline namespace Core
 // Core utils.
 #include "utils/platform-utils.h"
 #include "utils/container-utils.h"
+#include "utils/text-utils.internal.h"
 #include "utils/text-utils.const.h"
 #include "utils/text-utils.h"
 #include "utils/tuple-utils.h"
@@ -118,6 +119,7 @@ inline namespace Core
 #include "utils/hash-utils.inl"
 #include "utils/tuple-utils.inl"
 #include "utils/text-utils.inl"
+#include "utils/text-utils.split-string.inl"
 #include "utils/container-utils.plain-containers.inl"
 #include "utils/container-utils.set.inl"
 #include "utils/container-utils.map.inl"
