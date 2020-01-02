@@ -20,10 +20,14 @@ namespace Internal
 
 
 	// Adapter to check the char type and qualify the type of suitable string view.
-	template< typename TChar, typename TTraits = std::char_traits<TChar> >
+	template< typename TChar, typename TTraits = std::char_traits<TChar>, typename TAllocator = std::allocator<TChar> >
 	struct StringViewAdapter : public ValidCharTest<TChar>
 	{
-		using View = std::basic_string_view<TChar, TTraits>;
+		// Regular suitable string view type.
+		using View		= std::basic_string_view<TChar, TTraits>;
+
+		// Regular suitable string storage type.
+		using Storage	= std::basic_string<TChar, TTraits, TAllocator>;
 	};
 
 
@@ -31,7 +35,11 @@ namespace Internal
 	template< typename TCandidate >
 	struct StringInfo : public std::false_type
 	{
-		using View = void;
+		// TYpe shortcut.
+		using View		= void;
+
+		// Type shortcut.
+		using Storage	= void;
 	};
 
 	template< typename TChar, typename TTraits >
@@ -41,7 +49,7 @@ namespace Internal
 	struct StringInfo<std::basic_string_view<TChar, TTraits>> : public StringViewAdapter<TChar, TTraits> {};
 
 	template< typename TChar, typename TTraits, typename TAllocator >
-	struct StringInfo<std::basic_string<TChar, TTraits, TAllocator>> : public StringViewAdapter<TChar, TTraits> {};
+	struct StringInfo<std::basic_string<TChar, TTraits, TAllocator>> : public StringViewAdapter<TChar, TTraits, TAllocator> {};
 
 	template< typename TChar >
 	struct StringInfo<TChar*> : public StringViewAdapter<TChar> {};
@@ -95,5 +103,9 @@ namespace Internal
 	// Type translation for consumable string patterns.
 	template< typename TCandidate >
 	using PatternView = typename PatternInfo<std::decay_t<TCandidate>>::View;
+
+	// Type translation for storing the consumable strings.
+	template< typename TCandidate >
+	using StringStorage = typename StringInfo<std::decay_t<TCandidate>>::Storage;
 }
 }
