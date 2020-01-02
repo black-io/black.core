@@ -119,19 +119,13 @@ inline namespace TextUtils
 		@param	parts				Given parts to join.
 		@param	pattern				Joining pattern.
 		@param	flags				Joining flags.
-		@tparam	TChar				Type of string character.
-		@tparam	TTraits				String traits.
-		@tparam	TAllocator			String allocator.
-		@tparam	TStorageAllocator	Allocator for `fragments_storage`.
-		@tparam	TStorage			Type of `fragments_storage`, `std::vector`, `std::list` or `std::deque` may be used here.
+		@tparam	TPartStorage		Type of storage, where the given parts stored.
+		@tparam	TPattern			Type of given pattern. Any type of string char or string are accepted.
+		@tparam	TOutStorage			Type of result string, where the joined parts will be stored.
 		@return						The value returned is an joined parts into single string.
 	*/
-	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
-	inline std::basic_string<TChar, TTraits, TAllocator> JoinString(
-		const TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		Black::RegularStringView<TChar> pattern,
-		const TextJoiningFlags flags = { TextJoiningFlag::DropEmpty }
-	);
+	template< typename TPartStorage, typename TPattern, typename TOutStorage = Internal::StringStorage<typename TPartStorage::value_type> >
+	inline TOutStorage JoinString( const TPartStorage& parts, const TPattern& pattern, const TextJoiningFlags flags = { TextJoiningFlag::DropEmpty } );
 
 	/**
 		@brief	Splits input string buffer into fragments, which will be stored into storage according to split options.
