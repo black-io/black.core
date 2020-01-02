@@ -119,6 +119,7 @@ inline namespace Core
 #include "utils/hash-utils.inl"
 #include "utils/tuple-utils.inl"
 #include "utils/text-utils.inl"
+#include "utils/text-utils.join-string.inl"
 #include "utils/text-utils.split-string.inl"
 #include "utils/container-utils.plain-containers.inl"
 #include "utils/container-utils.set.inl"
