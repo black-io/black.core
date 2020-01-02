@@ -9,8 +9,7 @@ inline namespace Types
 {
 namespace Internal
 {
-	// Common deduction branch. True functionality.
-	template< Black::BuildMode >
+	// Regular debug name implementation.
 	class DebugName final
 	{
 	// Construction and initialization.
@@ -44,27 +43,26 @@ namespace Internal
 		std::string	m_name;	// Stored name.
 	};
 
-	// Terminal deduction branch. Fake functionality for release build.
-	template<>
-	class DebugName<Black::BuildMode::Release> final
+	// Fake debug name implementation. Well used in release builds.
+	class FakeDebugName final
 	{
 	// Fake initialization.
 	public:
-		DebugName()												= default;
-		DebugName( const DebugName& )							= default;
-		DebugName( DebugName&& )								= default;
-		DebugName( std::string name )							{};
-		DebugName( std::string_view name )						{};
-		DebugName( Black::StringView name )						{};
-		DebugName( const char* const name )						{};
+		FakeDebugName()												= default;
+		FakeDebugName( const FakeDebugName& )						= default;
+		FakeDebugName( FakeDebugName&& )							= default;
+		FakeDebugName( std::string name )							{};
+		FakeDebugName( std::string_view name )						{};
+		FakeDebugName( Black::StringView name )						{};
+		FakeDebugName( const char* const name )						{};
 
 
-		inline DebugName& operator = ( const DebugName& )		= default;
-		inline DebugName& operator = ( DebugName&& )			= default;
-		inline DebugName& operator = ( std::string name )		{ return *this; };
-		inline DebugName& operator = ( std::string_view name )	{ return *this; };
-		inline DebugName& operator = ( Black::StringView name )	{ return *this; };
-		inline DebugName& operator = ( const char* const name )	{ return *this; };
+		inline FakeDebugName& operator = ( const FakeDebugName& )	= default;
+		inline FakeDebugName& operator = ( FakeDebugName&& )		= default;
+		inline FakeDebugName& operator = ( std::string name )		{ return *this; };
+		inline FakeDebugName& operator = ( std::string_view name )	{ return *this; };
+		inline FakeDebugName& operator = ( Black::StringView name )	{ return *this; };
+		inline FakeDebugName& operator = ( const char* const name )	{ return *this; };
 
 	// Fake interface.
 	public:
@@ -82,7 +80,7 @@ namespace Internal
 		Debug names are visible only in Debug build configuration. For any other configuration such names will be empty.
 		Ideally, any code about debug names may be omitted out of code for non-Debug build configurations.
 	*/
-	using DebugName = Internal::DebugName<Black::BUILD_CONFIGURATION>;
+	using DebugName = Black::BuildModeDependent<Internal::FakeDebugName, Internal::DebugName>;
 }
 }
 }
