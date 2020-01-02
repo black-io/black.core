@@ -73,8 +73,8 @@ namespace Internal
 	template< typename TStorage, typename TStringBuffer, typename TPattern >
 	inline const size_t SplitString( TStorage& parts, const TStringBuffer& string_buffer, const TPattern& pattern, const TextSplittingFlags flags )
 	{
-		static_assert( Internal::IS_VALID_STRING<TStringBuffer>, "The type input string buffer should be one of regular string types." );
-		static_assert( Internal::IS_VALID_PATTERN<TPattern>, "The type split pattern should be one of regular string types or the regular char type." );
+		static_assert( Internal::IS_VALID_STRING<TStringBuffer>, "The type of input string buffer should be one of regular string types." );
+		static_assert( Internal::IS_VALID_PATTERN<TPattern>, "The type of splitting pattern should be one of regular string types or the regular char type." );
 
 		using ValidStringView	= Internal::StringView<TStringBuffer>;
 		using ValidPatternView	= Internal::PatternView<TPattern>;
