@@ -115,50 +115,6 @@ inline namespace TextUtils
 		return JoinString( parts, Black::RegularStringView<TChar>{ pattern }, flags );
 	}
 
-	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
-	inline const size_t SplitString(
-		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		const TChar* const string_buffer,
-		const TChar* const pattern,
-		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
-	)
-	{
-		return SplitString( parts, Black::RegularStringView<TChar>{ string_buffer }, Black::RegularStringView<TChar>{ pattern }, flags );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
-	inline const size_t SplitString(
-		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		const std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
-		const std::basic_string<TChar, TTraits, TAllocator>& pattern,
-		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
-	)
-	{
-		return SplitString( parts, Black::RegularStringView<TChar>{ string_buffer }, Black::RegularStringView<TChar>{ pattern }, flags );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
-	inline const size_t SplitString(
-		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		const TChar* const string_buffer,
-		const std::basic_string<TChar, TTraits, TAllocator>& pattern,
-		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
-	)
-	{
-		return SplitString( parts, Black::RegularStringView<TChar>{ string_buffer }, Black::RegularStringView<TChar>{ pattern }, flags );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
-	inline const size_t SplitString(
-		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		const std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
-		const TChar* const pattern,
-		const TextSplittingFlags flags = { TextSplittingFlag::DropEmpty, TextSplittingFlag::Trim }
-	)
-	{
-		return SplitString( parts, Black::RegularStringView<TChar>{ string_buffer }, Black::RegularStringView<TChar>{ pattern }, flags );
-	}
-
 	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
 	inline std::basic_string<TChar, TTraits, TAllocator> FormatString(
 		const std::basic_string<TChar, TTraits, TAllocator>& format,
@@ -248,29 +204,37 @@ inline namespace TextUtils
 		return { found_begin, found_end };
 	}
 
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void MakeTrimmedString( std::basic_string<TChar, TTraits, TAllocator>& string_buffer )
+	template< typename TStringBuffer >
+	inline void MakeTrimmedString( TStringBuffer& string_buffer )
 	{
-		CRET( string_buffer.empty() );
+		static_assert( Internal::IS_REARRANGEABLE<TStringBuffer>, "The string buffer should be valid rearrangeable string (e.g. `std::string`)." );
+
+		using View = Internal::StringView<TStringBuffer>;
+		using Char = typename View::value_type;
+
+		const View buffer_view{ string_buffer };
+		CRET( buffer_view.empty() );
 
 		std::locale used_locale;
-		decltype( auto ) char_traits	= std::use_facet< std::ctype<TChar> >( used_locale );
-		auto space_filter				= [&char_traits]( const TChar& symbol ) -> bool
+		decltype( auto ) char_traits	= std::use_facet< std::ctype<Char> >( used_locale );
+		auto space_filter				= [&char_traits]( const Char& symbol ) -> bool
 		{
 			return !char_traits.is( std::ctype_base::space, symbol );
 		};
 
-		auto found_begin = std::find_if( std::begin( string_buffer ), std::end( string_buffer ), space_filter );
-		if( found_begin == std::end( string_buffer ) )
+		auto found_begin = std::find_if( buffer_view.begin(), buffer_view.end(), space_filter );
+		if( found_begin == buffer_view.end() )
 		{
-			string_buffer.clear();
+			string_buffer = {};
 			return;
 		}
 
-		auto found_end	= std::find_if( std::rbegin( string_buffer ), std::rend( string_buffer ), space_filter ).base();
-		CRET( std::distance( found_begin, found_end ) == string_buffer.length() );
+		auto found_end	= std::find_if( buffer_view.rbegin(), buffer_view.rend(), space_filter ).base();
+		CRET( std::distance( found_begin, found_end ) == buffer_view.length() );
 
-		std::basic_string<TChar, TTraits, TAllocator> buffer{ found_begin, found_end };
+		const size_t result_position	= std::distance( buffer_view.begin(), found_begin );
+		const size_t result_length		= std::distance( found_begin, found_end );
+		TStringBuffer buffer{ buffer_view.substr( result_position, result_length ) };
 		std::swap( string_buffer, buffer );
 	}
 
@@ -304,43 +268,6 @@ inline namespace TextUtils
 		}
 
 		return result;
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator, typename TStorageAllocator, template< typename, typename > class TStorage >
-	inline const size_t SplitString(
-		TStorage< std::basic_string<TChar, TTraits, TAllocator>, TStorageAllocator >& parts,
-		Black::RegularStringView<TChar> string_buffer,
-		Black::RegularStringView<TChar> pattern,
-		const TextSplittingFlags flags
-	)
-	{
-		using String = std::basic_string<TChar, TTraits, TAllocator>;
-
-		CRET( string_buffer.empty() || pattern.empty(), 0 );
-		const size_t stored_parts	= parts.size();
-		size_t part_begin			= 0;
-		size_t pattern_begin		= string_buffer.find( pattern, part_begin );
-		CRET( flags.HasFlag<TextSplittingFlag::OnlySplitted>() && ( pattern_begin == String::npos ), 0 );
-
-		while( part_begin < string_buffer.size() )
-		{
-			const size_t part_length	= ( pattern_begin == String::npos )? String::npos : pattern_begin - part_begin;
-			String part					= String{ string_buffer.substr( part_begin, part_length ) };
-			part_begin					= ( pattern_begin == String::npos )? string_buffer.length() : pattern_begin + pattern.length();
-			pattern_begin				= string_buffer.find( pattern, part_begin );
-
-			if( flags.HasFlag<TextSplittingFlag::Trim>() )
-			{
-				MakeTrimmedString( part );
-			}
-
-			CCON( flags.HasFlag<TextSplittingFlag::DropEmpty>() && part.empty() );
-			CCON( flags.HasFlag<TextSplittingFlag::OnlyUnique>() && Black::IsItemExists( parts, part ) );
-
-			parts.emplace_back( std::move( part ) );
-		}
-
-		return parts.size() - stored_parts;
 	}
 }
 }
