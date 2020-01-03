@@ -94,6 +94,7 @@ inline namespace Core
 #include "utils/platform-utils.h"
 #include "utils/container-utils.h"
 #include "utils/text-utils.internal.h"
+#include "utils/text-utils.functions.h"
 #include "utils/text-utils.const.h"
 #include "utils/text-utils.h"
 #include "utils/tuple-utils.h"
