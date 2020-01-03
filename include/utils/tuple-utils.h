@@ -18,25 +18,5 @@ inline namespace Utils
 	template< typename TFunction, typename... TArguments >
 	void ForEach( std::tuple<TArguments...>& elements, const TFunction& function );
 }
-
-
-inline namespace TextUtils
-{
-	/**
-		@brief	Format the arguments into string.
-		Uses formatting syntax similar to `str.format` from Python.
-		Syntax documentation : http://cppformat.github.io/latest/syntax.html
-		@param	format		Declares the format, how `arguments` must be placed in output string.
-		@param	arguments	The arguments to be formatted.
-		@tparam	TChar		Type of string character.
-		@tparam	TArguments	Types of passed arguments.
-		@return				The value returned is an formatted string.
-	*/
-	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
-	inline std::basic_string<TChar, TTraits, TAllocator> FormatString(
-		const std::basic_string<TChar, TTraits, TAllocator>& format,
-		const std::tuple<TArguments...>& arguments
-	);
-}
 }
 }
