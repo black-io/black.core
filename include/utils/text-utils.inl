@@ -7,190 +7,168 @@ inline namespace Core
 {
 inline namespace TextUtils
 {
-	template< typename TChar, typename... TArguments >
-	inline std::basic_string<TChar> FormatString( const TChar* format, const TArguments&... arguments )
+namespace Internal
+{
+	template< typename TOutStorage, typename TStringBuffer, typename... TArguments, size_t... INDICES >
+	inline TOutStorage FormatString( const TStringBuffer& format, const std::tuple<TArguments...>& arguments, std::index_sequence<INDICES...> )
 	{
-		return fmt::format( std::basic_string<TChar>{ format }, arguments... );
+		return Black::FormatString<TStringBuffer, TOutStorage>( format, std::get<INDICES>( arguments )... );
+	}
+}
+
+
+	template< typename TStringBuffer, typename TOutStorage, typename... TArguments >
+	inline TOutStorage FormatString( const TStringBuffer& format, const TArguments&... arguments )
+	{
+		static_assert( Internal::IS_VALID_STRING<TStringBuffer>, "The string buffer should be one of regular string types." );
+		static_assert( Internal::HAS_SAME_CHAR_TYPE<TStringBuffer, TOutStorage>, "The type of characters should be same for `format` and result of function." );
+
+		Internal::StringView<TStringBuffer> format_view{ format };
+		return TOutStorage{ fmt::format( format_view, arguments... ) };
 	}
 
-	template< typename TChar, typename... TArguments >
-	inline Black::RegularStringView<TChar> FormatString( Black::PlainView<TChar> buffer, const char* format, const TArguments&... arguments )
+	template< typename TStringBuffer, typename TOutStorage, typename... TArguments >
+	inline TOutStorage FormatString( const TStringBuffer& format, const std::tuple<TArguments...>& arguments )
 	{
-		return FormatString( buffer, std::basic_string<TChar>{ format } );
+		return Internal::FormatString<TOutStorage>( format, arguments, std::index_sequence_for<TArguments...>{} );
 	}
 
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void ReplaceSubstring(
-		std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
-		const TChar* pattern,
-		const TChar* replacement
-	)
-	{
-		ReplaceSubstring( string_buffer, Black::RegularStringView<TChar>{ pattern }, Black::RegularStringView<TChar>{ replacement } );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void ReplaceSubstring(
-		std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
-		const std::basic_string<TChar, TTraits, TAllocator>& pattern,
-		const TChar* replacement
-	)
-	{
-		ReplaceSubstring( string_buffer, Black::RegularStringView<TChar>{ pattern }, Black::RegularStringView<TChar>{ replacement } );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void ReplaceSubstring(
-		std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
-		const TChar* pattern,
-		const std::basic_string<TChar, TTraits, TAllocator>& replacement
-	)
-	{
-		ReplaceSubstring( string_buffer, Black::RegularStringView<TChar>{ pattern }, Black::RegularStringView<TChar>{ replacement } );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void ReplaceSubstring(
-		std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
-		const std::basic_string<TChar, TTraits, TAllocator>& pattern,
-		const std::basic_string<TChar, TTraits, TAllocator>& replacement
-	)
-	{
-		ReplaceSubstring( string_buffer, Black::RegularStringView<TChar>{ pattern }, Black::RegularStringView<TChar>{ replacement } );
-	}
-
-	template< typename TChar >
-	inline std::basic_string<TChar> GetUpperCase( const TChar* const string_buffer )
-	{
-		return GetUpperCase( Black::RegularStringView<TChar>{ string_buffer } );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline std::basic_string<TChar> GetUpperCase( const std::basic_string<TChar, TTraits, TAllocator>& string_buffer )
-	{
-		return GetUpperCase( Black::RegularStringView<TChar>{ string_buffer } );
-	}
-
-	template< typename TChar >
-	inline std::basic_string<TChar> GetLowerCase( const TChar* const string_buffer )
-	{
-		return GetLowerCase( Black::RegularStringView<TChar>{ string_buffer } );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline std::basic_string<TChar> GetLowerCase( const std::basic_string<TChar, TTraits, TAllocator>& string_buffer )
-	{
-		return GetLowerCase( Black::RegularStringView<TChar>{ string_buffer } );
-	}
-
-	template< typename TChar >
-	inline std::basic_string<TChar> GetTrimmedString( const TChar* const string_buffer )
-	{
-		return GetTrimmedString( Black::RegularStringView<TChar>{ string_buffer } );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline std::basic_string<TChar> GetTrimmedString( const std::basic_string<TChar, TTraits, TAllocator>& string_buffer )
-	{
-		return GetTrimmedString( Black::RegularStringView<TChar>{ string_buffer } );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
-	inline std::basic_string<TChar, TTraits, TAllocator> FormatString(
-		const std::basic_string<TChar, TTraits, TAllocator>& format,
-		const TArguments&... arguments
-	)
-	{
-		return fmt::format( format, arguments... );
-	}
-
-	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
-	inline Black::RegularStringView<TChar> FormatString(
-		Black::PlainView<TChar> buffer,
-		const std::basic_string<TChar, TTraits, TAllocator>& format,
-		const TArguments&... arguments
-	)
+	template< typename TStringBuffer, typename TOutView, typename... TArguments >
+	inline TOutView FormatString( Black::PlainView<std::byte> result_buffer, const TStringBuffer& format, const TArguments&... arguments )
 	{
 		// @FIXME: Implement this stuff.
 		return {};
 	}
 
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void ReplaceSubstring(
-		std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
-		Black::RegularStringView<TChar> pattern,
-		Black::RegularStringView<TChar> replacement
-	)
+	template< typename TStringBuffer, typename TPattern, typename TReplacement >
+	inline void ReplaceSubstring( TStringBuffer& string_buffer, const TPattern& pattern, const TReplacement& replacement )
 	{
-		const size_t replacement_length	= replacement.length();
-		const size_t pattern_length		= pattern.length();
-		size_t pattern_position			= string_buffer.find( pattern );
+		static_assert( Internal::IS_VALID_STRING<TStringBuffer>, "The string buffer should be one of regular string types." );
+		static_assert( Internal::IS_MUTABLE<TStringBuffer>, "The string buffer should be valid mutable string (e.g. `std::string` or `char*`)." );
+		static_assert( Internal::IS_REARRANGEABLE<TStringBuffer>, "The string buffer should be valid rearrangeable string (e.g. `std::string`)." );
+		static_assert( Internal::HAS_SAME_CHAR_TYPE<TStringBuffer, TPattern>, "Pattern has different character type." );
+		static_assert( Internal::HAS_SAME_CHAR_TYPE<TStringBuffer, TReplacement>, "Replacement has different character type." );
 
-		while( std::basic_string<TChar, TTraits, TAllocator>::npos != pattern_position )
+		// At this point it's pretty obvious that the `TStringBuffer` is some instantiation of `std::basic_string`.
+
+		// But it would be better to store the result into another storage and use string view for string buffer.
+		Internal::StringStorage<TStringBuffer>		result;
+		const Internal::StringView<TStringBuffer>	buffer_view{ string_buffer };
+		const Internal::PatternView<TPattern>		pattern_view{ pattern };
+		const Internal::PatternView<TReplacement>	replacement_view{ replacement };
+
+		const size_t pattern_length		= Internal::GetStringLength( pattern_view );
+		const size_t replacement_length	= Internal::GetStringLength( replacement_view );
+		size_t substring_position		= 0;
+		size_t pattern_position			= buffer_view.find( pattern_view, substring_position );
+
+		// Early exit due to no patterns found in buffer.
+		CRET( pattern_position == buffer_view.npos );
+
+		while( pattern_position != buffer_view.npos )
 		{
-			string_buffer.replace( pattern_position, pattern_length, replacement );
-			pattern_position = string_buffer.find( pattern, pattern_position + replacement_length );
+			if( substring_position != pattern_position )
+			{
+				result += buffer_view.substr( substring_position, pattern_position - substring_position );
+			}
+
+			if( replacement_length > 0 )
+			{
+				result += replacement_view;
+			}
+
+			substring_position	= pattern_position + pattern_length;
+			pattern_position	= buffer_view.find( pattern_view, substring_position );
 		}
+
+		// Forcedly store the rest of string buffer.
+		if( substring_position < buffer_view.length() )
+		{
+			result += buffer_view.substr( substring_position );
+		}
+
+		// After replacement is done, the result just may be exchanged with the initial string buffer.
+		using std::swap;
+		swap( string_buffer, result );
 	}
 
-	template< typename TChar >
-	inline std::basic_string<TChar> GetUpperCase( Black::RegularStringView<TChar> string_buffer )
+	template< typename TStringBuffer, typename TOutStorage >
+	inline TOutStorage GetUpperCase( const TStringBuffer& string_buffer )
 	{
-		std::basic_string<TChar> result{ string_buffer.begin(), string_buffer.end() };
+		static_assert( Internal::IS_VALID_STRING<TStringBuffer>, "The string buffer should be one of regular string types." );
+		static_assert( Internal::HAS_SAME_CHAR_TYPE<TStringBuffer, TOutStorage>, "Result of function has different character type." );
+
+		TOutStorage result{ string_buffer };
 		MakeUpperCase( result );
 		return result;
 	}
 
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void MakeUpperCase( std::basic_string<TChar, TTraits, TAllocator>& string_buffer )
+	template< typename TStringBuffer >
+	inline void MakeUpperCase( TStringBuffer& string_buffer )
 	{
+		static_assert( Internal::IS_VALID_STRING<TStringBuffer>, "The string buffer should be one of regular string types." );
+		static_assert( Internal::IS_MUTABLE<TStringBuffer>, "The string buffer should be valid mutable string (e.g. `std::string` or `char*`)." );
+
+		using Char = Internal::StringChar<TStringBuffer>;
+
 		std::locale used_locale;
-		decltype( auto ) char_traits = std::use_facet< std::ctype<TChar> >( used_locale );
-		std::for_each( string_buffer.begin(), string_buffer.end(), [&char_traits]( TChar& symbol ) { symbol = char_traits.toupper( symbol ); } );
+		decltype( auto ) char_traits	= std::use_facet< std::ctype<Char> >( used_locale );
+		auto to_lower					= [&char_traits]( Char& symbol )
+		{
+			symbol = char_traits.toupper( symbol );
+		};
+
+		std::for_each( std::begin( string_buffer ), std::end( string_buffer ), to_lower );
 	}
 
-	template< typename TChar >
-	inline std::basic_string<TChar> GetLowerCase( Black::RegularStringView<TChar> string_buffer )
+	template< typename TStringBuffer, typename TOutStorage >
+	inline TOutStorage GetLowerCase( const TStringBuffer& string_buffer )
 	{
-		std::basic_string<TChar> result{ string_buffer.begin(), string_buffer.end() };
+		static_assert( Internal::IS_VALID_STRING<TStringBuffer>, "The string buffer should be one of regular string types." );
+		static_assert( Internal::HAS_SAME_CHAR_TYPE<TStringBuffer, TOutStorage>, "Result of function has different character type." );
+
+		TOutStorage result{ string_buffer };
 		MakeLowerCase( result );
 		return result;
 	}
 
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void MakeLowerCase( std::basic_string<TChar, TTraits, TAllocator>& string_buffer )
+	template< typename TStringBuffer >
+	inline void MakeLowerCase( TStringBuffer& string_buffer )
 	{
-		std::locale used_locale;
-		decltype( auto ) char_traits = std::use_facet< std::ctype<TChar> >( used_locale );
-		std::for_each( string_buffer.begin(), string_buffer.end(), [&char_traits]( TChar& symbol ) { symbol = char_traits.tolower( symbol ); } );
-	}
+		static_assert( Internal::IS_VALID_STRING<TStringBuffer>, "The string buffer should be one of regular string types." );
+		static_assert( Internal::IS_MUTABLE<TStringBuffer>, "The string buffer should be valid mutable string (e.g. `std::string` or `char*`)." );
 
-	template< typename TChar >
-	inline std::basic_string<TChar> GetTrimmedString( Black::RegularStringView<TChar> string_buffer )
-	{
-		CRET( string_buffer.empty(), {} );
+		using Char = Internal::StringChar<TStringBuffer>;
 
 		std::locale used_locale;
-		decltype( auto ) char_traits	= std::use_facet< std::ctype<TChar> >( used_locale );
-		auto space_filter				= [&char_traits]( const TChar& symbol ) -> bool
+		decltype( auto ) char_traits	= std::use_facet< std::ctype<Char> >( used_locale );
+		auto to_lower					= [&char_traits]( Char& symbol )
 		{
-			return !char_traits.is( std::ctype_base::space, symbol );
+			symbol = char_traits.tolower( symbol );
 		};
 
-		auto found_begin = std::find_if( std::begin( string_buffer ), std::end( string_buffer ), space_filter );
-		CRET( found_begin == std::end( string_buffer ), {} );
+		std::for_each( std::begin( string_buffer ), std::end( string_buffer ), to_lower );
+	}
 
-		auto found_end	= std::find_if( std::rbegin( string_buffer ), std::rend( string_buffer ), space_filter ).base();
-		return { found_begin, found_end };
+	template< typename TStringBuffer, typename TOutStorage >
+	inline TOutStorage GetTrimmedString( const TStringBuffer& string_buffer )
+	{
+		static_assert( Internal::IS_VALID_STRING<TStringBuffer>, "The string buffer should be one of regular string types." );
+		static_assert( Internal::HAS_SAME_CHAR_TYPE<TStringBuffer, TOutStorage>, "Result of function has different character type." );
+
+		Internal::StringView<TStringBuffer> result{ string_buffer };
+		MakeTrimmedString( result );
+		return TOutStorage{ result };
 	}
 
 	template< typename TStringBuffer >
 	inline void MakeTrimmedString( TStringBuffer& string_buffer )
 	{
+		static_assert( Internal::IS_VALID_STRING<TStringBuffer>, "The string buffer should be one of regular string types." );
 		static_assert( Internal::IS_REARRANGEABLE<TStringBuffer>, "The string buffer should be valid rearrangeable string (e.g. `std::string`)." );
 
 		using View = Internal::StringView<TStringBuffer>;
-		using Char = typename View::value_type;
+		using Char = Internal::StringChar<TStringBuffer>;
 
 		const View buffer_view{ string_buffer };
 		CRET( buffer_view.empty() );
