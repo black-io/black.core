@@ -5,16 +5,11 @@ namespace Black::Core::TextUtils
 {
 namespace Internal
 {
-	template< typename TChar, typename TTraits, typename TPattern, typename TConsumer >
-	inline const size_t GenericSplitString(
-		TConsumer consume,
-		const std::basic_string_view<TChar, TTraits> string_buffer,
-		const TPattern& pattern,
-		const size_t pattern_length,
-		const TextSplittingFlags flags
-	)
+	template< typename TStringBuffer, typename TPattern, typename TConsumer >
+	inline const size_t SplitString( TConsumer consume, const TStringBuffer& string_buffer, const TPattern& pattern, const TextSplittingFlags flags )
 	{
-		constexpr size_t not_found = std::basic_string_view<TChar, TTraits>::npos;
+		const size_t not_found		= string_buffer.npos;
+		const size_t pattern_length	= GetStringLength( pattern );
 
 		CRET( string_buffer.empty(), 0 );
 		size_t part_begin		= 0;
@@ -44,29 +39,6 @@ namespace Internal
 
 		return found_parts.size();
 	}
-
-	template< typename TChar, typename TTraits, typename TConsumer >
-	inline const size_t SplitString(
-		TConsumer consume,
-		const std::basic_string_view<TChar, TTraits> string_buffer,
-		const TChar pattern,
-		const TextSplittingFlags flags
-	)
-	{
-		return GenericSplitString( consume, string_buffer, pattern, 1, flags );
-	}
-
-	template< typename TChar, typename TTraits, typename TConsumer >
-	inline const size_t SplitString(
-		TConsumer consume,
-		const std::basic_string_view<TChar, TTraits> string_buffer,
-		const std::basic_string_view<TChar, TTraits> pattern,
-		const TextSplittingFlags flags
-	)
-	{
-		CRET( pattern.empty(), 0 );
-		return GenericSplitString( consume, string_buffer, pattern, pattern.length(), flags );
-	}
 }
 
 
@@ -78,6 +50,8 @@ namespace Internal
 
 		using ValidStringView	= Internal::StringView<TStringBuffer>;
 		using ValidPatternView	= Internal::PatternView<TPattern>;
+
+		static_assert( Internal::HAS_SAME_CHAR_TYPE<ValidStringView, ValidPatternView>, "Pattern has different character type." );
 
 		auto consume = [&parts]( const ValidStringView part ) { parts.emplace_back( part ); };
 		return Internal::SplitString( consume, ValidStringView{ string_buffer }, ValidPatternView{ pattern }, flags );
