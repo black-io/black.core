@@ -11,98 +11,102 @@ inline namespace TextUtils
 		@brief	Format the arguments into string.
 		Uses formatting syntax similar to `str.format` from Python.
 		Syntax documentation : http://cppformat.github.io/latest/syntax.html
-		@param	format		Declares the format, how `arguments` must be placed in output string.
-		@param	arguments	The arguments to be formatted.
-		@tparam	TChar		Type of string character.
-		@tparam	TArguments	Types of passed arguments.
-		@return				The value returned is an formatted string.
+		@param	format			Declares the format, how `arguments` must be placed in output string.
+		@param	arguments		The arguments to be formatted.
+		@tparam	TStringBuffer	Acceptable type of regular string.
+		@tparam	TOutStorage		Type of function result. May be defined by user.
+		@tparam	TArguments		Variadic list of argument types.
+		@return					The value returned is an formatted string.
 	*/
-	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
-	inline std::basic_string<TChar, TTraits, TAllocator> FormatString(
-		const std::basic_string<TChar, TTraits, TAllocator>& format,
-		const TArguments&... arguments
-	);
+	template< typename TStringBuffer, typename TOutStorage = Internal::StringStorage<TStringBuffer>, typename... TArguments >
+	inline TOutStorage FormatString( const TStringBuffer& format, const TArguments&... arguments );
+
+	/**
+		@brief	Format the tuple into string.
+		Uses formatting syntax similar to `str.format` from Python.
+		Syntax documentation : http://cppformat.github.io/latest/syntax.html
+		@param	format			Declares the format, how `arguments` must be placed in output string.
+		@param	arguments		The tuple to be formatted.
+		@tparam	TStringBuffer	Acceptable type of regular string.
+		@tparam	TOutStorage		Type of function result. May be defined by user.
+		@tparam	TArguments		Variadic list of argument types int tuple.
+		@return					The value returned is an formatted string.
+	*/
+	template< typename TStringBuffer, typename TOutStorage = Internal::StringStorage<TStringBuffer>, typename... TArguments >
+	inline TOutStorage FormatString( const TStringBuffer& format, const std::tuple<TArguments...>& arguments );
 
 	/**
 		@brief	Format the arguments into string.
 		Uses formatting syntax similar to `str.format` from Python.
 		Syntax documentation : http://cppformat.github.io/latest/syntax.html
-		@param	buffer		Storage buffer for formatted string.
-		@param	format		Declares the format, how `arguments` must be placed in output string.
-		@param	arguments	The arguments to be formatted.
-		@tparam	TChar		Type of string character.
-		@tparam	TArguments	Types of passed arguments.
-		@return				The value returned is an string view into `buffer` with formatted arguments.
+		@param	result_buffer	Storage buffer for formatted string. The viewed memory should be large enough to fit the formatted string.
+		@param	format			Declares the format, how `arguments` must be placed in output string.
+		@param	arguments		The arguments to be formatted.
+		@tparam	TStringBuffer	Acceptable type of regular string.
+		@tparam	TOutView		Type of function result. The viewed string is placed in memory represented by `result_buffer`.
+		@tparam	TArguments		Variadic list of argument types.
+		@return					The value returned is an string view into `result_buffer` with formatted arguments.
 	*/
-	template< typename TChar, typename TTraits, typename TAllocator, typename... TArguments >
-	inline Black::RegularStringView<TChar> FormatString(
-		Black::PlainView<TChar> buffer,
-		const std::basic_string<TChar, TTraits, TAllocator>& format,
-		const TArguments&... arguments
-	);
+	template< typename TStringBuffer, typename TOutView = Internal::StringView<TStringBuffer>, typename... TArguments >
+	inline TOutView FormatString( Black::PlainView<std::byte> result_buffer, const TStringBuffer& format, const TArguments&... arguments );
 
 	/**
 		@brief	Replace some string pattern with given replacement inside string buffer.
 		@param	string_buffer	The string to be modified.
 		@param	pattern			String pattern to search.
 		@param	replacement		String to replace the `pattern`.
-		@tparam	TChar			Type of string character.
-		@tparam	TTraits			String traits.
-		@tparam	TAllocator		String allocator.
+		@tparam	TStringBuffer	Acceptable type of regular mutable and rearrangeable string buffer.
+		@tparam	TPattern		Type of given pattern. Any type of string char or string are accepted.
+		@tparam	TReplacement	Type of given replacement. Any type of string char or string are accepted.
 	*/
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void ReplaceSubstring(
-		std::basic_string<TChar, TTraits, TAllocator>& string_buffer,
-		Black::RegularStringView<TChar> pattern,
-		Black::RegularStringView<TChar> replacement
-	);
+	template< typename TStringBuffer, typename TPattern, typename TReplacement >
+	inline void ReplaceSubstring( TStringBuffer& string_buffer, const TPattern& pattern, const TReplacement& replacement );
 
 	/**
 		@brief	Convert the string into its upper-case form.
 		@param	string_buffer	Input string to be converted.
-		@tparam TChar			Type of string character.
+		@tparam	TStringBuffer	Acceptable type of regular string.
+		@tparam	TOutStorage		Type of function result. May be defined by user.
 		@return					The value returned is and converted string.
 	*/
-	template< typename TChar >
-	inline std::basic_string<TChar> GetUpperCase( Black::RegularStringView<TChar> string_buffer );
+	template< typename TStringBuffer, typename TOutStorage = Internal::StringStorage<TStringBuffer> >
+	inline TOutStorage GetUpperCase( const TStringBuffer& string_buffer );
 
 	/**
 		@brief	Convert each char of string into upper-case form.
 		@param	string_buffer	Input string to be converted.
-		@tparam TChar			Type of string character.
-		@tparam	TTraits			String traits.
-		@tparam	TAllocator		String allocator.
+		@tparam	TStringBuffer	Acceptable type of regular mutable string.
 	*/
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void MakeUpperCase( std::basic_string<TChar, TTraits, TAllocator>& string_buffer );
+	template< typename TStringBuffer >
+	inline void MakeUpperCase( TStringBuffer& string_buffer );
 
 	/**
 		@brief	Convert the string into its lower-case form.
 		@param	string_buffer	Input string to be converted.
-		@tparam TChar			Type of string character.
+		@tparam	TStringBuffer	Acceptable type of regular string.
+		@tparam	TOutStorage		Type of function result. May be defined by user.
 		@return					The value returned is and converted string.
 	*/
-	template< typename TChar >
-	inline std::basic_string<TChar> GetLowerCase( Black::RegularStringView<TChar> string_buffer );
+	template< typename TStringBuffer, typename TOutStorage = Internal::StringStorage<TStringBuffer> >
+	inline TOutStorage GetLowerCase( const TStringBuffer& string_buffer );
 
 	/**
 		@brief	Convert each char of string into lower-case form.
 		@param	string_buffer	Input string to be converted.
-		@tparam TChar			Type of string character.
-		@tparam	TTraits			String traits.
-		@tparam	TAllocator		String allocator.
+		@tparam	TStringBuffer	Acceptable type of regular mutable string.
 	*/
-	template< typename TChar, typename TTraits, typename TAllocator >
-	inline void MakeLowerCase( std::basic_string<TChar, TTraits, TAllocator>& string_buffer );
+	template< typename TStringBuffer >
+	inline void MakeLowerCase( TStringBuffer& string_buffer );
 
 	/**
 		@brief	Get the trimmed (without non-printable chars at left and right) form of string.
 		@param	string_buffer	Input string to be trimmed.
-		@tparam TChar			Type of string character.
+		@tparam	TStringBuffer	Acceptable type of regular string.
+		@tparam	TOutStorage		Type of function result. May be defined by user.
 		@return					The value returned is and trimmed string.
 	*/
-	template< typename TChar >
-	inline std::basic_string<TChar> GetTrimmedString( Black::RegularStringView<TChar> string_buffer );
+	template< typename TStringBuffer, typename TOutStorage = Internal::StringStorage<TStringBuffer> >
+	inline TOutStorage GetTrimmedString( const TStringBuffer& string_buffer );
 
 	/**
 		@brief	Remove the non-printable chars from left and right of string.
