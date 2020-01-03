@@ -40,10 +40,13 @@ namespace Internal
 		static_assert( Internal::IS_VALID_STRING<TOutStorage>, "The type of output string buffer should be one of regular string types." );
 		static_assert( Internal::IS_VALID_PATTERN<TPattern>, "The type of joining pattern should be one of regular string types or the regular char type." );
 
-		CRET( parts.empty(), TOutStorage{} );
-
 		using ValidStringView	= Internal::StringView<typename TPartStorage::value_type>;
 		using ValidPatternView	= Internal::PatternView<TPattern>;
+
+		static_assert( Internal::HAS_SAME_CHAR_TYPE<ValidStringView, ValidPatternView>, "Pattern has different character type." );
+		static_assert( Internal::HAS_SAME_CHAR_TYPE<ValidStringView, TOutStorage>, "Result of function has different character type." );
+
+		CRET( parts.empty(), TOutStorage{} );
 
 		auto generate = [current_part = parts.begin(), parts_end = parts.end()]() mutable -> ValidStringView
 		{
