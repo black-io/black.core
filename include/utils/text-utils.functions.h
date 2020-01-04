@@ -1,7 +1,11 @@
 #pragma once
 
 
-namespace Black::Core::TextUtils
+namespace Black
+{
+inline namespace Core
+{
+inline namespace TextUtils
 {
 namespace Internal
 {
@@ -18,5 +22,7 @@ namespace Internal
 	{
 		return candidate.length();
 	}
+}
+}
 }
 }

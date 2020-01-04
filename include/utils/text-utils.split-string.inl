@@ -1,7 +1,11 @@
 #pragma once
 
 
-namespace Black::Core::TextUtils
+namespace Black
+{
+inline namespace Core
+{
+inline namespace TextUtils
 {
 namespace Internal
 {
@@ -56,4 +60,6 @@ namespace Internal
 		auto consume = [&parts]( const ValidStringView part ) { parts.emplace_back( part ); };
 		return Internal::SplitString( consume, ValidStringView{ string_buffer }, ValidPatternView{ pattern }, flags );
 	}
+}
+}
 }

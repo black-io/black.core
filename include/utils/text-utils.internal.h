@@ -1,7 +1,11 @@
 #pragma once
 
 
-namespace Black::Core::TextUtils
+namespace Black
+{
+inline namespace Core
+{
+inline namespace TextUtils
 {
 namespace Internal
 {
@@ -155,5 +159,7 @@ namespace Internal
 	// Whether two strings has same character type.
 	template< typename TLeft, typename TRight >
 	inline constexpr bool HAS_SAME_CHAR_TYPE = std::is_same_v<StringChar<TLeft>, StringChar<TRight>>;
+}
+}
 }
 }
