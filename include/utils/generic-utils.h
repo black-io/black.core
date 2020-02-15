@@ -55,6 +55,21 @@ namespace Black
 	}
 
 	/**
+		@brief	Allow to check whether the value has only one significant bit.
+		It also means that the value is one of power-of-two values.
+
+		@param	value	The value to check.
+		@tparam	TValue	Type of value to check. Should be one of integral types: int, char, bool e.t.c.
+		@return			The value returned represents whether the value consists of single bit or not.
+	*/
+	template< typename TValue >
+	inline constexpr auto IsSingleBitValue( const TValue value )
+	{
+		static_assert( std::is_integral_v<TValue>, "Type of value should be one of integral types." );
+		return value == ( value & ~( value - 1 ) );
+	}
+
+	/**
 		@brief	Converts value of enumeration type to its underlying type value.
 		@param	value			Te value to be converted.
 		@tparam	TEnumeration	Type of enumeration.
