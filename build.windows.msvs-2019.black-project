@@ -3,18 +3,18 @@ __include__:
   - '../platform.windows.black-settings'
   - '../properties.windows.black-settings'
 
-project:
+component:
   name: 'black.core'
   guid: '5123150C-C173-42D2-947B-7FA978D66E31'
   path: '{current-folder-path}'
   type: 'static-library'
 
 includes:
-  - '{project/path}/include'
+  - '{component/path}/include'
 
 files:
-  - '{project/path}/include'
-  - '{project/path}/source'
+  - '{component/path}/include'
+  - '{component/path}/source'
 
 references:
   - 'fmt.format'
