@@ -4,8 +4,6 @@ __include__:
   - '../properties.windows.black-settings'
 
 component:
-  name: 'black.core'
-  guid: '5123150C-C173-42D2-947B-7FA978D66E31'
   path: '{current-folder-path}'
   type: 'static-library'
 
