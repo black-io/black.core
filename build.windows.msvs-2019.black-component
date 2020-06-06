@@ -1,18 +1,4 @@
 __include__:
-  - '../.black-settings'
+  - '.black-settings'
   - '../platform.windows.black-settings'
   - '../properties.windows.black-settings'
-
-component:
-  path: '{current-folder-path}'
-  type: 'static-library'
-
-includes:
-  - '{component/path}/include'
-
-files:
-  - '{component/path}/include'
-  - '{component/path}/source'
-
-references:
-  - 'fmt.format'
