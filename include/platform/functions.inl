@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Utils
+inline namespace Platform
 {
 	template< typename TValue >
 	inline void CopyMemory( TValue& dest_ref, const TValue& source_ref )
@@ -54,23 +54,19 @@ inline namespace Utils
 	{
 		return Black::IsMemoryEqual( &left_ref, right_ref, sizeof( TValue ) );
 	}
-}
 
-
-inline namespace TextUtils
-{
-	inline Black::StringView WriteArguments( Black::PlainView<char> target_buffer, const Black::StringView format, ... )
+	inline std::string_view WriteArguments( Black::PlainView<char> target_buffer, const std::string_view format, ... )
 	{
 		va_list arguments;
 		va_start( arguments, format );
 
-		Black::StringView result = Black::WriteArguments( target_buffer, format, arguments );
+		std::string_view result = Black::WriteArguments( target_buffer, format, arguments );
 
 		va_end( arguments );
 		return result;
 	}
 
-	inline const size_t ReadArguments( const Black::StringView source_buffer, const Black::StringView format, ... )
+	inline const size_t ReadArguments( const std::string_view source_buffer, const std::string_view format, ... )
 	{
 		va_list arguments;
 		va_start( arguments, format );

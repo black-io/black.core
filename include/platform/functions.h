@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Utils
+inline namespace Platform
 {
 	/**
 		@brief	Copies memory from source to destination.
@@ -19,7 +19,7 @@ inline namespace Utils
 
 	/**
 		@brief	Fills every byte of `target_ref` with `pattern` byte.
-		Affects directly to memory, calls no destructors!
+		Affects directly to memory, calls no destructor!
 		@param	target_ref	Reference to object, which memory will be filed.
 		@param	pattern		Value the memory will be filled with. Note, only first byte of value will be used.
 		@tparam	TValue		Type of passed object. Helps determinate size of memory to fill.
@@ -29,7 +29,7 @@ inline namespace Utils
 
 	/**
 		@brief	Fills every byte of `target_array` array with `pattern` byte.
-		Affects directly to memory, calls no destructors!
+		Affects directly to memory, calls no destructor!
 		@param	target_array	Reference to array of objects, which memory will be filed.
 		@param	pattern			Value the memory will be filled with. Note, only first byte of value will be used.
 		@tparam	TValue			Type of passed object. Helps determinate size of memory to fill.
@@ -40,7 +40,7 @@ inline namespace Utils
 
 	/**
 		@brief	Fills every byte of `target_ref` with zero.
-		Affects directly to memory, calls no destructors!
+		Affects directly to memory, calls no destructor!
 		@param	target_ref	Reference to object, which memory will be filed.
 		@tparam	TValue		Type of passed object. Helps determinate size of memory to fill.
 	*/
@@ -49,7 +49,7 @@ inline namespace Utils
 
 	/**
 		@brief	Fills every byte of `target_array` array with zero.
-		Affects directly to memory, calls no destructors!
+		Affects directly to memory, calls no destructor!
 		@param	target_array	Reference to array of objects, which memory will be filed.
 		@tparam	TValue			Type of passed object. Helps determinate size of memory to fill.
 		@tparam	ARRAY_LENGTH	Number of elements in array.
@@ -59,7 +59,7 @@ inline namespace Utils
 
 	/**
 		@brief	Fills every byte of `target_ref` with zero.
-		Affects directly to memory, calls no destructors!
+		Affects directly to memory, calls no destructor!
 		@note	This function is same as `FillMemory`, but it may not be dropped while compiler optimizations.
 		@param	target_ref	Reference to object, which memory will be filed.
 		@tparam	TValue		Type of passed object. Helps determinate size of memory to fill.
@@ -69,7 +69,7 @@ inline namespace Utils
 
 	/**
 		@brief	Fills every byte of `target_array` array with zero.
-		Affects directly to memory, calls no destructors!
+		Affects directly to memory, calls no destructor!
 		@param	target_array	Reference to array of objects, which memory will be filed.
 		@tparam	TValue			Type of passed object. Helps determinate size of memory to fill.
 		@tparam	ARRAY_LENGTH	Number of elements in array.
@@ -86,11 +86,7 @@ inline namespace Utils
 	*/
 	template< typename TValue >
 	inline const bool IsMemoryEqual( const TValue& left_ref, const TValue& right_ref );
-}
 
-
-inline namespace TextUtils
-{
 	/**
 		@brief	Format the variable arguments into `target_buffer` according to `format` specification.
 		May cause potentially unsafe behavior if invalid arguments passed.
@@ -100,18 +96,18 @@ inline namespace TextUtils
 		@return					Formatted string view with same memory as `target_buffer`.
 		@retval	empty view		In case the arguments can not be formated into target buffer.
 	*/
-	inline Black::StringView WriteArguments( Black::PlainView<char> target_buffer, const Black::StringView format, ... );
+	inline std::string_view WriteArguments( Black::PlainView<char> target_buffer, const std::string_view format, ... );
 
 	/**
 		@brief	Read the variable arguments from `source_buffer` according to `format` specification.
 		May cause potentially unsafe behavior if invalid arguments passed.
-		@param	source_buffer	Memory buffer to be readen.
+		@param	source_buffer	Memory buffer to be readden.
 		@param	format			Arguments reading specification.
 		@param	...				List of arguments.
-		@return					Number of readen arguments.
+		@return					Number of readden arguments.
 		@retval	0				If no argument was read.
 	*/
-	inline const size_t ReadArguments( const Black::StringView source_buffer, const Black::StringView format, ... );
+	inline const size_t ReadArguments( const std::string_view source_buffer, const std::string_view format, ... );
 }
 }
 }
