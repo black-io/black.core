@@ -61,10 +61,10 @@ inline namespace PlatformSpecific
 	/**
 		@brief	Read the `arguments` from `source_buffer` according to `format` specification.
 		May cause potentially unsafe behavior if invalid arguments passed.
-		@param	source_buffer	Memory buffer to be readen.
+		@param	source_buffer	Memory buffer to be readden.
 		@param	format			Arguments reading specification.
 		@param	arguments		List of arguments.
-		@return					Number of readen arguments.
+		@return					Number of readden arguments.
 		@retval	0				If no argument was read.
 	*/
 	const size_t ReadArguments( const std::string_view source_buffer, const std::string_view format, va_list arguments );
