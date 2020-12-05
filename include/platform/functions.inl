@@ -55,7 +55,7 @@ inline namespace Platform
 		return Black::IsMemoryEqual( &left_ref, right_ref, sizeof( TValue ) );
 	}
 
-	inline std::string_view WriteArguments( Black::PlainView<char> target_buffer, const std::string_view format, ... )
+	inline std::string_view WriteArguments( Black::PlainView<char> target_buffer, const std::string& format, ... )
 	{
 		va_list arguments;
 		va_start( arguments, format );
@@ -66,7 +66,7 @@ inline namespace Platform
 		return result;
 	}
 
-	inline const size_t ReadArguments( const std::string_view source_buffer, const std::string_view format, ... )
+	inline const size_t ReadArguments( const std::string_view source_buffer, const std::string& format, ... )
 	{
 		va_list arguments;
 		va_start( arguments, format );
