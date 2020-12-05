@@ -26,10 +26,6 @@ inline namespace Platform
 	#include "../platform.android/platform.android.h"
 #elif( BLACK_IOS_PLATFORM )
 	#include "../platform.ios/platform.ios.h"
-#elif( BLACK_WINDOWS_MOBILE_PLATFORM )
-	#include "../platform.winmo/platform.winmo.h"
-#elif( BLACK_TIZEN_PLATFORM )
-	#include "../platform.tizen/platform.tizen.h"
 #else
 	#error Current platform is unspecified or not defined
 #endif
