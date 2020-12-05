@@ -15,7 +15,7 @@ inline namespace Algorithms
 		@return				Return value is an equivalent amount of seconds, including fractions of second.
 	*/
 	template< typename TCounterType, typename TPeriodType >
-	inline const Black::Time GetTimeFromDuration( const std::chrono::duration<TCounterType, TPeriodType>& duration )
+	inline const Black::Time GetSecondsFromDuration( const std::chrono::duration<TCounterType, TPeriodType>& duration )
 	{
 		return std::chrono::duration_cast<TimeDuration>( duration ).count();
 	}
