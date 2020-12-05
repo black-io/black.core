@@ -15,8 +15,7 @@ inline namespace Platform
 
 // Include most fundamental platform stuff.
 #include "functions.h"
-#include "platform-specific/functions.h"
-
+#include "functions.platform-specific.h"
 
 // Select the implementation of platform-specific code.
 #if( BLACK_WINDOWS_DESKTOP_PLATFORM )
@@ -32,7 +31,6 @@ inline namespace Platform
 #else
 	#error Current platform is unspecified or not defined
 #endif
-
 
 // Deferred implementations.
 #include "functions.inl"
