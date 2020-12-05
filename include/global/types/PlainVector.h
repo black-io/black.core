@@ -62,19 +62,19 @@ inline namespace Types
 		PlainVector( ConstIterator elements, const size_t length ) : PlainVector{ elements, elements + length } {};
 		PlainVector( std::initializer_list<TStoredType> elements ) : PlainVector{ elements.begin(), elements.end() } {};
 
-		template< typename TOtherType, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		explicit PlainVector( PlainView<TOtherType> elements ) : PlainVector( elements.GetHead(), elements.GetTail() ) {};
 
-		template< typename TOtherType, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		explicit PlainVector( PlainView<const TOtherType> elements ) : PlainVector( elements.GetHead(), elements.GetTail() ) {};
 
-		template< typename TOtherType, size_t ARRAY_LENGTH, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		explicit PlainVector( TOtherType elements[ ARRAY_LENGTH ] ) : PlainVector( elements, ARRAY_LENGTH ) {};
 
-		template< typename TOtherType, size_t ARRAY_LENGTH, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		explicit PlainVector( const std::array<TOtherType, ARRAY_LENGTH>& elements ) : PlainVector( elements.data(), ARRAY_LENGTH ) {};
 
-		template< typename TOtherType, typename TAllocator, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, typename TAllocator, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		explicit PlainVector( const std::vector<TOtherType, TAllocator>& elements ) : PlainVector( elements.data(), elements.size() ) {};
 
 
@@ -85,19 +85,19 @@ inline namespace Types
 		inline PlainVector& operator = ( PlainVector&& other );
 		inline PlainVector& operator = ( std::initializer_list<TStoredType> elements )			{ return CopyAndSwap( *this, elements ); };
 
-		template< typename TOtherType, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		inline PlainVector& operator = ( PlainView<TOtherType> elements )						{ return CopyAndSwap( *this, elements ); };
 
-		template< typename TOtherType, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		inline PlainVector& operator = ( PlainView<const TOtherType> elements )					{ return CopyAndSwap( *this, elements ); };
 
-		template< typename TOtherType, size_t ARRAY_LENGTH, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		inline PlainVector& operator = ( TOtherType elements[ ARRAY_LENGTH ] )					{ return CopyAndSwap( *this, elements ); };
 
-		template< typename TOtherType, size_t ARRAY_LENGTH, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		inline PlainVector& operator = ( const std::array<TOtherType, ARRAY_LENGTH>& elements )	{ return CopyAndSwap( *this, elements ); };
 
-		template< typename TOtherType, typename TAllocator, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, typename TAllocator, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		inline PlainVector& operator = ( const std::vector<TOtherType, TAllocator>& elements )	{ return CopyAndSwap( *this, elements ); };
 
 	// Public interface.

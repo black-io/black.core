@@ -50,7 +50,7 @@ inline namespace Types
 		PlainView( Element* head, Element* tail );
 		PlainView( Element* head, const size_t length );
 
-		template< typename TOtherType, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		explicit PlainView( const PlainView<TOtherType>& other ) : PlainView( other.m_head, other.m_tail ) {};
 
 		template< size_t ARRAY_LENGTH >
@@ -66,7 +66,7 @@ inline namespace Types
 		inline PlainView& operator = ( const PlainView& )	= default;
 		inline PlainView& operator = ( PlainView&& other );
 
-		template< typename TOtherType, typename = Black::EnableIf<Black::IS_CONVERTIBLE<TOtherType*, TStoredType*>> >
+		template< typename TOtherType, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
 		inline PlainView& operator = ( const PlainView<TOtherType>& other )				{ return CopyAndSwap( *this, other ); };
 
 		template< size_t ARRAY_LENGTH >
