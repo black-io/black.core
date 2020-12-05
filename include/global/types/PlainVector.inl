@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Types
 {
 	template< typename TStoredType >
@@ -186,6 +188,7 @@ inline namespace Types
 		CRET( elements_length == 0 );
 		Black::CopyMemory( m_memory, elements, GetUsedBytes() );
 	}
+}
 }
 }
 }

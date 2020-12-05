@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Types
 {
 namespace Internal
@@ -65,7 +67,8 @@ namespace Internal
 
 	// Intrusive link.
 	template< typename TLinkedType >
-	using IntrusiveLink = Internal::IntrusiveLink<TLinkedType, Black::IS_BASE_OF<Black::IntrusiveHook, TLinkedType>>;
+	using IntrusiveLink = Internal::IntrusiveLink<TLinkedType, std::is_base_of_v<Black::IntrusiveHook, TLinkedType>>;
+}
 }
 }
 }

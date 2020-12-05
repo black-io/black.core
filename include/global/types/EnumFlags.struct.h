@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Types
 {
 	// Marker type to mark the enumeration with ordinal values.
@@ -20,6 +22,7 @@ inline namespace Types
 	{
 		static_assert( std::is_enum_v<TEnumeration>, "`TEnumeration` have to be enumeration type." );
 	};
+}
 }
 }
 }

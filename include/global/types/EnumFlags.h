@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Types
 {
 	/**
@@ -91,6 +93,7 @@ inline namespace Types
 		inline EnumFlags& operator += ( const Enumeration flag )			{ Storage::SetFlag( flag ); return *this; };
 		inline EnumFlags& operator -= ( const Enumeration flag )			{ Storage::UnsetFlag( flag ); return *this; };
 	};
+}
 }
 }
 }

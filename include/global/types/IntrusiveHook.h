@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Types
 {
 	/**
@@ -54,6 +56,7 @@ inline namespace Types
 	private:
 		mutable std::deque<RegularIntrusiveLink*>	m_liinks;	// Connected links.
 	};
+}
 }
 }
 }

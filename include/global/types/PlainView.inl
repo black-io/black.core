@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Types
 {
 	template< typename TStoredType >
@@ -89,6 +91,7 @@ inline namespace Types
 	{
 		return ( m_head != other.m_head ) || ( m_length != other.m_length );
 	}
+}
 }
 }
 }

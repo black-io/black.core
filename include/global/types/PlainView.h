@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Types
 {
 	/**
@@ -16,11 +18,11 @@ inline namespace Types
 	{
 	// Inner entities.
 	public:
-		static_assert( !IS_REFERENCE<TStoredType>,	"Element type may not be reference type." );
+		static_assert( !std::is_reference_v<TStoredType>, "Element type may not be reference type." );
 
 
 		// Size of single element of view.
-		static constexpr size_t ELEMENT_SIZE	= sizeof( TStoredType );
+		static constexpr size_t ELEMENT_SIZE = sizeof( TStoredType );
 
 
 		// Type of stored elements.
@@ -146,6 +148,7 @@ inline namespace Types
 		TStoredType*	m_tail		= nullptr;	// Tail of view.
 		size_t			m_length	= 0;		// Number of elements in view.
 	};
+}
 }
 }
 }

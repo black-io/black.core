@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Types
 {
 	/**
@@ -14,9 +16,9 @@ inline namespace Types
 	{
 	// Inner entities.
 	public:
-		static_assert( !IS_REFERENCE<TStoredType>,	"Element type may not be reference type." );
-		static_assert( !IS_CONST<TStoredType>,		"Element type may not be constant." );
-		static_assert( IS_PLAIN<TStoredType>,		"Element type should be plain (PoD) type." );
+		static_assert( !std::is_reference_v<TStoredType>,	"Element type may not be reference type." );
+		static_assert( !std::is_const_v<TStoredType>,		"Element type may not be constant." );
+		static_assert( std::is_pod_v<TStoredType>,			"Element type should be plain (PoD) type." );
 
 
 		// Size of single element of view.
@@ -217,6 +219,7 @@ inline namespace Types
 		size_t			m_capacity	= 0;		// Number of elements available for currently allocated memory.
 		size_t			m_length	= 0;		// Number of currently allocated elements.
 	};
+}
 }
 }
 }

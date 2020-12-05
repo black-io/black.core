@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Types
 {
 namespace Internal
@@ -85,7 +87,7 @@ namespace Internal
 		using Enumeration	= TEnumeration;
 
 		// Bit storage type for given enumeration.
-		using BitStorage	= Black::UnderlyingType<TEnumeration>;
+		using BitStorage	= std::underlying_type_t<TEnumeration>;
 
 
 		// Get the bit of given enumeration value.
@@ -274,6 +276,7 @@ namespace Internal
 		// Interface of bit storage for given enumeration.
 		using Storage = EnumFlagsStorage<BitmaskEnumeration<TEnumeration>>;
 	};
+}
 }
 }
 }

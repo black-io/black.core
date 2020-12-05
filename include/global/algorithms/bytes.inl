@@ -3,22 +3,28 @@
 
 namespace Black
 {
+inline namespace Core
+{
+inline namespace Global
+{
+inline namespace Algorithms
+{
 	template<>
-	inline uint32_t GetPackedBytes<PlatformEndianness::LittleEndian>( const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4 )
+	inline uint32_t GetPackedBytes<Black::PlatformEndianness::LittleEndian>( const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4 )
 	{
 		const uint8_t bytes[] = { b1, b2, b3, b4 };
 		return *reinterpret_cast<const uint32_t*>( bytes );
 	}
 
 	template<>
-	inline uint32_t GetPackedBytes<PlatformEndianness::BigEndian>( const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4 )
+	inline uint32_t GetPackedBytes<Black::PlatformEndianness::BigEndian>( const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4 )
 	{
 		const uint8_t bytes[] = { b4, b3, b2, b1 };
 		return *reinterpret_cast<const uint32_t*>( bytes );
 	}
 
 	template<>
-	inline uint64_t GetPackedBytes<PlatformEndianness::LittleEndian>(
+	inline uint64_t GetPackedBytes<Black::PlatformEndianness::LittleEndian>(
 		const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4,
 		const uint8_t b5, const uint8_t b6, const uint8_t b7, const uint8_t b8
 	)
@@ -28,7 +34,7 @@ namespace Black
 	}
 
 	template<>
-	inline uint64_t GetPackedBytes<PlatformEndianness::BigEndian>(
+	inline uint64_t GetPackedBytes<Black::PlatformEndianness::BigEndian>(
 		const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4,
 		const uint8_t b5, const uint8_t b6, const uint8_t b7, const uint8_t b8
 	)
@@ -41,20 +47,25 @@ namespace Black
 	inline const TValue GetTransformedEndianness( const TValue value )
 	{
 		constexpr size_t value_length = sizeof( TValue );
-		static_assert( Black::IS_INTEGER<TValue>, "The type of value have to be an integer." );
+		static_assert( std::is_integral_v<TValue>, "The type of value have to be an integer." );
 		static_assert( value_length > 1, "Size of value may not be less than 2 bytes." );
 
 		CRET( ENDIANNESS == Black::BUILD_ENDIANNESS, value );
 
 		TValue result;
-		const uint8_t* bytes	= reinterpret_cast<const uint8_t*>( &value );
-		uint8_t* result_bytes	= reinterpret_cast<uint8_t*>( &result );
 
-		for( size_t index = 0; index < value_length; ++index )
+		std::byte bytes[ value_length ];
+		std::memcpy( bytes, &value, value_length );
+
+		for( size_t index = 0; index < ( value_length / 2 ); ++index )
 		{
-			result_bytes[ value_length - 1 - index ] = bytes[ index ];
+			std::swap( bytes[ index ], bytes[ value_length - 1 - index ] );
 		}
 
+		std::memcpy( &result, bytes, value_length );
 		return result;
 	}
+}
+}
+}
 }

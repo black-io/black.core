@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Types
 {
 namespace Internal
@@ -63,6 +65,7 @@ namespace Internal
 		CRET( m_hook == nullptr );
 		m_hook->RemoveIntrusiveLink( this );
 	}
+}
 }
 }
 }

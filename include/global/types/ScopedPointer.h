@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Types
 {
 	/**
@@ -24,10 +26,10 @@ inline namespace Types
 	template< typename TStoredValue, typename TDeleter = std::default_delete<TStoredValue> >
 	class ScopedPointer final : private Black::NonTransferable
 	{
-		static_assert( !Black::IS_REFERENCE<TStoredValue>, "The type stored by scoped pointer have to not be the reference type." );
-
 	// Construction and assignment.
 	public:
+		static_assert( !std::is_reference_v<TStoredValue>, "Invalid type of scoped pointer, references are not allowed." );
+
 		ScopedPointer()	= delete;
 
 		inline explicit ScopedPointer( TStoredValue* value ) : m_value{ value } {};
@@ -73,11 +75,4 @@ inline namespace Types
 }
 }
 }
-
-
-namespace std
-{
-	// Prohibit the swapping of scoped pointers.
-	template< typename TLeftValue, typename TLeftDeleter, typename TRightValue, typename TRightDeleter >
-	void swap( Black::ScopedPointer<TLeftValue, TLeftDeleter>& left, Black::ScopedPointer<TRightValue, TRightDeleter>& right );
 }
