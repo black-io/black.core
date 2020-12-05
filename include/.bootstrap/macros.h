@@ -1,60 +1,6 @@
 #pragma once
 
 
-// Shunting the logging subsystem by default.
-#if( !defined( BLACK_LOG_CRITICAL ) )
-	#define BLACK_LOG_CRITICAL( ... )
-#endif
-
-#if( !defined( BLACK_LOG_ERROR ) )
-	#define BLACK_LOG_ERROR( ... )
-#endif
-
-#if( !defined( BLACK_LOG_WARNING ) )
-	#define BLACK_LOG_WARNING( ... )
-#endif
-
-#if( !defined( BLACK_LOG_DEBUG ) )
-	#define BLACK_LOG_DEBUG( ... )
-#endif
-
-#if( !defined( BLACK_LOGS_CLOSE ) )
-	#define BLACK_LOGS_CLOSE( ... )
-#endif
-
-
-// Regular SFINAE statement for function templates.
-#define BLACK_SFINAE( CONDITION )	char (*)[ CONDITION ] = 0
-
-
-// Regular 'conditional return' statement.
-#define CRET( CONDITION, ... )								{ if( CONDITION ) { return __VA_ARGS__; } }
-
-// Regular 'conditional continue' statement.
-#define CCON( CONDITION )									{ if( CONDITION ) { continue; } }
-
-// Regular 'conditional break' statement.
-#define CBRK( CONDITION )									{ if( CONDITION ) { break; } }
-
-// 'conditional return' statement with error reporting.
-#define CRETM( CONDITION, RESULT, CHANNEL, FORMAT, ... )	{ if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; } }
-
-// 'conditional continue' statement with error reporting.
-#define CCONM( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; } }
-
-// 'conditional break' statement with error reporting.
-#define CBRKM( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; } }
-
-// 'conditional return' statement with warning reporting.
-#define CRETW( CONDITION, RESULT, CHANNEL, FORMAT, ... )	{ if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; } }
-
-// 'conditional continue' statement with warning reporting.
-#define CCONW( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; } }
-
-// 'conditional break' statement with warning reporting.
-#define CBRKW( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; } }
-
-
 // Regular 'debug-only' code statement.
 #if( BLACK_RELEASE_BUILD )
 	#define BLACK_NON_RELEASE_CODE( ... )
@@ -87,6 +33,60 @@
 #endif
 
 
+// Regular SFINAE statement for function templates.
+#define BLACK_SFINAE( CONDITION )	char (*)[ CONDITION ] = 0
+
+
+// Shunting the logging subsystem by default.
+#if( !defined( BLACK_LOG_CRITICAL ) )
+	#define BLACK_LOG_CRITICAL( ... )
+#endif
+
+#if( !defined( BLACK_LOG_ERROR ) )
+	#define BLACK_LOG_ERROR( ... )
+#endif
+
+#if( !defined( BLACK_LOG_WARNING ) )
+	#define BLACK_LOG_WARNING( ... )
+#endif
+
+#if( !defined( BLACK_LOG_DEBUG ) )
+	#define BLACK_LOG_DEBUG( ... )
+#endif
+
+#if( !defined( BLACK_LOGS_CLOSE ) )
+	#define BLACK_LOGS_CLOSE( ... )
+#endif
+
+
+// Regular 'conditional return' statement.
+#define CRET( CONDITION, ... )								{ if( CONDITION ) { return __VA_ARGS__; } }
+
+// Regular 'conditional continue' statement.
+#define CCON( CONDITION )									{ if( CONDITION ) { continue; } }
+
+// Regular 'conditional break' statement.
+#define CBRK( CONDITION )									{ if( CONDITION ) { break; } }
+
+// 'conditional return' statement with error reporting.
+#define CRETE( CONDITION, RESULT, CHANNEL, FORMAT, ... )	{ if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; } }
+
+// 'conditional continue' statement with error reporting.
+#define CCONE( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; } }
+
+// 'conditional break' statement with error reporting.
+#define CBRKE( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; } }
+
+// 'conditional return' statement with warning reporting.
+#define CRETW( CONDITION, RESULT, CHANNEL, FORMAT, ... )	{ if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; } }
+
+// 'conditional continue' statement with warning reporting.
+#define CCONW( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; } }
+
+// 'conditional break' statement with warning reporting.
+#define CBRKW( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ){ BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; } }
+
+
 // String from arbitrary expression.
 #define BLACK_STRING_MACRO( EXPRESSION )	#EXPRESSION
 #define BLACK_STRINGIFICATION( EXPRESSION )	BLACK_STRING_MACRO( EXPRESSION )
@@ -95,7 +95,7 @@
 // Regular expectation.
 #define EXPECTS( ... )																									\
 {																														\
-	if( !( __VA_ARGS__ ) )																								\
+	if( !( __VA_ARGS__ ) ) [[unlikely]]																					\
 	{																													\
 		BLACK_LOG_CRITICAL( "Black", "Unexpected result of `" BLACK_STRINGIFICATION( __VA_ARGS__ ) "` expression." );	\
 		BLACK_LOGS_CLOSE();																								\
@@ -107,7 +107,7 @@
 // Regular insurance.
 #define ENSURES( ... )																									\
 {																														\
-	if( !( __VA_ARGS__ ) )																								\
+	if( !( __VA_ARGS__ ) ) [[unlikely]]																					\
 	{																													\
 		BLACK_LOG_CRITICAL( "Black", "Unexpected result of `" BLACK_STRINGIFICATION( __VA_ARGS__ ) "` expression." );	\
 		BLACK_LOGS_CLOSE();																								\
