@@ -35,6 +35,7 @@
 #include <memory>
 
 // Containers.
+#include <initializer_list>
 #include <array>
 #include <vector>
 #include <list>
