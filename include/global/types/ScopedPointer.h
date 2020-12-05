@@ -59,14 +59,14 @@ inline namespace Types
 		inline const TDeleter& GetDeleter() const		{ return m_value.get_deleter(); };
 
 		// Check that the value stored is `nullptr`.
-		inline const bool IsNull() const				{ return m_value == nullptr; };
+		inline const bool IsEmpty() const				{ return m_value == nullptr; };
 
 
-		inline TStoredValue& operator * () const		{ EXPECTS( !IsNull() ); return *GetValue(); };
-		inline TStoredValue* operator -> () const		{ EXPECTS( !IsNull() ); return GetValue(); };
+		inline TStoredValue& operator * () const		{ EXPECTS( !IsEmpty() ); return *GetValue(); };
+		inline TStoredValue* operator -> () const		{ EXPECTS( !IsEmpty() ); return GetValue(); };
 
-		inline explicit operator const bool () const	{ return !IsNull(); };
-		inline const bool operator ! () const			{ return IsNull(); };
+		inline explicit operator const bool () const	{ return !IsEmpty(); };
+		inline const bool operator ! () const			{ return IsEmpty(); };
 
 	// Private state.
 	private:
