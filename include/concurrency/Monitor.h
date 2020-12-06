@@ -39,7 +39,7 @@ inline namespace Concurrency
 			@retval	MonitorWaitResult::Condition	Returned if `condition` returns success result.
 		*/
 		template< typename TWaitCondition >
-		inline const MonitorWaitResult Wait( TWaitCondition condition ) const;
+		inline const MonitorWaitResult Wait( TWaitCondition&& condition ) const;
 
 		/**
 			@brief	Initiate waiting of signal for current thread.

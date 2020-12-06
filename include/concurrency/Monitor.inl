@@ -8,10 +8,11 @@ inline namespace Core
 inline namespace Concurrency
 {
 	template< typename TWaitCondition >
-	inline const MonitorWaitResult Monitor::Wait( TWaitCondition condition ) const
+	inline const MonitorWaitResult Monitor::Wait( TWaitCondition&& condition ) const
 	{
-		CRET( condition(), MonitorWaitResult::Condition );
-		return Wait();
+		auto lock = std::unique_lock<std::recursive_mutex>( m_mutex );
+		m_waiting_queue.wait( lock, std::forward<TWaitCondition>( condition ) );
+		return MonitorWaitResult::Notified;
 	}
 
 	inline const MonitorWaitResult Monitor::Wait() const

@@ -13,7 +13,6 @@ inline namespace Concurrency
 		Exception = 0,	// Some exception was occurred while waiting.
 		Notified,		// Monitor was notified.
 		Timeout,		// Timeout was reached.
-		Condition,		// Wait was aborted in order of success condition result.
 	};
 }
 }
