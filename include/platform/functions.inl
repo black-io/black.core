@@ -60,7 +60,7 @@ inline namespace Platform
 		va_list arguments;
 		va_start( arguments, format );
 
-		std::string_view result = Black::FormatArgumentList( target_buffer, format, arguments );
+		std::string_view result = Black::FormatArgumentsList( target_buffer, format, arguments );
 
 		va_end( arguments );
 		return result;
@@ -71,7 +71,7 @@ inline namespace Platform
 		va_list arguments;
 		va_start( arguments, format );
 
-		const size_t result = Black::ParseArgumentList( source_buffer, format, arguments );
+		const size_t result = Black::ParseArgumentsList( source_buffer, format, arguments );
 
 		va_end( arguments );
 		return result;
