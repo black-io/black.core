@@ -28,13 +28,13 @@ inline namespace Platform
 	template< typename TValue >
 	inline void ZeroMemory( TValue& target_ref )
 	{
-		Black::FillMemory( &target_ref, 0, sizeof( TValue ) );
+		Black::ZeroMemory( &target_ref, sizeof( TValue ) );
 	}
 
 	template< typename TValue, size_t ARRAY_LENGTH >
 	inline void ZeroMemory( TValue (&target_array)[ ARRAY_LENGTH ] )
 	{
-		Black::FillMemory( target_array, 0, sizeof( TValue ) * ARRAY_LENGTH );
+		Black::ZeroMemory( target_array, sizeof( TValue ) * ARRAY_LENGTH );
 	}
 
 	template< typename TValue >

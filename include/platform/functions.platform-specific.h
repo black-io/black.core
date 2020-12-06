@@ -30,9 +30,16 @@ inline namespace PlatformSpecific
 	/**
 		@brief	Fill every byte of `memory` with zero value.
 		May cause potentially unsafe behavior if invalid arguments passed.
-		@note	This function is same as `FillMemory`, but it may not be dropped while compiler optimizations.
 		@param	memory	Head of memory to be filled.
-		@param	pattern	Filling pattern.
+		@param	length	Number of bytes in `memory` to be filled.
+	*/
+	void ZeroMemory( void* memory, const size_t length );
+
+	/**
+		@brief	Fill every byte of `memory` with zero value.
+		May cause potentially unsafe behavior if invalid arguments passed.
+		@note	This function is same as `ZeroMemory`, but it may not be dropped while compiler optimizations.
+		@param	memory	Head of memory to be filled.
 		@param	length	Number of bytes in `memory` to be filled.
 	*/
 	void SecuredZeroMemory( void* memory, const size_t length );

@@ -19,6 +19,11 @@ inline namespace PlatformSpecific
 		::memset( memory, pattern, length );
 	}
 
+	void ZeroMemory( void* memory, const size_t length )
+	{
+		::RtlZeroMemory( memory, length );
+	}
+
 	void SecuredZeroMemory( void* memory, const size_t length )
 	{
 		::RtlSecureZeroMemory( memory, length );
