@@ -44,10 +44,10 @@ inline namespace Types
 	protected:
 		IntrusiveHook() = default;
 		IntrusiveHook( const IntrusiveHook& other );
-		IntrusiveHook( IntrusiveHook&& other );
+		IntrusiveHook( IntrusiveHook&& other ) noexcept;
 
 		IntrusiveHook& operator = ( const IntrusiveHook& other );
-		IntrusiveHook& operator = ( IntrusiveHook&& other );
+		IntrusiveHook& operator = ( IntrusiveHook&& other ) noexcept;
 
 	private:
 		// Invalidate the hook.

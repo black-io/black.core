@@ -39,14 +39,14 @@ inline namespace Types
 
 	void IntrusiveHook::AddIntrusiveLink( Black::NotNull<RegularIntrusiveLink*> link ) const
 	{
-		EXPECTS_DEBUG( !Black::IsItemExists( m_liinks, link.Get() ) );
-		Black::UniqueAdd( m_liinks, link.Get() );
+		//EXPECTS_DEBUG( !Black::IsItemExists( m_liinks, link.Get() ) );
+		//Black::UniqueAdd( m_liinks, link.Get() );
 	}
 
 	void IntrusiveHook::RemoveIntrusiveLink( Black::NotNull<RegularIntrusiveLink*> link ) const
 	{
-		EXPECTS_DEBUG( Black::IsItemExists( m_liinks, link.Get() ) );
-		Black::RemoveItem( m_liinks, link.Get() );
+		//EXPECTS_DEBUG( Black::IsItemExists( m_liinks, link.Get() ) );
+		//Black::RemoveItem( m_liinks, link.Get() );
 	}
 
 	void IntrusiveHook::Invalidate()
