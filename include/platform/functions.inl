@@ -52,26 +52,26 @@ inline namespace Platform
 	template< typename TValue >
 	inline const bool IsMemoryEqual( const TValue& left_ref, const TValue& right_ref )
 	{
-		return Black::IsMemoryEqual( &left_ref, right_ref, sizeof( TValue ) );
+		return Black::IsMemoryEqual( &left_ref, &right_ref, sizeof( TValue ) );
 	}
 
-	inline std::string_view WriteArguments( Black::PlainView<char> target_buffer, const std::string& format, ... )
+	inline std::string_view FormatArguments( Black::PlainView<char> target_buffer, const char* format, ... )
 	{
 		va_list arguments;
 		va_start( arguments, format );
 
-		std::string_view result = Black::WriteArguments( target_buffer, format, arguments );
+		std::string_view result = Black::FormatArgumentList( target_buffer, format, arguments );
 
 		va_end( arguments );
 		return result;
 	}
 
-	inline const size_t ReadArguments( const std::string_view source_buffer, const std::string& format, ... )
+	inline const size_t ParseArguments( const std::string_view source_buffer, const char* format, ... )
 	{
 		va_list arguments;
 		va_start( arguments, format );
 
-		const size_t result = Black::ReadArguments( source_buffer, format, arguments );
+		const size_t result = Black::ParseArgumentList( source_buffer, format, arguments );
 
 		va_end( arguments );
 		return result;

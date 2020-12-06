@@ -56,7 +56,7 @@ inline namespace PlatformSpecific
 		@return					Formatted string view with same memory as `target_buffer`.
 		@retval	empty view		In case the arguments can not be formated into target buffer.
 	*/
-	std::string_view WriteArguments( Black::PlainView<char> target_buffer, const std::string_view format, va_list arguments );
+	std::string_view FormatArgumentsList( Black::PlainView<char> target_buffer, const char* format, va_list arguments );
 
 	/**
 		@brief	Read the `arguments` from `source_buffer` according to `format` specification.
@@ -67,7 +67,7 @@ inline namespace PlatformSpecific
 		@return					Number of readden arguments.
 		@retval	0				If no argument was read.
 	*/
-	const size_t ReadArguments( const std::string_view source_buffer, const std::string_view format, va_list arguments );
+	const size_t ParseArgumentsList( const std::string_view source_buffer, const char* format, va_list arguments );
 }
 }
 }
