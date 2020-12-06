@@ -1,4 +1,4 @@
-#include <black.core.h>
+#include <black/core/concurrency.h>
 
 
 namespace Black
@@ -7,12 +7,12 @@ inline namespace Core
 {
 inline namespace Concurrency
 {
-	Time GetCurrentTime()
+	Black::Time GetCurrentTime()
 	{
 		return GetSecondsFromDuration( std::chrono::high_resolution_clock::now().time_since_epoch() );
 	}
 
-	void SleepCurrentThread( TimeDuration duration )
+	void SleepCurrentThread( Black::TimeDuration duration )
 	{
 		std::this_thread::sleep_for( duration );
 	}
