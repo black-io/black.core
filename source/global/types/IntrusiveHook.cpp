@@ -1,9 +1,11 @@
-#include <black.core.h>
+#include <black/core.h>
 
 
 namespace Black
 {
 inline namespace Core
+{
+inline namespace Global
 {
 inline namespace Types
 {
@@ -12,7 +14,7 @@ inline namespace Types
 	{}
 
 	// Move construction only invalidates the other hook.
-	IntrusiveHook::IntrusiveHook( IntrusiveHook&& other )
+	IntrusiveHook::IntrusiveHook( IntrusiveHook&& other ) noexcept
 	{
 		other.Invalidate();
 	}
@@ -29,7 +31,7 @@ inline namespace Types
 	}
 
 	// Move assignment invalidates the other hook.
-	IntrusiveHook& IntrusiveHook::operator=( IntrusiveHook&& other )
+	IntrusiveHook& IntrusiveHook::operator=( IntrusiveHook&& other ) noexcept
 	{
 		other.Invalidate();
 		return *this;
@@ -57,6 +59,7 @@ inline namespace Types
 
 		m_liinks.clear();
 	}
+}
 }
 }
 }
