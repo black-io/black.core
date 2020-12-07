@@ -12,7 +12,7 @@ namespace Internal
 	template< typename TOutStorage, typename TPattern, typename TGenerator >
 	inline TOutStorage JoinString( TGenerator generate, const size_t count, const TPattern pattern, const TextJoiningFlags flags )
 	{
-		TOutStorage result;
+		TOutStorage result{};
 		for( size_t index = 0; index < count; ++index )
 		{
 			auto part = generate();
