@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace HashUtils
+inline namespace Algorithms
 {
 	/**
 		@brief	Hash the given data using unreliable function.

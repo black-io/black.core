@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace TextUtils
+inline namespace Algorithms
 {
 namespace Internal
 {

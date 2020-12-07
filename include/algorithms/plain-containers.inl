@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Utils
+inline namespace Algorithms
 {
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
 	inline const bool IsItemExists( const TStorage<TItem, TAllocator>& storage, const TItem& item )

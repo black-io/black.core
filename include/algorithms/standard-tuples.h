@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Utils
+inline namespace Algorithms
 {
 	/**
 		@brief	For-each loop over arbitrary tuple.

@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Utils
+inline namespace Algorithms
 {
 	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
 	inline const bool IsItemExists( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key )

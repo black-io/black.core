@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace HashUtils
+inline namespace Algorithms
 {
 	template< typename TValue, size_t ARRAY_LENGTH >
 	inline const uint32_t GetUnreliableHash( const TValue (&data)[ ARRAY_LENGTH ], const uint32_t seed = 0 )

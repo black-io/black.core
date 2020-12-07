@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace TextUtils
+inline namespace Algorithms
 {
 	// Text splitting variant specification.
 	enum class TextSplittingFlag : uint32_t
