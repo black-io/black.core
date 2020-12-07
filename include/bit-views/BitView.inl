@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Types
+inline namespace BitViews
 {
 	template< typename TBitStorage >
 	BitView<TBitStorage>::BitView( BitView&& other )

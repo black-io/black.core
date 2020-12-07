@@ -5,12 +5,12 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Types
+inline namespace BitViews
 {
 namespace Internal
 {
-	// BitView core traits.
-	struct BitViewCoreTraits final
+	// Some traits for bits.
+	struct BitTraits final
 	{
 		// Get the number of bits to store values up to given one.
 		static constexpr const size_t GetSuitableBitsFor( const size_t value )
@@ -37,7 +37,7 @@ namespace Internal
 		static constexpr const size_t	MAX_BIT_INDEX			= BIT_LENGTH - 1;
 
 		// Length of bit index field.
-		static constexpr const size_t	BIT_INDEX_LENGTH		= BitViewCoreTraits::GetSuitableBitsFor( BYTE_LENGTH ) + 3;
+		static constexpr const size_t	BIT_INDEX_LENGTH		= BitTraits::GetSuitableBitsFor( BYTE_LENGTH ) + 3;
 
 		// Length of storage index field.
 		static constexpr const size_t	STORAGE_INDEX_LENGTH	= ( sizeof( size_t ) * 8 ) - BIT_INDEX_LENGTH;
