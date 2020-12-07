@@ -35,7 +35,7 @@ namespace Internal
 
 			const uint32_t part_hash = Black::GetUnreliableHash( part );
 			CCON( flags.HasFlag( TextSplittingFlag::DropEmpty ) && part.empty() );
-			CCON( flags.HasFlag( TextSplittingFlag::OnlyUnique ) && Black::IsItemExists( found_parts, part_hash ) );
+			CCON( flags.HasFlag( TextSplittingFlag::OnlyUnique ) && Black::IsItemPresent( found_parts, part_hash ) );
 
 			found_parts.push_back( part_hash );
 			consume( part );
