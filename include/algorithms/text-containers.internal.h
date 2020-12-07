@@ -56,9 +56,6 @@ namespace Internal
 	};
 
 	template< typename TChar, typename TTraits >
-	struct StringInfo<Black::RegularStringView<TChar, TTraits>> : public StringViewAdapter<TChar, TTraits> {};
-
-	template< typename TChar, typename TTraits >
 	struct StringInfo<std::basic_string_view<TChar, TTraits>> : public StringViewAdapter<TChar, TTraits> {};
 
 	template< typename TChar, typename TTraits, typename TAllocator >
@@ -103,9 +100,6 @@ namespace Internal
 	struct RearrangeStringTest final : public std::false_type {};
 
 	template< typename TChar, typename TTraits >
-	struct RearrangeStringTest<Black::RegularStringView<TChar, TTraits>> final : public std::true_type {};
-
-	template< typename TChar, typename TTraits >
 	struct RearrangeStringTest<std::basic_string_view<TChar, TTraits>> final : public std::true_type {};
 
 	template< typename TChar, typename TTraits, typename TAllocator >
@@ -139,6 +133,10 @@ namespace Internal
 	template< typename TCandidate >
 	using StringStorage = typename StringInfo<std::decay_t<TCandidate>>::Storage;
 
+
+	// Whether the candidate is valid character type.
+	template< typename TCandidate >
+	inline constexpr bool IS_VALID_CHAR = ValidCharTest<TCandidate>::value;
 
 	// Whether the candidate is valid consumable string.
 	template< typename TCandidate >
