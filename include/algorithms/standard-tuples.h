@@ -16,7 +16,7 @@ inline namespace Algorithms
 		@tparam	TArguments	List of tuple types.
 	*/
 	template< typename TFunction, typename... TArguments >
-	void ForEach( std::tuple<TArguments...>& elements, const TFunction& function );
+	void ForEach( std::tuple<TArguments...>& elements, TFunction&& function );
 }
 }
 }
