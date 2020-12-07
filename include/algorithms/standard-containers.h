@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Utils
+inline namespace Algorithms
 {
 	/**
 		@brief	Check that the item storage contains the item.
