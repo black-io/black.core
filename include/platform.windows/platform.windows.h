@@ -62,7 +62,10 @@ inline namespace Platform
 {
 inline namespace WindowsDesktop
 {
+namespace Internal
+{
 
+}
 }
 }
 }

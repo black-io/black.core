@@ -7,7 +7,10 @@ inline namespace Core
 {
 inline namespace Concurrency
 {
+namespace Internal
+{
 
+}
 }
 }
 }
