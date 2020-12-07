@@ -12,6 +12,7 @@ inline namespace Concurrency
 }
 }
 
+
 #include "concurrency.const.h"
 #include "concurrency.functions.h"
 
