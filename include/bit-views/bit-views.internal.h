@@ -24,7 +24,7 @@ namespace Internal
 	template< typename TBitStorage >
 	struct BitStorageTraits final
 	{
-		static_assert( Black::IS_INTEGER<TBitStorage> || Black::IS_ENUMERATION<TBitStorage>, "`TBitStorage` should be of integer or enumeration type." );
+		static_assert( std::is_integral_v<TBitStorage> || std::is_enum_v<TBitStorage>, "`TBitStorage` should be of integer or enumeration type." );
 
 
 		// Storage length in bytes.
@@ -142,7 +142,7 @@ namespace Internal
 	// Private interface.
 	private:
 		// Mutable type of bit storage.
-		using MutableBitStorage = Black::RemoveConst<TBitStorage>;
+		using MutableBitStorage = std::remove_const_t<TBitStorage>;
 
 
 		// Swap the state with other adapter.

@@ -34,7 +34,7 @@ namespace Internal
 	template< typename TBitStorage >
 	inline BitAdapter<TBitStorage>& BitAdapter<TBitStorage>::operator=( const bool value )
 	{
-		static_assert( !Black::IS_CONST<TBitStorage>, "The constant value may not be modified." );
+		static_assert( !std::is_const_v<TBitStorage>, "The constant value may not be modified." );
 		EXPECTS_DEBUG( IsValid() );
 		CRET( !IsValid(), *this );
 
