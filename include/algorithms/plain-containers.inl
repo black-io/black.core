@@ -8,60 +8,45 @@ inline namespace Core
 inline namespace Algorithms
 {
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline const bool IsItemExists( const TStorage<TItem, TAllocator>& storage, const TItem& item )
+	inline const bool IsItemPresent( const TStorage<TItem, TAllocator>& storage, const TItem& item )
 	{
 		return std::find( std::begin( storage ), std::end( storage ), item ) != std::end( storage );
 	}
 
 	template< typename TItem, size_t ARRAY_LENGTH >
-	inline const bool IsItemExists( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item )
+	inline const bool IsItemPresent( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item )
 	{
 		return std::find( std::begin( storage ), std::end( storage ), item ) != std::end( storage );
 	}
 
 	template< typename TItem >
-	inline const bool IsItemExists( const PlainView<TItem>& storage, const TItem& item )
+	inline const bool IsItemPresent( const PlainView<TItem>& storage, const TItem& item )
 	{
 		return std::find( std::begin( storage ), std::end( storage ), item ) != std::end( storage );
 	}
 
 	template< typename TItem >
-	inline const bool IsItemExists( const PlainVector<TItem>& storage, const TItem& item )
+	inline const bool IsItemPresent( const PlainVector<TItem>& storage, const TItem& item )
 	{
 		return std::find( std::begin( storage ), std::end( storage ), item ) != std::end( storage );
 	}
 
-	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline const bool UniqueAdd( TStorage<TItem, TAllocator>& storage, const TItem& item )
+	template< typename TStoredItem, typename TNewItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool UniqueAdd( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item )
 	{
-		CRET( IsItemExists( storage, item ), false );
-		storage.push_back( item );
+		static_assert( std::is_same_v<std::remove_cv_t<TStoredItem>, std::remove_cv_t<TNewItem>>, "Item of such type can't be added into storage." );
+		CRET( IsItemPresent( storage, item ), false );
+		storage.emplace_back( std::forward<TNewItem>( item ) );
 		return true;
 	}
 
-	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline const bool UniqueAdd( TStorage<TItem, TAllocator>& storage, TItem&& item )
+	template< typename TStoredItem, typename TNewItem, typename TAllocator >
+	inline const size_t UniqueAddIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item )
 	{
-		CRET( IsItemExists( storage, item ), false );
-		storage.push_back( std::move( item ) );
-		return true;
-	}
-
-	template< typename TItem, typename TAllocator >
-	inline const size_t UniqueAddIndexed( std::vector<TItem, TAllocator>& storage, const TItem& item )
-	{
+		static_assert( std::is_same_v<std::remove_cv_t<TStoredItem>, std::remove_cv_t<TNewItem>>, "Item of such type can't be added into storage." );
 		auto found_item = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_item != std::end( storage ), std::distance( std::begin( storage ), found_item ) );
-		storage.push_back( item );
-		return storage.size() - 1;
-	}
-
-	template< typename TItem, typename TAllocator >
-	inline const size_t UniqueAddIndexed( std::vector<TItem, TAllocator>& storage, TItem&& item )
-	{
-		auto found_item = std::find( std::begin( storage ), std::end( storage ), item );
-		CRET( found_item != std::end( storage ), std::distance( std::begin( storage ), found_item ) );
-		storage.push_back( std::move( item ) );
+		storage.emplace_back( std::forward<TNewItem>( item ) );
 		return storage.size() - 1;
 	}
 
@@ -79,7 +64,7 @@ inline namespace Algorithms
 	inline void DeletePointersAndClear( TStorage<TItem*, TAllocator>& storage )
 	{
 		CRET( storage.empty() );
-		std::for_each( std::begin( storage ), std::end( storage ), []( const TItem* item ){ delete item; } );
+		std::for_each( std::begin( storage ), std::end( storage ), []( TItem* item ){ delete item; } );
 		storage.clear();
 	}
 
@@ -87,7 +72,7 @@ inline namespace Algorithms
 	inline void DeletePointersAndClear( PlainVector<TItem*>& storage )
 	{
 		CRET( storage.IsEmpty() );
-		std::for_each( std::begin( storage ), std::end( storage ), []( const TItem* item ){ delete item; } );
+		std::for_each( std::begin( storage ), std::end( storage ), []( TItem* item ){ delete item; } );
 		storage.clear();
 	}
 
