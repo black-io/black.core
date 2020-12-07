@@ -8,7 +8,7 @@ namespace Black
 inline namespace Core
 {
 // Internal layer of Core Library.
-inline namespace Internal
+namespace Internal
 {
 
 }
