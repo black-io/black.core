@@ -71,11 +71,11 @@ namespace Internal
 	{
 		// Whether the `TImplementation` can be constructed through defined constructor with given argument types.
 		template< typename... TArguments >
-		static constexpr bool IS_CONSTRUCTIBLE = Black::IS_CONSTRUCTIBLE<TImplementation, TArguments...>;
+		static constexpr bool IS_CONSTRUCTIBLE = std::is_constructible_v<TImplementation, TArguments...>;
 
 		// Narrowing construction, in case of `TImplementation` may be constructed.
 		template< typename... TArguments >
-		static inline Black::EnableIf<IS_CONSTRUCTIBLE<TArguments...>, TImplementation*> Construct( void* memory, TArguments&&... arguments )
+		static inline std::enable_if_t<IS_CONSTRUCTIBLE<TArguments...>, TImplementation*> Construct( void* memory, TArguments&&... arguments )
 		{
 			EXPECTS_DEBUG( memory != nullptr );
 			return new( memory ) TImplementation( std::forward<TArguments>( arguments )... );
@@ -83,7 +83,7 @@ namespace Internal
 
 		// Brace initialization, in case of  `TImplementation` is an aggregate type of has no constructor with given arguments.
 		template< typename... TArguments >
-		static inline Black::EnableIf<!IS_CONSTRUCTIBLE<TArguments...>, TImplementation*> Construct( void* memory, TArguments&&... arguments )
+		static inline std::enable_if_t<!IS_CONSTRUCTIBLE<TArguments...>, TImplementation*> Construct( void* memory, TArguments&&... arguments )
 		{
 			EXPECTS_DEBUG( memory != nullptr );
 			return new( memory ) TImplementation{ std::forward<TArguments>( arguments )... };

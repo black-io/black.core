@@ -11,7 +11,7 @@ inline namespace StaticLists
 	template< typename TImplementation >
 	inline TImplementation& StaticList<TInterface>::Get()
 	{
-		static_assert( Black::IS_BASE_OF<TInterface, TImplementation>, "`TImplementation` should be derived from `TInterface`." );
+		static_assert( std::is_base_of_v<TInterface, TImplementation>, "`TImplementation` should be derived from `TInterface`." );
 
 		static Node<TImplementation> storage{ TImplementation::GetDebugName(), Black::CONSTRUCT_INPLACE };
 		return *storage;

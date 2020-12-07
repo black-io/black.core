@@ -16,7 +16,7 @@ namespace Internal
 	public:
 		using self_type			= StaticListIterator;
 		using difference_type	= size_t;
-        using value_type		= Black::RemoveConst<TInterface>;
+        using value_type		= std::remove_const_t<TInterface>;
         using pointer			= TInterface*;
         using reference			= TInterface&;
         using iterator_category	= std::forward_iterator_tag;

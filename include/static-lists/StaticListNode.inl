@@ -27,7 +27,7 @@ namespace Internal
 	template< typename... TArguments >
 	inline TImplementation& StaticListNode<TInterface, TImplementation>::Construct( TArguments&&... arguments ) const
 	{
-		static_assert( Black::IS_BASE_OF<TInterface, TImplementation>, "`TImplementation` should be derived from `TInterface`." );
+		static_assert( std::is_base_of_v<TInterface, TImplementation>, "`TImplementation` should be derived from `TInterface`." );
 
 		void* memory = Black::GetAlignedPointer( m_storage.data(), STORAGE_ALIGNMENT );
 
