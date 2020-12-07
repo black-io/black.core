@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Types
+inline namespace StaticLists
 {
 namespace Internal
 {

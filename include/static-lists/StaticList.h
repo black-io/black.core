@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Types
+inline namespace StaticLists
 {
 	// The implementation of static list.
 	template< typename TInterface >
