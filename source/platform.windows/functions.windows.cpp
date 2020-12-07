@@ -1,4 +1,4 @@
-#include <black.core.h>
+#include <black/core.h>
 
 
 namespace Black
@@ -19,6 +19,11 @@ inline namespace PlatformSpecific
 		::memset( memory, pattern, length );
 	}
 
+	void ZeroMemory( void* memory, const size_t length )
+	{
+		::RtlZeroMemory( memory, length );
+	}
+
 	void SecuredZeroMemory( void* memory, const size_t length )
 	{
 		::RtlSecureZeroMemory( memory, length );
@@ -29,17 +34,17 @@ inline namespace PlatformSpecific
 		return ::memcmp( left_memory, right_memory, length ) == 0;
 	}
 
-	Black::StringView WriteArguments( Black::PlainView<char> target_buffer, const Black::StringView format, va_list arguments )
+	std::string_view FormatArgumentsList( Black::PlainView<char> target_buffer, const char* format, va_list arguments )
 	{
-		const int32_t status = ::vsprintf_s( target_buffer.GetData(), target_buffer.GetLength(), format.data(), arguments );
+		const int32_t status = ::vsprintf_s( target_buffer.GetData(), target_buffer.GetLength(), format, arguments );
 		CRET( status <= 0, {} );
 
 		return { target_buffer.GetData(), static_cast<size_t>( status ) };
 	}
 
-	const size_t ReadArguments( const Black::StringView source_buffer, const Black::StringView format, va_list arguments )
+	const size_t ParseArgumentsList( const std::string_view source_buffer, const char* format, va_list arguments )
 	{
-		return std::max<int32_t>( ::vsscanf_s( source_buffer.data(), format.data(), arguments ), 0 );
+		return std::max<int32_t>( ::vsscanf_s( source_buffer.data(), format, arguments ), 0 );
 	}
 }
 }

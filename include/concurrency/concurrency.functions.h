@@ -8,10 +8,10 @@ inline namespace Core
 inline namespace Concurrency
 {
 	/// Get the number of elapsed seconds.
-	Time GetCurrentTime();
+	Black::Time GetCurrentTime();
 
 	// Suspend the thread for a given duration.
-	void SleepCurrentThread( TimeDuration duration );
+	void SleepCurrentThread( Black::TimeDuration duration );
 
 	// Instruct the platform to end the scheduled time quantum for current thread.
 	void YieldCurrentThread();

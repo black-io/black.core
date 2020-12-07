@@ -7,10 +7,14 @@ inline namespace Core
 {
 inline namespace Concurrency
 {
+namespace Internal
+{
 
 }
 }
 }
+}
+
 
 #include "concurrency.const.h"
 #include "concurrency.functions.h"

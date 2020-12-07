@@ -7,13 +7,18 @@ inline namespace Core
 {
 inline namespace Platform
 {
+namespace Internal
+{
 
 }
 }
 }
+}
 
 
+// Include most fundamental platform stuff.
 #include "functions.h"
+#include "functions.platform-specific.h"
 
 // Select the implementation of platform-specific code.
 #if( BLACK_WINDOWS_DESKTOP_PLATFORM )
@@ -26,10 +31,9 @@ inline namespace Platform
 	#include "../platform.android/platform.android.h"
 #elif( BLACK_IOS_PLATFORM )
 	#include "../platform.ios/platform.ios.h"
-#elif( BLACK_WINDOWS_MOBILE_PLATFORM )
-	#include "../platform.winmo/platform.winmo.h"
-#elif( BLACK_TIZEN_PLATFORM )
-	#include "../platform.tizen/platform.tizen.h"
 #else
 	#error Current platform is unspecified or not defined
 #endif
+
+// Deferred implementations.
+#include "functions.inl"
