@@ -8,21 +8,16 @@ inline namespace Core
 inline namespace Algorithms
 {
 	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool IsItemExists( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
+	inline const bool IsItemPresent( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
 	{
 		return storage.find( item ) != storage.end();
 	}
 
-	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool UniqueAdd( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
+	template< typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator >
+	inline const bool UniqueAdd( std::set<TStoredItem, TPredicate, TAllocator>& storage, TNewItem&& item )
 	{
-		return std::get<1>( storage.insert( item ) );
-	}
-
-	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool UniqueAdd( std::set<TItem, TPredicate, TAllocator>& storage, TItem&& item )
-	{
-		return std::get<1>( storage.insert( std::move( item ) ) );
+		static_assert( std::is_same_v<std::remove_cv_t<TStoredItem>, std::remove_cv_t<TNewItem>>, "Item of such type can't be added into storage." );
+		return std::get<1>( storage.emplace( std::forward<TNewItem>( item ) ) );
 	}
 
 	template< typename TItem, typename TPredicate, typename TAllocator >
