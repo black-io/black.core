@@ -25,16 +25,16 @@ inline namespace Algorithms
 		return GetUnreliableHash( data.GetData(), data.GetUsedBytes(), seed );
 	}
 
-	template< typename TChar, typename TTraits >
-	inline const uint32_t GetUnreliableHash( std::basic_string_view<TChar, TTraits> data, const uint32_t seed = 0 )
-	{
-		return GetUnreliableHash( data.data(), data.length() * sizeof( TChar ), seed );
-	}
-
 	template< typename TValue >
 	inline const uint32_t GetUnreliableHash( const Black::PlainVector<TValue>& data, const uint32_t seed = 0 )
 	{
 		return GetUnreliableHash( data.GetData(), data.GetUsedBytes(), seed );
+	}
+
+	template< typename TChar, typename TTraits >
+	inline const uint32_t GetUnreliableHash( std::basic_string_view<TChar, TTraits> data, const uint32_t seed = 0 )
+	{
+		return GetUnreliableHash( data.data(), data.length() * sizeof( TChar ), seed );
 	}
 
 	template< typename TChar, typename TTraits, typename TAllocator >
