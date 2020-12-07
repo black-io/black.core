@@ -5,7 +5,7 @@
 #include "../../.prologue.h"
 
 #include "../../concurrency/concurrency.h"
-#include "../../bit-view/bit-view.h"
+#include "../../bit-views/bit-views.h"
 
 // The epilogue of library.
 #include "../../.epilogue.h"
