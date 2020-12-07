@@ -17,7 +17,7 @@ inline namespace Algorithms
 		@return				`true` if storage contain the item.
 	*/
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline const bool IsItemExists( const TStorage<TItem, TAllocator>& storage, const TItem& item );
+	inline const bool IsItemPresent( const TStorage<TItem, TAllocator>& storage, const TItem& item );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -28,7 +28,7 @@ inline namespace Algorithms
 		@return					`true` if storage contain the item.
 	*/
 	template< typename TItem, size_t ARRAY_LENGTH >
-	inline const bool IsItemExists( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item );
+	inline const bool IsItemPresent( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -38,7 +38,7 @@ inline namespace Algorithms
 		@return					`true` if storage contain the item.
 	*/
 	template< typename TItem >
-	inline const bool IsItemExists( const PlainView<TItem>& storage, const TItem& item );
+	inline const bool IsItemPresent( const PlainView<TItem>& storage, const TItem& item );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -48,7 +48,7 @@ inline namespace Algorithms
 		@return					`true` if storage contain the item.
 	*/
 	template< typename TItem >
-	inline const bool IsItemExists( const PlainVector<TItem>& storage, const TItem& item );
+	inline const bool IsItemPresent( const PlainVector<TItem>& storage, const TItem& item );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -60,7 +60,7 @@ inline namespace Algorithms
 		@return				`true` if storage contain the item.
 	*/
 	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool IsItemExists( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item );
+	inline const bool IsItemPresent( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -73,7 +73,7 @@ inline namespace Algorithms
 		@return				`true` if storage contain the item.
 	*/
 	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool IsItemExists( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key );
+	inline const bool IsItemPresent( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -87,7 +87,7 @@ inline namespace Algorithms
 		@return				`true` if storage contain the item.
 	*/
 	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator >
-	inline const bool IsItemExists( const std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key );
+	inline const bool IsItemPresent( const std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key );
 
 	/**
 		@brief	Uniquely insert the item into storage.
@@ -98,20 +98,8 @@ inline namespace Algorithms
 		@tparam	TStorage	Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
 		@return				`true` if item successfully inserted into storage.
 	*/
-	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline const bool UniqueAdd( TStorage<TItem, TAllocator>& storage, const TItem& item );
-
-	/**
-		@brief	Uniquely insert the item into storage.
-		@param	storage		The storage to add.
-		@param	item		The item to add.
-		@tparam	TItem		Type of storage content and type of item as well.
-		@tparam	TAllocator	Allocator used by storage.
-		@tparam	TStorage	Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
-		@return				`true` if item successfully inserted into storage.
-	*/
-	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline const bool UniqueAdd( TStorage<TItem, TAllocator>& storage, TItem&& item );
+	template< typename TStoredItem, typename TNewItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool UniqueAdd( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item );
 
 	/**
 		@brief	Uniquely insert the item into storage.
@@ -122,20 +110,8 @@ inline namespace Algorithms
 		@tparam	TAllocator	Allocator used by storage.
 		@return				`true` if item successfully inserted into storage.
 	*/
-	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool UniqueAdd( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item );
-
-	/**
-		@brief	Uniquely insert the item into storage.
-		@param	storage		The storage to add.
-		@param	item		The item to add.
-		@tparam	TItem		Type of storage content and type of item as well.
-		@tparam	TPredicate	Predicate used by storage.
-		@tparam	TAllocator	Allocator used by storage.
-		@return				`true` if item successfully inserted into storage.
-	*/
-	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool UniqueAdd( std::set<TItem, TPredicate, TAllocator>& storage, TItem&& item );
+	template< typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator >
+	inline const bool UniqueAdd( std::set<TStoredItem, TPredicate, TAllocator>& storage, TNewItem&& item );
 
 	/**
 		@brief	Uniquely insert the item into storage.
@@ -147,21 +123,8 @@ inline namespace Algorithms
 		@tparam	TAllocator	Allocator used by storage.
 		@return				`true` if item successfully inserted into storage.
 	*/
-	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool UniqueAdd( std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key, const TItem& item );
-
-	/**
-		@brief	Uniquely insert the item into storage.
-		@param	storage		The storage to add.
-		@param	key			The key for item to add.
-		@param	item		The item to add.
-		@tparam	TItem		Type of storage content and type of item as well.
-		@tparam	TPredicate	Predicate used by storage.
-		@tparam	TAllocator	Allocator used by storage.
-		@return				`true` if item successfully inserted into storage.
-	*/
-	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool UniqueAdd( std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key, TItem&& item );
+	template< typename TStoredKey, typename TNewKey, typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator >
+	inline const bool UniqueAdd( std::map<TStoredKey, TStoredItem, TPredicate, TAllocator>& storage, TNewKey&& key, TNewItem&& item );
 
 	/**
 		@brief	Uniquely insert the item into storage.
@@ -175,23 +138,8 @@ inline namespace Algorithms
 		@tparam	TAllocator	Allocator used by storage.
 		@return				`true` if item successfully inserted into storage.
 	*/
-	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator >
-	inline const bool UniqueAdd( std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key, const TItem& item );
-
-	/**
-		@brief	Uniquely insert the item into storage.
-		@param	storage		The storage to add.
-		@param	key			The key for item to add.
-		@param	item		The item to add.
-		@tparam	TKey		Type of keys used by storage.
-		@tparam	TItem		Type of storage content and type of item as well.
-		@tparam	THash		Hash used by storage.
-		@tparam	TPredicate	Predicate used by storage.
-		@tparam	TAllocator	Allocator used by storage.
-		@return				`true` if item successfully inserted into storage.
-	*/
-	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator >
-	inline const bool UniqueAdd( std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key, TItem&& item );
+	template< typename TStoredKey, typename TNewKey, typename TStoredItem, typename TNewItem, typename THash, typename TPredicate, typename TAllocator >
+	inline const bool UniqueAdd( std::unordered_map<TStoredKey, TStoredItem, THash, TPredicate, TAllocator>& storage, TNewKey&& key, TNewItem&& item );
 
 	/**
 		@brief	Uniquely insert the item into storage.
@@ -202,20 +150,8 @@ inline namespace Algorithms
 		@tparam	TAllocator	Allocator used by storage.
 		@return				index of item in storage.
 	*/
-	template< typename TItem, typename TAllocator >
-	inline const size_t UniqueAddIndexed( std::vector<TItem, TAllocator>& storage, const TItem& item );
-
-	/**
-		@brief	Uniquely insert the item into storage.
-		@note	Unlike the `UniqueAdd` function, this one will return the positional number of item in storage.
-		@param	storage		The storage to add.
-		@param	item		The item to add.
-		@tparam	TItem		Type of storage content and type of item as well.
-		@tparam	TAllocator	Allocator used by storage.
-		@return				index of item in storage.
-	*/
-	template< typename TItem, typename TAllocator >
-	inline const size_t UniqueAddIndexed( std::vector<TItem, TAllocator>& storage, TItem&& item );
+	template< typename TStoredItem, typename TNewItem, typename TAllocator >
+	inline const size_t UniqueAddIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item );
 
 	/**
 		@brief	Removes the single item from storage.
@@ -344,6 +280,38 @@ inline namespace Algorithms
 	inline const TItem& FindItem( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key, const TItem& default_result );
 
 	/**
+		@brief	Look for `key` in `storage` and call `on_found` only with found item.
+		@param	storage			The storage to remove.
+		@param	key				The key for item to remove.
+		@param	on_found		The function-like object to be called on stored item.
+		@tparam	TKey			Type of keys used by storage.
+		@tparam	TItem			Type of storage content and type of item as well.
+		@tparam	TPredicate		Predicate used by storage.
+		@tparam	TAllocator		Allocator used by storage.
+		@tparam	TFunction		Type of function-acceptor of found item.
+		@return					`true` only when the item was found and `on_found` was called.
+		@retval	false			In case the given `key` does not exist in storage.
+	*/
+	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator, typename TFunction >
+	inline const bool FindItem( std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key, TFunction on_found );
+
+	/**
+		@brief	Look for `key` in `storage` and call `on_found` only with found item.
+		@param	storage			The storage to remove.
+		@param	key				The key for item to remove.
+		@param	on_found		The function-like object to be called on stored item.
+		@tparam	TKey			Type of keys used by storage.
+		@tparam	TItem			Type of storage content and type of item as well.
+		@tparam	TPredicate		Predicate used by storage.
+		@tparam	TAllocator		Allocator used by storage.
+		@tparam	TFunction		Type of function-acceptor of found item.
+		@return					`true` only when the item was found and `on_found` was called.
+		@retval	false			In case the given `key` does not exist in storage.
+	*/
+	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator, typename TFunction >
+	inline const bool FindItem( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key, TFunction on_found );
+
+	/**
 		@brief	Look for `key` in `storage` and return the stored item or `default_result`.
 		@param	storage			The storage to remove.
 		@param	key				The key for item to remove.
@@ -374,6 +342,40 @@ inline namespace Algorithms
 	*/
 	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator >
 	inline const TItem& FindItem( const std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key, const TItem& default_result );
+
+	/**
+		@brief	Look for `key` in `storage` and call `on_found` only with found item.
+		@param	storage			The storage to remove.
+		@param	key				The key for item to remove.
+		@param	on_found		The function-like object to be called on stored item.
+		@tparam	TKey			Type of keys used by storage.
+		@tparam	TItem			Type of storage content and type of item as well.
+		@tparam	THash			Hash used by storage.
+		@tparam	TPredicate		Predicate used by storage.
+		@tparam	TAllocator		Allocator used by storage.
+		@tparam	TFunction		Type of function-acceptor of found item.
+		@return					`true` only when the item was found and `on_found` was called.
+		@retval	false			In case the given `key` does not exist in storage.
+	*/
+	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator, typename TFunction >
+	inline const bool FindItem( std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key, TFunction on_found );
+
+	/**
+		@brief	Look for `key` in `storage` and call `on_found` only with found item.
+		@param	storage			The storage to remove.
+		@param	key				The key for item to remove.
+		@param	on_found		The function-like object to be called on stored item.
+		@tparam	TKey			Type of keys used by storage.
+		@tparam	TItem			Type of storage content and type of item as well.
+		@tparam	THash			Hash used by storage.
+		@tparam	TPredicate		Predicate used by storage.
+		@tparam	TAllocator		Allocator used by storage.
+		@tparam	TFunction		Type of function-acceptor of found item.
+		@return					`true` only when the item was found and `on_found` was called.
+		@retval	false			In case the given `key` does not exist in storage.
+	*/
+	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator, typename TFunction >
+	inline const bool FindItem( const std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key, TFunction on_found );
 
 	/**
 		@brief	Get the position of `item` in `storage`.
