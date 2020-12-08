@@ -1,5 +1,7 @@
 #pragma once
 
+
+// External dependencies.
 #include <jni.h>
 #include <android/log.h>
 
@@ -13,7 +15,7 @@ inline namespace Platform
 inline namespace Android
 {
 	// JNI version, used by Black framework.
-	constexpr int32_t JNI_VERSION = JNI_VERSION_1_6;
+	inline constexpr int32_t JNI_VERSION = JNI_VERSION_1_6;
 }
 }
 }
