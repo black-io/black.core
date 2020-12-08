@@ -5,9 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace TextUtils
-{
-namespace StaticStrings
+inline namespace StaticStrings
 {
 namespace Internal
 {
@@ -42,8 +40,7 @@ namespace Internal
 
 	// Join the collection of static strings.
 	template< typename... TStrings >
-	using Join = typename Internal::Join<TStrings...>::String;
-}
+	using StaticStringJoin = typename Internal::Join<TStrings...>::String;
 }
 }
 }

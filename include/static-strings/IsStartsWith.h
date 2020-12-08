@@ -5,9 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace TextUtils
-{
-namespace StaticStrings
+inline namespace StaticStrings
 {
 namespace Internal
 {
@@ -51,8 +49,7 @@ namespace Internal
 
 	// Check that the static string starts with given pattern.
 	template< typename TString, typename TPattern >
-	constexpr bool IS_STARTS_WITH = Internal::IsStartsWith<TString, TPattern>::value;
-}
+	constexpr bool STATIC_STRING_IS_STARTS_WITH = Internal::IsStartsWith<TString, TPattern>::value;
 }
 }
 }

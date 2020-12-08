@@ -5,9 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace TextUtils
-{
-namespace StaticStrings
+inline namespace StaticStrings
 {
 namespace Internal
 {
@@ -51,8 +49,7 @@ namespace Internal
 		Each of inner types represents the part of given static string being bisected at given position.
 	*/
 	template< size_t POSITION, typename TString >
-	using Bisect = Internal::Bisect<POSITION, POSITION == 0, Black::StaticString<>, TString>;
-}
+	using StaticStringBisect = Internal::Bisect<POSITION, POSITION == 0, Black::StaticString<>, TString>;
 }
 }
 }

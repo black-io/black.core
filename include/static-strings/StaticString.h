@@ -5,7 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Types
+inline namespace StaticStrings
 {
 	/**
 		@brief	Compile-time string implementation.
@@ -30,7 +30,7 @@ inline namespace Types
 		// Get the regular string.
 		static inline const char* const GetData()
 		{
-			static constexpr const char data[] = { CHARS..., 0 };
+			static constexpr const char data[]{ CHARS..., 0 };
 			return data;
 		}
 

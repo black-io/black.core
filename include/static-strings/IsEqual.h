@@ -5,9 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace TextUtils
-{
-namespace StaticStrings
+inline namespace StaticStrings
 {
 namespace Internal
 {
@@ -32,10 +30,9 @@ namespace Internal
 }
 
 
-	// Check that the left and right static strings are equal.
+	// Whether the two static strings consists of same chars.
 	template< typename TLeft, typename TRight >
-	constexpr bool IS_EQUAL = Internal::IsEqual<TLeft, TRight>::value;
-}
+	inline constexpr bool STATIC_STRING_IS_EQUAL = Internal::IsEqual<TLeft, TRight>::value;
 }
 }
 }

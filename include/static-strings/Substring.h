@@ -5,9 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace TextUtils
-{
-namespace StaticStrings
+inline namespace StaticStrings
 {
 namespace Internal
 {
@@ -38,8 +36,7 @@ namespace Internal
 
 	// Get the substring from initial static string.
 	template< size_t POSITION, size_t LENGTH, typename TString >
-	using Substring = typename Internal::Substring<POSITION, LENGTH, TString>::String;
-}
+	using StaticStringSubstring = typename Internal::Substring<POSITION, LENGTH, TString>::String;
 }
 }
 }

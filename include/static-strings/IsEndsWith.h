@@ -5,9 +5,7 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace TextUtils
-{
-namespace StaticStrings
+inline namespace StaticStrings
 {
 namespace Internal
 {
@@ -54,8 +52,7 @@ namespace Internal
 
 	// Check that the static string ends with given pattern.
 	template< typename TString, typename TPattern >
-	constexpr bool IS_ENDS_WITH = Internal::IsEndsWith<TString, TPattern>::value;
-}
+	constexpr bool STATIC_STRING_IS_ENDS_WITH = Internal::IsEndsWith<TString, TPattern>::value;
 }
 }
 }
