@@ -1,57 +1,11 @@
 #pragma once
 
 
+// External dependencies.
 #include <windows.h>
 
-// Release worthless macros
-
-#if( defined( GetCurrentTime ) )
-	#undef GetCurrentTime
-#endif
-
-#if( defined( min ) )
-	#undef min
-#endif
-
-#if( defined( max ) )
-	#undef max
-#endif
-
-#if( defined( CopyMemory ) )
-	#undef CopyMemory
-#endif
-
-#if( defined( FillMemory ) )
-	#undef FillMemory
-#endif
-
-#if( defined( MoveMemory ) )
-	#undef MoveMemory
-#endif
-
-#if( defined( ZeroMemory ) )
-	#undef ZeroMemory
-#endif
-
-#if( defined( ERROR ) )
-	#undef ERROR
-#endif
-
-#if( defined( CopyFile ) )
-	#undef CopyFile
-#endif
-
-#if( defined( MoveFile ) )
-	#undef MoveFile
-#endif
-
-#if( defined( DeleteFile ) )
-	#undef DeleteFile
-#endif
-
-#if( defined( AddMonitor ) )
-	#undef AddMonitor
-#endif
+// WinAPI macro moderation.
+#include "drop-forbidden-macros.h"
 
 
 namespace Black
@@ -60,8 +14,10 @@ inline namespace Core
 {
 inline namespace Platform
 {
+// Core Windows desktop platform definitions.
 inline namespace WindowsDesktop
 {
+// Internal stuff for Windows desktop platform.
 namespace Internal
 {
 
