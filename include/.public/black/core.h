@@ -8,6 +8,7 @@
 #include "../../bit-views/bit-views.h"
 #include "../../static-lists/static-lists.h"
 #include "../../algorithms/algorithms.h"
+#include "../../static-strings/static-strings.h"
 
 // The epilogue of library.
 #include "../../.epilogue.h"
