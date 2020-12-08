@@ -67,7 +67,7 @@
 #endif
 
 #if( !defined( BLACK_LOGS_CLOSE ) )
-	#define BLACK_LOGS_CLOSE( CHANNEL, FORMAT, ... )
+	#define BLACK_LOGS_CLOSE( ... )
 #endif
 
 
