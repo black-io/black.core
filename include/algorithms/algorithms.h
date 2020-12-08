@@ -5,8 +5,10 @@ namespace Black
 {
 inline namespace Core
 {
+// Core algorithms subsystem.
 inline namespace Algorithms
 {
+// Internal definitions for algorithms.
 namespace Internal
 {
 

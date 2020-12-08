@@ -5,8 +5,10 @@ namespace Black
 {
 inline namespace Core
 {
+// Namespace for core concurrency subsystem.
 inline namespace Concurrency
 {
+// Core concurrency internal definitions.
 namespace Internal
 {
 

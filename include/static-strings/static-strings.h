@@ -5,8 +5,10 @@ namespace Black
 {
 inline namespace Core
 {
+// Compile-time strings subsystem.
 inline namespace StaticStrings
 {
+// Internal definitions for compile-time strings.
 namespace Internal
 {
 

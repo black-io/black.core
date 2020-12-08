@@ -5,8 +5,10 @@ namespace Black
 {
 inline namespace Core
 {
+// Static chains and static lists subsystem.
 inline namespace StaticLists
 {
+// Internal definitions for static lists.
 namespace Internal
 {
 

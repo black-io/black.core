@@ -5,8 +5,10 @@ namespace Black
 {
 inline namespace Core
 {
+// Core platform subsystem.
 inline namespace Platform
 {
+// Internal definitions for platforms.
 namespace Internal
 {
 
