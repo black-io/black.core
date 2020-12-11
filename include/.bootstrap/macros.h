@@ -72,74 +72,32 @@
 
 
 // Regular 'conditional return' statement.
-#define CRET( CONDITION, ... )					{ if( CONDITION ) [[likely]] { return __VA_ARGS__; } }
+#define CRET( CONDITION, ... )								{ if( CONDITION ) [[likely]] { return __VA_ARGS__; } }
 
 // Regular 'conditional continue' statement.
-#define CCON( CONDITION )						{ if( CONDITION ) [[likely]] { continue; } }
+#define CCON( CONDITION )									{ if( CONDITION ) [[likely]] { continue; } }
 
 // Regular 'conditional break' statement.
-#define CBRK( CONDITION )						{ if( CONDITION ) [[likely]] { break; } }
+#define CBRK( CONDITION )									{ if( CONDITION ) [[likely]] { break; } }
 
 
 // 'conditional return' statement with error reporting.
-#define CRETE( CONDITION, RESULT, CHANNEL, FORMAT, ... )				\
-{																		\
-	if( CONDITION ) [[unlikely]]										\
-	{																	\
-		BLACK_LOG_ERROR( ( CHANNEL ), ( FORMAT ), ##__VA_ARGS__ );		\
-		return RESULT;													\
-	}																	\
-}
+#define CRETE( CONDITION, RESULT, CHANNEL, FORMAT, ... )	{ if( CONDITION ) [[unlikely]] { BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; } }
 
 // 'conditional continue' statement with error reporting.
-#define CCONE( CONDITION, CHANNEL, FORMAT, ... )						\
-{																		\
-	if( CONDITION ) [[unlikely]]										\
-	{																	\
-		BLACK_LOG_ERROR( ( CHANNEL ), ( FORMAT ), ##__VA_ARGS__ );		\
-		continue;														\
-	}																	\
-}
+#define CCONE( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ) [[unlikely]] { BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; } }
 
 // 'conditional break' statement with error reporting.
-#define CBRKE( CONDITION, CHANNEL, FORMAT, ... )						\
-{																		\
-	if( CONDITION ) [[unlikely]]										\
-	{																	\
-		BLACK_LOG_ERROR( ( CHANNEL ), ( FORMAT ), ##__VA_ARGS__ );		\
-		break;															\
-	}																	\
-}
+#define CBRKE( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ) [[unlikely]] { BLACK_LOG_ERROR( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; } }
 
 // 'conditional return' statement with warning reporting.
-#define CRETW( CONDITION, RESULT, CHANNEL, FORMAT, ... )				\
-{																		\
-	if( CONDITION ) [[unlikely]]										\
-	{																	\
-		BLACK_LOG_WARNING( ( CHANNEL ), ( FORMAT ), ##__VA_ARGS__ );	\
-		return RESULT;													\
-	}																	\
-}
+#define CRETW( CONDITION, RESULT, CHANNEL, FORMAT, ... )	{ if( CONDITION ) [[unlikely]] { BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; } }
 
 // 'conditional continue' statement with warning reporting.
-#define CCONW( CONDITION, CHANNEL, FORMAT, ... )						\
-{																		\
-	if( CONDITION ) [[unlikely]]										\
-	{																	\
-		BLACK_LOG_WARNING( ( CHANNEL ), ( FORMAT ), ##__VA_ARGS__ );	\
-		continue;														\
-	}																	\
-}
+#define CCONW( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ) [[unlikely]] { BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; } }
 
 // 'conditional break' statement with warning reporting.
-#define CBRKW( CONDITION, CHANNEL, FORMAT, ... )						\
-{																		\
-	if( CONDITION ) [[unlikely]]										\
-	{																	\
-		BLACK_LOG_WARNING( ( CHANNEL ), ( FORMAT ), ##__VA_ARGS__ );	\
-		break;															\
-	}																	\
-}
+#define CBRKW( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ) [[unlikely]] { BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; } }
 
 
 // String from arbitrary expression.
@@ -180,32 +138,9 @@
 	#define EXPECTS_DEBUG( ... )
 	#define ENSURES_DEBUG( ... )
 #else
-	#define CRETD( CONDITION, RESULT, CHANNEL, FORMAT, ... )			\
-	{																	\
-		if( CONDITION ) [[likely]]										\
-		{																\
-			BLACK_LOG_DEBUG( ( CHANNEL ), ( FORMAT ), ##__VA_ARGS__ );	\
-			return RESULT;												\
-		}																\
-	}
-
-	#define CCOND( CONDITION, CHANNEL, FORMAT, ... )					\
-	{																	\
-		if( CONDITION ) [[likely]]										\
-		{																\
-			BLACK_LOG_DEBUG( ( CHANNEL ), ( FORMAT ), ##__VA_ARGS__ );	\
-			continue;													\
-		}																\
-	}
-
-	#define CBRKD( CONDITION, CHANNEL, FORMAT, ... )					\
-	{																	\
-		if( CONDITION ) [[likely]]										\
-		{																\
-			BLACK_LOG_DEBUG( ( CHANNEL ), ( FORMAT ), ##__VA_ARGS__ );	\
-			break;														\
-		}																\
-	}
+	#define CRETD( CONDITION, RESULT, CHANNEL, FORMAT, ... )	{ if( CONDITION ) [[likely]] { BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); return RESULT; } }
+	#define CCOND( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ) [[likely]] { BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); continue; } }
+	#define CBRKD( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ) [[likely]] { BLACK_LOG_DEBUG( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; } }
 
 	#define EXPECTS_DEBUG( ... )								EXPECTS( __VA_ARGS__ )
 	#define ENSURES_DEBUG( ... )								ENSURES( __VA_ARGS__ )
