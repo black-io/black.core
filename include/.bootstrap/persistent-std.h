@@ -6,10 +6,12 @@
 #include <stdint.h>
 #include <stdarg.h>
 #include <uchar.h>
+#include <cstddef>
 #include <cstdint>
 #include <cstdarg>
 #include <csignal>
 #include <cstdlib>
+#include <type_traits>
 
 // Numbers.
 #include <limits>
