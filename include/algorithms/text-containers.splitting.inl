@@ -20,7 +20,7 @@ namespace Internal
 		size_t pattern_begin	= string_buffer.find( pattern, part_begin );
 		CRET( flags.HasFlag( TextSplittingFlag::OnlySplitted ) && ( pattern_begin == string_buffer.npos ), 0 );
 
-		std::vector<uint32_t> found_parts;
+		std::vector<hash32_t> found_parts;
 		while( part_begin < string_buffer.length() )
 		{
 			const size_t part_length	= ( pattern_begin == not_found )? not_found : pattern_begin - part_begin;
@@ -33,7 +33,7 @@ namespace Internal
 				MakeTrimmedString( part );
 			}
 
-			const uint32_t part_hash = Black::GetUnreliableHash( part );
+			const hash32_t part_hash = Black::GetUnreliableHash( part );
 			CCON( flags.HasFlag( TextSplittingFlag::DropEmpty ) && part.empty() );
 			CCON( flags.HasFlag( TextSplittingFlag::OnlyUnique ) && Black::IsItemPresent( found_parts, part_hash ) );
 
