@@ -15,6 +15,12 @@ inline namespace Types
 	// Regular time duration specification.
 	using TimeDuration	= std::chrono::duration<Time>;
 
+	// Regular 32-bit hash value.
+	enum class Hash32 : uint32_t;
+
+	// Regular 64-bit hash value.
+	enum class Hash64 : uint64_t;
+
 
 	// Trivial common selection between Debug and Non-debug implementations.
 	template< typename RelaseImplementation, typename DebugImplementation >
