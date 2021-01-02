@@ -1,4 +1,5 @@
 #include <black/core.h>
+#include <black/core/algorithms.h>
 
 
 namespace Black
