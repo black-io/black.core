@@ -39,6 +39,12 @@ inline namespace Types
 	// Tagging object to mark the operation variant, that will use in-place construction.
 	inline constexpr ConstructInplace CONSTRUCT_INPLACE = {};
 
+	// Tagging type to mark the persistent static storage. This storage carries the memory while process lifetime.
+	enum class PersistentStorage;
+
+	// Tagging type to mark the session static storage. This storage carries the memory only until soft restart.
+	enum class SessionStorage;
+
 
 	// Regular bit storage for requested number of bits. The number of bits should be 8, 16, 32 or 64 only.
 	template< size_t MAX_BITS >
