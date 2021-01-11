@@ -11,7 +11,7 @@ namespace Internal
 {
 	/**
 		@brief	Basic interface for static list nodes.
-		The `StaticList` carries nodes as statically placed (static-duration storage) instances of `StaticListBasicNode`.
+		The `StaticList` carries nodes as statically placed (static-duration storage) instances of `BasicStaticNode`.
 		Each basic node is an element of intrusive forward list.
 
 		On its creation, the basic node stores current list head into `m_next_node` and places itself into list head.
@@ -22,31 +22,36 @@ namespace Internal
 		@tparam	TInterface	The common interface of stored items.
 	*/
 	template< typename TInterface >
-	class StaticListBasicNode : private Black::NonTransferable
+	class BasicStaticNode : private Black::NonTransferable
 	{
+	// Friendship.
+	public:
 		friend class StaticListIterator<TInterface>;	// Grant access to `m_next_node` member.
 		friend class Black::StaticList<TInterface>;		// Grant access to `m_next_node` member.
 
+	// Construction and destruction.
+	public:
+		BasicStaticNode()			= delete;
+		virtual ~BasicStaticNode()	= default;
+
 	// Public interface.
 	public:
-		virtual ~StaticListBasicNode() = default;
-
 		// Invalidate (destroy) the stored interface.
 		virtual void Invalidate() = 0;
+
 
 		// Get the stored interface.
 		virtual TInterface& GetInterface() const = 0;
 
 		// Get the debug name (only for debug purposes).
-		inline const char* const GetDebugName() const	{ return *m_name; };
+		inline std::string_view const GetDebugName() const	{ return *m_name; };
 
 
-		inline TInterface* operator -> () const			{ return &GetInterface(); };
+		inline TInterface* operator -> () const				{ return &GetInterface(); };
 
-	// Inheritance interface.
+	// Heirs interface.
 	protected:
-		StaticListBasicNode() = delete;
-		StaticListBasicNode( Black::DebugName&& name ) : m_name{ std::move( name ) } { PlugIntoList(); };
+		BasicStaticNode( Black::DebugName&& name ) : m_name{ std::move( name ) } { PlugIntoList(); };
 
 	// Private interface.
 	private:
@@ -55,7 +60,7 @@ namespace Internal
 
 	// Private state.
 	private:
-		StaticListBasicNode*	m_next_node	= nullptr;	// Next node in list.
+		BasicStaticNode*		m_next_node	= nullptr;	// Next node in list.
 		const Black::DebugName	m_name;					// Debug name.
 	};
 }
