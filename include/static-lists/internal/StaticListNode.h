@@ -9,18 +9,33 @@ inline namespace StaticLists
 {
 namespace Internal
 {
+	/**
+		@brief	Implementation of static list node.
+
+		Each node of static list carries its own object of concrete type. The memory buffer is placed inside of node, but the construction may be deferred
+		to the moment, when the object is requested.
+
+		@tparam	TInterface		Type of common interface in static list.
+		@tparam	TImplementation	Concrete implementation of common interface.
+	*/
 	template< typename TInterface, typename TImplementation >
-	class StaticListNode final : private StaticListBasicNode<TInterface>
+	class alignas( TInterface ) StaticListNode final : private BasicStaticNode<TInterface>
 	{
+	// Static checks.
 	public:
-		StaticListNode() : StaticListBasicNode<TInterface>{ TImplementation::GetDebugName() } {};
-		explicit StaticListNode( Black::DebugName&& name ) : StaticListBasicNode<TInterface>{ std::move( name ) } {};
+		static_assert( std::is_base_of_v<TInterface, TImplementation>, "`TImplementation` should be derived from declared `TInterface`." );
+
+	// Construction and initialization.
+	public:
+		StaticListNode()									: BasicStaticNode<TInterface>{ TImplementation::GetDebugName() } {};
+		explicit StaticListNode( Black::DebugName&& name )	: BasicStaticNode<TInterface>{ std::move( name ) } {};
 
 		template< typename... TArguments >
 		explicit StaticListNode( Black::DebugName&& name, Black::ConstructInplace, TArguments&&... arguments );
 
 		virtual ~StaticListNode();
 
+	// Public interface.
 	public:
 		// Construct the implementation.
 		template< typename... TArguments >
@@ -30,29 +45,28 @@ namespace Internal
 		inline void Destroy();
 
 
-		inline explicit operator const bool () const			{ return m_implementation != nullptr; };
-		inline const bool operator ! () const					{ return m_implementation == nullptr; };
+		inline explicit operator const bool () const		{ return m_implementation != nullptr; };
+		inline const bool operator ! () const				{ return m_implementation == nullptr; };
 
 
-		inline TImplementation& operator * () const				{ return GetImplementation(); };
-		inline TImplementation* operator -> () const			{ return &GetImplementation(); };
+		inline TImplementation& operator * () const			{ return GetImplementation(); };
+		inline TImplementation* operator -> () const		{ return &GetImplementation(); };
 
+	// Private interface.
 	private:
 		// Get the stored implementation.
 		inline TImplementation& GetImplementation() const;
 
 		// Invalidate (destroy) the stored interface.
-		virtual void Invalidate() override						{ Destroy(); };
+		void Invalidate() override							{ Destroy(); };
 
 		// Get the stored interface.
-		virtual TInterface& GetInterface() const override		{ return GetImplementation(); };
+		TInterface& GetInterface() const override			{ return GetImplementation(); };
 
+	// Private state.
 	private:
-		static constexpr size_t STORAGE_ALIGNMENT	= alignof( TImplementation );
-		static constexpr size_t STORAGE_LENGTH		= sizeof( TImplementation );
-
-		mutable TImplementation*										m_implementation	= nullptr;
-		mutable std::array<uint8_t, STORAGE_LENGTH + STORAGE_ALIGNMENT>	m_storage			{};
+		mutable	TImplementation*	m_implementation						= nullptr;	// Pointer to allocated instance.
+		mutable std::byte			m_storage[ sizeof( TImplementation ) ];				// Memory buffer to store the allocated instance.
 	};
 }
 }
