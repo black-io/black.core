@@ -66,7 +66,7 @@ namespace Internal
 
 	// Private state.
 	private:
-		StaticListBasicNode<value_type>*	m_current_node = nullptr;
+		StaticListBasicNode<value_type>* m_current_node = nullptr;
 	};
 }
 }

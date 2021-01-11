@@ -18,14 +18,22 @@ namespace Internal
 }
 
 
-#include "static-lists.forwards.h"
-#include "static-lists.internal.h"
+// Some forwards.
+#include "internal/forwards.h"
+#include "forwards.h"
 
-#include "StaticListIterator.h"
-#include "StaticListNode.h"
+// Most fundamental stuff.
+#include "internal/BasicStaticNode.h"
+#include "internal/ConstructionProxy.h"
+#include "internal/StaticListIterator.h"
+#include "internal/StaticListNode.h"
+
+// Implementation of static list.
 #include "StaticList.h"
 
+// Deferred implementations.
 #include "StaticList.inl"
-#include "StaticListNode.inl"
-#include "StaticListIterator.inl"
-#include "static-lists.internal.inl"
+
+#include "internal/StaticListNode.inl"
+#include "internal/StaticListIterator.inl"
+#include "internal/BasicStaticNode.inl"
