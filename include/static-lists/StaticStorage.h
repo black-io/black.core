@@ -30,7 +30,7 @@ inline namespace StaticLists
 	// Public static interface.
 	public:
 		// Clear the static storage, destroying all the stored services.
-		static inline Clear();
+		static inline void Clear();
 
 		// Get the particular service.
 		template< typename TService >
