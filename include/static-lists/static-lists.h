@@ -30,8 +30,10 @@ namespace Internal
 
 // Implementation of static list.
 #include "StaticList.h"
+#include "StaticStorage.h"
 
 // Deferred implementations.
+#include "StaticStorage.inl"
 #include "StaticList.inl"
 
 #include "internal/StaticListNode.inl"
