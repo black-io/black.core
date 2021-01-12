@@ -12,7 +12,7 @@ namespace Internal
 	template< typename TInterface, typename TImplementation >
 	template< typename... TArguments >
 	StaticListNode<TInterface, TImplementation>::StaticListNode( Black::DebugName&& name, Black::ConstructInplace, TArguments&&... arguments )
-		: StaticListBasicNode<TInterface>{ std::move( name ) }
+		: StaticListCommonNode<TInterface>{ std::move( name ) }
 	{
 		Construct( std::forward<TArguments>( arguments )... );
 	}

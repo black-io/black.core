@@ -19,16 +19,12 @@ namespace Internal
 		@tparam	TImplementation	Concrete implementation of common interface.
 	*/
 	template< typename TInterface, typename TImplementation >
-	class alignas( TInterface ) StaticListNode final : private BasicStaticNode<TInterface>
+	class alignas( TInterface ) StaticListNode final : private StaticListCommonNode<TInterface>
 	{
-	// Static checks.
-	public:
-		static_assert( std::is_base_of_v<TInterface, TImplementation>, "`TImplementation` should be derived from declared `TInterface`." );
-
 	// Construction and initialization.
 	public:
-		StaticListNode()									: BasicStaticNode<TInterface>{ TImplementation::GetDebugName() } {};
-		explicit StaticListNode( Black::DebugName&& name )	: BasicStaticNode<TInterface>{ std::move( name ) } {};
+		StaticListNode()									: StaticListCommonNode<TInterface>{ TImplementation::GetDebugName() } {};
+		explicit StaticListNode( Black::DebugName&& name )	: StaticListCommonNode<TInterface>{ std::move( name ) } {};
 
 		template< typename... TArguments >
 		explicit StaticListNode( Black::DebugName&& name, Black::ConstructInplace, TArguments&&... arguments );
@@ -56,6 +52,7 @@ namespace Internal
 	private:
 		// Get the stored implementation.
 		inline TImplementation& GetImplementation() const;
+
 
 		// Invalidate (destroy) the stored interface.
 		void Invalidate() override							{ Destroy(); };
