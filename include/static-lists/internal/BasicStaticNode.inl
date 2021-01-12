@@ -9,17 +9,17 @@ inline namespace StaticLists
 {
 namespace Internal
 {
-	template< typename TInterface >
-	inline BasicStaticNode<TInterface>* const BasicStaticNode<TInterface>::GetNextNode() const
+	template< typename TStorageTag >
+	inline BasicStaticNode<TStorageTag>* const BasicStaticNode<TStorageTag>::GetNextNode() const
 	{
 		return m_next_node;
 	}
 
-	template< typename TInterface >
-	inline void BasicStaticNode<TInterface>::PlugIntoList()
+	template< typename TStorageTag >
+	inline void BasicStaticNode<TStorageTag>::PlugIntoList()
 	{
 		EXPECTS_DEBUG( m_next_node == nullptr );
-		m_next_node = std::exchange( Black::StaticList<TInterface>::GetRootNode(), this );
+		m_next_node = std::exchange( BasicStaticList<TStorageTag>::AccessRootNode(), this );
 	}
 }
 }
