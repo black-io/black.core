@@ -12,22 +12,25 @@ namespace Internal
 	/**
 		@brief	Implementation of static list node.
 
-		Each node of static list carries its own object of concrete type. The memory buffer is placed inside of node, but the construction may be deferred
+		Each node of static list carries its own object of particular type. The memory buffer is placed inside of node, but the construction may be deferred
 		to the moment, when the object is requested.
 
 		@tparam	TInterface		Type of common interface in static list.
-		@tparam	TImplementation	Concrete implementation of common interface.
+		@tparam	TImplementation	Particular implementation of common interface.
 	*/
 	template< typename TInterface, typename TImplementation >
 	class alignas( TInterface ) StaticListNode final : private StaticListCommonNode<TInterface>
 	{
 	// Construction and initialization.
 	public:
-		StaticListNode()									: StaticListCommonNode<TInterface>{ TImplementation::GetDebugName() } {};
-		explicit StaticListNode( Black::DebugName&& name )	: StaticListCommonNode<TInterface>{ std::move( name ) } {};
+		inline StaticListNode()										: StaticListNode{ TImplementation::GetDebugName() } {};
+		inline explicit StaticListNode( Black::DebugName&& name )	: StaticListCommonNode<TInterface>{ std::move( name ) } {};
 
 		template< typename... TArguments >
-		explicit StaticListNode( Black::DebugName&& name, Black::ConstructInplace, TArguments&&... arguments );
+		inline StaticListNode( Black::ConstructInplace, TArguments&&... arguments );
+
+		template< typename... TArguments >
+		inline StaticListNode( Black::DebugName&& name, Black::ConstructInplace, TArguments&&... arguments );
 
 		virtual ~StaticListNode();
 
@@ -54,10 +57,10 @@ namespace Internal
 		inline TImplementation& GetImplementation() const;
 
 
-		// Invalidate (destroy) the stored interface.
+		/// @see	BasicStaticNode::Invalidate
 		void Invalidate() override							{ Destroy(); };
 
-		// Get the stored interface.
+		/// @see	StaticListCommonNode::GetInterface
 		TInterface& GetInterface() const override			{ return GetImplementation(); };
 
 	// Private state.

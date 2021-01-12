@@ -11,8 +11,14 @@ namespace Internal
 {
 	template< typename TInterface, typename TImplementation >
 	template< typename... TArguments >
-	StaticListNode<TInterface, TImplementation>::StaticListNode( Black::DebugName&& name, Black::ConstructInplace, TArguments&&... arguments )
-		: StaticListCommonNode<TInterface>{ std::move( name ) }
+	inline StaticListNode<TInterface, TImplementation>::StaticListNode( Black::ConstructInplace, TArguments&&... arguments )
+		: StaticListNode{ TImplementation::GetDebugName(), Black::CONSTRUCT_INPLACE, std::forward<TArguments>( arguments )... }
+	{}
+
+	template< typename TInterface, typename TImplementation >
+	template< typename... TArguments >
+	inline StaticListNode<TInterface, TImplementation>::StaticListNode( Black::DebugName&& name, Black::ConstructInplace, TArguments&&... arguments )
+		: StaticListNode{ std::move( name ) }
 	{
 		Construct( std::forward<TArguments>( arguments )... );
 	}
@@ -29,10 +35,10 @@ namespace Internal
 	{
 		static_assert( std::is_base_of_v<TInterface, TImplementation>, "`TImplementation` should be derived from `TInterface`." );
 
-		void* memory = Black::GetAlignedPointer( m_storage.data(), STORAGE_ALIGNMENT );
+		EXPECTS( m_implementation == nullptr );
+		m_implementation = ConstructionProxy<TImplementation>::Construct( m_storage, std::forward<TArguments>( arguments )... );
 
-		ENSURES( m_implementation == nullptr );
-		m_implementation = ConstructionProxy<TImplementation>::Construct( memory, std::forward<TArguments>( arguments )... );
+		ENSURES_DEBUG( m_implementation != nullptr );
 		return *m_implementation;
 	}
 
