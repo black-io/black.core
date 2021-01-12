@@ -35,6 +35,7 @@ namespace Internal
 		virtual TInterface& GetInterface() const	= 0;
 
 
+		inline TInterface& operator * () const		{ return GetInterface(); };
 		inline TInterface* operator -> () const		{ return &GetInterface(); };
 
 	// Heirs interface.
