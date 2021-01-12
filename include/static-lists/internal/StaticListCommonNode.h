@@ -39,7 +39,7 @@ namespace Internal
 
 	// Heirs interface.
 	protected:
-		using BasicStaticNode<InterfaceTag<TInterface>>::BasicStaticNode;
+		inline StaticListCommonNode( Black::DebugName&& name ) : BasicStaticNode<InterfaceTag<TInterface>>{ std::move( name ), INSTANT_INSERT } {};
 	};
 }
 }
