@@ -36,10 +36,10 @@ namespace Internal
 
 		// Enumerate all stored nodes to be used by given consuming function.
 		template< typename TFunction >
-		inline void EnumerateNodes( TFunction consumer );
+		static inline void EnumerateNodes( TFunction consumer );
 
 		// Clear the list, decoupling the stored nodes.
-		inline void Clear();
+		static inline void Clear();
 
 
 		// Whether the collection is empty.

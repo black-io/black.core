@@ -20,7 +20,7 @@ namespace Internal
 	inline void BasicStaticList<TStorageTag>::EnumerateNodes( TFunction consumer )
 	{
 		static_assert( std::is_invocable_v<TFunction, Node*>, "The given function should be safe to accept the enumerated nodes." );
-		static_assert( std::is_same_v<std::result_of_t<TFunction>, void>, "The given function shall not return any value." );
+		static_assert( std::is_same_v<std::invoke_result_t<TFunction, Node*>, void>, "The given function may not return any value." );
 
 		for( Node* node = GetRootNode(); node != nullptr; node = node->m_next_node )
 		{
