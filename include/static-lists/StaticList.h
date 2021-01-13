@@ -10,6 +10,14 @@ inline namespace StaticLists
 	/**
 		@brief	The implementation of static list.
 
+		Static list implements the forward list of statically hosted nodes, which all are linked together on construction.
+		Each static list is identified by interface of hosted items. The interface should be common parent type for all object hosted in list.
+		Through that all the hosted objects list may be enumerated for some reason.
+
+		Such static lists are very useful to create the automatic chain of resource registering.
+		Once initialized, the list will remain the order of hosted nodes until the process is stopped. The nodes of list will never be decoupled
+		while execution of process. So that the list may be accessed at every time of process execution.
+
 		@tparam	TInterface	The interface type of objects stored in static list.
 	*/
 	template< typename TInterface >
