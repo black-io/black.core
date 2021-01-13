@@ -36,6 +36,9 @@ inline namespace StaticLists
 		// Clear the static storage, destroying all the stored services and decoupling the nodes.
 		static inline void Clear();
 
+		/// @see	BasicStaticList::IsEmpty
+		using Internal::BasicStaticList<TStorageTag>::IsEmpty;
+
 	// Private inner types.
 	private:
 		// Type of basic static list.
