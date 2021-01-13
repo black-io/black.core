@@ -20,7 +20,7 @@ inline namespace StaticLists
 		@tparam	TStorageTag		Tagging type to implement the functional separation between different storages.
 	*/
 	template< typename TStorageTag >
-	class StaticStorage final : private Black::NonTransferable
+	class StaticStorage final : private Internal::BasicStaticList<TStorageTag>
 	{
 	// Construction and initialization.
 	public:
@@ -29,15 +29,24 @@ inline namespace StaticLists
 
 	// Public static interface.
 	public:
-		// Clear the static storage, destroying all the stored services.
-		static inline void Clear();
-
 		// Get the particular service.
 		template< typename TService >
-		static inline TService& GetService();
+		static inline TService& Get();
 
-	// Private static state.
+		// Clear the static storage, destroying all the stored services and decoupling the nodes.
+		static inline void Clear();
+
+	// Private inner types.
 	private:
+		// Type of basic static list.
+		using Parent = Internal::BasicStaticList<TStorageTag>;
+
+		// Type of nodes of storage.
+		using CommonNode = typename Parent::Node;
+
+		// Type of particular node.
+		template< typename TImplementation >
+		using Node = Internal::StaticStorageNode<TStorageTag, TImplementation>;
 	};
 }
 }
