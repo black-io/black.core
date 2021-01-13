@@ -83,7 +83,7 @@ namespace Internal
 	inline void StaticListIterator<TInterface>::GoNextNode()
 	{
 		EXPECTS_DEBUG( m_current_node != nullptr );
-		m_current_node = m_current_node->GetNextNode();
+		m_current_node = static_cast<StaticListCommonNode<TInterface>*>( m_current_node->GetNextNode() );
 	}
 }
 }
