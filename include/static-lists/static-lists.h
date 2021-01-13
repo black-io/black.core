@@ -26,9 +26,9 @@ namespace Internal
 #include "internal/structures.h"
 #include "internal/BasicStaticNode.h"
 #include "internal/ConstructionProxy.h"
-#include "internal/StaticListIterator.h"
 
 #include "internal/StaticListCommonNode.h"
+#include "internal/StaticListIterator.h"
 #include "internal/StaticListNode.h"
 #include "internal/StaticStorageNode.h"
 
@@ -48,6 +48,6 @@ namespace Internal
 
 #include "internal/StaticStorageNode.inl"
 #include "internal/StaticListNode.inl"
-
 #include "internal/StaticListIterator.inl"
+
 #include "internal/BasicStaticNode.inl"
