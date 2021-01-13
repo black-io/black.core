@@ -7,9 +7,13 @@ inline namespace Core
 {
 inline namespace StaticLists
 {
-	// The implementation of static list.
+	/**
+		@brief	The implementation of static list.
+
+		@tparam	TInterface	The interface type of objects stored in static list.
+	*/
 	template< typename TInterface >
-	class StaticList final
+	class StaticList final : private Internal::BasicStaticList<Internal::InterfaceTag<TInterface>>
 	{
 	// Friendship and public types.
 	public:
@@ -28,45 +32,50 @@ inline namespace StaticLists
 
 
 		// Ranged for-loop interface.
-		friend inline Iterator begin( StaticList& static_list )					{ return static_list.GetHead(); };
-		friend inline Iterator end( StaticList& static_list )					{ return static_list.GetTail(); };
+		friend inline Iterator begin( StaticList& static_list )					{ return static_list.GetBegin(); };
+		friend inline Iterator end( StaticList& static_list )					{ return static_list.GetEnd(); };
 
-		friend inline ConstIterator begin( const StaticList& static_list )		{ return static_list.GetHead(); };
-		friend inline ConstIterator end( const StaticList& static_list )		{ return static_list.GetTail(); };
-
-
-		// Grant access to root of list.
-		friend class Internal::StaticListBasicNode<TInterface>;
+		friend inline ConstIterator begin( const StaticList& static_list )		{ return static_list.GetBegin(); };
+		friend inline ConstIterator end( const StaticList& static_list )		{ return static_list.GetEnd(); };
 
 	// Public interface.
 	public:
-		// Get the implementation.
+		// Get the stored implementation. Implementation will be created if not stored yet.
 		template< typename TImplementation >
 		static inline TImplementation& Get();
 
-		// Clear the list. All stored implementations will be destroyed at this moment.
-		void Clear();
-
-		// Get the head of list.
-		inline Iterator GetHead()				{ return Iterator{ GetRootNode() }; };
-
-		// Get the tail f list.
-		inline Iterator GetTail()				{ return Iterator{ nullptr }; };
-
-		// Get the head of list.
-		inline ConstIterator GetHead() const	{ return ConstIterator{ GetRootNode() }; };
-
-		// Get the tail f list.
-		inline ConstIterator GetTail() const	{ return ConstIterator{ nullptr }; };
+		// Destroy all instances stored in list. All nodes of list will remains linked.
+		void DestroyStoredInstances();
 
 
-		// Check whether the list is empty.
-		inline const bool IsEmpty() const		{ return GetRootNode() == nullptr; };
+		// Whether the list is empty.
+		inline const bool IsEmpty() const;
+
+
+		// Get the iterator to the head of list.
+		inline Iterator GetBegin()					{ return Iterator{ GetRootNode() }; };
+
+		// Get the iterator to the end of list.
+		inline Iterator GetEnd()					{ return Iterator{ nullptr }; };
+
+		// Get the iterator to the head of list.
+		inline ConstIterator GetBegin() const		{ return ConstIterator{ GetRootNode() }; };
+
+		// Get the iterator to the end of list.
+		inline ConstIterator GetEnd() const			{ return ConstIterator{ nullptr }; };
+
+	// Private inner types.
+	private:
+		// Type of basic static list.
+		using Parent = Internal::BasicStaticList<Internal::InterfaceTag<TInterface>>;
+
+		// Type of list node.
+		using CommonNode = Internal::StaticListCommonNode<TInterface>;
 
 	// Private state.
 	private:
 		// Get the root node.
-		static Internal::StaticListBasicNode<TInterface>*& GetRootNode();
+		static CommonNode* GetRootNode();
 	};
 }
 }
