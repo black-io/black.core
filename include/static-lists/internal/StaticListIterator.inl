@@ -17,14 +17,14 @@ namespace Internal
 	}
 
 	template< typename TInterface >
-	StaticListIterator<TInterface>::StaticListIterator( StaticListBasicNode<TInterface>* root_node )
+	StaticListIterator<TInterface>::StaticListIterator( StaticListCommonNode<TInterface>* root_node )
 		: m_current_node{ root_node }
 	{
 
 	}
 
 	template< typename TInterface >
-	inline StaticListIterator<TInterface>& StaticListIterator<TInterface>::operator=( StaticListBasicNode<TInterface>* root_node )
+	inline StaticListIterator<TInterface>& StaticListIterator<TInterface>::operator=( StaticListCommonNode<TInterface>* root_node )
 	{
 		m_current_node = root_node;
 		return *this;
@@ -45,7 +45,7 @@ namespace Internal
 	}
 
 	template< typename TInterface >
-	inline StaticListBasicNode<TInterface>* StaticListIterator<TInterface>::GetNode() const
+	inline StaticListCommonNode<TInterface>* StaticListIterator<TInterface>::GetNode() const
 	{
 		EXPECTS_DEBUG( m_current_node != nullptr );
 		return m_current_node;

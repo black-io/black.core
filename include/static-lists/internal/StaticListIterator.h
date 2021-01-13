@@ -15,7 +15,7 @@ namespace Internal
 	// Iterator traits.
 	public:
 		using self_type			= StaticListIterator;
-		using difference_type	= size_t;
+		using difference_type	= std::ptrdiff_t;
         using value_type		= std::remove_const_t<TInterface>;
         using pointer			= TInterface*;
         using reference			= TInterface&;
@@ -35,17 +35,17 @@ namespace Internal
 		StaticListIterator( std::nullptr_t )					{};
 		StaticListIterator( const StaticListIterator& other )	= default;
 		StaticListIterator( StaticListIterator&& other );
-		explicit StaticListIterator( StaticListBasicNode<TInterface>* root_node );
+		explicit StaticListIterator( StaticListCommonNode<TInterface>* root_node );
 
 
 		inline StaticListIterator& operator = ( const StaticListIterator& other )				= default;
-		inline StaticListIterator& operator = ( StaticListBasicNode<TInterface>* root_node );
+		inline StaticListIterator& operator = ( StaticListCommonNode<TInterface>* root_node );
 		inline StaticListIterator& operator = ( StaticListIterator&& other );
 		inline StaticListIterator& operator = ( std::nullptr_t );
 
 	// Public interface.
 	public:
-		inline StaticListBasicNode<TInterface>* GetNode() const;
+		inline StaticListCommonNode<TInterface>* GetNode() const;
 
 		inline self_type& operator ++ ();
 		inline self_type operator ++ ( int );
@@ -66,7 +66,7 @@ namespace Internal
 
 	// Private state.
 	private:
-		StaticListBasicNode<value_type>* m_current_node = nullptr;
+		StaticListCommonNode<value_type>* m_current_node = nullptr;
 	};
 }
 }
