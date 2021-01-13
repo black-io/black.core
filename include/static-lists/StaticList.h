@@ -45,7 +45,7 @@ inline namespace StaticLists
 		static inline TImplementation& Get();
 
 		// Destroy all instances stored in list. All nodes of list will remains linked.
-		void DestroyStoredInstances();
+		inline void DestroyStoredInstances();
 
 
 		// Whether the list is empty.

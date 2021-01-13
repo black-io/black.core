@@ -18,7 +18,7 @@ inline namespace StaticLists
 	}
 
 	template< typename TInterface >
-	void StaticList<TInterface>::DestroyStoredInstances()
+	inline void StaticList<TInterface>::DestroyStoredInstances()
 	{
 		 Parent::template EnumerateNodes( []( typename Parent::Node* node ) { node->Invalidate(); } );
 	}
