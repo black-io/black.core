@@ -10,7 +10,7 @@ inline namespace StaticLists
 namespace Internal
 {
 	template< typename TStorageTag, typename TImplementation >
-	inline TImplementation& StaticStorageNode<TStorageTag, TImplementation>::ConstructImplementation() const
+	inline TImplementation& StaticStorageNode<TStorageTag, TImplementation>::ConstructImplementation()
 	{
 		EXPECTS_DEBUG( m_implementation == nullptr );
 		m_implementation = ConstructionProxy<TImplementation>::Construct( m_storage );
@@ -21,7 +21,7 @@ namespace Internal
 	}
 
 	template< typename TStorageTag, typename TImplementation >
-	inline TImplementation& StaticStorageNode<TStorageTag, TImplementation>::GetImplementation() const
+	inline TImplementation& StaticStorageNode<TStorageTag, TImplementation>::GetImplementation()
 	{
 		return ( m_implementation == nullptr )? ConstructImplementation() : *m_implementation;
 	}

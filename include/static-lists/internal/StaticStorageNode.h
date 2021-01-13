@@ -32,16 +32,16 @@ namespace Internal
 		inline const bool operator ! () const							{ return m_implementation == nullptr; };
 
 
-		inline TImplementation& operator * () const						{ return GetImplementation(); };
-		inline TImplementation* operator -> () const					{ return &GetImplementation(); };
+		inline TImplementation& operator * ()							{ return GetImplementation(); };
+		inline TImplementation* operator -> ()							{ return &GetImplementation(); };
 
 	// Private interface.
 	private:
 		// Construct the implementation.
-		inline TImplementation& ConstructImplementation() const;
+		inline TImplementation& ConstructImplementation();
 
 		// Get the stored implementation.
-		inline TImplementation& GetImplementation() const;
+		inline TImplementation& GetImplementation();
 
 
 		/// @see	BasicStaticNode::Invalidate
@@ -49,8 +49,8 @@ namespace Internal
 
 	// Private state.
 	private:
-		mutable	TImplementation*	m_implementation						= nullptr;	// Pointer to allocated instance.
-		mutable std::byte			m_storage[ sizeof( TImplementation ) ];				// Memory buffer to store the allocated instance.
+		TImplementation*	m_implementation						= nullptr;	// Pointer to allocated instance.
+		std::byte			m_storage[ sizeof( TImplementation ) ];				// Memory buffer to store the allocated instance.
 	};
 }
 }
