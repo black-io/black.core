@@ -9,6 +9,14 @@ inline namespace StaticLists
 {
 namespace Internal
 {
+	/**
+		@breif	Iteration tool for particular static list.
+
+		This iterator satisfy the requirements of standard forward iterator. It may be used in standard algorithms and range-based for loops.
+		It is swappable as well.
+
+		@tparam	TInterface	Interface of static list items.
+	*/
 	template< typename TInterface >
 	class StaticListIterator final
 	{
