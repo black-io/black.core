@@ -14,6 +14,12 @@ namespace Internal
 
 	// Tagging object to indicate that the `BasicStaticNode` should be plugged into the static list just at construction.
 	inline constexpr InstantInsert INSTANT_INSERT = {};
+
+	// Tagging type to mark the persistent static storage. This storage carries the memory while process lifetime.
+	enum class PersistentStorage;
+
+	// Tagging type to mark the session static storage. This storage carries the memory only until soft restart.
+	enum class SessionStorage;
 }
 }
 }
