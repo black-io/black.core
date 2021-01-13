@@ -7,8 +7,6 @@ inline namespace Core
 {
 inline namespace StaticLists
 {
-namespace Internal
-{
 	/**
 		@breif	Persistent static storage.
 		This storage will carry any hosted service since its first access until the process execution is finished.
@@ -29,7 +27,6 @@ namespace Internal
 		Once the session is ended, all hosted services are invalidated.
 	*/
 	using SessionStorage = StaticStorage<Internal::SessionStorage>;
-}
 }
 }
 }
