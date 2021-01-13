@@ -34,6 +34,13 @@ namespace Internal
 		// Get the head of list.
 		static inline Node* GetRootNode();
 
+		// Enumerate all stored nodes to be used by given consuming function.
+		template< typename TFunction >
+		inline void EnumerateNodes( TFunction consumer );
+
+		// Clear the list, decoupling the stored nodes.
+		inline void Clear();
+
 
 		// Whether the collection is empty.
 		static inline const bool IsEmpty();
