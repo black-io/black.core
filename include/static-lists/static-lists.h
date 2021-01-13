@@ -38,6 +38,8 @@ namespace Internal
 #include "StaticList.h"
 #include "StaticStorage.h"
 
+#include "predefined-lists.h"
+
 // Deferred implementations.
 #include "StaticStorage.inl"
 #include "StaticList.inl"
