@@ -12,10 +12,6 @@ namespace Internal
 	// Forward declaration to properly declare the friendship.
 	template< typename TStorageTag >
 	class BasicStaticList;
-
-	// Forward declaration to properly declare the friendship.
-	template< typename TInterface >
-	class StaticListIterator;
 }
 }
 }

@@ -25,10 +25,6 @@ namespace Internal
 	template< typename TInterface >
 	class StaticListCommonNode : public BasicStaticNode<InterfaceTag<TInterface>>
 	{
-	// Friendship.
-	public:
-		friend class StaticListIterator<TInterface>;	// Grant access to `m_next_node` member.
-
 	// Public interface.
 	public:
 		/// @see	BasicStaticNode::GetNextNode
