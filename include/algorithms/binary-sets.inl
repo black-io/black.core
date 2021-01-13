@@ -16,7 +16,7 @@ inline namespace Algorithms
 	template< typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator >
 	inline const bool UniqueAdd( std::set<TStoredItem, TPredicate, TAllocator>& storage, TNewItem&& item )
 	{
-		static_assert( std::is_same_v<std::remove_cv_t<TStoredItem>, std::remove_cv_t<TNewItem>>, "Item of such type can't be added into storage." );
+		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
 		return std::get<1>( storage.emplace( std::forward<TNewItem>( item ) ) );
 	}
 
