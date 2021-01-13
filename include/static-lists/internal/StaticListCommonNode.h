@@ -31,6 +31,10 @@ namespace Internal
 
 	// Public interface.
 	public:
+		/// @see	BasicStaticNode::GetNextNode
+		using BasicStaticNode<InterfaceTag<TInterface>>::GetNextNode;
+
+
 		// Get the stored interface.
 		virtual TInterface& GetInterface() const	= 0;
 
