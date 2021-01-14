@@ -128,41 +128,41 @@ namespace Black
 {
 	// Declare current build mode.
 	#if( BLACK_DEBUG_BUILD )
-	constexpr BuildMode BUILD_CONFIGURATION	= BuildMode::Debug;
+	inline constexpr BuildMode BUILD_CONFIGURATION	= BuildMode::Debug;
 	#elif( BLACK_DRAFT_BUILD )
-	constexpr BuildMode BUILD_CONFIGURATION	= BuildMode::Draft;
+	inline constexpr BuildMode BUILD_CONFIGURATION	= BuildMode::Draft;
 	#elif( BLACK_RELEASE_BUILD )
-	constexpr BuildMode BUILD_CONFIGURATION	= BuildMode::Release;
+	inline constexpr BuildMode BUILD_CONFIGURATION	= BuildMode::Release;
 	#else
 		#error The `BUILD_CONFIGURATION` constant needs to be defined for current platform.
 	#endif
 
 	// Declare current platform.
 	#if( BLACK_WINDOWS_DESKTOP_PLATFORM )
-	constexpr PlatformType BUILD_PLATFORM	= PlatformType::WindowsDesktop;
+	inline constexpr PlatformType BUILD_PLATFORM	= PlatformType::WindowsDesktop;
 	#elif( BLACK_MAC_OS_PLATFORM )
-	constexpr PlatformType BUILD_PLATFORM	= PlatformType::MacOs;
+	inline constexpr PlatformType BUILD_PLATFORM	= PlatformType::MacOs;
 	#elif( BLACK_LINUX_PLATFORM )
-	constexpr PlatformType BUILD_PLATFORM	= PlatformType::Linux;
+	inline constexpr PlatformType BUILD_PLATFORM	= PlatformType::Linux;
 	#elif( BLACK_ANDROID_PLATFORM )
-	constexpr PlatformType BUILD_PLATFORM	= PlatformType::Android;
+	inline constexpr PlatformType BUILD_PLATFORM	= PlatformType::Android;
 	#elif( BLACK_IOS_PLATFORM )
-	constexpr PlatformType BUILD_PLATFORM	= PlatformType::Ios;
+	inline constexpr PlatformType BUILD_PLATFORM	= PlatformType::Ios;
 	#else
 		#error The `BUILD_PLATFORM` constant needs to be defined for current platform.
 	#endif
 
 	// Declare current platform endianness.
 	#if( BLACK_LITTLE_ENDIAN )
-	constexpr PlatformEndianness BUILD_ENDIANNESS	= PlatformEndianness::LittleEndian;
+	inline constexpr PlatformEndianness BUILD_ENDIANNESS	= PlatformEndianness::LittleEndian;
 	#elif( BLACK_BIG_ENDIAN )
-	constexpr PlatformEndianness BUILD_ENDIANNESS	= PlatformEndianness::BigEndian;
+	inline constexpr PlatformEndianness BUILD_ENDIANNESS	= PlatformEndianness::BigEndian;
 	#elif( BLACK_PDP_ENDIAN )
-	constexpr PlatformEndianness BUILD_ENDIANNESS	= PlatformEndianness::PdpEndian;
+	inline constexpr PlatformEndianness BUILD_ENDIANNESS	= PlatformEndianness::PdpEndian;
 	#else
 		#error The `BUILD_ENDIANNESS` constatnt needs to be defined for curent platform.
 	#endif
 
 	// Declare current exceptions support.
-	constexpr bool USE_EXCEPTIONS = BLACK_EXCEPTIONS_ENABLED != 0;
+	inline constexpr bool USE_EXCEPTIONS = BLACK_EXCEPTIONS_ENABLED != 0;
 }
