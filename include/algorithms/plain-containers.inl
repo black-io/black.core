@@ -34,7 +34,7 @@ inline namespace Algorithms
 	template< typename TStoredItem, typename TNewItem, typename TAllocator, template< typename, typename > class TStorage >
 	inline const bool UniqueAdd( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item )
 	{
-		static_assert( std::is_same_v<std::remove_cv_t<TStoredItem>, std::remove_cv_t<TNewItem>>, "Item of such type can't be added into storage." );
+		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
 		CRET( IsItemPresent( storage, item ), false );
 		storage.emplace_back( std::forward<TNewItem>( item ) );
 		return true;
@@ -43,7 +43,7 @@ inline namespace Algorithms
 	template< typename TStoredItem, typename TNewItem, typename TAllocator >
 	inline const size_t UniqueAddIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item )
 	{
-		static_assert( std::is_same_v<std::remove_cv_t<TStoredItem>, std::remove_cv_t<TNewItem>>, "Item of such type can't be added into storage." );
+		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
 		auto found_item = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_item != std::end( storage ), std::distance( std::begin( storage ), found_item ) );
 		storage.emplace_back( std::forward<TNewItem>( item ) );
