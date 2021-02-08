@@ -28,6 +28,8 @@
 // Regular 'assume' statement.
 #if( BLACK_WINDOWS_DESKTOP_PLATFORM || BLACK_WINDOWS_MOBILE_PLATFORM )
 	#define BLACK_ASSUME( ... )	__assume( __VA_ARGS__ )
+#elif( BLACK_ANDROID_PLATFORM )
+	#define BLACK_ASSUME( ... ) __predict_true( __VA_ARGS__ )
 #else
 	#define BLACK_ASSUME( ... )
 #endif
