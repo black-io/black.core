@@ -19,7 +19,7 @@ namespace Internal
 		@tparam	TImplementation	Particular implementation of common interface.
 	*/
 	template< typename TInterface, typename TImplementation >
-	class alignas( TInterface ) StaticListNode final : private StaticListCommonNode<TInterface>
+	class alignas( TImplementation ) StaticListNode final : private StaticListCommonNode<TInterface>
 	{
 	// Construction and initialization.
 	public:
