@@ -33,7 +33,7 @@ namespace Internal
 	// Public interface.
 	public:
 		// Get the name.
-		inline std::string_view const GetName() const			{ return m_name.data(); };
+		inline std::string_view const GetName() const			{ return m_name; };
 
 
 		inline std::string_view const operator * () const		{ return GetName(); };
