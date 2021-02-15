@@ -195,8 +195,9 @@ inline namespace Types
 
 	// Denied operations.
 	private:
-		NonTransferable( const NonTransferable& )				= delete;
-		NonTransferable( NonTransferable&& )					= delete;
+		NonTransferable( const NonTransferable& )	= delete;
+		NonTransferable( NonTransferable&& )		= delete;
+
 
 		NonTransferable& operator = ( const NonTransferable& )	= delete;
 		NonTransferable& operator = ( NonTransferable&& )		= delete;
