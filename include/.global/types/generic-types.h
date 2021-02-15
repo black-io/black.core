@@ -10,10 +10,10 @@ inline namespace Global
 inline namespace Types
 {
 	// Regular time type, in seconds.
-	using Time			= float;
+	using Time = float;
 
 	// Regular time duration specification.
-	using TimeDuration	= std::chrono::duration<Time>;
+	using TimeDuration = std::chrono::duration<Time>;
 
 	// Regular 32-bit hash value.
 	enum class Hash32 : uint32_t;
@@ -77,73 +77,123 @@ inline namespace Types
 	// It would be better to use private inheritance.
 	class NonCopyConstructible
 	{
+	// Allowed operations.
 	public:
-		NonCopyConstructible() = default;
+		inline NonCopyConstructible()							= default;
+		inline NonCopyConstructible( NonCopyConstructible&& )	= default;
 
+
+		inline NonCopyConstructible& operator = ( const NonCopyConstructible& )	= default;
+		inline NonCopyConstructible& operator = ( NonCopyConstructible&& )		= default;
+
+	// Denied operations.
 	private:
-		NonCopyConstructible( const NonCopyConstructible& ) = delete;
+		inline NonCopyConstructible( const NonCopyConstructible& ) = delete;
 	};
 
 	// Generic tag to prohibit copy-assignment of derived types.
 	// It would be better to use private inheritance.
 	class NonCopyAssignable
 	{
+	// Allowed operations.
+	public:
+		inline NonCopyAssignable()								= default;
+		inline NonCopyAssignable( const NonCopyAssignable& )	= default;
+		inline NonCopyAssignable( NonCopyAssignable&& )			= default;
+
+
+		inline NonCopyAssignable& operator = ( NonCopyAssignable&& ) = default;
+
+	// Denied operations.
 	private:
-		NonCopyAssignable& operator = ( const NonCopyAssignable& ) = delete;
+		inline NonCopyAssignable& operator = ( const NonCopyAssignable& ) = delete;
 	};
 
 	// Generic tag to prohibit move-construction of derived types.
 	// It would be better to use private inheritance.
 	class NonMoveConstructible
 	{
+	// Allowed operations.
 	public:
-		NonMoveConstructible() = default;
+		inline NonMoveConstructible()								= default;
+		inline NonMoveConstructible( const NonMoveConstructible& )	= default;
 
+
+		inline NonMoveConstructible& operator = ( const NonMoveConstructible& )	= default;
+		inline NonMoveConstructible& operator = ( NonMoveConstructible&& )		= default;
+
+	// Denied operations.
 	private:
-		NonMoveConstructible( NonMoveConstructible&& ) = delete;
+		inline NonMoveConstructible( NonMoveConstructible&& ) = delete;
 	};
 
 	// Generic tag to prohibit move-assignment of derived types.
 	// It would be better to use private inheritance.
 	class NonMoveAssignable
 	{
+	// Allowed operations.
+	public:
+		inline NonMoveAssignable()								= default;
+		inline NonMoveAssignable( const NonMoveAssignable& )	= default;
+		inline NonMoveAssignable( NonMoveAssignable&& )			= default;
+
+
+		inline NonMoveAssignable& operator = ( const NonMoveAssignable& ) = default;
+
+	// Denied operations.
 	private:
-		NonMoveAssignable& operator = ( NonMoveAssignable&& ) = delete;
+		inline NonMoveAssignable& operator = ( NonMoveAssignable&& ) = delete;
 	};
 
 	// Generic tag to prohibit copy-construction and copy-assignment of derived types.
 	// It would be better to use private inheritance.
 	class NonCopyable
 	{
+	// Allowed operations.
 	public:
-		NonCopyable() = default;
+		inline NonCopyable()				= default;
+		inline NonCopyable( NonCopyable&& )	= default;
 
+
+		inline NonCopyable& operator = ( NonCopyable&& ) = default;
+
+	// Denied operations.
 	private:
-		NonCopyable( const NonCopyable& )				= delete;
+		inline NonCopyable( const NonCopyable& ) = delete;
 
-		NonCopyable& operator = ( const NonCopyable& )	= delete;
+
+		inline NonCopyable& operator = ( const NonCopyable& ) = delete;
 	};
 
 	// Generic tag to prohibit move-construction and move-assignment of derived types.
 	// It would be better to use private inheritance.
 	class NonMovable
 	{
+	// Allowed operations.
 	public:
-		NonMovable() = default;
+		inline NonMovable()						= default;
+		inline NonMovable( const NonMovable& )	= default;
 
+
+		inline NonMovable& operator = ( const NonMovable& ) = default;
+
+	// Denied operations.
 	private:
-		NonMovable( NonMovable&& )				= delete;
+		inline NonMovable( NonMovable&& ) = delete;
 
-		NonMovable& operator = ( NonMovable&& )	= delete;
+
+		inline NonMovable& operator = ( NonMovable&& ) = delete;
 	};
 
 	// Generic tag to prohibit copy/move construction/assignment of derived types.
 	// It would be better to use private inheritance.
 	class NonTransferable
 	{
+	// Allowed operations.
 	public:
 		NonTransferable() = default;
 
+	// Denied operations.
 	private:
 		NonTransferable( const NonTransferable& )				= delete;
 		NonTransferable( NonTransferable&& )					= delete;
