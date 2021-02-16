@@ -20,7 +20,9 @@ namespace Internal
 
 // Include most fundamental platform stuff.
 #include "functions.h"
-#include "functions.platform-specific.h"
+#include "platform-specific/debug.h"
+#include "platform-specific/formatting.h"
+#include "platform-specific/memory.h"
 
 // Select the implementation of platform-specific code.
 #if( BLACK_WINDOWS_DESKTOP_PLATFORM )
