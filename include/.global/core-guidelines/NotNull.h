@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Types
+inline namespace CoreGuidelines
 {
 	/**
 		@brief	Core C++ Guideline `not_null` type.
@@ -26,13 +26,13 @@ inline namespace Types
 		NotNull( const NotNull& )	= default;
 		NotNull( NotNull&& )		= default;
 		NotNull( std::nullptr_t )	= delete;
-		constexpr NotNull( TPointer pointer ) : m_pointer{ std::move( pointer ) } { EXPECTS( m_pointer != nullptr ); };
+		inline NotNull( TPointer pointer ) : m_pointer{ std::move( pointer ) } { EXPECTS( m_pointer != nullptr ); };
 
 		template< typename TOther, typename = std::enable_if_t<std::is_convertible_v<TOther, TPointer>> >
-		constexpr NotNull( TOther&& other ) : m_pointer( std::forward<TOther>( other ) ) { EXPECTS( m_pointer != nullptr ); };
+		inline NotNull( TOther&& other ) : m_pointer( std::forward<TOther>( other ) ) { EXPECTS( m_pointer != nullptr ); };
 
 		template< typename TOther, typename = std::enable_if_t<std::is_convertible_v<TOther, TPointer>> >
-		constexpr NotNull( const NotNull<TOther>& other ) : m_pointer( other.m_pointer ) { EXPECTS( m_pointer != nullptr ); };
+		inline NotNull( const NotNull<TOther>& other ) : m_pointer( other.m_pointer ) { EXPECTS( m_pointer != nullptr ); };
 
 
 		inline NotNull& operator = ( const NotNull& )					= default;
@@ -48,7 +48,11 @@ inline namespace Types
 
 	// Public interface.
 	public:
-		constexpr TPointer Get() const	{ ENSURES_DEBUG( m_pointer != nullptr ); return m_pointer; };
+		constexpr TPointer Get() const
+		{
+			BLACK_ASSUME( m_pointer != nullptr );
+			return m_pointer;
+		}
 
 		template< typename TOther >
 		constexpr auto Get() const -> decltype( static_cast<TOther>( std::declval<TPointer>() ) )	{ return static_cast<TOther>( Get() ); };
