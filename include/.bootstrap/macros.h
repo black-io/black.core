@@ -39,40 +39,6 @@
 #define BLACK_SFINAE( CONDITION )	char (*)[ CONDITION ] = 0
 
 
-// Shunting the logging subsystem by default.
-#if( !defined( BLACK_LOG_ASSERT ) )
-	#define BLACK_LOG_ASSERT( CHANNEL, FORMAT, ... )
-#endif
-
-#if( !defined( BLACK_LOG_CRITICAL ) )
-	#define BLACK_LOG_CRITICAL( CHANNEL, FORMAT, ... )
-#endif
-
-#if( !defined( BLACK_LOG_ERROR ) )
-	#define BLACK_LOG_ERROR( CHANNEL, FORMAT, ... )
-#endif
-
-#if( !defined( BLACK_LOG_WARNING ) )
-	#define BLACK_LOG_WARNING( CHANNEL, FORMAT, ... )
-#endif
-
-#if( !defined( BLACK_LOG_INFO ) )
-	#define BLACK_LOG_INFO( CHANNEL, FORMAT, ... )
-#endif
-
-#if( !defined( BLACK_LOG_VERBOSE ) )
-	#define BLACK_LOG_VERBOSE( CHANNEL, FORMAT, ... )
-#endif
-
-#if( !defined( BLACK_LOG_DEBUG ) )
-	#define BLACK_LOG_DEBUG( CHANNEL, FORMAT, ... )
-#endif
-
-#if( !defined( BLACK_LOGS_CLOSE ) )
-	#define BLACK_LOGS_CLOSE( ... )
-#endif
-
-
 // Regular 'conditional return' statement.
 #define CRET( CONDITION, ... )								{ if( CONDITION ) [[likely]] { return __VA_ARGS__; } }
 
