@@ -17,7 +17,11 @@ namespace Internal
 		//
 		static constexpr char Encode( const char symbol, const size_t salt )
 		{
-			if constexpr( Black::BUILD_CONFIGURATION == Black::BuildMode::Release )
+			if constexpr( Black::BUILD_CONFIGURATION == Black::BuildMode::Debug )
+			{
+				return symbol;
+			}
+			else
 			{
 				// Shuffled prime numbers.
 				constexpr uint8_t keys[]{
@@ -26,10 +30,6 @@ namespace Internal
 				};
 
 				return symbol ^ keys[ salt % std::size( keys ) ];
-			}
-			else
-			{
-				return symbol;
 			}
 		}
 

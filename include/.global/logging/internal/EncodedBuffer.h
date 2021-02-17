@@ -12,7 +12,7 @@ inline namespace Logging
 namespace Internal
 {
 	//
-	template< size_t BUFFER_LENGTH>
+	template< size_t BUFFER_LENGTH >
 	class EncodedBuffer final
 	{
 	// Construction and initialization.
