@@ -19,7 +19,7 @@ inline namespace Logging
 	)
 		: m_location{ function_name, file_path, file_line }
 		, m_channel{ log_channel }
-		, m_format_id{}
+		, m_format{ format }
 		, m_category{ category }
 		, m_id{ Internal::MessageRegistry::GetMessageUniqueId() }
 	{
