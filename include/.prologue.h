@@ -12,6 +12,17 @@
 #include ".bootstrap/persistent-std.h"
 #include ".bootstrap/persistent-third-party.h"
 
+// Logging basics.
+#include ".global/logging/internal/constants.h"
+#include ".global/logging/internal/MessageRegistry.h"
+#include ".global/logging/internal/BufferEncoder.h"
+#include ".global/logging/internal/EncodedBuffer.h"
+#include ".global/logging/internal/MessageLocation.h"
+#include ".global/logging/internal/MessageChannel.h"
+#include ".global/logging/internal/MessageFormat.h"
+#include ".global/logging/LogMessage.h"
+#include ".global/logging/macros.h"
+
 // Most global stuff.
 #include ".bootstrap/constants.h"
 #include ".bootstrap/macros.h"
