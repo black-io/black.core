@@ -17,11 +17,16 @@ namespace Internal
 	{
 	// Construction and initialization.
 	public:
-		MessageLocation() = default;
-		MessageLocation( std::string_view function_name, std::string_view file_path, const size_t file_line );
+		inline MessageLocation( std::string_view function_name, std::string_view file_path, const size_t file_line );
 
 	// Public interface.
 	public:
+		//
+		inline std::string_view GetRawFunctionName() const;
+
+		//
+		inline std::string_view GetRawFilePath() const;
+
 		//
 		inline std::string GetFunctionName() const;
 
@@ -46,23 +51,28 @@ namespace Internal
 	{
 	// Construction and initialization.
 	public:
-		MessageLocation() = default;
-		MessageLocation( std::string_view function_name, std::string_view file_path, const size_t file_line );
+		inline MessageLocation( std::string_view function_name, std::string_view file_path, const size_t file_line );
 
 	// Public interface.
 	public:
 		//
-		inline std::string GetFunctionName() const		{ return BufferEncoder::Decode( std::string{ m_function_name } ); };
+		inline std::string_view GetRawFunctionName() const	{ return m_function_name; };
 
 		//
-		inline std::string GetFilePath() const			{ return BufferEncoder::Decode( std::string{ m_file_path } ); };
+		inline std::string_view GetRawFilePath() const		{ return m_file_path; };
 
 		//
-		inline const size_t GetFileLine() const			{ return m_file_line; };
+		inline std::string GetFunctionName() const			{ return BufferEncoder::Decode( std::string{ m_function_name } ); };
+
+		//
+		inline std::string GetFilePath() const				{ return BufferEncoder::Decode( std::string{ m_file_path } ); };
+
+		//
+		inline const size_t GetFileLine() const				{ return m_file_line; };
 
 
 		//
-		inline const LocationId GetId() const			{ return m_id; };
+		inline const LocationId GetId() const				{ return m_id; };
 
 	// Private state.
 	private:
