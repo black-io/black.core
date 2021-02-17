@@ -78,10 +78,13 @@ inline namespace Logging
 		// DTO type to store the information about source code location.
 		using Location = Internal::MessageLocation<Black::BUILD_CONFIGURATION>;
 
+		// DTO type to store the information about logging channel.
+		using Channel = Internal::MessageChannel<Black::BUILD_CONFIGURATION>;
+
 	// Private state.
 	private:
 		const Location				m_location;		// Source code location of message.
-		const Internal::ChannelId	m_channel_id;	// Unique identifier of logging channel.
+		const Channel				m_channel;		// Logging channel for message to send.
 		const Internal::FormatId	m_format_id;	// Unique identifier of message format.
 		const Category				m_category;		// Message category.
 		const Id					m_id;			// Unique identifier of message.
