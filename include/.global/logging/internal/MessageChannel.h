@@ -33,7 +33,10 @@ namespace Internal
 
 
 		//
-		inline const ChannelId GetId() const { return m_id; };
+		inline const ChannelId GetId() const		{ return m_id; };
+
+
+		inline const ChannelId operator * () const	{ return m_id; };
 
 	// Private state.
 	private:
@@ -63,6 +66,9 @@ namespace Internal
 
 		//
 		inline const ChannelId GetId() const			{ return m_id; };
+
+
+		inline const ChannelId operator * () const		{ return m_id; };
 
 	// Private state.
 	private:

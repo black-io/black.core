@@ -29,7 +29,10 @@ namespace Internal
 
 
 		//
-		inline const FormatId GetId() const { return m_id; };
+		inline const FormatId GetId() const			{ return m_id; };
+
+
+		inline const FormatId operator * () const	{ return m_id; };
 
 	// Private state.
 	private:
@@ -55,6 +58,9 @@ namespace Internal
 
 		//
 		inline const FormatId GetId() const				{ return m_id; };
+
+
+		inline const FormatId operator * () const		{ return m_id; };
 
 	// Private state.
 	private:

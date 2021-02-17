@@ -38,7 +38,10 @@ namespace Internal
 
 
 		//
-		inline const LocationId GetId() const { return m_id; };
+		inline const LocationId GetId() const		{ return m_id; };
+
+
+		inline const LocationId operator * () const	{ return m_id; };
 
 	// Private state.
 	private:
@@ -73,6 +76,9 @@ namespace Internal
 
 		//
 		inline const LocationId GetId() const				{ return m_id; };
+
+
+		inline const LocationId operator * () const			{ return m_id; };
 
 	// Private state.
 	private:

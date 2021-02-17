@@ -17,6 +17,10 @@ namespace Internal
 	// Public static interface.
 	public:
 		//
+		static void Close();
+
+
+		//
 		static const MessageId GetMessageUniqueId();
 
 		//
