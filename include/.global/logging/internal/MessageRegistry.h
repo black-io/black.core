@@ -25,6 +25,13 @@ namespace Internal
 		//
 		static const ChannelId GetChannelId( std::string_view log_channel );
 
+		//
+		static const FormatId GetFormatId( std::string_view format );
+
+
+		//
+		static const bool IsMessageEnabled( const MessageId message_id );
+
 
 		//
 		static std::string_view GetFunctionName( const LocationId location_id );
@@ -41,6 +48,10 @@ namespace Internal
 
 		//
 		static std::string_view GetChannel( const ChannelId channel_id );
+
+
+		//
+		static std::string_view GetFormat( const FormatId format_id );
 
 
 	// Construction and initialization.
