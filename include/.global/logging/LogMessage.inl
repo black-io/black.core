@@ -17,11 +17,11 @@ inline namespace Logging
 		std::string_view log_channel,
 		std::string_view format
 	)
-		: m_id{}
-		, m_location_id{}
+		: m_location{ function_name, file_path, file_line }
 		, m_channel_id{}
 		, m_format_id{}
 		, m_category{ category }
+		, m_id{ Internal::MessageRegistry::GetMessageUniqueId() }
 	{
 	}
 

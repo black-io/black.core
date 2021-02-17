@@ -73,13 +73,18 @@ inline namespace Logging
 		// Get the category of message.
 		inline const Category GetCategory() const	{ return m_category; };
 
+	// Private inner types.
+	private:
+		// DTO type to store the information about source code location.
+		using Location = Internal::MessageLocation<Black::BUILD_CONFIGURATION>;
+
 	// Private state.
 	private:
-		const Id					m_id;			// Unique identifier of message.
-		const Internal::LocationId	m_location_id;	// Unique identifier of source code location.
+		const Location				m_location;		// Source code location of message.
 		const Internal::ChannelId	m_channel_id;	// Unique identifier of logging channel.
 		const Internal::FormatId	m_format_id;	// Unique identifier of message format.
 		const Category				m_category;		// Message category.
+		const Id					m_id;			// Unique identifier of message.
 	};
 }
 }
