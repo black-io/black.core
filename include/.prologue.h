@@ -14,7 +14,7 @@
 
 // Logging basics.
 #include ".global/logging/internal/constants.h"
-#include ".global/logging/internal/MessageRegistry.h"
+#include ".global/logging/internal/functions.h"
 #include ".global/logging/internal/BufferEncoder.h"
 #include ".global/logging/internal/EncodedBuffer.h"
 #include ".global/logging/internal/MessageLocation.h"
