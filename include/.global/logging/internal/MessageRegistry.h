@@ -23,6 +23,10 @@ namespace Internal
 		static const LocationId GetLocationId( std::string_view function_name, std::string_view file_path, const size_t file_line );
 
 		//
+		static const ChannelId GetChannelId( std::string_view log_channel );
+
+
+		//
 		static std::string_view GetFunctionName( const LocationId location_id );
 
 		//
@@ -30,6 +34,13 @@ namespace Internal
 
 		//
 		static const size_t GetFileLine( const LocationId location_id );
+
+
+		//
+		static const bool IsChannelEnabled( const ChannelId channel_id );
+
+		//
+		static std::string_view GetChannel( const ChannelId channel_id );
 
 
 	// Construction and initialization.
