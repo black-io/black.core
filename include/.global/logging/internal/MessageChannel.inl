@@ -13,20 +13,20 @@ namespace Internal
 {
 	template< Black::BuildMode BUILD_CONFIGURATION >
 	inline MessageChannel<BUILD_CONFIGURATION>::MessageChannel( std::string_view log_channel )
-		: m_id{ MessageRegistry::GetChannelId( log_channel ) }
+		: m_id{ GetChannelUniqueId( log_channel ) }
 	{
 	}
 
 	template< Black::BuildMode BUILD_CONFIGURATION >
 	inline const bool MessageChannel<BUILD_CONFIGURATION>::IsEnabled() const
 	{
-		return MessageRegistry::IsChannelEnabled( m_id );
+		return IsChannelEnabled( m_id );
 	}
 
 	template< Black::BuildMode BUILD_CONFIGURATION >
 	inline std::string_view MessageChannel<BUILD_CONFIGURATION>::GetRawChannel() const
 	{
-		return MessageRegistry::GetChannel( m_id );
+		return GetChannel( m_id );
 	}
 
 	template< Black::BuildMode BUILD_CONFIGURATION >
@@ -37,13 +37,13 @@ namespace Internal
 
 	inline MessageChannel<Black::BuildMode::Debug>::MessageChannel( std::string_view log_channel )
 		: m_channel{ log_channel }
-		, m_id{ MessageRegistry::GetChannelId( log_channel ) }
+		, m_id{ GetChannelUniqueId( log_channel ) }
 	{
 	}
 
 	inline const bool MessageChannel<Black::BuildMode::Debug>::IsEnabled() const
 	{
-		return MessageRegistry::IsChannelEnabled( m_id );
+		return IsChannelEnabled( m_id );
 	}
 }
 }

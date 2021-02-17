@@ -13,20 +13,20 @@ namespace Internal
 {
 	template< Black::BuildMode BUILD_CONFIGURATION >
 	inline MessageLocation<BUILD_CONFIGURATION>::MessageLocation( std::string_view function_name, std::string_view file_path, const size_t file_line )
-		: m_id{ MessageRegistry::GetLocationId( function_name, file_path, file_line ) }
+		: m_id{ GetLocationUniqueId( function_name, file_path, file_line ) }
 	{
 	}
 
 	template< Black::BuildMode BUILD_CONFIGURATION >
 	inline std::string_view MessageLocation<BUILD_CONFIGURATION>::GetRawFunctionName() const
 	{
-		return MessageRegistry::GetFunctionName( m_id );
+		return GetFunctionName( m_id );
 	}
 
 	template< Black::BuildMode BUILD_CONFIGURATION >
 	inline std::string_view MessageLocation<BUILD_CONFIGURATION>::GetRawFilePath() const
 	{
-		return MessageRegistry::GetFilePath( m_id );
+		return GetFilePath( m_id );
 	}
 
 	template< Black::BuildMode BUILD_CONFIGURATION >
@@ -44,14 +44,14 @@ namespace Internal
 	template< Black::BuildMode BUILD_CONFIGURATION >
 	inline const size_t MessageLocation<BUILD_CONFIGURATION>::GetFileLine() const
 	{
-		return MessageRegistry::GetFileLine( m_id );
+		return GetFileLine( m_id );
 	}
 
 	inline MessageLocation<Black::BuildMode::Debug>::MessageLocation( std::string_view function_name, std::string_view file_path, const size_t file_line )
 		: m_function_name{ function_name }
 		, m_file_path{ file_path }
 		, m_file_line{ file_line }
-		, m_id{ MessageRegistry::GetLocationId( function_name, file_path, file_line ) }
+		, m_id{ GetLocationUniqueId( function_name, file_path, file_line ) }
 	{
 	}
 }

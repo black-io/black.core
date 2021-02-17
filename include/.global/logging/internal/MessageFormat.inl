@@ -13,14 +13,14 @@ namespace Internal
 {
 	template< Black::BuildMode BUILD_CONFIGURATION >
 	inline MessageFormat<BUILD_CONFIGURATION>::MessageFormat( std::string_view format )
-		: m_id{ MessageRegistry::GetFormatId( format ) }
+		: m_id{ GetFormatUniqueId( format ) }
 	{
 	}
 
 	template< Black::BuildMode BUILD_CONFIGURATION >
 	inline std::string_view MessageFormat<BUILD_CONFIGURATION>::GetRawFormat() const
 	{
-		return MessageRegistry::GetFormat( m_id );
+		return GetFormat( m_id );
 	}
 
 	template< Black::BuildMode BUILD_CONFIGURATION >
@@ -31,7 +31,7 @@ namespace Internal
 
 	inline MessageFormat<Black::BuildMode::Debug>::MessageFormat( std::string_view format )
 		: m_format{ format }
-		, m_id{ MessageRegistry::GetFormatId( format ) }
+		, m_id{ GetFormatUniqueId( format ) }
 	{
 	}
 }
