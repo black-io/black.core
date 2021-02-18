@@ -11,7 +11,6 @@ inline namespace Logging
 {
 	void LogMessage::CloseLogs()
 	{
-		Internal::CloseLogs();
 	}
 
 	const bool LogMessage::IsEnabled() const

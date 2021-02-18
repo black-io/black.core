@@ -12,9 +12,6 @@ inline namespace Logging
 namespace Internal
 {
 	//
-	void CloseLogs();
-
-	//
 	const MessageId GetMessageUniqueId();
 
 	//
