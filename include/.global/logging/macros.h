@@ -38,10 +38,10 @@
 // Regular logging macro.
 #define BLACK_DEFINE_LOGGING_SECTION( CATEGORY, CHANNEL, FORMAT, FUNCTION, FILE, LINE, ... )																\
 {																																							\
-	static const Black::LogMessage::EncodedString<std::char_traits<char>::length( FUNCTION ) + 1>	logging_function_name{ FUNCTION };						\
-	static const Black::LogMessage::EncodedString<std::char_traits<char>::length( FILE ) + 1>		logging_file_path{ FILE };								\
-	static const Black::LogMessage::EncodedString<std::char_traits<char>::length( CHANNEL ) + 1>	logging_log_channel{ CHANNEL };							\
-	static const Black::LogMessage::EncodedString<std::char_traits<char>::length( FORMAT ) + 1>		logging_format{ FORMAT };								\
+	static const Black::LogMessage::EncodedString<std::char_traits<char>::length( FUNCTION )>	logging_function_name{ FUNCTION };							\
+	static const Black::LogMessage::EncodedString<std::char_traits<char>::length( FILE )>		logging_file_path{ FILE };									\
+	static const Black::LogMessage::EncodedString<std::char_traits<char>::length( CHANNEL )>	logging_log_channel{ CHANNEL };								\
+	static const Black::LogMessage::EncodedString<std::char_traits<char>::length( FORMAT )>		logging_format{ FORMAT };									\
 																																							\
 	static const Black::LogMessage logging_message{ CATEGORY, *logging_function_name, *logging_file_path, LINE, *logging_log_channel, *logging_format };	\
 	logging_message.Send( __VA_ARGS__ );																													\
