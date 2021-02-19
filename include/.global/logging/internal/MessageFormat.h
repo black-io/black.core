@@ -11,7 +11,14 @@ inline namespace Logging
 {
 namespace Internal
 {
-	//
+	/**
+		@brief	Logging message format adapter.
+
+		The format of log messages is required to be uniquely identified in the logging core.
+		This adapter is used for purposes of such registration. In addition, the adapter implements the assess to registered data via given unique ID.
+
+		@tparam	BUILD_CONFIGURATION	Build configuration to specify the functionality of adapter.
+	*/
 	template< Black::BuildMode BUILD_CONFIGURATION >
 	class MessageFormat final
 	{
@@ -21,14 +28,14 @@ namespace Internal
 
 	// Public interface.
 	public:
-		//
+		/// @brief	Get the encoded string of logging format.
 		inline std::string_view GetRawFormat() const;
 
-		//
+		/// @brief	Get the decoded (original) string of logging format.
 		inline std::string GetFormat() const;
 
 
-		//
+		/// @brief	Get the unique ID of channel.
 		inline const FormatId GetId() const			{ return m_id; };
 
 
@@ -39,7 +46,7 @@ namespace Internal
 		const FormatId m_id; // Unique id for hosted log format.
 	};
 
-	//
+	// The selection variant for Debug build configuration. It includes some additional fields.
 	template<>
 	class MessageFormat<Black::BuildMode::Debug> final
 	{
@@ -49,14 +56,14 @@ namespace Internal
 
 	// Public interface.
 	public:
-		//
+		/// @brief	Get the encoded string of logging format.
 		inline std::string_view GetRawFormat() const	{ return m_format; };
 
-		//
+		/// @brief	Get the decoded (original) string of logging format.
 		inline std::string GetFormat() const			{ return BufferEncoder::Decode( std::string{ m_format } ); };
 
 
-		//
+		/// @brief	Get the unique ID of channel.
 		inline const FormatId GetId() const				{ return m_id; };
 
 

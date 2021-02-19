@@ -11,7 +11,14 @@ inline namespace Logging
 {
 namespace Internal
 {
-	//
+	/**
+		@brief	Static-length string buffer with compile-time encoding.
+
+		This buffer stores only valuable string data. It does not tore the terminating symbol.
+		It is very useful for compile-time string obfuscation.
+
+		@tparam	BUFFER_LENGTH	Length of internal buffer for string.
+	*/
 	template< size_t BUFFER_LENGTH >
 	class EncodedBuffer final
 	{
@@ -27,13 +34,13 @@ namespace Internal
 
 	// Public interface.
 	public:
-		//
+		/// @brief	Get the decoded string.
 		inline std::string GetDecodedBuffer() const			{ return BufferEncoder::Decode( std::string{ m_buffer, BUFFER_LENGTH } ); };
 
-		//
-		constexpr std::string_view GetEncodedBuffer() const	{ return m_buffer; };
+		/// @brief	Get the string directly from buffer with encoded data.
+		constexpr std::string_view GetEncodedBuffer() const	{ return std::string_view{ m_buffer, BUFFER_LENGTH }; };
 
-		//
+		/// @breif	Get the length of buffer.
 		constexpr const size_t GetLength() const			{ return BUFFER_LENGTH; };
 
 

@@ -19,6 +19,7 @@ namespace Internal
 		{
 			for( size_t index = 0; index < result.size(); ++index )
 			{
+				// Encoding function here may be used to reverse the encoding.
 				result[ index ] = Encode( result[ index ], index );
 			}
 		}

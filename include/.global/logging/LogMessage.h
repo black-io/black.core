@@ -58,7 +58,7 @@ inline namespace Logging
 
 	// Public interface.
 	public:
-		//
+		/// @brief	Perform the sending of log entry. Arguments are used to substitute the message from its format.
 		template< typename... TArguments >
 		inline void Send( TArguments&&... arguments ) const;
 
@@ -66,19 +66,44 @@ inline namespace Logging
 		// Whether the message is able to be sent.
 		const bool IsEnabled() const;
 
-		//
+		/**
+			@brief		Get the encoded buffer of function name.
+			@warning	This function is usable only in Debug build configuration.
+			@return		The value returned is the encoded string buffer.
+			@retval	""	Empty string will be returned when the build configuration is not Debug.
+		*/
 		std::string_view GetFunctionName() const;
 
-		//
+		/**
+			@brief		Get the encoded buffer of source code file path.
+			@warning	This function is usable only in Debug build configuration.
+			@return		The value returned is the encoded string buffer.
+			@retval	""	Empty string will be returned when the build configuration is not Debug.
+		*/
 		std::string_view GetFilePath() const;
 
-		//
+		/**
+			@brief		Get the line number of source code.
+			@warning	This function is usable only in Debug build configuration.
+			@return		The value returned is the source code line number.
+			@retval	0	Zero will be returned when the build configuration is not Debug.
+		*/
 		const size_t GetFileLine() const;
 
-		//
+		/**
+			@brief		Get the encoded buffer of logging channel.
+			@warning	This function is usable only in Debug build configuration.
+			@return		The value returned is the encoded string buffer.
+			@retval	""	Empty string will be returned when the build configuration is not Debug.
+		*/
 		std::string_view GetChannel() const;
 
-		//
+		/**
+			@brief		Get the encoded buffer of message format.
+			@warning	This function is usable only in Debug build configuration.
+			@return		The value returned is the encoded string buffer.
+			@retval	""	Empty string will be returned when the build configuration is not Debug.
+		*/
 		std::string_view GetFormat() const;
 
 
@@ -101,11 +126,11 @@ inline namespace Logging
 
 	// Private state.
 	private:
-		const Location				m_location;		// Source code location of message.
-		const Channel				m_channel;		// Logging channel for message to send.
-		const Format				m_format;		// Format of message.
-		const Category				m_category;		// Message category.
-		const Id					m_id;			// Unique identifier of message.
+		const Location	m_location;	// Source code location of message.
+		const Channel	m_channel;	// Logging channel for message to send.
+		const Format	m_format;	// Format of message.
+		const Category	m_category;	// Message category.
+		const Id		m_id;		// Unique identifier of message.
 	};
 }
 }
