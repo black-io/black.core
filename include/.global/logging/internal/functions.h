@@ -12,7 +12,7 @@ inline namespace Logging
 namespace Internal
 {
 	//
-	const MessageId GetMessageUniqueId();
+	const MessageId GetMessageUniqueId( const Black::LogMessage& message );
 
 	//
 	const LocationId GetLocationUniqueId( std::string_view function_name, std::string_view file_path, const size_t file_line );
