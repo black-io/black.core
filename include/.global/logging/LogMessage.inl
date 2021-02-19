@@ -21,7 +21,7 @@ inline namespace Logging
 		, m_channel{ log_channel }
 		, m_format{ format }
 		, m_category{ category }
-		, m_id{ Internal::GetMessageUniqueId() }
+		, m_id{ Internal::GetMessageUniqueId( *this ) }
 	{
 	}
 
