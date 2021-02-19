@@ -66,6 +66,21 @@ inline namespace Logging
 		// Whether the message is able to be sent.
 		const bool IsEnabled() const;
 
+		//
+		std::string_view GetFunctionName() const;
+
+		//
+		std::string_view GetFilePath() const;
+
+		//
+		const size_t GetFileLine() const;
+
+		//
+		std::string_view GetChannel() const;
+
+		//
+		std::string_view GetFormat() const;
+
 
 		// get the unique identifier of message.
 		inline const Id GetId() const				{ return m_id; };
