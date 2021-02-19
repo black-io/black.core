@@ -13,6 +13,7 @@
 #include ".bootstrap/persistent-third-party.h"
 
 // Logging basics.
+#include ".global/logging/forwards.h"
 #include ".global/logging/internal/constants.h"
 #include ".global/logging/internal/functions.h"
 #include ".global/logging/internal/BufferEncoder.h"
