@@ -5,7 +5,7 @@
 #include <black/core/concurrency.h>
 
 
-class MessageLocationRegistry final
+class MessageLocationRegistry final : private Black::NonTransferable
 {
 // Public inner types.
 public:

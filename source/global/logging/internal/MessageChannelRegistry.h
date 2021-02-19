@@ -5,7 +5,7 @@
 #include <black/core/concurrency.h>
 
 
-class MessageChannelRegistry final
+class MessageChannelRegistry final : private Black::NonTransferable
 {
 // Public inner types.
 public:

@@ -19,7 +19,7 @@ namespace
 
 	const MessageChannelRegistry::ChannelId BuildId( std::string_view log_channel )
 	{
-		std::hash<std::string_view> hash;
+		const std::hash<std::string_view> hash{};
 
 		const size_t uuid[]{
 			hash( log_channel ),

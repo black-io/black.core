@@ -19,7 +19,7 @@ namespace
 
 	const MessageLocationRegistry::LocationId BuildId( std::string_view function_name, std::string_view file_path, const size_t file_line )
 	{
-		std::hash<std::string_view> hash;
+		const std::hash<std::string_view> hash{};
 
 		const size_t uuid[]{
 			file_line,
