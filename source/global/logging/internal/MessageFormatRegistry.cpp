@@ -40,6 +40,8 @@ const MessageFormatRegistry::FormatId MessageFormatRegistry::GetUniqueId( std::s
 {
 	const FormatId format_id = BuildId( format );
 
+	MessageFormatRegistry& registry = GetRegistry();
+
 	// Thread-safe access.
 	const Black::MutexLock lock{ GetMutex() };
 
@@ -47,7 +49,7 @@ const MessageFormatRegistry::FormatId MessageFormatRegistry::GetUniqueId( std::s
 	if( Black::BUILD_CONFIGURATION == Black::BuildMode::Debug )
 	{
 		Black::FindItem(
-			GetRegistry().m_formats_map,
+			registry.m_formats_map,
 			format_id,
 			[&format]( const FormatSlot& slot )
 			{
@@ -62,7 +64,7 @@ const MessageFormatRegistry::FormatId MessageFormatRegistry::GetUniqueId( std::s
 		);
 	}
 
-	Black::UniqueAdd( GetRegistry().m_formats_map, format_id, FormatSlot{ format } );
+	Black::UniqueAdd( registry.m_formats_map, format_id, FormatSlot{ format } );
 	return format_id;
 }
 
