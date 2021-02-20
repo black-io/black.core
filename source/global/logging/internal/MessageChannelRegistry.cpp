@@ -5,22 +5,26 @@
 
 namespace
 {
+	/// @brief	Get the thread barrier for synchronized access to registry.
 	const Black::Mutex& GetMutex()
 	{
 		static Black::SpinLock mutex;
 		return mutex;
 	}
 
+	/// @brief	Get the persistent instance of registry.
 	MessageChannelRegistry& GetRegistry()
 	{
 		static MessageChannelRegistry registry;
 		return registry;
 	}
 
+	/// @brief	Build the unique ID using given content of channel.
 	const MessageChannelRegistry::ChannelId BuildId( std::string_view log_channel )
 	{
 		const std::hash<std::string_view> hash{};
 
+		// Compress the initial content. Keep the overall algorithm same for purposes of extendability.
 		const size_t uuid[]{
 			hash( log_channel ),
 		};
@@ -28,6 +32,7 @@ namespace
 		return static_cast<MessageChannelRegistry::ChannelId>( Black::GetUnreliableHash( static_cast<const void*>( uuid ), sizeof( uuid ) ) );
 	}
 
+	/// @brief	Get the parent channel. Empty string returned for root channels.
 	std::string_view GetParentChannel( std::string_view log_channel )
 	{
 		using Black::Core::Global::Logging::Internal::BufferEncoder;
@@ -43,9 +48,9 @@ namespace
 
 struct MessageChannelRegistry::ChannelSlot final
 {
-	std::string_view			channel;
-	std::vector<ChannelSlot*>	subchannels;
-	bool						is_enabled	= true;
+	std::string_view			channel;			// Message channel.
+	std::vector<ChannelSlot*>	subchannels;		// List of sub-channels.
+	bool						is_enabled	= true;	// Whether the channel is able to send messages.
 };
 
 
@@ -136,13 +141,14 @@ const MessageChannelRegistry::ChannelId MessageChannelRegistry::AddChannel( std:
 	ChannelSlot&			channel_slot	= m_channels_map[ channel_id ];
 	const std::string_view	parent_channel	= GetParentChannel( log_channel );
 
-	//
+	// Empty parent channel means the current channel is root.
 	if( parent_channel.empty() )
 	{
 		Black::UniqueAdd( m_channel_roots, &channel_slot );
 	}
 	else
 	{
+		// Add the new child into parent channel.
 		const ChannelId parent_id = AddChannel( parent_channel );
 		Black::UniqueAdd( m_channels_map[ parent_id ].subchannels, &channel_slot );
 	}

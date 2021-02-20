@@ -5,20 +5,24 @@
 
 namespace
 {
+	/// @brief	Get the thread barrier for synchronized access to registry.
 	const Black::Mutex& GetMutex()
 	{
 		static Black::SpinLock mutex;
 		return mutex;
 	}
 
+	/// @brief	Get the persistent instance of registry.
 	LogMessageRegistry& GetRegistry()
 	{
 		static LogMessageRegistry registry;
 		return registry;
 	}
 
+	/// @brief	Build the unique ID using given content of message.
 	const LogMessageRegistry::MessageId BuildId( const Black::LogMessage& message )
 	{
+		// Compress the initial content. Keep the overall algorithm same for purposes of extendability.
 		const size_t uuid[]{
 			reinterpret_cast<std::uintptr_t>( &message ),
 		};
@@ -30,7 +34,7 @@ namespace
 
 struct LogMessageRegistry::MessageSlot final
 {
-	bool is_enabled = true;
+	bool is_enabled = true; // Whether the message is able to send log entries.
 };
 
 

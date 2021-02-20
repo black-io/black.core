@@ -5,22 +5,26 @@
 
 namespace
 {
+	/// @brief	Get the thread barrier for synchronized access to registry.
 	const Black::Mutex& GetMutex()
 	{
 		static Black::SpinLock mutex;
 		return mutex;
 	}
 
+	/// @brief	Get the persistent instance of registry.
 	MessageFormatRegistry& GetRegistry()
 	{
 		static MessageFormatRegistry registry;
 		return registry;
 	}
 
+	/// @brief	Build the unique ID using given content of format.
 	const MessageFormatRegistry::FormatId BuildId( std::string_view format )
 	{
 		const std::hash<std::string_view> hash{};
 
+		// Compress the initial content. Keep the overall algorithm same for purposes of extendability.
 		const size_t uuid[]{
 			hash( format ),
 		};
@@ -32,7 +36,7 @@ namespace
 
 struct MessageFormatRegistry::FormatSlot final
 {
-	std::string_view format;
+	std::string_view format; // Message format.
 };
 
 

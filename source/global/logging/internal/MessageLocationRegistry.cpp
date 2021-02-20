@@ -5,22 +5,26 @@
 
 namespace
 {
+	/// @brief	Get the thread barrier for synchronized access to registry.
 	const Black::Mutex& GetMutex()
 	{
 		static Black::SpinLock mutex;
 		return mutex;
 	}
 
+	/// @brief	Get the persistent instance of registry.
 	MessageLocationRegistry& GetRegistry()
 	{
 		static MessageLocationRegistry registry;
 		return registry;
 	}
 
+	/// @brief	Build the unique ID using given content of location.
 	const MessageLocationRegistry::LocationId BuildId( std::string_view function_name, std::string_view file_path, const size_t file_line )
 	{
 		const std::hash<std::string_view> hash{};
 
+		// Compress the initial content.
 		const size_t uuid[]{
 			file_line,
 			hash( function_name ),
@@ -34,9 +38,9 @@ namespace
 
 struct MessageLocationRegistry::LocationSlot final
 {
-	std::string_view	function_name;
-	std::string_view	file_path;
-	size_t				file_line;
+	std::string_view	function_name;	// Name of function, where the logging location created.
+	std::string_view	file_path;		// Source code file path, where the logging location is placed.
+	size_t				file_line;		// Source code line number, where the logging location is placed.
 };
 
 
