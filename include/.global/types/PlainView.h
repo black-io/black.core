@@ -51,7 +51,7 @@ inline namespace Types
 		PlainView( Element* head, const size_t length );
 
 		template< typename TOtherType, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
-		PlainView( const PlainView<TOtherType>& other ) : PlainView( other.m_head, other.m_tail ) {};
+		PlainView( const PlainView<TOtherType>& other ) : PlainView( other.GetHead(), other.GetTail() ) {};
 
 		template< size_t ARRAY_LENGTH >
 		PlainView( Element (&elements)[ ARRAY_LENGTH ] ) : PlainView{ elements, ARRAY_LENGTH } {};
