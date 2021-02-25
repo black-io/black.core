@@ -47,6 +47,9 @@ namespace Internal
 
 	// Private interface.
 	private:
+		// Get the synchronization lock for root node.
+		static inline const Black::Mutex& GetMutex();
+
 		// Access the root of current static list.
 		static inline Node*& AccessRootNode();
 	};

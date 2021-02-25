@@ -45,6 +45,13 @@ namespace Internal
 	}
 
 	template< typename TStorageTag >
+	inline const Black::Mutex& BasicStaticList<TStorageTag>::GetMutex()
+	{
+		static Black::SpinLock mutex;
+		return mutex;
+	}
+
+	template< typename TStorageTag >
 	inline typename BasicStaticList<TStorageTag>::Node*& BasicStaticList<TStorageTag>::AccessRootNode()
 	{
 		// Escaping the 'static initialization order fiasco'.

@@ -63,10 +63,11 @@ namespace Internal
 		/// @see	StaticListCommonNode::GetInterface
 		TInterface& GetInterface() const override			{ return GetImplementation(); };
 
-	// Private state.
+	// Private non-state.
 	private:
-		mutable	TImplementation*	m_implementation						= nullptr;	// Pointer to allocated instance.
-		mutable std::byte			m_storage[ sizeof( TImplementation ) ];				// Memory buffer to store the allocated instance.
+		mutable Black::SpinLock							m_lock;												// For synchronized access to implementation.
+		mutable	TImplementation*						m_implementation						= nullptr;	// Pointer to allocated instance.
+		alignas( TImplementation ) mutable std::byte	m_storage[ sizeof( TImplementation ) ];				// Memory buffer to store the allocated instance.
 	};
 }
 }

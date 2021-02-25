@@ -49,8 +49,9 @@ namespace Internal
 
 	// Private state.
 	private:
-		TImplementation*	m_implementation						= nullptr;	// Pointer to allocated instance.
-		std::byte			m_storage[ sizeof( TImplementation ) ];				// Memory buffer to store the allocated instance.
+		Black::SpinLock							m_lock;												// For synchronized access to implementation.
+		TImplementation*						m_implementation						= nullptr;	// Pointer to allocated instance.
+		alignas( TImplementation ) std::byte	m_storage[ sizeof( TImplementation ) ];				// Memory buffer to store the allocated instance.
 	};
 }
 }

@@ -35,7 +35,10 @@ namespace Internal
 	{
 		static_assert( std::is_base_of_v<TInterface, TImplementation>, "`TImplementation` should be derived from `TInterface`." );
 
-		EXPECTS( m_implementation == nullptr );
+		const Black::MutexLock lock{ m_lock };
+		// It may happen after synchronization that the implementation is already created.
+		CRET( m_implementation != nullptr, *m_implementation );
+
 		m_implementation = ConstructionProxy<TImplementation>::Construct( m_storage, std::forward<TArguments>( arguments )... );
 
 		ENSURES_DEBUG( m_implementation != nullptr );

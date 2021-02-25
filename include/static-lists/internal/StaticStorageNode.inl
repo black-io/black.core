@@ -12,8 +12,13 @@ namespace Internal
 	template< typename TStorageTag, typename TImplementation >
 	inline TImplementation& StaticStorageNode<TStorageTag, TImplementation>::ConstructImplementation()
 	{
-		EXPECTS_DEBUG( m_implementation == nullptr );
-		m_implementation = ConstructionProxy<TImplementation>::Construct( m_storage );
+		{
+			const Black::MutexLock lock{ m_lock };
+			// It may happen after synchronization that the implementation is already created.
+			CRET( m_implementation != nullptr, *m_implementation );
+
+			m_implementation = ConstructionProxy<TImplementation>::Construct( m_storage );
+		}
 
 		ENSURES_DEBUG( m_implementation != nullptr );
 		BasicStaticNode<TStorageTag>::PlugIntoList();
@@ -30,7 +35,7 @@ namespace Internal
 	void StaticStorageNode<TStorageTag, TImplementation>::Invalidate()
 	{
 		CRET( m_implementation == nullptr );
-		std::exchange(m_implementation, nullptr)->~TImplementation();
+		std::exchange( m_implementation, nullptr )->~TImplementation();
 	}
 }
 }

@@ -1,6 +1,10 @@
 #pragma once
 
 
+// Fundamental external dependencies.
+#include <black/core/concurrency.h>
+
+
 namespace Black
 {
 inline namespace Core

@@ -18,7 +18,10 @@ namespace Internal
 	template< typename TStorageTag >
 	inline void BasicStaticNode<TStorageTag>::PlugIntoList()
 	{
-		EXPECTS_DEBUG( m_next_node == nullptr );
+		const Black::MutexLock lock{ BasicStaticList<TStorageTag>::GetMutex() };
+		// Early exit due to the node is already in the static list.
+		CRET( m_next_node != nullptr );
+
 		m_next_node = std::exchange( BasicStaticList<TStorageTag>::AccessRootNode(), this );
 	}
 }
