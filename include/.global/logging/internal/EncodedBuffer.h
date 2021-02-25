@@ -44,7 +44,7 @@ namespace Internal
 		constexpr const size_t GetLength() const			{ return BUFFER_LENGTH; };
 
 
-		constexpr std::string_view operator * () const		{ return m_buffer; };
+		constexpr std::string_view operator * () const		{ return GetEncodedBuffer(); };
 
 	// Private construction.
 	private:
