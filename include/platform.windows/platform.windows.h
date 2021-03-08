@@ -17,11 +17,7 @@ inline namespace Platform
 // Core Windows desktop platform definitions.
 inline namespace WindowsDesktop
 {
-// Internal stuff for Windows desktop platform.
-namespace Internal
-{
 
-}
 }
 }
 }
