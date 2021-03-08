@@ -12,8 +12,14 @@ inline namespace Types
 	// Regular time type, in seconds.
 	using Time = float;
 
+	// Type of time with high precision, in seconds.
+	using HighPrecisionTime = float;
+
 	// Regular time duration specification.
 	using TimeDuration = std::chrono::duration<Time>;
+
+	// High precision time duration specification.
+	using HighPrecisionTimeDuration = std::chrono::duration<HighPrecisionTime>;
 
 	// Regular 32-bit hash value.
 	enum class Hash32 : uint32_t;
