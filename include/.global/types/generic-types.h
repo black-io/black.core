@@ -13,7 +13,7 @@ inline namespace Types
 	using Time = float;
 
 	// Type of time with high precision, in seconds.
-	using HighPrecisionTime = float;
+	using HighPrecisionTime = double;
 
 	// Regular time duration specification.
 	using TimeDuration = std::chrono::duration<Time>;
