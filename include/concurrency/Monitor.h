@@ -27,21 +27,6 @@ inline namespace Concurrency
 		virtual void Unlock() const override	{ m_mutex.unlock(); };
 
 		/**
-			@brief	Initiate waiting of signal for current thread if `condition` not return success result.
-			This method initiates direct waiting only if `condition` returns `false`.
-			While waiting, mutex of this monitor will be released, so any other thread would be able to lock it.
-			After waiting, mutex of this monitor will be locked again by this thread, preventing any ambiguous situations between threads.
-			@warning	Monitor must not be locked before calling this function! Locking is done internally.
-			@param	condition						Callable conditions with calling signature like `void (*)()`. Other types will cause compiler errors.
-			@tparam	TWaitCondition					Type of condition.
-			@return									Returns reason why `Wait` was finished.
-			@retval	MonitorWaitResult::Notified		Returned if monitor was notified.
-			@retval	MonitorWaitResult::Condition	Returned if `condition` returns success result.
-		*/
-		template< typename TWaitCondition >
-		inline const MonitorWaitResult Wait( TWaitCondition&& condition ) const;
-
-		/**
 			@brief	Initiate waiting of signal for current thread.
 			Causes unconditional waiting until monitor notified.
 			While waiting, mutex of this monitor will be released, so any other thread would be able to lock it.
@@ -58,11 +43,43 @@ inline namespace Concurrency
 			While waiting, mutex of this monitor will be released, so any other thread would be able to lock it.
 			After waiting, mutex of this monitor will be locked again by this thread, preventing any ambiguous situations between threads.
 			@warning	Monitor must not be locked before calling this function! Locking is done internally.
+			@param	seconds							Number of seconds to wait the signal.
 			@return									Returns reason why `Wait` was finished.
 			@retval	MonitorWaitResult::Notified		Returned if monitor was notified.
 			@retval	MonitorWaitResult::Timeout		Returned if timeout was reached.
 		*/
 		inline const MonitorWaitResult Wait( const Time seconds ) const;
+
+		/**
+			@brief	Initiate waiting of signal for current thread if `condition` not return success result.
+			This method initiates direct waiting only if `condition` returns `false`.
+			While waiting, mutex of this monitor will be released, so any other thread would be able to lock it.
+			After waiting, mutex of this monitor will be locked again by this thread, preventing any ambiguous situations between threads.
+			@warning	Monitor must not be locked before calling this function! Locking is done internally.
+			@param	condition						Callable conditions with calling signature like `void (*)()`. Other types will cause compiler errors.
+			@tparam	TWaitCondition					Type of condition.
+			@return									Returns reason why `Wait` was finished.
+			@retval	MonitorWaitResult::Notified		Returned if monitor was notified.
+			@retval	MonitorWaitResult::Condition	Returned if `condition` returns success result.
+		*/
+		template< typename TWaitCondition >
+		inline const MonitorWaitResult Wait( TWaitCondition&& condition ) const;
+
+		/**
+			@brief	Wait for signal for given seconds and while the given condition is `false`.
+			This method initiates direct waiting only if `condition` returns `false`.
+			While waiting, mutex of this monitor will be released, so any other thread would be able to lock it.
+			After waiting, mutex of this monitor will be locked again by this thread, preventing any ambiguous situations between threads.
+			@warning	Monitor must not be locked before calling this function! Locking is done internally.
+			@param	seconds							Number of seconds to wait the signal.
+			@param	condition						Callable conditions with calling signature like `void (*)()`. Other types will cause compiler errors.
+			@tparam	TWaitCondition					Type of condition.
+			@return									Returns reason why `Wait` was finished.
+			@retval	MonitorWaitResult::Notified		Returned if monitor was notified.
+			@retval	MonitorWaitResult::Condition	Returned if `condition` returns success result.
+		*/
+		template< typename TWaitCondition >
+		inline const MonitorWaitResult Wait( const Time seconds, TWaitCondition&& condition ) const;
 
 		/**
 			@brief	Notifies monitor, what cause one of waiting threads wake up.
