@@ -224,7 +224,7 @@ namespace Internal
 
 	// Heirs state.
 	protected:
-		Bits	m_bits = NONE_BITS;	// The storage for bits.
+		Bits m_bits = NONE_BITS; // The storage for bits.
 	};
 
 	// Policy to allow the bit storage projection through the type of bit-field structure.
