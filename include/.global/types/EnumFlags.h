@@ -50,13 +50,13 @@ inline namespace Types
 	public:
 		EnumFlags()												= default;
 		EnumFlags( const EnumFlags& )							= default;
-		EnumFlags( EnumFlags&& )								= default;
+		EnumFlags( EnumFlags&& other ) noexcept					{ Storage::m_bits = std::exchange( other.Storage::m_bits, {} ); };
 		explicit EnumFlags( const Bits flags )					{ Storage::m_bits = flags; };
 		EnumFlags( std::initializer_list<Enumeration> flags )	{ Storage::SetFlags( flags ); };
 
 
 		inline EnumFlags& operator = ( const EnumFlags& )							= default;
-		inline EnumFlags& operator = ( EnumFlags&& )								= default;
+		inline EnumFlags& operator = ( EnumFlags&& other ) noexcept					{ Storage::m_bits = std::exchange( other.Storage::m_bits, {} ); return *this; };
 		inline EnumFlags& operator = ( const Enumeration flag )						{ Storage::m_bits = Traits::GetBit( flag ); return *this; };
 		inline EnumFlags& operator = ( std::initializer_list<Enumeration> flags )	{ return Black::CopyAndSwap( *this, flags ); };
 
