@@ -27,8 +27,9 @@
 // Strings and etc.
 #include <string>
 #include <string_view>
-#include <locale>
 #include <ostream>
+#include <clocale>
+#include <locale>
 
 // Algorithms and etc.
 #include <functional>
