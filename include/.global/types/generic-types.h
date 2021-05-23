@@ -254,24 +254,51 @@ inline namespace Types
 	template< typename TFunction >
 	class ScopeLeaveHandler final
 	{
+	// Construction and assignment.
 	public:
-		ScopeLeaveHandler()								= delete;
-		ScopeLeaveHandler( const ScopeLeaveHandler& )	= default;
-		ScopeLeaveHandler( ScopeLeaveHandler&& )		= default;
-		explicit ScopeLeaveHandler( TFunction function ) : m_function{ std::move( function ) } {};
-		~ScopeLeaveHandler() { CRET( m_is_canceled ); m_function(); };
+		ScopeLeaveHandler()									= delete;
+		ScopeLeaveHandler( const ScopeLeaveHandler& )		= default;
+		ScopeLeaveHandler( ScopeLeaveHandler&& )			= default;
+
+		explicit ScopeLeaveHandler( TFunction function )	: m_function{ std::move( function ) } {};
+
+		~ScopeLeaveHandler()
+		{
+			CRET( m_is_canceled );
+			m_function();
+		}
 
 
 		ScopeLeaveHandler& operator = ( ScopeLeaveHandler&& )		= default;
 		ScopeLeaveHandler& operator = ( const ScopeLeaveHandler& )	= default;
 
-
+	// Public interface.
+	public:
 		// Cancel the handling.
 		inline void Cancel() { m_is_canceled = true; };
 
+	// Private state.
 	private:
-		TFunction	m_function;
-		bool		m_is_canceled	= false;
+		TFunction	m_function;					// The function to be executed.
+		bool		m_is_canceled	= false;	// Whether the function should be executed.
+	};
+
+	// Locale holder accepts the new locale through the constructor, uses it on construction and returns the previous locale only on destruction.
+	class SystemLocaleHolder final : private NonTransferable
+	{
+	// Construction and destruction.
+	public:
+		explicit SystemLocaleHolder( const std::string& new_locale )	: SystemLocaleHolder{ new_locale.data() } {};
+		explicit SystemLocaleHolder( const char* new_locale )			: m_old_locale{ std::setlocale( LC_ALL, new_locale ) } {};
+		~SystemLocaleHolder()
+		{
+			CRET( m_old_locale == nullptr );
+			std::setlocale( LC_ALL, m_old_locale );
+		}
+
+	// Private state.
+	private:
+		const char* m_old_locale; // The previous locale that should be returned.
 	};
 }
 }
