@@ -29,6 +29,7 @@
 #include ".bootstrap/macros.h"
 #include ".global/algorithms/misc.h"
 #include ".global/algorithms/bytes.h"
+#include ".global/algorithms/chars.h"
 #include ".global/algorithms/memory.h"
 #include ".global/types/generic-types.h"
 #include ".global/types/generic-types.aliasing.h"

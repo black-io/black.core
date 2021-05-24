@@ -13,4 +13,5 @@
 #include ".global/types/PlainVector.inl"
 #include ".global/types/PlainView.inl"
 
+#include ".global/algorithms/chars.inl"
 #include ".global/algorithms/bytes.inl"
