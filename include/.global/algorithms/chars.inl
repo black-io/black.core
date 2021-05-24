@@ -16,7 +16,7 @@ inline namespace Algorithms
 		{
 			return std::isalnum( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswalnum( static_cast<wint_t>( candidate ) ) != 0;
 		}
@@ -33,7 +33,7 @@ inline namespace Algorithms
 		{
 			return std::isalpha( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswalpha( static_cast<wint_t>( candidate ) ) != 0;
 		}
@@ -50,7 +50,7 @@ inline namespace Algorithms
 		{
 			return std::islower( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswlower( static_cast<wint_t>( candidate ) ) != 0;
 		}
@@ -67,7 +67,7 @@ inline namespace Algorithms
 		{
 			return std::isupper( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswupper( static_cast<wint_t>( candidate ) ) != 0;
 		}
@@ -84,7 +84,7 @@ inline namespace Algorithms
 		{
 			return std::isdigit( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswdigit( static_cast<wint_t>( candidate ) ) != 0;
 		}
@@ -101,7 +101,7 @@ inline namespace Algorithms
 		{
 			return std::isxdigit( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswxdigit( static_cast<wint_t>( candidate ) ) != 0;
 		}
@@ -118,7 +118,7 @@ inline namespace Algorithms
 		{
 			return std::iscntrl( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswcntrl( static_cast<wint_t>( candidate ) ) != 0;
 		}
@@ -135,7 +135,7 @@ inline namespace Algorithms
 		{
 			return std::isgraph( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswgraph( static_cast<wint_t>( candidate ) ) != 0;
 		}
@@ -152,7 +152,7 @@ inline namespace Algorithms
 		{
 			return std::isspace( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswspace( static_cast<wint_t>( candidate ) ) != 0;
 		}
@@ -169,7 +169,7 @@ inline namespace Algorithms
 		{
 			return std::isblank( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswblank( static_cast<wint_t>( candidate ) ) != 0;
 		}
@@ -186,7 +186,7 @@ inline namespace Algorithms
 		{
 			return std::isprint( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswprint( static_cast<wint_t>( candidate ) ) != 0;
 		}
@@ -203,7 +203,7 @@ inline namespace Algorithms
 		{
 			return std::ispunct( static_cast<int32_t>( candidate ) ) != 0;
 		}
-		else if constexpr( std::is_same_v<std::decay_t<TChar>, char> )
+		else if constexpr( std::is_same_v<std::decay_t<TChar>, wchar_t> )
 		{
 			return std::iswpunct( static_cast<wint_t>( candidate ) ) != 0;
 		}
