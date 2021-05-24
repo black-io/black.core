@@ -29,6 +29,7 @@
 #include <string_view>
 #include <ostream>
 #include <clocale>
+#include <cwctype>
 #include <locale>
 
 // Algorithms and etc.
