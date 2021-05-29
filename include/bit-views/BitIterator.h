@@ -18,10 +18,10 @@ namespace Internal
 		using self_type			= BitIterator;
 		using size_type			= size_t;
 		using difference_type	= ptrdiff_t;
-        using value_type		= BitAdapter<TBitStorage>;
-        using pointer			= BitAdapter<TBitStorage>*;
-        using reference			= BitAdapter<TBitStorage>&;
-        using iterator_category	= std::random_access_iterator_tag;
+		using value_type		= BitAdapter<TBitStorage>;
+		using pointer			= BitAdapter<TBitStorage>*;
+		using reference			= BitAdapter<TBitStorage>&;
+		using iterator_category	= std::random_access_iterator_tag;
 
 	// Friendship interface.
 	public:
