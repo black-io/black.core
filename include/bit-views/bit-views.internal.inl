@@ -18,7 +18,7 @@ namespace Internal
 	template< typename TBitStorage >
 	BitAdapter<TBitStorage>::BitAdapter( TBitStorage* storage, const size_t bit_index )
 		: m_storage{ storage }
-		, m_bit_mask{ FIRST_BIT_MASK << ValidateBitIndex( bit_index ) }
+		, m_bit_mask( FIRST_BIT_MASK << ValidateBitIndex( bit_index ) )
 	{
 
 	}
