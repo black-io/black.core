@@ -153,7 +153,7 @@ namespace Internal
 
 	// Private state.
 	private:
-		static constexpr const MutableBitStorage FIRST_BIT_MASK = 1;
+		static constexpr MutableBitStorage FIRST_BIT_MASK = 1;
 
 		TBitStorage*		m_storage	= nullptr;	// The storage element containing the bit.
 		MutableBitStorage	m_bit_mask	= 0;		// The bit mask for stored bit.
