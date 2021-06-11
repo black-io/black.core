@@ -21,7 +21,7 @@ namespace Internal
 	{
 		static constexpr size_t	MAX_BITS = Black::GetEnumValue( TEnumeration::MaxBits );
 		static_assert( MAX_BITS > 0, "The maximum number of bits should be above 0." );
-		static_assert( MAX_BITS <= 64, "The maximum number of bits may not be below 64." );
+		static_assert( MAX_BITS <= 64, "The maximum number of bits may not be above 64." );
 
 		// Bit storage type for given enumeration.
 		using Bits = typename Black::BitStorage<Black::GetAlignedSize( MAX_BITS, 8 )>::Bits;
@@ -33,10 +33,11 @@ namespace Internal
 	{
 		static constexpr size_t	MAX_VALUE	= Black::GetEnumValue( TEnumeration::MaxValue );
 		static_assert( MAX_VALUE > 0, "The maximum value should be above 0." );
+		static_assert( MAX_VALUE <= 64, "The maximum number of bits may not be above 64." );
 
-		static constexpr bool	IS_UINT64	= MAX_VALUE > std::numeric_limits<uint32_t>::max();
-		static constexpr bool	IS_UINT32	= MAX_VALUE > std::numeric_limits<uint16_t>::max();
-		static constexpr bool	IS_UINT16	= MAX_VALUE > std::numeric_limits<uint8_t>::max();
+		static constexpr bool	IS_UINT64	= MAX_VALUE > sizeof( uint32_t ) * 8;
+		static constexpr bool	IS_UINT32	= MAX_VALUE > sizeof( uint16_t ) * 8;
+		static constexpr bool	IS_UINT16	= MAX_VALUE > sizeof( uint8_t ) * 8;
 		static constexpr size_t	MAX_BITS	= ( IS_UINT64 )? 64 : ( IS_UINT32 )? 32 : ( IS_UINT16 )? 16 : 8;
 
 		// Bit storage type for given enumeration.
