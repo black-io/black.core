@@ -128,7 +128,7 @@ inline namespace Types
 		ENSURES( m_memory != nullptr );
 
 		CRET( !old_memory || !m_length );
-		Black::CopyMemory( old_memory.get(), m_memory, GetUsedBytes() );
+		Black::CopyMemory( m_memory, old_memory.get(), GetUsedBytes() );
 	}
 
 	template< typename TStoredType >
