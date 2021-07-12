@@ -57,10 +57,10 @@ namespace Internal
 
 	protected:
 		// Empty stub for functional symmetry.
-		virtual void SetHook( const TLinkedType* hook )	{};
+		virtual void SetHook( const TLinkedType* )		{};
 
 		// Empty stub for functional symmetry.
-		virtual void InvalidateIntrusiveLink() {};
+		virtual void InvalidateIntrusiveLink()			{};
 	};
 }
 
