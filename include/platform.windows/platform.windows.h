@@ -22,3 +22,8 @@ inline namespace WindowsDesktop
 }
 }
 }
+
+
+// Common platform-related stuff.
+#include "internal/ComObjectReleaser.h"
+#include "com-pointers.h"
