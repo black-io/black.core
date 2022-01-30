@@ -32,7 +32,7 @@ inline namespace CoreGuidelines
 		inline NotNull( TOther&& other ) : m_pointer( std::forward<TOther>( other ) ) { EXPECTS( m_pointer != nullptr ); };
 
 		template< typename TOther, typename = std::enable_if_t<std::is_convertible_v<TOther, TPointer>> >
-		inline NotNull( const NotNull<TOther>& other ) : m_pointer( other.m_pointer ) { EXPECTS( m_pointer != nullptr ); };
+		inline NotNull( const NotNull<TOther>& other ) : m_pointer( other.Get() ) { EXPECTS( m_pointer != nullptr ); };
 
 
 		inline NotNull& operator = ( const NotNull& )					= default;
