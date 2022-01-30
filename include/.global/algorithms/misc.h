@@ -32,12 +32,12 @@ inline namespace Algorithms
 		@return				The value returned is an `left` operand after the assignation.
 	*/
 	template< typename TValue, typename... TArguments >
-	inline TValue& CopyAndSwap( TValue& left, TArguments... arguments )
+	inline TValue& CopyAndSwap( TValue& left, TArguments&&... arguments )
 	{
 		using std::swap;
 
-		TValue temp{ std::forward<TArguments>( arguments )... };
-		swap( left, temp );
+		TValue vicar{ std::forward<TArguments>( arguments )... };
+		swap( left, vicar );
 
 		return left;
 	}
