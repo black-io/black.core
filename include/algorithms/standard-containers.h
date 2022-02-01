@@ -93,7 +93,8 @@ inline namespace Algorithms
 		@brief	Uniquely insert the item into storage.
 		@param	storage		The storage to add.
 		@param	item		The item to add.
-		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TStoredItem	Type of items stored by storage.
+		@tparam	TNewItem	Type of item to be added uniquely. The type may be only cv-qualified version of `TStoredItem`.
 		@tparam	TAllocator	Allocator used by storage.
 		@tparam	TStorage	Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
 		@return				`true` if item successfully inserted into storage.
@@ -102,10 +103,39 @@ inline namespace Algorithms
 	inline const bool UniqueAdd( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item );
 
 	/**
+		@brief	Uniquely insert the item into presorted storage keeping the it sorted.
+		@param	storage		The storage to add.
+		@param	item		The item to add.
+		@tparam	TStoredItem	Type of items stored by storage.
+		@tparam	TNewItem	Type of item to be added uniquely. The type may be only cv-qualified version of `TStoredItem`.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TStorage	Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` if item successfully inserted into storage.
+	*/
+	template< typename TStoredItem, typename TNewItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool UniqueAddSorted( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item );
+
+	/**
+		@brief	Uniquely insert the item into presorted storage keeping the it sorted.
+		@param	storage		The storage to add.
+		@param	item		The item to add.
+		@param	predicate	Binary predicate that return `true` if left argument is ordered before right.
+		@tparam	TStoredItem	Type of items stored by storage.
+		@tparam	TNewItem	Type of item to be added uniquely. The type may be only cv-qualified version of `TStoredItem`.
+		@tparam	TPredicate	Type of used predicate. Should fit the signature `const bool ( const TStoredItem&, const TNewItem& )`.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TStorage	Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` if item successfully inserted into storage.
+	*/
+	template< typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool UniqueAddSorted( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item, TPredicate&& predicate );
+
+	/**
 		@brief	Uniquely insert the item into storage.
 		@param	storage		The storage to add.
 		@param	item		The item to add.
-		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TStoredItem	Type of items stored by storage.
+		@tparam	TNewItem	Type of item to be added uniquely. The type may be only cv-qualified version of `TStoredItem`.
 		@tparam	TPredicate	Predicate used by storage.
 		@tparam	TAllocator	Allocator used by storage.
 		@return				`true` if item successfully inserted into storage.
@@ -118,7 +148,10 @@ inline namespace Algorithms
 		@param	storage		The storage to add.
 		@param	key			The key for item to add.
 		@param	item		The item to add.
-		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TStoredKey	Type of keys stored by storage.
+		@tparam	TNewKey		Type of key to be added uniquely. The type may be only cv-qualified version of `TStoredKey`.
+		@tparam	TStoredItem	Type of items stored by storage.
+		@tparam	TNewItem	Type of item to be added uniquely. The type may be only cv-qualified version of `TStoredItem`.
 		@tparam	TPredicate	Predicate used by storage.
 		@tparam	TAllocator	Allocator used by storage.
 		@return				`true` if item successfully inserted into storage.
@@ -131,8 +164,10 @@ inline namespace Algorithms
 		@param	storage		The storage to add.
 		@param	key			The key for item to add.
 		@param	item		The item to add.
-		@tparam	TKey		Type of keys used by storage.
-		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TStoredKey	Type of keys stored by storage.
+		@tparam	TNewKey		Type of key to be added uniquely. The type may be only cv-qualified version of `TStoredKey`.
+		@tparam	TStoredItem	Type of items stored by storage.
+		@tparam	TNewItem	Type of item to be added uniquely. The type may be only cv-qualified version of `TStoredItem`.
 		@tparam	THash		Hash used by storage.
 		@tparam	TPredicate	Predicate used by storage.
 		@tparam	TAllocator	Allocator used by storage.
@@ -146,12 +181,43 @@ inline namespace Algorithms
 		@note	Unlike the `UniqueAdd` function, this one will return the positional number of item in storage.
 		@param	storage		The storage to add.
 		@param	item		The item to add.
-		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TStoredItem	Type of items stored in storage.
+		@tparam	TNewItem	Type of item to be added.
 		@tparam	TAllocator	Allocator used by storage.
 		@return				index of item in storage.
 	*/
 	template< typename TStoredItem, typename TNewItem, typename TAllocator >
 	inline const size_t UniqueAddIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item );
+
+	/**
+		@brief	Uniquely insert the item into presorted storage, keeping the storage sorted.
+		Requires the `operator ==` defined between entities of `TStoredItem` and `TNewItem`.
+
+		@note	Unlike the `UniqueAddSorted` function, this one will return the positional number of item in storage.
+		@param	storage		The storage to add.
+		@param	item		The item to add.
+		@tparam	TStoredItem	Type of items stored in storage.
+		@tparam	TNewItem	Type of item to be added.
+		@tparam	TAllocator	Allocator used by storage.
+		@return				index of item in storage.
+	*/
+	template< typename TStoredItem, typename TNewItem, typename TAllocator >
+	inline const size_t UniqueAddSortedIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item );
+
+	/**
+		@brief	Uniquely insert the item into presorted storage, keeping the storage sorted.
+		@note	Unlike the `UniqueAddSorted` function, this one will return the positional number of item in storage.
+		@param	storage		The storage to add.
+		@param	item		The item to add.
+		@param	predicate	The predicate to compare the stored items with new one.
+		@tparam	TStoredItem	Type of items stored in storage.
+		@tparam	TNewItem	Type of item to be added.
+		@tparam	TPredicate	Type of predicate to be used in search.
+		@tparam	TAllocator	Allocator used by storage.
+		@return				index of item in storage.
+	*/
+	template< typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator >
+	inline const size_t UniqueAddSortedIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item, TPredicate&& predicate );
 
 	/**
 		@brief	Removes the single item from storage.

@@ -40,6 +40,33 @@ inline namespace Algorithms
 		return true;
 	}
 
+	template< typename TStoredItem, typename TNewItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool UniqueAddSorted( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item )
+	{
+		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
+		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item );
+		CRET( ( found_slot > std::begin( storage ) ) && !( *( found_slot - 1 ) < item ), false );
+
+		storage.insert( found_slot, std::forward<TNewItem>( item ) );
+		return true;
+	}
+
+	template< typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool UniqueAddSorted( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item, TPredicate&& predicate )
+	{
+		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
+		static_assert(
+			std::is_invocable_r_v<const bool, TPredicate, const std::decay_t<TStoredItem>&, const std::decay_t<TNewItem>&>,
+			"Used predicate should meets the requirement of signature `const bool ( const TStoredItem&, const TNewItem& )`."
+		);
+
+		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item, std::forward<TPredicate>( predicate ) );
+		CRET( ( found_slot > std::begin( storage ) ) && !predicate( *( found_slot - 1 ), item ), false );
+
+		found_slot = storage.insert( found_slot, std::forward<TNewItem>( item ) );
+		return true;
+	}
+
 	template< typename TStoredItem, typename TNewItem, typename TAllocator >
 	inline const size_t UniqueAddIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item )
 	{
@@ -48,6 +75,33 @@ inline namespace Algorithms
 		CRET( found_item != std::end( storage ), std::distance( std::begin( storage ), found_item ) );
 		storage.emplace_back( std::forward<TNewItem>( item ) );
 		return storage.size() - 1;
+	}
+
+	template< typename TStoredItem, typename TNewItem, typename TAllocator >
+	inline const size_t UniqueAddSortedIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item )
+	{
+		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
+		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item );
+		CRET( ( found_slot > std::begin( storage ) ) && !( *( found_slot - 1 ) < item ), std::distance( std::begin( storage ), found_slot ) - 1 );
+
+		found_slot = storage.insert( found_slot, std::forward<TNewItem>( item ) );
+		return std::distance( std::begin( storage ), found_slot );
+	}
+
+	template< typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator >
+	inline const size_t UniqueAddSortedIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item, TPredicate&& predicate )
+	{
+		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
+		static_assert(
+			std::is_invocable_r_v<const bool, TPredicate, const std::decay_t<TStoredItem>&, const std::decay_t<TNewItem>&>,
+			"Used predicate should meets the requirement of signature `const bool ( const TStoredItem&, const TNewItem& )`."
+		);
+
+		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item, std::forward<TPredicate>( predicate ) );
+		CRET( ( found_slot > std::begin( storage ) ) && !predicate( *( found_slot - 1 ), item ), std::distance( std::begin( storage ), found_slot ) - 1 );
+
+		found_slot = storage.insert( found_slot, std::forward<TNewItem>( item ) );
+		return std::distance( std::begin( storage ), found_slot );
 	}
 
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
