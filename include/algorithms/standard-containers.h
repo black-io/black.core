@@ -103,7 +103,7 @@ inline namespace Algorithms
 	inline const bool UniqueAdd( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item );
 
 	/**
-		@brief	Uniquely insert the item into presorted storage keeping the it sorted.
+		@brief	Uniquely insert the item into presorted storage keeping the storage sorted.
 		@param	storage		The storage to add.
 		@param	item		The item to add.
 		@tparam	TStoredItem	Type of items stored by storage.
@@ -116,7 +116,7 @@ inline namespace Algorithms
 	inline const bool UniqueAddSorted( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item );
 
 	/**
-		@brief	Uniquely insert the item into presorted storage keeping the it sorted.
+		@brief	Uniquely insert the item into presorted storage keeping the storage sorted.
 		@param	storage		The storage to add.
 		@param	item		The item to add.
 		@param	predicate	Binary predicate that return `true` if left argument is ordered before right.
