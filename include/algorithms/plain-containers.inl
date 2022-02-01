@@ -45,7 +45,7 @@ inline namespace Algorithms
 	{
 		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
 		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item );
-		CRET( ( found_slot > std::begin( storage ) ) && !( *( found_slot - 1 ) < item ), false );
+		CRET( ( found_slot > std::begin( storage ) ) && !( *std::prev( found_slot ) < item ), false );
 
 		storage.insert( found_slot, std::forward<TNewItem>( item ) );
 		return true;
@@ -61,7 +61,7 @@ inline namespace Algorithms
 		);
 
 		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item, std::forward<TPredicate>( predicate ) );
-		CRET( ( found_slot > std::begin( storage ) ) && !predicate( *( found_slot - 1 ), item ), false );
+		CRET( ( found_slot > std::begin( storage ) ) && !predicate( *std::prev( found_slot ), item ), false );
 
 		found_slot = storage.insert( found_slot, std::forward<TNewItem>( item ) );
 		return true;
@@ -82,7 +82,7 @@ inline namespace Algorithms
 	{
 		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
 		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item );
-		CRET( ( found_slot > std::begin( storage ) ) && !( *( found_slot - 1 ) < item ), std::distance( std::begin( storage ), found_slot ) - 1 );
+		CRET( ( found_slot > std::begin( storage ) ) && !( *std::prev( found_slot ) < item ), std::distance( std::begin( storage ), found_slot ) - 1 );
 
 		found_slot = storage.insert( found_slot, std::forward<TNewItem>( item ) );
 		return std::distance( std::begin( storage ), found_slot );
@@ -98,7 +98,7 @@ inline namespace Algorithms
 		);
 
 		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item, std::forward<TPredicate>( predicate ) );
-		CRET( ( found_slot > std::begin( storage ) ) && !predicate( *( found_slot - 1 ), item ), std::distance( std::begin( storage ), found_slot ) - 1 );
+		CRET( ( found_slot > std::begin( storage ) ) && !predicate( *std::prev( found_slot ), item ), std::distance( std::begin( storage ), found_slot ) - 1 );
 
 		found_slot = storage.insert( found_slot, std::forward<TNewItem>( item ) );
 		return std::distance( std::begin( storage ), found_slot );
