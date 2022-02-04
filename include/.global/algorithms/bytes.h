@@ -25,12 +25,21 @@ inline namespace Algorithms
 	}
 
 	/**
+		@brief	Packs 2 bytes into single 2-byte value.
+		The value returned will be formed in endianness given through the template argument `ENDIANNESS`.
+		@tparam	ENDIANNESS	The requested endianness.
+		@return				Returns endian-dependent 4-byte unsigned integer value.
+	*/
+	template< Black::PlatformEndianness ENDIANNESS = Black::BUILD_ENDIANNESS >
+	inline uint16_t GetPackedBytes( const uint8_t b1, const uint8_t b2 );
+
+	/**
 		@brief	Packs 4 bytes into single 4-byte value.
 		The value returned will be formed in endianness given through the template argument `ENDIANNESS`.
 		@tparam	ENDIANNESS	The requested endianness.
 		@return				Returns endian-dependent 4-byte unsigned integer value.
 	*/
-	template< Black::PlatformEndianness ENDIANNESS = BUILD_ENDIANNESS >
+	template< Black::PlatformEndianness ENDIANNESS = Black::BUILD_ENDIANNESS >
 	inline uint32_t GetPackedBytes( const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4 );
 
 	/**
@@ -39,7 +48,7 @@ inline namespace Algorithms
 		@tparam	ENDIANNESS	The requested endianness.
 		@return				Returns endian-dependent 4-byte unsigned integer value.
 	*/
-	template< Black::PlatformEndianness ENDIANNESS = BUILD_ENDIANNESS >
+	template< Black::PlatformEndianness ENDIANNESS = Black::BUILD_ENDIANNESS >
 	inline uint64_t GetPackedBytes(
 		const uint8_t b1, const uint8_t b2, const uint8_t b3, const uint8_t b4,
 		const uint8_t b5, const uint8_t b6, const uint8_t b7, const uint8_t b8
