@@ -52,7 +52,7 @@ inline namespace Algorithms
 	}
 
 	template< typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator, template< typename, typename > class TStorage >
-	inline const bool UniqueAddSorted( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item, TPredicate&& predicate )
+	inline const bool UniqueAddSorted( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item, const TPredicate& predicate )
 	{
 		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
 		static_assert(
@@ -60,7 +60,7 @@ inline namespace Algorithms
 			"Used predicate should meets the requirement of signature `const bool ( const TStoredItem&, const TNewItem& )`."
 		);
 
-		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item, std::forward<TPredicate>( predicate ) );
+		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item, predicate );
 		CRET( ( found_slot > std::begin( storage ) ) && !predicate( *std::prev( found_slot ), item ), false );
 
 		found_slot = storage.insert( found_slot, std::forward<TNewItem>( item ) );
@@ -89,7 +89,7 @@ inline namespace Algorithms
 	}
 
 	template< typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator >
-	inline const size_t UniqueAddSortedIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item, TPredicate&& predicate )
+	inline const size_t UniqueAddSortedIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item, const TPredicate& predicate )
 	{
 		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
 		static_assert(
@@ -97,7 +97,7 @@ inline namespace Algorithms
 			"Used predicate should meets the requirement of signature `const bool ( const TStoredItem&, const TNewItem& )`."
 		);
 
-		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item, std::forward<TPredicate>( predicate ) );
+		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item, predicate );
 		CRET( ( found_slot > std::begin( storage ) ) && !predicate( *std::prev( found_slot ), item ), std::distance( std::begin( storage ), found_slot ) - 1 );
 
 		found_slot = storage.insert( found_slot, std::forward<TNewItem>( item ) );
@@ -111,6 +111,30 @@ inline namespace Algorithms
 		auto found_item = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_item == std::end( storage ), false );
 		storage.erase( found_item );
+		return true;
+	}
+
+	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool RemoveItemSorted( TStorage<TItem, TAllocator>& storage, const TItem& item )
+	{
+		CRET( storage.empty(), false );
+		auto found_candidate = std::lower_bound( std::begin( storage ), std::end( storage ), item );
+		CRET( found_candidate == std::end( storage ), false );
+		CRET( ( item < *found_candidate ), false );
+
+		storage.erase( found_candidate );
+		return true;
+	}
+
+	template< typename TItem, typename TPredicate, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool RemoveItemSorted( TStorage<TItem, TAllocator>& storage, const TItem& item, const TPredicate& predicate )
+	{
+		CRET( storage.empty(), false );
+		auto found_candidate = std::lower_bound( std::begin( storage ), std::end( storage ), item, predicate );
+		CRET( found_candidate == std::end( storage ), false );
+		CRET( predicate( item, *found_candidate ), false );
+
+		storage.erase( found_candidate );
 		return true;
 	}
 

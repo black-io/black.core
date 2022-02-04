@@ -128,7 +128,7 @@ inline namespace Algorithms
 		@return				`true` if item successfully inserted into storage.
 	*/
 	template< typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator, template< typename, typename > class TStorage >
-	inline const bool UniqueAddSorted( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item, TPredicate&& predicate );
+	inline const bool UniqueAddSorted( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item, const TPredicate& predicate );
 
 	/**
 		@brief	Uniquely insert the item into storage.
@@ -217,7 +217,7 @@ inline namespace Algorithms
 		@return				index of item in storage.
 	*/
 	template< typename TStoredItem, typename TNewItem, typename TPredicate, typename TAllocator >
-	inline const size_t UniqueAddSortedIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item, TPredicate&& predicate );
+	inline const size_t UniqueAddSortedIndexed( std::vector<TStoredItem, TAllocator>& storage, TNewItem&& item, const TPredicate& predicate );
 
 	/**
 		@brief	Removes the single item from storage.
@@ -230,6 +230,32 @@ inline namespace Algorithms
 	*/
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
 	inline const bool RemoveItem( TStorage<TItem, TAllocator>& storage, const TItem& item );
+
+	/**
+		@brief	Removes the single item from presorted storage, keeping the storage sorted.
+		@param	storage		The storage to remove.
+		@param	item		The item to remove.
+		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TStorage	Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` if item was removed.
+	*/
+	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool RemoveItemSorted( TStorage<TItem, TAllocator>& storage, const TItem& item );
+
+	/**
+		@brief	Removes the single item from presorted storage, keeping the storage sorted.
+		@param	storage		The storage to remove.
+		@param	item		The item to remove.
+		@param	predicate	The predicate to search the `item` in storage.
+		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TPredicate	Type of predicate for searching the `item`.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TStorage	Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` if item was removed.
+	*/
+	template< typename TItem, typename TPredicate, typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool RemoveItemSorted( TStorage<TItem, TAllocator>& storage, const TItem& item, const TPredicate& predicate );
 
 	/**
 		@brief	Removes the single item from storage.
