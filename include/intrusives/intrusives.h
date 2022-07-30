@@ -31,5 +31,6 @@ namespace Internal
 #include "internal/DoublyLinkedList.h"
 
 // Intrusive containers.
+#include "aliases.h"
 
 // Deferred implementations.
