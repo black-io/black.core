@@ -44,15 +44,19 @@ namespace Internal
 		const bool IsEnd() const;
 
 
+		// Get the current slot. Expects that the slot is valid.
+		DoublyLinkedListSlot& GetSlot() const;
+
 		// Get the current slot.
-		inline DoublyLinkedListSlot* GetCurrentSlot() const	{ return m_current_slot; };
+		inline DoublyLinkedListSlot* QuerySlot() const		{ return m_slot; };
 
 
-		inline DoublyLinkedListSlot* operator -> () const	{ return m_current_slot; };
+		inline DoublyLinkedListSlot& operator * () const	{ return GetSlot(); };
+		inline DoublyLinkedListSlot* operator -> () const	{ return &GetSlot(); };
 
 	// Private state.
 	private:
-		DoublyLinkedListSlot* m_current_slot = nullptr; // Currently observed slot in list.
+		DoublyLinkedListSlot* m_slot = nullptr; // Currently observed slot in list.
 	};
 }
 }
