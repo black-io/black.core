@@ -44,10 +44,21 @@ namespace Internal
 		// Whether the slot is attached to list.
 		inline const bool IsAttached() const				{ return m_host != nullptr; };
 
+	// Private lifetime management.
+	private:
+		explicit SinglyLinkedListSlot( SinglyLinkedList& host );
+
 	// Private interface.
 	private:
+		// Reset the state of slot.
+		void Reset();
+
 		// Perform the detaching from host list.
 		void Detach();
+
+
+		// Whether the slot implies the end of list.
+		const bool IsEndSlot() const;
 
 	// Private state.
 	private:
