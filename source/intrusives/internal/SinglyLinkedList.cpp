@@ -17,14 +17,30 @@ namespace
 
 
 	SinglyLinkedList::SinglyLinkedList( SinglyLinkedList&& other ) noexcept
-		: m_head{ std::exchange( other.m_head, nullptr ) }
-		, m_tail{ std::exchange( other.m_tail, nullptr ) }
+		: m_head{ std::exchange( other.m_head, &other.m_end ) }
 		, m_size{ std::exchange( other.m_size, 0 ) }
 	{
-		for( Slot* slot = m_head; slot != nullptr; slot = slot->m_next )
+		EXPECTS_DEBUG( m_head != nullptr );
+		if( m_head == &other.m_end )
 		{
-			slot->m_host = this;
+			// Empty list moved.
+			m_head = &m_end;
+			return;
 		}
+
+		Slot* tail = m_head;
+
+		// Update the link to hosted list for each slot.
+		for( Slot* slot = m_head; slot != &other.m_end; slot = slot->m_next )
+		{
+			ENSURES_DEBUG( slot != nullptr );
+			slot->m_host = this;
+
+			tail = slot;
+		}
+
+		// Update the tail slot to link with new end slot.
+		tail->m_next = &m_end;
 	}
 
 	SinglyLinkedList::~SinglyLinkedList() noexcept
@@ -45,11 +61,13 @@ namespace
 	{
 		CRET( IsEmpty() );
 
-		while( m_head != nullptr )
+		EXPECTS_DEBUG( m_head != nullptr );
+		while( !IsEmpty() )
 		{
-			Slot* slot		= std::exchange( m_head, m_head->m_next );
-			slot->m_host	= nullptr;
-			slot->m_next	= nullptr;
+			Slot* slot = std::exchange( m_head, m_head->m_next );
+			EXPECTS_DEBUG( m_head != nullptr );
+
+			slot->Reset();
 		}
 
 		m_size = 0;
@@ -59,13 +77,8 @@ namespace
 	{
 		slot.Detach();
 
-		slot.m_next	= std::exchange( m_head, &slot );
 		slot.m_host	= this;
-		if( m_tail == nullptr )
-		{
-			m_tail = m_head;
-			ENSURES_DEBUG( m_tail->m_next == nullptr );
-		}
+		slot.m_next	= std::exchange( m_head, &slot );
 
 		++m_size;
 	}
@@ -74,105 +87,40 @@ namespace
 	{
 		EXPECTS( !IsEmpty() );
 
-		Slot* slot		= std::exchange( m_head, m_head->m_next );
-		slot->m_host	= nullptr;
-		slot->m_next	= nullptr;
-
-		EXPECTS_DEBUG( m_size > 0 );
-		--m_size;
-
-		if( m_head == nullptr )
-		{
-			m_tail = nullptr;
-		}
-	}
-
-	void SinglyLinkedList::PushBack( Slot& slot )
-	{
-		if( m_tail == nullptr )
-		{
-			PushFront( slot );
-			return;
-		}
-
-		slot.Detach();
-
-		m_tail->m_next	= &slot;
-		m_tail			= &slot;
-		slot.m_host		= this;
-
-		++m_size;
-
-		ENSURES_DEBUG( m_tail->m_next == nullptr );
-	}
-
-	void SinglyLinkedList::PopBack()
-	{
-		if( m_head == m_tail )
-		{
-			PopFront();
-			return;
-		}
-
-		Iterator pre_tail{ FindPositionBefore( Iterator{ m_tail } ) };
-
-		pre_tail->m_next	= nullptr;
-		Slot* slot			= std::exchange( m_tail, pre_tail.GetCurrentSlot() );
-		slot->m_host		= nullptr;
-		slot->m_next		= nullptr;
+		Slot* slot = std::exchange( m_head, m_head->m_next );
+		slot->Reset();
 
 		EXPECTS_DEBUG( m_size > 0 );
 		--m_size;
 	}
 
-	void SinglyLinkedList::InsertBefore( Iterator position, Slot& slot )
+	void SinglyLinkedList::InsertAfter( Iterator position, Slot& slot )
 	{
-		if( position.GetCurrentSlot() == m_head )
-		{
-			EXPECTS_DEBUG( position->m_host == this );
-
-			PushFront( slot );
-			return;
-		}
-
-		if( !position.IsValid() )
-		{
-			PushBack( slot );
-			return;
-		}
-
-		Iterator pre_position{ FindPositionBefore( position ) };
-
-		slot.Detach();
-
-		slot.m_next	= std::exchange( pre_position->m_next, &slot );
-		slot.m_host	= this;
-
-		++m_size;
-	}
-
-	void SinglyLinkedList::Erase( Iterator position )
-	{
-		EXPECTS( position.IsValid() );
 		EXPECTS_DEBUG( !IsEmpty() );
+		EXPECTS_DEBUG( position.IsValid() );
 		EXPECTS_DEBUG( position->m_host == this );
 
-		if( position.GetCurrentSlot() == m_head )
-		{
-			PopFront();
-			return;
-		}
+		slot.Detach();
 
-		if( position.GetCurrentSlot() == m_tail )
-		{
-			PopBack();
-			return;
-		}
+		Slot* const slot_before = position.QuerySlot();
 
-		Iterator pre_position{ FindPositionBefore( position ) };
+		slot.m_host	= this;
+		slot.m_next	= std::exchange( slot_before->m_next, &slot );
 
-		pre_position->m_next	= std::exchange( position->m_next, nullptr );
-		position->m_host		= nullptr;
+		++m_size;
+	}
+
+	void SinglyLinkedList::EraseAfter( Iterator position )
+	{
+		EXPECTS_DEBUG( !IsEmpty() );
+		EXPECTS_DEBUG( position.IsValid() );
+		EXPECTS_DEBUG( position->m_host == this );
+
+		Slot* const slot	= position->m_next;
+		ENSURES_DEBUG( !slot->IsEndSlot() );
+
+		position->m_next	= slot->m_next;
+		slot->Reset();
 
 		EXPECTS_DEBUG( m_size > 0 );
 		--m_size;
@@ -184,28 +132,39 @@ namespace
 		return *m_head;
 	}
 
-	SinglyLinkedList::Slot& SinglyLinkedList::GetBackSlot() const
+	void SinglyLinkedList::InsertInstead( Slot& old_slot, Slot& new_slot )
 	{
-		EXPECTS_DEBUG( m_tail != nullptr );
-		return *m_tail;
+		Slot* const slot_after	= old_slot.m_next;
+		Slot& slot_before		= FindSlotBefore( old_slot );
+		slot_before.m_next		= &new_slot;
+		old_slot.Reset();
+
+		new_slot.m_host		= this;
+		new_slot.m_next		= slot_after;
 	}
 
-	SinglyLinkedList::Iterator SinglyLinkedList::FindPositionBefore( Iterator position ) const
+	void SinglyLinkedList::Erase( Slot& slot )
 	{
-		EXPECTS( position.IsValid() );
-		EXPECTS_DEBUG( position->m_host == this );
-		EXPECTS_DEBUG( !IsEmpty() );
+		Slot& slot_before	= FindSlotBefore( slot );
+		slot_before.m_next	= slot.m_next;
 
-		EXPECTS_DEBUG( position.GetCurrentSlot() != m_head );
+		slot.Reset();
 
-		Iterator pre_position{ GetBegin() };
-		while( pre_position.IsValid() && ( pre_position->m_next != position.GetCurrentSlot() ) )
+		EXPECTS_DEBUG( m_size > 0 );
+		--m_size;
+	}
+
+	SinglyLinkedList::Slot& SinglyLinkedList::FindSlotBefore( Slot& slot ) const
+	{
+		EXPECTS_DEBUG( !slot.IsEndSlot() );
+
+		Iterator preceder{ GetBegin() };
+		while( preceder->m_next != &slot )
 		{
-			pre_position.ShiftNext();
+			preceder.ShiftNext();
 		}
 
-		ENSURES_DEBUG( pre_position.IsValid() );
-		return pre_position;
+		return *preceder;
 	}
 }
 }

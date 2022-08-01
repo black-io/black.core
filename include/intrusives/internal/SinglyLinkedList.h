@@ -49,30 +49,21 @@ namespace Internal
 		// Remove the current head slot from list. Expects that list is not empty.
 		void PopFront();
 
-		// Add the slot as new tail. Previous link of slot will be resolved safely.
-		void PushBack( Slot& slot );
+		// Insert the slot after the given iterator. Expects the iterator is valid. Previous link of slot will be resolved safely.
+		void InsertAfter( Iterator position, Slot& slot );
 
-		// Remove the current tail from list. Expects that list is not empty.
-		void PopBack();
-
-		// Insert the slot before the given iterator. Expects the iterator is valid. Previous link of slot will be resolved safely.
-		void InsertBefore( Iterator position, Slot& slot );
-
-		// Erase the slot by given iterator. Expects the iterator is valid.
-		void Erase( Iterator position );
+		// Erase the slot after given iterator. Expects the iterator is valid.
+		void EraseAfter( Iterator position );
 
 
 		// Get the slot at the head of list. Expects that list is not empty.
 		Slot& GetFrontSlot() const;
 
-		// Get the slot at the tail of list. Expects that list is not empty.
-		Slot& GetBackSlot() const;
-
 		// Get the iterator to beginning of list. May return invalid iterator.
 		inline Iterator GetBegin() const		{ return Iterator{ m_head }; };
 
 		// Get the iterator to ending of list. Always return invalid iterator.
-		inline Iterator GetEnd() const			{ return {}; };
+		inline Iterator GetEnd() const			{ return Iterator{ &m_end }; };
 
 
 		// Get the size of list.
@@ -80,18 +71,28 @@ namespace Internal
 
 
 		// Whether the list is empty or not.
-		inline const bool IsEmpty() const		{ return m_head == nullptr; };
+		inline const bool IsEmpty() const		{ return m_head == &m_end; };
 
 	// Private interface.
 	private:
-		// Find the position that precedes the given one.
-		Iterator FindPositionBefore( Iterator position ) const;
+		// Insert the new slot instead of given old.
+		void InsertInstead( Slot& old_slot, Slot& new_slot );
+
+		// Erase the slot from list.
+		void Erase( Slot& slot );
+
+
+		// Find the slot that precedes the given one.
+		Slot& FindSlotBefore( Slot& slot ) const;
 
 	// Private state.
 	private:
-		SinglyLinkedListSlot*	m_head	= nullptr;	// The first hosted slot.
-		SinglyLinkedListSlot*	m_tail	= nullptr;	// The last hosted slot.
-		size_t					m_size	= 0;		// Count of hosted slots.
+		SinglyLinkedListSlot*	m_head	= &m_end;		// The first hosted slot.
+		size_t					m_size	= 0;			// Count of hosted slots.
+
+	// Private non-state.
+	private:
+		mutable SinglyLinkedListSlot	m_end{ *this };	// The end of list.
 	};
 }
 }
