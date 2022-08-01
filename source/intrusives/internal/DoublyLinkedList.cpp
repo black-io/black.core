@@ -19,27 +19,26 @@ namespace
 	DoublyLinkedList::DoublyLinkedList( DoublyLinkedList&& other ) noexcept
 		: m_head{ std::exchange( other.m_head, &other.m_end ) }
 		, m_size{ std::exchange( other.m_size, 0 ) }
-		, m_end{ std::move( other.m_end ) }
 	{
 		EXPECTS_DEBUG( m_head != nullptr );
 		if( m_head == &other.m_end )
 		{
 			// Empty list moved.
 			m_head = &m_end;
-			ENSURES_DEBUG( m_end.m_previous == nullptr );
+			return;
 		}
-		else
-		{
-			// Update the tail slot to link with new end slot.
-			m_end.m_previous->m_next = &m_end;
-		}
-		ENSURES_DEBUG( m_end.m_next == nullptr );
+
+		Slot* const tail = std::exchange( other.m_end.m_previous, nullptr );
 
 		// Update the link to hosted list for each slot.
-		for( Slot* slot = m_head; slot != nullptr; slot = slot->m_next )
+		for( Slot* slot = m_head; slot != &other.m_end; slot = slot->m_next )
 		{
+			ENSURES_DEBUG( slot != nullptr );
 			slot->m_host = this;
 		}
+
+		// Update the tail slot to link with new end slot.
+		tail->m_next = &m_end;
 	}
 
 	DoublyLinkedList::~DoublyLinkedList() noexcept
@@ -66,13 +65,11 @@ namespace
 			Slot* slot = std::exchange( m_head, m_head->m_next );
 			EXPECTS_DEBUG( m_head != nullptr );
 
-			m_head->m_previous	= nullptr;
-			slot->m_host		= nullptr;
-			slot->m_next		= nullptr;
-			ENSURES_DEBUG( slot->m_previous == nullptr );
+			slot->Reset();
 		}
 
-		m_size = 0;
+		m_end.m_previous	= nullptr;
+		m_size				= 0;
 	}
 
 	void DoublyLinkedList::PushFront( Slot& slot )
@@ -80,9 +77,9 @@ namespace
 		slot.Detach();
 		ENSURES_DEBUG( slot.m_previous == nullptr );
 
-		slot.m_host				= this;
-		slot.m_next				= std::exchange( m_head, &slot );
-		slot.m_next->m_previous	= &slot;
+		m_head->m_previous	= &slot;
+		slot.m_host			= this;
+		slot.m_next			= std::exchange( m_head, &slot );
 
 		++m_size;
 	}
@@ -93,9 +90,8 @@ namespace
 
 		Slot* slot = std::exchange( m_head, m_head->m_next );
 
-		slot->m_host		= nullptr;
-		slot->m_next		= nullptr;
-		m_head->m_previous	= nullptr;
+		m_head->m_previous = nullptr;
+		slot->Reset();
 
 		EXPECTS_DEBUG( m_size > 0 );
 		--m_size;
@@ -131,18 +127,18 @@ namespace
 			return;
 		}
 
-		Slot* tail					= m_end.m_previous;
-		tail->m_previous->m_next	= tail->m_next;
-		tail->m_next->m_previous	= tail->m_previous;
-		tail->m_host				= nullptr;
-		tail->m_previous			= nullptr;
-		tail->m_next				= nullptr;
+		Slot* const tail		= m_end.m_previous;
+		Slot* const new_tail	= tail->m_previous;
+		tail->Reset();
+
+		m_end.m_previous		= new_tail;
+		new_tail->m_next		= &m_end;
 
 		EXPECTS_DEBUG( m_size > 0 );
 		--m_size;
 	}
 
-	void DoublyLinkedList::InsertBefore( Iterator position, Slot& slot )
+	void DoublyLinkedList::Insert( Iterator position, Slot& slot )
 	{
 		if( position.IsEnd() )
 		{
@@ -150,10 +146,11 @@ namespace
 			return;
 		}
 
+		EXPECTS_DEBUG( !IsEmpty() );
 		EXPECTS_DEBUG( position.IsValid() );
 		EXPECTS_DEBUG( position->m_host == this );
 
-		if( position.GetCurrentSlot() == m_head )
+		if( position.QuerySlot() == m_head )
 		{
 			PushFront( slot );
 			return;
@@ -161,39 +158,29 @@ namespace
 
 		slot.Detach();
 
-		Slot* pre_position		= position->m_previous;
-		pre_position->m_next	= &slot;
-		slot.m_previous			= pre_position;
-		slot.m_host				= this;
-		slot.m_next				= position.GetCurrentSlot();
-		position->m_previous	= &slot;
+		Slot* const slot_after	= position.QuerySlot();
+		Slot* const slot_before	= position->m_previous;
+
+		slot.m_host					= this;
+		slot.m_previous				= std::exchange( slot_after->m_previous, &slot );
+		slot.m_next					= std::exchange( slot_before->m_next, &slot );
 
 		++m_size;
 	}
 
 	void DoublyLinkedList::Erase( Iterator position )
 	{
-		EXPECTS_DEBUG( position.IsValid() );
 		EXPECTS_DEBUG( !IsEmpty() );
+		EXPECTS_DEBUG( position.IsValid() );
 		EXPECTS_DEBUG( position->m_host == this );
 
-		if( position.GetCurrentSlot() == m_end.m_previous )
-		{
-			PopBack();
-			return;
-		}
-
-		if( position.GetCurrentSlot() == m_head )
+		if( position.QuerySlot() == m_head )
 		{
 			PopFront();
 			return;
 		}
 
-		position->m_previous->m_next	= position->m_next;
-		position->m_next->m_previous	= position->m_previous;
-		position->m_host				= nullptr;
-		position->m_previous			= nullptr;
-		position->m_next				= nullptr;
+		Erase( *position );
 
 		EXPECTS_DEBUG( m_size > 0 );
 		--m_size;
@@ -209,6 +196,29 @@ namespace
 	{
 		EXPECTS_DEBUG( !IsEmpty() );
 		return *m_end.m_previous;
+	}
+
+	void DoublyLinkedList::InsertInstead( Slot& old_slot, Slot& new_slot )
+	{
+		Slot* const slot_before	= old_slot.m_previous;
+		Slot* const slot_after	= old_slot.m_next;
+		slot_before->m_next		= &new_slot;
+		slot_after->m_previous	= &new_slot;
+		old_slot.Reset();
+
+		new_slot.m_host			= this;
+		new_slot.m_previous		= slot_before;
+		new_slot.m_next			= slot_after;
+	}
+
+	void DoublyLinkedList::Erase( Slot& slot )
+	{
+		Slot* const slot_after	= slot.m_next;
+		Slot* const slot_before	= slot.m_previous;
+		slot.Reset();
+
+		slot_before->m_next		= slot_after;
+		slot_after->m_previous	= slot_before;
 	}
 }
 }

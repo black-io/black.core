@@ -56,7 +56,7 @@ namespace Internal
 		void PopBack();
 
 		// Insert the slot before the given iterator. Expects the iterator is valid. Previous link of slot will be resolved safely.
-		void InsertBefore( Iterator position, Slot& slot );
+		void Insert( Iterator position, Slot& slot );
 
 		// Erase the slot by given iterator. Expects the iterator is valid.
 		void Erase( Iterator position );
@@ -81,6 +81,14 @@ namespace Internal
 
 		// Whether the list is empty or not.
 		inline const bool IsEmpty() const		{ return m_head == &m_end; };
+
+	// Private interface.
+	private:
+		// Insert the new slot instead of given old.
+		void InsertInstead( Slot& old_slot, Slot& new_slot );
+
+		// Erase the slot from list.
+		void Erase( Slot& slot );
 
 	// Private state.
 	private:
