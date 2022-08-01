@@ -18,9 +18,10 @@ namespace
 
 	DoublyLinkedListSlot::DoublyLinkedListSlot( DoublyLinkedListSlot&& other ) noexcept
 	{
-		CRET( other.IsEndSlot() || !other.IsAttached() );
-		other.m_host->InsertBefore( DoublyLinkedListIterator{ &other }, *this );
-		other.Detach();
+		EXPECTS_DEBUG( !other.IsEndSlot() );
+
+		CRET( !other.IsAttached() );
+		other.m_host->InsertInstead( other, *this );
 	}
 
 	DoublyLinkedListSlot::~DoublyLinkedListSlot() noexcept
@@ -30,11 +31,12 @@ namespace
 
 	DoublyLinkedListSlot& DoublyLinkedListSlot::operator=( DoublyLinkedListSlot&& other ) noexcept
 	{
+		EXPECTS_DEBUG( !other.IsEndSlot() );
+
 		Detach();
 
 		CRET( !other.IsAttached(), *this );
-		other.m_host->InsertBefore( DoublyLinkedListIterator{ &other }, *this );
-		other.Detach();
+		other.m_host->InsertInstead( other, *this );
 
 		return *this;
 	}
@@ -44,20 +46,26 @@ namespace
 	{
 	}
 
+	void DoublyLinkedListSlot::Reset()
+	{
+		m_host		= nullptr;
+		m_previous	= nullptr;
+		m_next		= nullptr;
+	}
+
 	void DoublyLinkedListSlot::Detach()
 	{
 		CRET( IsEndSlot() || !IsAttached() );
-		m_host->Erase( DoublyLinkedListIterator{ this } );
+		m_host->Erase( *this );
 		ENSURES_DEBUG( m_host == nullptr );
 		ENSURES_DEBUG( m_previous == nullptr );
 		ENSURES_DEBUG( m_next == nullptr );
 	}
 
-	const bool DoublyLinkedListSlot::IsEndSlot() const
+	inline const bool DoublyLinkedListSlot::IsEndSlot() const
 	{
-		CRET( !IsAttached(), false );
-		return this == &m_host->m_end;
-	}
+		return ( m_host != nullptr ) && ( this == &m_host->m_end );
+	};
 }
 }
 }

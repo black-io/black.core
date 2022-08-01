@@ -50,6 +50,9 @@ namespace Internal
 
 	// Private interface.
 	private:
+		// Reset the state of slot.
+		void Reset();
+
 		// Perform the detaching from host list.
 		void Detach();
 
