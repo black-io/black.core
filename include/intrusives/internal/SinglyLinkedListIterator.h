@@ -30,23 +30,30 @@ namespace Internal
 
 	// Public interface.
 	public:
-		// Shift the iterator to next slot in list.
+		// Shift the iterator to next slot in list. Expects that the slot is valid.
 		void ShiftNext();
 
 
-		// Get the current slot.
-		inline SinglyLinkedListSlot* GetCurrentSlot() const	{ return m_current_slot; };
-
-
 		// Whether the iterator still valid.
-		inline const bool IsValid() const					{ return m_current_slot != nullptr; };
+		const bool IsValid() const;
+
+		// Whether the iterator points to end of list.
+		const bool IsEnd() const;
 
 
-		inline SinglyLinkedListSlot* operator -> () const	{ return m_current_slot; };
+		// Get the current slot. Expects that the slot is valid.
+		SinglyLinkedListSlot& GetSlot() const;
+
+		// Get the current slot.
+		inline SinglyLinkedListSlot* QuerySlot() const		{ return m_slot; };
+
+
+		inline SinglyLinkedListSlot& operator * () const	{ return GetSlot(); };
+		inline SinglyLinkedListSlot* operator -> () const	{ return &GetSlot(); };
 
 	// Private state.
 	private:
-		SinglyLinkedListSlot* m_current_slot = nullptr; // Currently observed slot in list.
+		SinglyLinkedListSlot* m_slot = nullptr; // Currently observed slot in list.
 	};
 }
 }

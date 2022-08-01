@@ -17,25 +17,41 @@ namespace
 
 
 	SinglyLinkedListIterator::SinglyLinkedListIterator( SinglyLinkedListIterator&& other ) noexcept
-		: m_current_slot{ std::exchange( other.m_current_slot, nullptr ) }
+		: m_slot{ std::exchange( other.m_slot, nullptr ) }
 	{
 	}
 
 	SinglyLinkedListIterator::SinglyLinkedListIterator( SinglyLinkedListSlot* slot ) noexcept
-		: m_current_slot{ slot }
+		: m_slot{ slot }
 	{
 	}
 
 	SinglyLinkedListIterator& SinglyLinkedListIterator::operator=( SinglyLinkedListIterator&& other ) noexcept
 	{
-		m_current_slot = std::exchange( other.m_current_slot, nullptr );
+		m_slot = std::exchange( other.m_slot, nullptr );
 		return *this;
 	}
 
 	void SinglyLinkedListIterator::ShiftNext()
 	{
 		EXPECTS_DEBUG( IsValid() );
-		m_current_slot = m_current_slot->m_next;
+		m_slot = m_slot->m_next;
+	}
+
+	const bool SinglyLinkedListIterator::IsValid() const
+	{
+		return ( m_slot != nullptr ) && !m_slot->IsEndSlot();
+	}
+
+	const bool SinglyLinkedListIterator::IsEnd() const
+	{
+		return ( m_slot != nullptr ) && m_slot->IsEndSlot();
+	}
+
+	SinglyLinkedListSlot& SinglyLinkedListIterator::GetSlot() const
+	{
+		EXPECTS_DEBUG( IsValid() );
+		return *m_slot;
 	}
 }
 }
