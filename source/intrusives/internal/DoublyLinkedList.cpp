@@ -202,23 +202,44 @@ namespace
 	{
 		Slot* const slot_before	= old_slot.m_previous;
 		Slot* const slot_after	= old_slot.m_next;
-		slot_before->m_next		= &new_slot;
-		slot_after->m_previous	= &new_slot;
-		old_slot.Reset();
 
 		new_slot.m_host			= this;
 		new_slot.m_previous		= slot_before;
 		new_slot.m_next			= slot_after;
+		slot_after->m_previous	= &new_slot;
+
+		if( &old_slot == m_head )
+		{
+			m_head = &new_slot;
+		}
+		else
+		{
+			slot_before->m_next = &new_slot;
+		}
+
+		old_slot.Reset();
 	}
 
 	void DoublyLinkedList::Erase( Slot& slot )
 	{
-		Slot* const slot_after	= slot.m_next;
 		Slot* const slot_before	= slot.m_previous;
+		Slot* const slot_after	= slot.m_next;
+
+		slot_after->m_previous = slot_before;
+
+		if( &slot == m_head )
+		{
+			m_head = slot_after;
+		}
+		else
+		{
+			slot_before->m_next = slot_after;
+		}
+
 		slot.Reset();
 
-		slot_before->m_next		= slot_after;
-		slot_after->m_previous	= slot_before;
+		EXPECTS_DEBUG( m_size > 0 );
+		--m_size;
 	}
 }
 }
