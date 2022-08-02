@@ -45,7 +45,7 @@ namespace Internal
 		inline const bool operator != ( const ListIterator& other ) const;
 
 
-		inline operator ListConstIterator() const { return ListConstIterator{ m_iterator }; };
+		inline operator ListConstIterator<TValue, SLOT_POINTER>() const { return ListConstIterator{ m_iterator }; };
 
 	// Private inner types.
 	private:

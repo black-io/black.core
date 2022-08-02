@@ -43,7 +43,7 @@ namespace Internal
 		inline const bool operator != ( const ForwardListIterator& other ) const;
 
 
-		inline operator ForwardListConstIterator() const { return ForwardListConstIterator{ m_iterator }; };
+		inline operator ForwardListConstIterator<TValue, SLOT_POINTER>() const { return ForwardListConstIterator{ m_iterator }; };
 
 	// Private inner types.
 	private:
