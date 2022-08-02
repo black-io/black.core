@@ -15,6 +15,11 @@ namespace Internal
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	class ForwardListIterator final
 	{
+	// Friendship declarations.
+	public:
+		// Grant access to private state.
+		friend class Black::IntrusiveForwardList<TValue, SLOT_POINTER>;
+
 	// Lifetime management.
 	public:
 		inline ForwardListIterator()								= default;
@@ -31,13 +36,14 @@ namespace Internal
 		inline ForwardListIterator& operator ++ ();
 		inline ForwardListIterator operator ++ ( int );
 
-		inline operator ForwardListConstIterator<TValue, SLOT_POINTER>() const;
-
 		inline TValue& operator * () const;
 		inline TValue* operator -> () const;
 
 		inline const bool operator == ( const ForwardListIterator& other ) const;
 		inline const bool operator != ( const ForwardListIterator& other ) const;
+
+
+		inline operator ForwardListConstIterator() const { return ForwardListConstIterator{ m_iterator }; };
 
 	// Private inner types.
 	private:

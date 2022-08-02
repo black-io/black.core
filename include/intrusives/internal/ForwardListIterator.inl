@@ -27,12 +27,6 @@ namespace Internal
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline ForwardListIterator<TValue, SLOT_POINTER>::operator ForwardListConstIterator<TValue, SLOT_POINTER>() const
-	{
-		return ForwardListConstIterator<TValue, SLOT_POINTER>{ m_iterator };
-	}
-
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	inline TValue& ForwardListIterator<TValue, SLOT_POINTER>::operator*() const
 	{
 		EXPECTS_DEBUG( m_iterator.IsValid() );
