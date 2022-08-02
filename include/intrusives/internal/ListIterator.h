@@ -23,7 +23,7 @@ namespace Internal
 	public:
 		inline ListIterator()						= default;
 		inline ListIterator( const ListIterator& )	= default;
-		inline ListIterator( ListIterator& )		= default;
+		inline ListIterator( ListIterator&& )		= default;
 		inline ~ListIterator()						= default;
 
 
@@ -45,12 +45,12 @@ namespace Internal
 		inline const bool operator != ( const ListIterator& other ) const;
 
 
-		inline operator ListConstIterator<TValue, SLOT_POINTER>() const { return ListConstIterator{ m_iterator }; };
+		inline operator ListConstIterator<TValue, SLOT_POINTER>() const { return ListConstIterator<TValue, SLOT_POINTER>{ m_iterator }; };
 
 	// Private inner types.
 	private:
 		// Traits for intrusive operations.
-		using Traits = IntrusiveTraits<TValue, Black::IntrusiveForwardListSlot, SLOT_POINTER>;
+		using Traits = IntrusiveTraits<TValue, Black::IntrusiveListSlot, SLOT_POINTER>;
 
 	// Private lifetime management.
 	private:
