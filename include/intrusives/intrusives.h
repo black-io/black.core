@@ -30,7 +30,28 @@ namespace Internal
 #include "internal/DoublyLinkedListIterator.h"
 #include "internal/DoublyLinkedList.h"
 
+#include "internal/IntrusiveTraits.h"
+
 // Intrusive containers.
 #include "aliases.h"
+#include "forwards.h"
+#include "internal/forwards.templates.h"
 
-// Deferred implementations.
+#include "internal/ForwardListConstIterator.h"
+#include "internal/ForwardListIterator.h"
+#include "IntrusiveForwardList.h"
+
+#include "internal/ListConstIterator.h"
+#include "internal/ListIterator.h"
+#include "IntrusiveList.h"
+
+// Deferred implementations
+#include "IntrusiveList.inl"
+#include "internal/ListIterator.inl"
+#include "internal/ListConstIterator.inl"
+
+#include "IntrusiveForwardList.inl"
+#include "internal/ForwardListIterator.inl"
+#include "internal/ForwardListConstIterator.inl"
+
+#include "internal/IntrusiveTraits.inl"
