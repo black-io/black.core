@@ -134,19 +134,37 @@ namespace
 
 	void SinglyLinkedList::InsertInstead( Slot& old_slot, Slot& new_slot )
 	{
-		Slot* const slot_after	= old_slot.m_next;
-		Slot& slot_before		= FindSlotBefore( old_slot );
-		slot_before.m_next		= &new_slot;
-		old_slot.Reset();
+		Slot* const slot_after = old_slot.m_next;
 
-		new_slot.m_host		= this;
-		new_slot.m_next		= slot_after;
+		new_slot.m_host	= this;
+		new_slot.m_next	= slot_after;
+
+		if( &old_slot == m_head )
+		{
+			m_head = &new_slot;
+		}
+		else
+		{
+			Slot& slot_before	= FindSlotBefore( old_slot );
+			slot_before.m_next	= &new_slot;
+		}
+
+		old_slot.Reset();
 	}
 
 	void SinglyLinkedList::Erase( Slot& slot )
 	{
-		Slot& slot_before	= FindSlotBefore( slot );
-		slot_before.m_next	= slot.m_next;
+		Slot* const slot_after	= slot.m_next;
+
+		if( &slot == m_head )
+		{
+			m_head = slot_after;
+		}
+		else
+		{
+			Slot& slot_before	= FindSlotBefore( slot );
+			slot_before.m_next	= slot_after;
+		}
 
 		slot.Reset();
 
