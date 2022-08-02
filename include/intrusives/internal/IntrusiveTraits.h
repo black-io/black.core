@@ -32,7 +32,7 @@ namespace Internal
 	// Private constants.
 	private:
 		// Byte offset from object base address to slot member.
-		static inline constexpr ptrdiff_t MEMBER_OFFSET = ptrdiff_t( &( ((TValue*)nullptr)->*MEMBER_POINTER ) );
+		static inline const ptrdiff_t MEMBER_OFFSET = ptrdiff_t( &( ((TValue*)nullptr)->*MEMBER_POINTER ) );
 	};
 }
 }
