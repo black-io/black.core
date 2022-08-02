@@ -19,13 +19,13 @@ inline namespace Intrusives
 
 
 		// Type of stored values.
-		using Value			= TValue;
+		using Value = TValue;
 
 		// Iterator of view.
-		using Iterator		= Internal::ForwardListIterator<TValue, SLOT_POINTER>;
+		using Iterator = Internal::ForwardListIterator<TValue, SLOT_POINTER>;
 
 		// Iterator of view.
-		using ConstIterator	= Internal::ForwardListConstIterator<TValue, SLOT_POINTER>;
+		using ConstIterator = Internal::ForwardListConstIterator<TValue, SLOT_POINTER>;
 
 	// Friendship interface.
 	public:
