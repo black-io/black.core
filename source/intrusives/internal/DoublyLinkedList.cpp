@@ -181,9 +181,6 @@ namespace
 		}
 
 		Erase( *position );
-
-		EXPECTS_DEBUG( m_size > 0 );
-		--m_size;
 	}
 
 	DoublyLinkedList::Slot& DoublyLinkedList::GetFrontSlot() const
