@@ -29,7 +29,7 @@ namespace Internal
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
 	inline ListConstIterator<TValue, SLOT_POINTER>& ListConstIterator<TValue, SLOT_POINTER>::operator--()
 	{
-		EXPECTS_DEBUG( m_iterator.IsValid() );
+		EXPECTS_DEBUG( m_iterator.IsEnd() || m_iterator.IsValid() );
 		m_iterator.ShiftBack();
 		return *this;
 	}
@@ -37,7 +37,7 @@ namespace Internal
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
 	inline ListConstIterator<TValue, SLOT_POINTER> ListConstIterator<TValue, SLOT_POINTER>::operator--( int )
 	{
-		EXPECTS_DEBUG( m_iterator.IsValid() );
+		EXPECTS_DEBUG( m_iterator.IsEnd() || m_iterator.IsValid() );
 		ListConstIterator copy{ m_iterator };
 		m_iterator.ShiftBack();
 		return copy;
@@ -47,7 +47,7 @@ namespace Internal
 	inline const TValue& ListConstIterator<TValue, SLOT_POINTER>::operator*() const
 	{
 		EXPECTS_DEBUG( m_iterator.IsValid() );
-		return Traits::GetSlot( *m_iterator );
+		return Traits::GetValue( *m_iterator );
 	}
 
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >

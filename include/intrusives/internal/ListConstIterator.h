@@ -26,7 +26,7 @@ namespace Internal
 	public:
 		inline ListConstIterator()								= default;
 		inline ListConstIterator( const ListConstIterator& )	= default;
-		inline ListConstIterator( ListConstIterator& )			= default;
+		inline ListConstIterator( ListConstIterator&& )			= default;
 		inline ~ListConstIterator()								= default;
 
 
@@ -50,7 +50,7 @@ namespace Internal
 	// Private inner types.
 	private:
 		// Traits for intrusive operations.
-		using Traits = IntrusiveTraits<TValue, Black::IntrusiveForwardListSlot, SLOT_POINTER>;
+		using Traits = IntrusiveTraits<TValue, Black::IntrusiveListSlot, SLOT_POINTER>;
 
 	// Private lifetime management.
 	private:
