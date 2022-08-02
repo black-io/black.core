@@ -15,6 +15,14 @@ namespace Internal
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	class ForwardListConstIterator final
 	{
+	// Friendship declarations.
+	public:
+		// Grant access to private state and constructor.
+		friend class Black::IntrusiveForwardList<TValue, SLOT_POINTER>;
+
+		// Grant access to private state and constructor.
+		friend class ForwardListIterator<TValue, SLOT_POINTER>;
+
 	// Lifetime management.
 	public:
 		inline ForwardListConstIterator()									= default;
