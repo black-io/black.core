@@ -27,7 +27,7 @@ namespace Internal
 	public:
 		inline ForwardListConstIterator()									= default;
 		inline ForwardListConstIterator( const ForwardListConstIterator& )	= default;
-		inline ForwardListConstIterator( ForwardListConstIterator& )		= default;
+		inline ForwardListConstIterator( ForwardListConstIterator&& )		= default;
 		inline ~ForwardListConstIterator()									= default;
 
 

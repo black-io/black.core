@@ -30,7 +30,7 @@ namespace Internal
 	inline const TValue& ForwardListConstIterator<TValue, SLOT_POINTER>::operator*() const
 	{
 		EXPECTS_DEBUG( m_iterator.IsValid() );
-		return Traits::GetSlot( *m_iterator );
+		return Traits::GetValue( *m_iterator );
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
