@@ -21,7 +21,7 @@ namespace Internal
 	inline ForwardListIterator<TValue, SLOT_POINTER> ForwardListIterator<TValue, SLOT_POINTER>::operator++( int )
 	{
 		EXPECTS_DEBUG( m_iterator.IsValid() );
-		ForwardListConstIterator copy{ m_iterator };
+		ForwardListIterator copy{ m_iterator };
 		m_iterator.ShiftNext();
 		return copy;
 	}
@@ -30,7 +30,7 @@ namespace Internal
 	inline TValue& ForwardListIterator<TValue, SLOT_POINTER>::operator*() const
 	{
 		EXPECTS_DEBUG( m_iterator.IsValid() );
-		return Traits::GetSlot( *m_iterator );
+		return Traits::GetValue( *m_iterator );
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >

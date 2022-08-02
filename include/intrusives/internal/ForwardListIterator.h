@@ -24,7 +24,7 @@ namespace Internal
 	public:
 		inline ForwardListIterator()								= default;
 		inline ForwardListIterator( const ForwardListIterator& )	= default;
-		inline ForwardListIterator( ForwardListIterator& )			= default;
+		inline ForwardListIterator( ForwardListIterator&& )			= default;
 		inline ~ForwardListIterator()								= default;
 
 
@@ -43,7 +43,7 @@ namespace Internal
 		inline const bool operator != ( const ForwardListIterator& other ) const;
 
 
-		inline operator ForwardListConstIterator<TValue, SLOT_POINTER>() const { return ForwardListConstIterator{ m_iterator }; };
+		inline operator ForwardListConstIterator<TValue, SLOT_POINTER>() const { return ForwardListConstIterator<TValue, SLOT_POINTER>{ m_iterator }; };
 
 	// Private inner types.
 	private:
