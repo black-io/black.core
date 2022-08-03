@@ -39,8 +39,6 @@
 #include ".global/core-guidelines/NotNull.h"
 #include ".global/types/PlainView.h"
 #include ".global/types/PlainVector.h"
-#include ".global/types/IntrusiveHook.h"
-#include ".global/types/IntrusiveLink.h"
 #include ".global/types/RingBuffer.h"
 #include ".global/types/DebugName.h"
 #include ".global/types/ScopedPointer.h"
