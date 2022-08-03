@@ -18,14 +18,28 @@ namespace
 
 	InterconnectionSlot::InterconnectionSlot( const InterconnectionSlot& other )
 	{
-		InsertNear( other );
+		CRET( !other.IsAttached() );
+
+		if( other.IsBegin() )
+		{
+			m_next		= other.m_next;
+			m_previous	= m_next->m_previous;
+		}
+		else
+		{
+			m_previous	= other.m_previous;
+			m_next		= m_previous->m_next;
+		}
+
+		m_next->m_previous	= this;
+		m_previous->m_next	= this;
 	}
 
 	InterconnectionSlot::InterconnectionSlot( InterconnectionSlot&& other ) noexcept
 		: m_previous{ std::exchange( other.m_previous, nullptr ) }
 		, m_next{ std::exchange( other.m_next, nullptr ) }
 	{
-		CRET( IsAttached() );
+		CRET( !IsAttached() );
 
 		if( m_previous != nullptr )
 		{
@@ -43,49 +57,22 @@ namespace
 		Detach();
 	}
 
-	void InterconnectionSlot::InsertBefore( InterconnectionSlot& other )
-	{
-		m_previous	= std::exchange( other.m_previous, this );
-		m_next		= &other;
-
-		ENSURES_DEBUG( m_previous != nullptr );
-		m_previous->m_next = this;
-	}
-
-	void InterconnectionSlot::InsertAfter( InterconnectionSlot& other )
-	{
-		m_previous	= &other;
-		m_next		= std::exchange( other.m_next, this );
-
-		ENSURES_DEBUG( m_next != nullptr );
-		m_next->m_previous = this;
-	}
-
-	void InterconnectionSlot::InsertNear( const InterconnectionSlot& other )
-	{
-		CRET( !other.IsAttached() );
-
-		if( other.IsBegin() )
-		{
-			InsertBefore( *other.m_next );
-		}
-		else
-		{
-			InsertAfter( *other.m_previous );
-		}
-	}
-
-	void InterconnectionSlot::Reset()
-	{
-		m_previous	= nullptr;
-		m_next		= nullptr;
-	}
-
 	void InterconnectionSlot::Detach()
 	{
-		m_previous->m_next	= m_next;
-		m_next->m_previous	= m_previous;
-		Reset();
+		CRET( !IsAttached() );
+
+		InterconnectionSlot* const previous	= std::exchange( m_previous, nullptr );
+		InterconnectionSlot* const next		= std::exchange( m_next, nullptr );
+
+		if( previous != nullptr )
+		{
+			previous->m_next = next;
+		}
+
+		if( next != nullptr )
+		{
+			next->m_previous = previous;
+		}
 	}
 }
 }

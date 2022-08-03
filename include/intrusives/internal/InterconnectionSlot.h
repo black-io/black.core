@@ -13,6 +13,11 @@ namespace Internal
 	*/
 	class InterconnectionSlot
 	{
+	// Friendship declarations.
+	public:
+		// Grant access to private state.
+		friend class Black::Interconnection;
+
 	// Lifetime management.
 	public:
 		InterconnectionSlot() = default;
@@ -42,19 +47,6 @@ namespace Internal
 
 	// Private interface.
 	private:
-		// Insert this slot before given other.
-		void InsertBefore( InterconnectionSlot& other );
-
-		// Insert this slot after given other.
-		void InsertAfter( InterconnectionSlot& other );
-
-		// Insert this slot before given other, if can, or else insert after it.
-		void InsertNear( const InterconnectionSlot& other );
-
-
-		// Reset the links to previous and next slots.
-		void Reset();
-
 		// Detach the slot from list of interconnections.
 		void Detach();
 
