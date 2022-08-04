@@ -11,7 +11,7 @@ namespace Internal
 {
 	/**
 	*/
-	class InterconnectionSlot
+	class BasicInterconnectionSlot
 	{
 	// Friendship declarations.
 	public:
@@ -20,11 +20,11 @@ namespace Internal
 
 	// Lifetime management.
 	public:
-		InterconnectionSlot() = default;
+		BasicInterconnectionSlot() = default;
 
-		InterconnectionSlot( const InterconnectionSlot& other );
-		InterconnectionSlot( InterconnectionSlot&& other ) noexcept;
-		~InterconnectionSlot() noexcept;
+		BasicInterconnectionSlot( const BasicInterconnectionSlot& other );
+		BasicInterconnectionSlot( BasicInterconnectionSlot&& other ) noexcept;
+		~BasicInterconnectionSlot() noexcept;
 
 	// Public interface.
 	public:
@@ -52,12 +52,12 @@ namespace Internal
 
 	// Private lifetime management.
 	private:
-		InterconnectionSlot( InterconnectionSlot* previous, InterconnectionSlot* next );
+		BasicInterconnectionSlot( BasicInterconnectionSlot* previous, BasicInterconnectionSlot* next );
 
 	// Private interface.
 	private:
 		// Insert this slot in list before the given one.
-		void InsertBefore( InterconnectionSlot& other );
+		void InsertBefore( BasicInterconnectionSlot& other );
 
 		// Reset the state of slot.
 		void Reset();
@@ -67,8 +67,8 @@ namespace Internal
 
 	// Private state.
 	private:
-		InterconnectionSlot* m_previous	= nullptr;	// Previous slot in interconnection.
-		InterconnectionSlot* m_next		= nullptr;	// Next slot in interconnection.
+		BasicInterconnectionSlot* m_previous	= nullptr;	// Previous slot in interconnection.
+		BasicInterconnectionSlot* m_next		= nullptr;	// Next slot in interconnection.
 	};
 }
 }

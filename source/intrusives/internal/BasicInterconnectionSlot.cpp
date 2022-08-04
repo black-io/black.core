@@ -16,7 +16,7 @@ namespace
 }
 
 
-	InterconnectionSlot::InterconnectionSlot( const InterconnectionSlot& other )
+	BasicInterconnectionSlot::BasicInterconnectionSlot( const BasicInterconnectionSlot& other )
 	{
 		CRET( !other.IsAttached() );
 
@@ -35,8 +35,8 @@ namespace
 		m_previous->m_next	= this;
 	}
 
-	InterconnectionSlot::InterconnectionSlot( InterconnectionSlot&& other ) noexcept
-		: InterconnectionSlot{ std::exchange( other.m_previous, nullptr ), std::exchange( other.m_next, nullptr ) }
+	BasicInterconnectionSlot::BasicInterconnectionSlot( BasicInterconnectionSlot&& other ) noexcept
+		: BasicInterconnectionSlot{ std::exchange( other.m_previous, nullptr ), std::exchange( other.m_next, nullptr ) }
 	{
 		if( m_previous != nullptr )
 		{
@@ -49,39 +49,39 @@ namespace
 		}
 	}
 
-	InterconnectionSlot::~InterconnectionSlot() noexcept
+	BasicInterconnectionSlot::~BasicInterconnectionSlot() noexcept
 	{
 		Detach();
 	}
 
-	void InterconnectionSlot::RegisterAt( Black::Interconnection& interconnection )
+	void BasicInterconnectionSlot::RegisterAt( Black::Interconnection& interconnection )
 	{
 		interconnection.RegisterSlot( *this );
 	}
 
-	InterconnectionSlot::InterconnectionSlot( InterconnectionSlot* previous, InterconnectionSlot* next )
+	BasicInterconnectionSlot::BasicInterconnectionSlot( BasicInterconnectionSlot* previous, BasicInterconnectionSlot* next )
 		: m_previous{ previous }
 		, m_next{ next }
 	{
 	}
 
-	void InterconnectionSlot::InsertBefore( InterconnectionSlot& other )
+	void BasicInterconnectionSlot::InsertBefore( BasicInterconnectionSlot& other )
 	{
 		EXPECTS_DEBUG( other.IsAttached() );
 	}
 
-	void InterconnectionSlot::Reset()
+	void BasicInterconnectionSlot::Reset()
 	{
 		m_previous	= nullptr;
 		m_next		= nullptr;
 	}
 
-	void InterconnectionSlot::Detach()
+	void BasicInterconnectionSlot::Detach()
 	{
 		CRET( !IsAttached() );
 
-		InterconnectionSlot* const previous	= std::exchange( m_previous, nullptr );
-		InterconnectionSlot* const next		= std::exchange( m_next, nullptr );
+		BasicInterconnectionSlot* const previous	= std::exchange( m_previous, nullptr );
+		BasicInterconnectionSlot* const next		= std::exchange( m_next, nullptr );
 
 		if( previous != nullptr )
 		{
