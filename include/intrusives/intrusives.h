@@ -45,7 +45,14 @@ namespace Internal
 #include "internal/ListIterator.h"
 #include "IntrusiveList.h"
 
+#include "internal/BasicInterconnectionSlot.h"
+#include "internal/InterconnectionSlotDummy.h"
+#include "internal/InterconnectionSlot.h"
+#include "Interconnection.h"
+
 // Deferred implementations
+#include "internal/InterconnectionSlot.inl"
+
 #include "IntrusiveList.inl"
 #include "internal/ListIterator.inl"
 #include "internal/ListConstIterator.inl"
