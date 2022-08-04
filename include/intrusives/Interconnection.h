@@ -31,7 +31,7 @@ inline namespace Intrusives
 		Interconnection();
 		Interconnection( const Interconnection& other );
 		Interconnection( Interconnection&& other ) noexcept;
-		virtual ~Interconnection() noexcept;
+		~Interconnection() noexcept;
 
 
 		Interconnection& operator = ( const Interconnection& other );
