@@ -5,58 +5,72 @@ namespace Black
 {
 inline namespace Core
 {
-inline namespace Global
-{
-inline namespace Types
+inline namespace Intrusives
 {
 	/**
-		@brief	Intrusive hook specification.
-
-		@note	`IntrusiveHook` is not thread safe. So, it must be used carefully in concurrent code.
 	*/
-	class IntrusiveHook
+	class Interconnection
 	{
-	// Inner entities.
+	// Friendship declarations.
 	public:
-		// Regular intrusive link.
-		class RegularIntrusiveLink
-		{
-		public:
-			// Used by intrusive hook to invalidate the link.
-			virtual void InvalidateIntrusiveLink() = 0;
-		};
+		// Allow slot to use registration function.
+		friend class Internal::BasicInterconnectionSlot;
+
+	// Public inner types.
+	public:
+		// Regular slot for interconnection.
+		template< typename THost >
+		using Slot = std::conditional_t<
+			std::is_base_of_v<Interconnection, THost>,
+			Internal::InterconnectionSlot<THost>,
+			Internal::InterconnectionSlotDummy<THost>
+		>;
+
+	// Lifetime management.
+	public:
+		Interconnection();
+		Interconnection( const Interconnection& other );
+		Interconnection( Interconnection&& other ) noexcept;
+		virtual ~Interconnection() noexcept;
+
+
+		Interconnection& operator = ( const Interconnection& other );
+		Interconnection& operator = ( Interconnection&& other ) noexcept;
 
 	// Public interface.
 	public:
-		// Cares about proper invalidation of hook.
-		virtual ~IntrusiveHook();
+		// Whether the interconnection host some slots.
+		inline const bool HasInterconnections() const	{ return m_begin.m_next != &m_end; };
 
-
-		// Add the link into hook.
-		// This is a service function, it may be used only by intrusive link.
-		void AddIntrusiveLink( Black::NotNull<RegularIntrusiveLink*> link ) const;
-
-		// Remove the link form hook.
-		// This is a service function, it may be used only by intrusive link.
-		void RemoveIntrusiveLink( Black::NotNull<RegularIntrusiveLink*> link ) const;
-
-	// Construction interface.
-	protected:
-		IntrusiveHook() = default;
-		IntrusiveHook( const IntrusiveHook& other );
-		IntrusiveHook( IntrusiveHook&& other ) noexcept;
-
-		IntrusiveHook& operator = ( const IntrusiveHook& other );
-		IntrusiveHook& operator = ( IntrusiveHook&& other ) noexcept;
-
+	// Private inner types.
 	private:
-		// Invalidate the hook.
-		void Invalidate();
+		// Dummy slot to declare the `begin` and `end` of list.
+		class DummySlot : public Internal::BasicInterconnectionSlot
+		{
+		// Lifetime management.
+		public:
+			using Internal::BasicInterconnectionSlot::BasicInterconnectionSlot;
 
+		// `InterconnectionSlot` virtual overrides.
+		public:
+			/// @see BasicInterconnectionSlot::Invalidate
+			void Invalidate() override {};
+		};
+
+	// Private interface.
 	private:
-		mutable std::deque<RegularIntrusiveLink*>	m_liinks;	// Connected links.
+		// Perform the invalidation of registered slots.
+		void Invalidate() const;
+
+
+		// Register given slot. Safely resolve the previous registration of slot.
+		void RegisterSlot( Internal::BasicInterconnectionSlot& slot ) const;
+
+	// Private non-state.
+	private:
+		mutable DummySlot	m_begin;
+		mutable DummySlot	m_end;
 	};
-}
 }
 }
 }

@@ -1,66 +1,76 @@
-#include <black/core.h>
-#include <black/core/algorithms.h>
+#include <black/core/intrusives.h>
 
 
 namespace Black
 {
 inline namespace Core
 {
-inline namespace Global
+inline namespace Intrusives
 {
-inline namespace Types
+namespace
 {
-	// Its nothing to do with other hook on copy construction.
-	IntrusiveHook::IntrusiveHook( const IntrusiveHook& other )
-	{}
+	// Logging channel.
+	constexpr const char* LOG_CHANNEL = "Black/Intrusives/Interconnection";
+}
 
-	// Move construction only invalidates the other hook.
-	IntrusiveHook::IntrusiveHook( IntrusiveHook&& other ) noexcept
+
+	Interconnection::Interconnection()
+		: m_begin{ nullptr, &m_end }
+		, m_end{ &m_begin, nullptr }
+	{
+	}
+
+	Interconnection::Interconnection( const Interconnection& other )
+		: Interconnection{}
+	{
+	}
+
+	Interconnection::Interconnection( Interconnection&& other ) noexcept
+		: Interconnection{}
 	{
 		other.Invalidate();
 	}
 
-	IntrusiveHook::~IntrusiveHook()
+	Interconnection::~Interconnection() noexcept
 	{
 		Invalidate();
 	}
 
-	// Copy assignment is an empty function.
-	IntrusiveHook& IntrusiveHook::operator=( const IntrusiveHook& other )
+	Interconnection& Interconnection::operator=( const Interconnection& other )
 	{
+		Invalidate();
 		return *this;
 	}
 
-	// Move assignment invalidates the other hook.
-	IntrusiveHook& IntrusiveHook::operator=( IntrusiveHook&& other ) noexcept
+	Interconnection& Interconnection::operator=( Interconnection&& other ) noexcept
 	{
+		Invalidate();
 		other.Invalidate();
 		return *this;
 	}
 
-	void IntrusiveHook::AddIntrusiveLink( Black::NotNull<RegularIntrusiveLink*> link ) const
+	void Interconnection::Invalidate() const
 	{
-		EXPECTS_DEBUG( !Black::IsItemPresent( m_liinks, link.Get() ) );
-		Black::UniqueAdd( m_liinks, link.Get() );
-	}
+		Internal::BasicInterconnectionSlot* cursor = m_begin.m_next;
 
-	void IntrusiveHook::RemoveIntrusiveLink( Black::NotNull<RegularIntrusiveLink*> link ) const
-	{
-		EXPECTS_DEBUG( Black::IsItemPresent( m_liinks, link.Get() ) );
-		Black::RemoveItem( m_liinks, link.Get() );
-	}
+		m_begin.m_next		= &m_end;
+		m_end.m_previous	= &m_begin;
 
-	void IntrusiveHook::Invalidate()
-	{
-		CRET( m_liinks.empty() );
-		for( auto link : m_liinks )
+		while( cursor != &m_end )
 		{
-			link->InvalidateIntrusiveLink();
-		}
+			ENSURES_DEBUG( cursor != nullptr );
+			auto slot = std::exchange( cursor, cursor->m_next );
 
-		m_liinks.clear();
+			slot->Invalidate();
+			slot->Reset();
+		}
 	}
-}
+
+	void Interconnection::RegisterSlot( Internal::BasicInterconnectionSlot& slot ) const
+	{
+		slot.Detach();
+		slot.InsertBefore( m_end );
+	}
 }
 }
 }
