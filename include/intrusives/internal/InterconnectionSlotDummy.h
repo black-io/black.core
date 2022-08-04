@@ -11,12 +11,27 @@ namespace Internal
 {
 	/**
 	*/
-	class InterconnectionSlotDummy : public InterconnectionSlot
+	template< typename THost >
+	class InterconnectionSlotDummy
 	{
-	// `InterconnectionSlot` virtual overrides.
+	// Lifetime management.
 	public:
-		/// @see InterconnectionSlot::Invalidate
-		void Invalidate() override {};
+		inline InterconnectionSlotDummy()									= default;
+		inline InterconnectionSlotDummy( const InterconnectionSlotDummy& )	= default;
+		inline InterconnectionSlotDummy( InterconnectionSlotDummy&& )		= default;
+		virtual inline ~InterconnectionSlotDummy()							= default;
+
+		explicit inline InterconnectionSlotDummy( const THost& )			{};
+
+	// Heirs compatible interface.
+	protected:
+		// Empty stub for functional symmetry.
+		inline void Interconnect( const THost& )	{};
+
+	// Heirs compatible virtual interface.
+	protected:
+		// Empty stub for functional symmetry.
+		virtual inline void Invalidate() = 0;
 	};
 }
 }
