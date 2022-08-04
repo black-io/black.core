@@ -24,7 +24,7 @@ namespace Internal
 
 		InterconnectionSlot( const InterconnectionSlot& other );
 		InterconnectionSlot( InterconnectionSlot&& other ) noexcept;
-		~InterconnectionSlot();
+		~InterconnectionSlot() noexcept;
 
 	// Public interface.
 	public:
@@ -45,8 +45,23 @@ namespace Internal
 		// Perform the slot invalidation.
 		virtual void Invalidate() = 0;
 
+	// Heirs interface.
+	protected:
+		// Register this slot at given interconnection.
+		void RegisterAt( Black::Interconnection& interconnection );
+
+	// Private lifetime management.
+	private:
+		InterconnectionSlot( InterconnectionSlot* previous, InterconnectionSlot* next );
+
 	// Private interface.
 	private:
+		// Insert this slot in list before the given one.
+		void InsertBefore( InterconnectionSlot& other );
+
+		// Reset the state of slot.
+		void Reset();
+
 		// Detach the slot from list of interconnections.
 		void Detach();
 

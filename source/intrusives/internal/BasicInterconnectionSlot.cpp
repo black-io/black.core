@@ -36,11 +36,8 @@ namespace
 	}
 
 	InterconnectionSlot::InterconnectionSlot( InterconnectionSlot&& other ) noexcept
-		: m_previous{ std::exchange( other.m_previous, nullptr ) }
-		, m_next{ std::exchange( other.m_next, nullptr ) }
+		: InterconnectionSlot{ std::exchange( other.m_previous, nullptr ), std::exchange( other.m_next, nullptr ) }
 	{
-		CRET( !IsAttached() );
-
 		if( m_previous != nullptr )
 		{
 			m_previous->m_next = this;
@@ -52,9 +49,31 @@ namespace
 		}
 	}
 
-	InterconnectionSlot::~InterconnectionSlot()
+	InterconnectionSlot::~InterconnectionSlot() noexcept
 	{
 		Detach();
+	}
+
+	void InterconnectionSlot::RegisterAt( Black::Interconnection& interconnection )
+	{
+		interconnection.RegisterSlot( *this );
+	}
+
+	InterconnectionSlot::InterconnectionSlot( InterconnectionSlot* previous, InterconnectionSlot* next )
+		: m_previous{ previous }
+		, m_next{ next }
+	{
+	}
+
+	void InterconnectionSlot::InsertBefore( InterconnectionSlot& other )
+	{
+		EXPECTS_DEBUG( other.IsAttached() );
+	}
+
+	void InterconnectionSlot::Reset()
+	{
+		m_previous	= nullptr;
+		m_next		= nullptr;
 	}
 
 	void InterconnectionSlot::Detach()
