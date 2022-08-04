@@ -47,8 +47,11 @@ namespace Internal
 
 	// Heirs interface.
 	protected:
-		// Register this slot at given interconnection.
-		void RegisterAt( Black::Interconnection& interconnection );
+		// Attach this slot to given interconnection.
+		void AttachTo( const Black::Interconnection& interconnection );
+
+		// Detach the slot from interconnection.
+		void Detach();
 
 	// Private lifetime management.
 	private:
@@ -61,9 +64,6 @@ namespace Internal
 
 		// Reset the state of slot.
 		void Reset();
-
-		// Detach the slot from list of interconnections.
-		void Detach();
 
 	// Private state.
 	private:

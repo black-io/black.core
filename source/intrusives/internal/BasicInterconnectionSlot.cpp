@@ -54,26 +54,9 @@ namespace
 		Detach();
 	}
 
-	void BasicInterconnectionSlot::RegisterAt( Black::Interconnection& interconnection )
+	void BasicInterconnectionSlot::AttachTo( const Black::Interconnection& interconnection )
 	{
 		interconnection.RegisterSlot( *this );
-	}
-
-	BasicInterconnectionSlot::BasicInterconnectionSlot( BasicInterconnectionSlot* previous, BasicInterconnectionSlot* next )
-		: m_previous{ previous }
-		, m_next{ next }
-	{
-	}
-
-	void BasicInterconnectionSlot::InsertBefore( BasicInterconnectionSlot& other )
-	{
-		EXPECTS_DEBUG( other.IsAttached() );
-	}
-
-	void BasicInterconnectionSlot::Reset()
-	{
-		m_previous	= nullptr;
-		m_next		= nullptr;
 	}
 
 	void BasicInterconnectionSlot::Detach()
@@ -92,6 +75,23 @@ namespace
 		{
 			next->m_previous = previous;
 		}
+	}
+
+	BasicInterconnectionSlot::BasicInterconnectionSlot( BasicInterconnectionSlot* previous, BasicInterconnectionSlot* next )
+		: m_previous{ previous }
+		, m_next{ next }
+	{
+	}
+
+	void BasicInterconnectionSlot::InsertBefore( BasicInterconnectionSlot& other )
+	{
+		EXPECTS_DEBUG( other.IsAttached() );
+	}
+
+	void BasicInterconnectionSlot::Reset()
+	{
+		m_previous	= nullptr;
+		m_next		= nullptr;
 	}
 }
 }
