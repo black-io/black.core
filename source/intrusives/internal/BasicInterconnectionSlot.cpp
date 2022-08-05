@@ -86,6 +86,9 @@ namespace
 	void BasicInterconnectionSlot::InsertBefore( BasicInterconnectionSlot& other )
 	{
 		EXPECTS_DEBUG( other.IsAttached() );
+		EXPECTS_DEBUG( !other.IsBegin() );
+		m_previous	= std::exchange( other.m_previous, this );
+		m_next		= std::exchange( m_previous->m_next, this );
 	}
 
 	void BasicInterconnectionSlot::Reset()
