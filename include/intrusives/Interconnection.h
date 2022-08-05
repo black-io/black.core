@@ -31,7 +31,6 @@ inline namespace Intrusives
 		Interconnection();
 		Interconnection( const Interconnection& other );
 		Interconnection( Interconnection&& other ) noexcept;
-		~Interconnection() noexcept;
 
 
 		Interconnection& operator = ( const Interconnection& other );
@@ -41,6 +40,15 @@ inline namespace Intrusives
 	public:
 		// Whether the interconnection host some slots.
 		inline const bool HasInterconnections() const	{ return m_begin.m_next != &m_end; };
+
+	// Heirs lifetime management.
+	protected:
+		~Interconnection() noexcept;
+
+	// Heirs interface.
+	protected:
+		// Perform the invalidation of registered slots.
+		void Invalidate() const;
 
 	// Private inner types.
 	private:
@@ -59,10 +67,6 @@ inline namespace Intrusives
 
 	// Private interface.
 	private:
-		// Perform the invalidation of registered slots.
-		void Invalidate() const;
-
-
 		// Register given slot. Safely resolve the previous registration of slot.
 		void RegisterSlot( Internal::BasicInterconnectionSlot& slot ) const;
 

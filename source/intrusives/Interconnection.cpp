@@ -31,11 +31,6 @@ namespace
 		other.Invalidate();
 	}
 
-	Interconnection::~Interconnection() noexcept
-	{
-		Invalidate();
-	}
-
 	Interconnection& Interconnection::operator=( const Interconnection& other )
 	{
 		Invalidate();
@@ -47,6 +42,11 @@ namespace
 		Invalidate();
 		other.Invalidate();
 		return *this;
+	}
+
+	Interconnection::~Interconnection() noexcept
+	{
+		Invalidate();
 	}
 
 	void Interconnection::Invalidate() const
