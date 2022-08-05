@@ -24,7 +24,6 @@ namespace Internal
 
 		BasicInterconnectionSlot( const BasicInterconnectionSlot& other );
 		BasicInterconnectionSlot( BasicInterconnectionSlot&& other ) noexcept;
-		~BasicInterconnectionSlot() noexcept;
 
 	// Public interface.
 	public:
@@ -44,6 +43,10 @@ namespace Internal
 	public:
 		// Perform the slot invalidation.
 		virtual void Invalidate() = 0;
+
+	// Heirs lifetime management.
+	protected:
+		~BasicInterconnectionSlot() noexcept;
 
 	// Heirs interface.
 	protected:
