@@ -19,9 +19,12 @@ namespace Internal
 		inline InterconnectionSlotDummy()									= default;
 		inline InterconnectionSlotDummy( const InterconnectionSlotDummy& )	= default;
 		inline InterconnectionSlotDummy( InterconnectionSlotDummy&& )		= default;
-		virtual inline ~InterconnectionSlotDummy()							= default;
 
 		explicit inline InterconnectionSlotDummy( const THost& )			{};
+
+	// Heirs lifetime management.
+	protected:
+		inline ~InterconnectionSlotDummy() = default;
 
 	// Heirs compatible interface.
 	protected:
