@@ -23,22 +23,28 @@ namespace Internal
 	}
 
 	template< typename THost >
-	inline InterconnectionSlot<THost>::~InterconnectionSlot()
+	inline InterconnectionSlot<THost>::InterconnectionSlot( const THost& host )
 	{
-		Detach();
+		Interconnect( host );
 	}
 
 	template< typename THost >
-	inline InterconnectionSlot<THost>::InterconnectionSlot( const THost& host )
+	inline InterconnectionSlot<THost>::~InterconnectionSlot()
 	{
-		AttachTo( host );
+		Disconnect();
 	}
 
 	template< typename THost >
 	inline void InterconnectionSlot<THost>::Interconnect( const THost& host )
 	{
-		Detach();
+		Disconnect();
 		AttachTo( host );
+	}
+
+	template< typename THost >
+	inline void InterconnectionSlot<THost>::Disconnect()
+	{
+		Detach();
 	}
 }
 }

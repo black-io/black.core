@@ -20,14 +20,20 @@ namespace Internal
 
 		inline InterconnectionSlot( const InterconnectionSlot& other );
 		inline InterconnectionSlot( InterconnectionSlot&& other );
-		virtual inline ~InterconnectionSlot();
 
 		explicit inline InterconnectionSlot( const THost& host );
+
+	// Heirs lifetime management.
+	protected:
+		inline ~InterconnectionSlot();
 
 	// Heirs compatible interface.
 	protected:
 		// Perform the interconnection.
 		inline void Interconnect( const THost& host );
+
+		// Perform the disconnection from interconnection.
+		inline void Disconnect();
 	};
 }
 }
