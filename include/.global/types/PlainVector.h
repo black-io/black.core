@@ -9,96 +9,81 @@ inline namespace Global
 {
 inline namespace Types
 {
+namespace Internal
+{
 	/**
 	*/
-	template< typename TStoredType >
-	class PlainVector final
+	template< typename TValue >
+	class PlainVector
 	{
-	// Inner entities.
+	// Restrictions.
 	public:
-		static_assert( !std::is_reference_v<TStoredType>,	"Element type may not be reference type." );
-		static_assert( !std::is_const_v<TStoredType>,		"Element type may not be constant." );
-		static_assert( std::is_pod_v<TStoredType>,			"Element type should be plain (PoD) type." );
+		static_assert( !std::is_reference_v<TValue>,	"Value type may not be reference type." );
+		static_assert( !std::is_const_v<TValue>,		"Value type may not be constant." );
+		static_assert( std::is_pod_v<TValue>,			"Value type should be plain (PoD) type." );
 
+	// Public inner types.
+	public:
+		// Stored value.
+		using Value = TValue;
 
+		// Reference to value.
+		using ValueReference = TValue&;
+
+		// Reference to constant value.
+		using ConstValueReference = const TValue&;
+
+		// Pointer to value.
+		using ValuePointer = TValue*;
+
+		// Pointer to constant value.
+		using ConstValuePointer = const TValue*;
+
+		// Iterator for values.
+		using Iterator = TValue*;
+
+		// Iterator for constant values.
+		using ConstIterator = const TValue*;
+
+	// Public constants.
+	public:
 		// Size of single element of view.
-		static constexpr size_t ELEMENT_SIZE	= sizeof( TStoredType );
-
-
-		// Type of stored elements.
-		using Element		= TStoredType;
-
-		// Iterator of view.
-		using Iterator		= Element*;
-
-		// Iterator of view.
-		using ConstIterator	= const Element*;
+		static constexpr size_t ELEMENT_SIZE	= sizeof( TValue );
 
 	// Friendship interface.
 	public:
 		// 'Range-based for loop' interface, the `begin( __range )` statement.
-		friend inline Iterator begin( PlainVector& range )					{ return range.GetHead(); };
+		friend inline Iterator begin( PlainVector& range )					{ return range.GetBegin(); };
 
 		// 'Range-based for loop' interface, the `end( __range )` statement.
-		friend inline Iterator end( PlainVector& range )					{ return range.GetTail(); };
+		friend inline Iterator end( PlainVector& range )					{ return range.GetEnd(); };
 
 		// 'Range-based for loop' interface, the `begin( __range )` statement.
-		friend inline ConstIterator begin( const PlainVector& range )		{ return range.GetHead(); };
+		friend inline ConstIterator begin( const PlainVector& range )		{ return range.GetBegin(); };
 
 		// 'Range-based for loop' interface, the `end( __range )` statement.
-		friend inline ConstIterator end( const PlainVector& range )			{ return range.GetTail(); };
+		friend inline ConstIterator end( const PlainVector& range )			{ return range.GetEnd(); };
 
 		// 'Swap' interface.
 		friend inline void swap( PlainVector& left, PlainVector& right )	{ left.Swap( right ); };
 
-	// Construction interface.
+	// Public lifetime management.
 	public:
-		PlainVector()						= default;
+		PlainVector() = default;
+
 		PlainVector( const PlainVector& other );
 		PlainVector( PlainVector&& other );
+
 		explicit PlainVector( const size_t length );
-		PlainVector( const size_t length, const TStoredType& proto );
-		PlainVector( ConstIterator head, ConstIterator tail );
-		PlainVector( ConstIterator elements, const size_t length ) : PlainVector{ elements, elements + length } {};
-		PlainVector( std::initializer_list<TStoredType> elements ) : PlainVector{ elements.begin(), elements.end() } {};
 
-		template< typename TOtherType, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
-		explicit PlainVector( PlainView<TOtherType> elements ) : PlainVector( elements.GetHead(), elements.GetTail() ) {};
-
-		template< typename TOtherType, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
-		explicit PlainVector( PlainView<const TOtherType> elements ) : PlainVector( elements.GetHead(), elements.GetTail() ) {};
-
-		template< typename TOtherType, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
-		explicit PlainVector( TOtherType elements[ ARRAY_LENGTH ] ) : PlainVector( elements, ARRAY_LENGTH ) {};
-
-		template< typename TOtherType, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
-		explicit PlainVector( const std::array<TOtherType, ARRAY_LENGTH>& elements ) : PlainVector( elements.data(), ARRAY_LENGTH ) {};
-
-		template< typename TOtherType, typename TAllocator, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
-		explicit PlainVector( const std::vector<TOtherType, TAllocator>& elements ) : PlainVector( elements.data(), elements.size() ) {};
-
+		PlainVector( const size_t length, ConstValueReference prototype );
+		PlainVector( ConstIterator begin, ConstIterator end );
 
 		~PlainVector();
 
 
 		inline PlainVector& operator = ( const PlainVector& other );
 		inline PlainVector& operator = ( PlainVector&& other );
-		inline PlainVector& operator = ( std::initializer_list<TStoredType> elements )			{ return CopyAndSwap( *this, elements ); };
-
-		template< typename TOtherType, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
-		inline PlainVector& operator = ( PlainView<TOtherType> elements )						{ return CopyAndSwap( *this, elements ); };
-
-		template< typename TOtherType, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
-		inline PlainVector& operator = ( PlainView<const TOtherType> elements )					{ return CopyAndSwap( *this, elements ); };
-
-		template< typename TOtherType, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
-		inline PlainVector& operator = ( TOtherType elements[ ARRAY_LENGTH ] )					{ return CopyAndSwap( *this, elements ); };
-
-		template< typename TOtherType, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
-		inline PlainVector& operator = ( const std::array<TOtherType, ARRAY_LENGTH>& elements )	{ return CopyAndSwap( *this, elements ); };
-
-		template< typename TOtherType, typename TAllocator, typename = std::enable_if_t<std::is_convertible_v<TOtherType*, TStoredType*>> >
-		inline PlainVector& operator = ( const std::vector<TOtherType, TAllocator>& elements )	{ return CopyAndSwap( *this, elements ); };
 
 	// Public interface.
 	public:
@@ -118,36 +103,43 @@ inline namespace Types
 		inline void ShrinkToFitLength();
 
 
-		// Checks the view is empty.
+		// Assign the hosted values to given one.
+		inline void FillWith( ConstValueReference value );
+
+		// Swap the content of vectors.
+		inline void Swap( PlainVector& other );
+
+
+		// Checks the container is empty.
 		inline const bool IsEmpty() const;
 
-		// Checks the iterator is inside of view.
+		// Checks the iterator is inside of container.
 		inline const bool IsInside( ConstIterator value ) const;
 
 
-		// Get the element at position.
-		inline TStoredType& GetElement( const size_t index );
+		// Get the value at position.
+		inline ValueReference GetValueAt( const size_t index );
 
-		// Get the element at position.
-		inline const TStoredType& GetElement( const size_t index ) const;
+		// Get the value at position.
+		inline ConstValueReference GetValueAt( const size_t index ) const;
 
-		// Get the head of view - the iterator to first element.
-		inline Iterator GetHead()					{ return m_memory; };
+		// Get the begin of view - the iterator to first element.
+		inline Iterator GetBegin()					{ return m_memory; };
 
-		// Get the tail of view - the iterator next of last element, which may not be dereferenced.
-		inline Iterator GetTail()					{ return m_memory + m_length; };
+		// Get the begin of view - the iterator to first element.
+		inline ConstIterator GetBegin() const		{ return m_memory; };
 
-		// Get the head of view - the iterator to first element.
-		inline ConstIterator GetHead() const		{ return m_memory; };
+		// Get the end of view - the iterator next of last element, which may not be dereferenced.
+		inline Iterator GetEnd()					{ return m_memory + m_length; };
 
-		// Get the tail of view - the iterator next of last element, which may not be dereferenced.
-		inline ConstIterator GetTail() const		{ return m_memory + m_length; };
+		// Get the end of view - the iterator next of last element, which may not be dereferenced.
+		inline ConstIterator GetEnd() const			{ return m_memory + m_length; };
+
+		// Get the memory of managed buffer.
+		inline ValuePointer GetMemory()				{ return m_memory; };
 
 		// Get the view data.
-		inline TStoredType* GetData()				{ return m_memory; };
-
-		// Get the view data.
-		inline const TStoredType* GetData() const	{ return m_memory; };
+		inline ConstValuePointer GetMemory() const	{ return m_memory; };
 
 		// Get the length of view.
 		inline const size_t GetLength() const		{ return m_length; };
@@ -158,66 +150,91 @@ inline namespace Types
 		// Get the number of bytes the elements of view stored.
 		inline const size_t GetUsedBytes() const	{ return m_length * ELEMENT_SIZE; };
 
-
-		inline operator PlainView<TStoredType> ()				{ return { m_memory, m_length }; };
-		inline operator PlainView<const TStoredType> () const	{ return { m_memory, m_length }; };
-
-		inline explicit operator const bool () const			{ return !IsEmpty(); };
-		inline const bool operator ! () const					{ return IsEmpty(); };
-
-		inline TStoredType& operator [] ( const size_t index )						{ return GetElement( index ); };
-		inline const TStoredType& operator [] ( const size_t index ) const			{ return GetElement( index ); };
-
-		inline const bool operator == ( const PlainVector& other ) const			{ return m_memory == other.m_memory; };
-		inline const bool operator != ( const PlainVector& other ) const			{ return m_memory != other.m_memory; };
-		inline const bool operator == ( const PlainView<TStoredType>& other ) const	{ return ( m_memory == other.m_head ) && ( m_length == other.m_length ); };
-		inline const bool operator != ( const PlainView<TStoredType>& other ) const	{ return ( m_memory != other.m_head ) || ( m_length != other.m_length ); };
-
-	// STL-conformance interface.
-	public:
-		using value_type		= Element;
-		using size_type			= std::size_t;
-		using difference_type	= std::ptrdiff_t;
-		using reference			= value_type&;
-		using const_reference	= const value_type&;
-		using pointer			= value_type*;
-		using const_pointer		= const value_type*;
-		using iterator			= Iterator;
-		using const_iterator	= ConstIterator;
-
-
-		inline void reserve( const size_type capacity )				{ ReserveCapacity( capacity ); };
-		inline void resize( const size_type length )				{ SetLength( length ); };
-		inline void clear()											{ m_length = 0; };
-		inline void swap( PlainVector& other )						{ Swap( other ); };
-		inline const bool empty() const								{ return IsEmpty(); };
-		inline reference at( const size_type index )				{ return GetElement( index ); };
-		inline iterator begin()										{ return GetHead(); };
-		inline iterator end()										{ return GetTail(); };
-		inline pointer data()										{ return GetData(); };
-		inline const_reference at( const size_type index ) const	{ return GetElement( index ); };
-		inline const_iterator begin() const							{ return GetHead(); };
-		inline const_iterator end() const							{ return GetTail(); };
-		inline const_pointer data() const							{ return GetData(); };
-		inline size_type size() const								{ return GetLength(); };
-		inline size_type capacity() const							{ return GetCapacity(); };
-
 	// Private interface.
 	private:
-		// Swap the content of views.
-		inline void Swap( PlainVector& other );
-
 		// Construct the desired amount of additional elements, using the construction arguments.
 		template< typename... TArguments >
-		inline void ConstructElements( const size_t length, TArguments... arguments );
+		inline void ConstructValues( const size_t length, const TArguments&... arguments );
 
 		// Copy the elements.
-		inline void CopyElements( const TStoredType* elements, const size_t elements_length );
+		inline void CopyValues( ConstValuePointer elements, const size_t elements_length );
 
 	private:
-		TStoredType*	m_memory	= nullptr;	// Stored elements.
-		size_t			m_capacity	= 0;		// Number of elements available for currently allocated memory.
-		size_t			m_length	= 0;		// Number of currently allocated elements.
+		TValue*	m_memory	= nullptr;	// Stored elements.
+		size_t	m_capacity	= 0;		// Number of elements available for currently allocated memory.
+		size_t	m_length	= 0;		// Number of currently allocated elements.
+	};
+}
+
+
+	/**
+	*/
+	template< typename TValue >
+	class PlainVector final : public Black::StandardDynamicArrayFacade<Internal::PlainVector<TValue>>
+	{
+	// Public aliases.
+	public:
+		using typename Internal::PlainVector<TValue>::ConstValuePointer;
+
+
+		using Internal::PlainVector<TValue>::GetValueAt;
+		using Internal::PlainVector<TValue>::IsEmpty;
+		using Internal::PlainVector<TValue>::GetMemory;
+		using Internal::PlainVector<TValue>::GetCapacity;
+		using Internal::PlainVector<TValue>::GetLength;
+
+	// Public lifetime management.
+	public:
+		using Black::StandardDynamicArrayFacade<Internal::PlainVector<TValue>>::StandardDynamicArrayFacade;
+
+		PlainVector( ConstValuePointer elements, const size_t length ) : PlainVector{ elements, elements + length } {};
+		PlainVector( std::initializer_list<TValue> elements ) : PlainVector{ elements.begin(), elements.end() } {};
+
+		template< typename TOtherValue, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
+		explicit PlainVector( PlainView<TOtherValue> elements ) : PlainVector( elements.GetBegin(), elements.GetEnd() ) {};
+
+		template< typename TOtherValue, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
+		explicit PlainVector( PlainView<const TOtherValue> elements ) : PlainVector( elements.GetHead(), elements.GetTail() ) {};
+
+		template< typename TOtherValue, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
+		explicit PlainVector( TOtherValue elements[ ARRAY_LENGTH ] ) : PlainVector( elements, ARRAY_LENGTH ) {};
+
+		template< typename TOtherValue, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
+		explicit PlainVector( const std::array<TOtherValue, ARRAY_LENGTH>& elements ) : PlainVector( elements.data(), ARRAY_LENGTH ) {};
+
+		template< typename TOtherValue, typename TAllocator, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
+		explicit PlainVector( const std::vector<TOtherValue, TAllocator>& elements ) : PlainVector( elements.data(), elements.size() ) {};
+
+
+		inline PlainVector& operator = ( std::initializer_list<TValue> elements )					{ return CopyAndSwap( *this, elements ); };
+
+		template< typename TOtherValue, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
+		inline PlainVector& operator = ( PlainView<TOtherValue> elements )							{ return CopyAndSwap( *this, elements ); };
+
+		template< typename TOtherValue, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
+		inline PlainVector& operator = ( PlainView<const TOtherValue> elements )					{ return CopyAndSwap( *this, elements ); };
+
+		template< typename TOtherValue, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
+		inline PlainVector& operator = ( TOtherValue elements[ ARRAY_LENGTH ] )						{ return CopyAndSwap( *this, elements ); };
+
+		template< typename TOtherValue, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
+		inline PlainVector& operator = ( const std::array<TOtherValue, ARRAY_LENGTH>& elements )	{ return CopyAndSwap( *this, elements ); };
+
+		template< typename TOtherValue, typename TAllocator, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
+		inline PlainVector& operator = ( const std::vector<TOtherValue, TAllocator>& elements )		{ return CopyAndSwap( *this, elements ); };
+
+	// Public interface.
+	public:
+		inline TValue& operator [] ( const size_t index )				{ return GetValueAt( index ); };
+		inline const TValue& operator [] ( const size_t index ) const	{ return GetValueAt( index ); };
+
+
+		inline operator PlainView<TValue> ()				{ return { GetMemory(), GetLength() }; };
+		inline operator PlainView<const TValue> () const	{ return { GetMemory(), GetLength() }; };
+
+
+		inline explicit operator const bool () const	{ return !IsEmpty(); };
+		inline const bool operator ! () const			{ return IsEmpty(); };
 	};
 }
 }
