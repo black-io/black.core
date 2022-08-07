@@ -35,6 +35,9 @@
 #include ".global/types/generic-types.aliasing.h"
 #include ".global/algorithms/time.h"
 
+#include ".global/stl/StandardArrayFacade.h"
+#include ".global/stl/StandardDynamicArrayFacade.h"
+
 // Global types.
 #include ".global/core-guidelines/NotNull.h"
 #include ".global/types/PlainView.h"
