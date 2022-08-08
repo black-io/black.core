@@ -48,15 +48,6 @@ namespace
 		Clear();
 	}
 
-	SinglyLinkedList& SinglyLinkedList::operator=( SinglyLinkedList&& other ) noexcept
-	{
-		// End the lifetime of current list.
-		SinglyLinkedList::~SinglyLinkedList();
-
-		// Start the lifetime of new list by moving the given `other`.
-		return *new( this ) SinglyLinkedList{ std::move( other ) };
-	}
-
 	void SinglyLinkedList::Clear()
 	{
 		CRET( IsEmpty() );

@@ -12,7 +12,7 @@ namespace Internal
 	/**
 		@brief	Intrusive singly-linked list.
 	*/
-	class SinglyLinkedList final : private Black::NonCopyable
+	class SinglyLinkedList : private Black::NonCopyable
 	{
 	// Friendship declarations.
 	public:
@@ -33,9 +33,6 @@ namespace Internal
 
 		SinglyLinkedList( SinglyLinkedList&& other ) noexcept;
 		~SinglyLinkedList() noexcept;
-
-
-		SinglyLinkedList& operator = ( SinglyLinkedList&& other ) noexcept;
 
 	// Public interface.
 	public:
