@@ -137,7 +137,7 @@ inline namespace Stl
 	/**
 	*/
 	template< typename THost, typename TBase >
-	class StandardListFacade<THost, TBase, true> : public TBase
+	class StandardListFacade<THost, TBase, false> : public TBase
 	{
 	// Public inner types.
 	public:
