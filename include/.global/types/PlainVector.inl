@@ -115,7 +115,7 @@ namespace Internal
 			return;
 		}
 
-		std::unique_ptr<Value[]> old_memory{ std::move( m_memory ) };
+		std::unique_ptr<Value[]> old_memory{ std::exchange( m_memory, nullptr ) };
 
 		m_capacity	= capacity;
 		m_length	= std::min( m_length, m_capacity );
