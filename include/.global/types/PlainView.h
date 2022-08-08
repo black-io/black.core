@@ -48,7 +48,7 @@ inline namespace Types
 		using Black::StandardArrayFacade<PlainView<TValue>, Internal::BasicPlainView<TValue>, false>::StandardArrayFacade;
 
 
-		PlainView( Iterator begin, Iterator end ) : PlainView{ begin, std::distance( begin, end ) } {};
+		PlainView( Iterator begin, Iterator end ) : PlainView{ begin, size_t( std::distance( begin, end ) ) } {};
 
 
 		template< typename TOtherValue, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
