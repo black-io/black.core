@@ -47,8 +47,8 @@ namespace Internal
 
 	// Public constants.
 	public:
-		// Size of single element of view.
-		static constexpr size_t ELEMENT_SIZE	= sizeof( TValue );
+		// Size of single store value.
+		static constexpr size_t VALUE_SIZE = sizeof( Value );
 
 	// Friendship interface.
 	public:
@@ -69,21 +69,21 @@ namespace Internal
 
 	// Public lifetime management.
 	public:
-		PlainVector() = default;
+		inline PlainVector() = default;
 
-		PlainVector( const PlainVector& other );
-		PlainVector( PlainVector&& other );
+		inline PlainVector( const PlainVector& other );
+		inline PlainVector( PlainVector&& other ) noexcept;
 
-		explicit PlainVector( const size_t length );
+		explicit inline PlainVector( const size_t length );
 
-		PlainVector( const size_t length, ConstValueReference prototype );
-		PlainVector( ConstIterator begin, ConstIterator end );
+		inline PlainVector( const size_t length, ConstValueReference prototype );
+		inline PlainVector( ConstIterator begin, ConstIterator end );
 
-		~PlainVector();
+		inline ~PlainVector() noexcept;
 
 
 		inline PlainVector& operator = ( const PlainVector& other );
-		inline PlainVector& operator = ( PlainVector&& other );
+		inline PlainVector& operator = ( PlainVector&& other ) noexcept;
 
 	// Public interface.
 	public:
@@ -148,7 +148,7 @@ namespace Internal
 		inline const size_t GetCapacity() const		{ return m_capacity; };
 
 		// Get the number of bytes the elements of view stored.
-		inline const size_t GetUsedBytes() const	{ return m_length * ELEMENT_SIZE; };
+		inline const size_t GetUsedBytes() const	{ return m_length * VALUE_SIZE; };
 
 	// Private interface.
 	private:
@@ -187,6 +187,7 @@ namespace Internal
 	public:
 		using Black::StandardDynamicArrayFacade<Internal::PlainVector<TValue>>::StandardDynamicArrayFacade;
 
+
 		PlainVector( ConstValuePointer elements, const size_t length ) : PlainVector{ elements, elements + length } {};
 		PlainVector( std::initializer_list<TValue> elements ) : PlainVector{ elements.begin(), elements.end() } {};
 
@@ -194,7 +195,7 @@ namespace Internal
 		explicit PlainVector( PlainView<TOtherValue> elements ) : PlainVector( elements.GetBegin(), elements.GetEnd() ) {};
 
 		template< typename TOtherValue, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
-		explicit PlainVector( PlainView<const TOtherValue> elements ) : PlainVector( elements.GetHead(), elements.GetTail() ) {};
+		explicit PlainVector( PlainView<const TOtherValue> elements ) : PlainVector( elements.GetBegin(), elements.GetEnd() ) {};
 
 		template< typename TOtherValue, size_t ARRAY_LENGTH, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
 		explicit PlainVector( TOtherValue elements[ ARRAY_LENGTH ] ) : PlainVector( elements, ARRAY_LENGTH ) {};

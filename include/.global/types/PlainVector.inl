@@ -12,7 +12,7 @@ inline namespace Types
 namespace Internal
 {
 	template< typename TValue >
-	PlainVector<TValue>::PlainVector( const PlainVector& other )
+	inline PlainVector<TValue>::PlainVector( const PlainVector& other )
 	{
 		CRET( other.IsEmpty() );
 		SetLength( other.GetLength() );
@@ -20,33 +20,35 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	PlainVector<TValue>::PlainVector( PlainVector&& other )
+	inline PlainVector<TValue>::PlainVector( PlainVector&& other ) noexcept
+		: m_memory{ std::exchange( other.m_memory, nullptr ) }
+		, m_capacity{ std::exchange( other.m_capacity, 0 ) }
+		, m_length{ std::exchange( other.m_length, 0 ) }
 	{
-		Swap( other );
 	}
 
 	template< typename TValue >
-	PlainVector<TValue>::PlainVector( const size_t length )
+	inline PlainVector<TValue>::PlainVector( const size_t length )
 	{
 		SetLength( length );
 	}
 
 	template< typename TValue >
-	PlainVector<TValue>::PlainVector( const size_t length, ConstValueReference prototype )
+	inline PlainVector<TValue>::PlainVector( const size_t length, ConstValueReference prototype )
 	{
 		SetCapacity( length );
 		ConstructValues( length, prototype );
 	}
 
 	template< typename TValue >
-	PlainVector<TValue>::PlainVector( ConstIterator begin, ConstIterator end )
+	inline PlainVector<TValue>::PlainVector( ConstIterator begin, ConstIterator end )
 	{
 		EXPECTS_DEBUG( ( !begin && !end ) || ( end >= begin ) );
 		CopyValues( begin, end - begin );
 	}
 
 	template< typename TValue >
-	PlainVector<TValue>::~PlainVector()
+	inline PlainVector<TValue>::~PlainVector() noexcept
 	{
 		Invalidate();
 	}
@@ -64,7 +66,7 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline PlainVector<TValue>& PlainVector<TValue>::operator=( PlainVector<TValue>&& other )
+	inline PlainVector<TValue>& PlainVector<TValue>::operator=( PlainVector<TValue>&& other ) noexcept
 	{
 		CRET( &other == this, *this );
 
@@ -134,6 +136,8 @@ namespace Internal
 	template< typename TValue >
 	inline void PlainVector<TValue>::FillWith( ConstValueReference value )
 	{
+		CRET( IsEmpty() );
+
 		for( TValue* cursor = m_memory; cursor < ( m_memory + m_length ); ++cursor )
 		{
 			new( cursor ) TValue{ value };
