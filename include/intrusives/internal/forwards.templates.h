@@ -16,6 +16,14 @@ namespace Internal
 	// To be used in friendship declarations.
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
 	class ListIterator;
+
+	// To be used in friendship declarations.
+	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
+	class BasicIntrusiveForwardList;
+
+	// To be used in friendship declarations.
+	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
+	class BasicIntrusiveList;
 }
 }
 }
