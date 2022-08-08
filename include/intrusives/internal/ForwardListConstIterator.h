@@ -52,11 +52,11 @@ namespace Internal
 
 	// Private lifetime management.
 	private:
-		inline explicit ForwardListConstIterator( SinglyLinkedListIterator iterator );
+		inline explicit ForwardListConstIterator( SinglyLinkedListCursor cursor );
 
 	// Private state.
 	private:
-		SinglyLinkedListIterator m_iterator; // Regular iterator for inner list type.
+		SinglyLinkedListCursor m_cursor; // Cursor for inner list.
 	};
 }
 }

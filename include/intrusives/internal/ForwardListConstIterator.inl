@@ -12,25 +12,25 @@ namespace Internal
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	inline ForwardListConstIterator<TValue, SLOT_POINTER>& ForwardListConstIterator<TValue, SLOT_POINTER>::operator++()
 	{
-		EXPECTS_DEBUG( m_iterator.IsValid() );
-		m_iterator.ShiftNext();
+		EXPECTS_DEBUG( m_cursor.IsValid() );
+		m_cursor.ShiftNext();
 		return *this;
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	inline ForwardListConstIterator<TValue, SLOT_POINTER> ForwardListConstIterator<TValue, SLOT_POINTER>::operator++( int )
 	{
-		EXPECTS_DEBUG( m_iterator.IsValid() );
-		ForwardListConstIterator copy{ m_iterator };
-		m_iterator.ShiftNext();
+		EXPECTS_DEBUG( m_cursor.IsValid() );
+		ForwardListConstIterator copy{ m_cursor };
+		m_cursor.ShiftNext();
 		return copy;
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	inline const TValue& ForwardListConstIterator<TValue, SLOT_POINTER>::operator*() const
 	{
-		EXPECTS_DEBUG( m_iterator.IsValid() );
-		return Traits::GetValue( *m_iterator );
+		EXPECTS_DEBUG( m_cursor.IsValid() );
+		return Traits::GetValue( *m_cursor );
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
@@ -42,10 +42,10 @@ namespace Internal
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	inline const bool ForwardListConstIterator<TValue, SLOT_POINTER>::operator==( const ForwardListConstIterator& other ) const
 	{
-		CRET( m_iterator.IsEnd() != other.m_iterator.IsEnd(), false );
-		CRET( m_iterator.IsEnd(), true );
-		CRET( m_iterator.IsValid() != other.m_iterator.IsValid(), false );
-		return m_iterator.GetCurrentSlot() == other.m_iterator.GetCurrentSlot();
+		CRET( m_cursor.IsEnd() != other.m_cursor.IsEnd(), false );
+		CRET( m_cursor.IsEnd(), true );
+		CRET( m_cursor.IsValid() != other.m_cursor.IsValid(), false );
+		return m_cursor.GetCurrentSlot() == other.m_cursor.GetCurrentSlot();
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
@@ -55,8 +55,8 @@ namespace Internal
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline ForwardListConstIterator<TValue, SLOT_POINTER>::ForwardListConstIterator( SinglyLinkedListIterator iterator )
-		: m_iterator{ std::move( iterator ) }
+	inline ForwardListConstIterator<TValue, SLOT_POINTER>::ForwardListConstIterator( SinglyLinkedListCursor cursor )
+		: m_cursor{ std::move( cursor ) }
 	{
 	}
 }
