@@ -12,7 +12,7 @@ namespace Internal
 	/**
 	*/
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	class BasicIntrusiveList
+	class BasicIntrusiveList : private DoublyLinkedList
 	{
 	// Restrictions.
 	public:
@@ -47,9 +47,6 @@ namespace Internal
 		inline BasicIntrusiveList()							= default;
 		inline BasicIntrusiveList( BasicIntrusiveList&& )	= default;
 		inline ~BasicIntrusiveList()						= default;
-
-
-		inline BasicIntrusiveList& operator = ( BasicIntrusiveList&& )	= default;
 
 	// Public interface.
 	public:
@@ -118,10 +115,6 @@ namespace Internal
 	private:
 		// Traits for intrusive operations.
 		using Traits = Internal::IntrusiveTraits<TValue, Black::IntrusiveListSlot, SLOT_POINTER>;
-
-	// Private state.
-	private:
-		Internal::DoublyLinkedList m_slots; // Inner container for intrusive slots.
 	};
 }
 }
