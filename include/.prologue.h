@@ -40,9 +40,9 @@
 
 // Global types.
 #include ".global/core-guidelines/NotNull.h"
-#include ".global/types/internal/PlainView.h"
+#include ".global/types/internal/BasicPlainView.h"
 #include ".global/types/PlainView.h"
-#include ".global/types/internal/PlainVector.h"
+#include ".global/types/internal/BasicPlainVector.h"
 #include ".global/types/PlainVector.h"
 #include ".global/types/RingBuffer.h"
 #include ".global/types/DebugName.h"
