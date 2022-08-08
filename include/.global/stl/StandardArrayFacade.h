@@ -125,9 +125,6 @@ inline namespace Stl
 		// Returns the number of elements in the container.
 		inline const size_type size() const							{ return TBase::GetLength(); };
 
-		// Assigns the given value to all elements in the container.
-		inline void fill( const_reference value )					{ TBase::FillWith( value ); };
-
 		// Exchanges the contents of the container with those of other.
 		inline void swap( TBase& other )							{ TBase::Swap( other ); };
 	};
