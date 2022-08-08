@@ -11,7 +11,7 @@
 #include ".global/types/RingBuffer.inl"
 #include ".global/types/PlainVector.operations.inl"
 #include ".global/types/PlainVector.inl"
-//#include ".global/types/PlainView.operations.inl"
+#include ".global/types/PlainView.operations.inl"
 #include ".global/types/PlainView.inl"
 
 #include ".global/algorithms/chars.inl"
