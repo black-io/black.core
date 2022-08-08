@@ -73,10 +73,10 @@ inline namespace Intrusives
 
 
 		// Get the value at the head of list. Expects that list is not empty.
-		inline Value& GetFront();
+		inline Value& GetFirstValue();
 
 		// Get the value at the head of list. Expects that list is not empty.
-		inline const Value& GetFront() const;
+		inline const Value& GetFirstValue() const;
 
 		// Get the iterator to beginning of list. May return invalid iterator.
 		inline Iterator GetBegin();
@@ -84,17 +84,11 @@ inline namespace Intrusives
 		// Get the iterator to beginning of list. May return invalid iterator.
 		inline ConstIterator GetBegin() const;
 
-		// Get the iterator to beginning of list. May return invalid iterator.
-		inline ConstIterator GetConstBegin() const;
-
 		// Get the iterator to ending of list. May return invalid iterator.
 		inline Iterator GetEnd();
 
 		// Get the iterator to ending of list. May return invalid iterator.
 		inline ConstIterator GetEnd() const;
-
-		// Get the iterator to ending of list. May return invalid iterator.
-		inline ConstIterator GetConstEnd() const;
 
 
 		// Get the size of list.

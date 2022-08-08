@@ -38,13 +38,13 @@ inline namespace Intrusives
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline typename IntrusiveForwardList<TValue, SLOT_POINTER>::Value& IntrusiveForwardList<TValue, SLOT_POINTER>::GetFront()
+	inline typename IntrusiveForwardList<TValue, SLOT_POINTER>::Value& IntrusiveForwardList<TValue, SLOT_POINTER>::GetFirstValue()
 	{
 		return Traits::GetValue( m_slots.GetFrontSlot() );
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline const typename IntrusiveForwardList<TValue, SLOT_POINTER>::Value& IntrusiveForwardList<TValue, SLOT_POINTER>::GetFront() const
+	inline const typename IntrusiveForwardList<TValue, SLOT_POINTER>::Value& IntrusiveForwardList<TValue, SLOT_POINTER>::GetFirstValue() const
 	{
 		return Traits::GetValue( m_slots.GetFrontSlot() );
 	}
@@ -62,12 +62,6 @@ inline namespace Intrusives
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline typename IntrusiveForwardList<TValue, SLOT_POINTER>::ConstIterator IntrusiveForwardList<TValue, SLOT_POINTER>::GetConstBegin() const
-	{
-		return ConstIterator{ m_slots.GetBegin() };
-	}
-
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	inline typename IntrusiveForwardList<TValue, SLOT_POINTER>::Iterator IntrusiveForwardList<TValue, SLOT_POINTER>::GetEnd()
 	{
 		return Iterator{ m_slots.GetEnd() };
@@ -75,12 +69,6 @@ inline namespace Intrusives
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	inline typename IntrusiveForwardList<TValue, SLOT_POINTER>::ConstIterator IntrusiveForwardList<TValue, SLOT_POINTER>::GetEnd() const
-	{
-		return ConstIterator{ m_slots.GetEnd() };
-	}
-
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline typename IntrusiveForwardList<TValue, SLOT_POINTER>::ConstIterator IntrusiveForwardList<TValue, SLOT_POINTER>::GetConstEnd() const
 	{
 		return ConstIterator{ m_slots.GetEnd() };
 	}
