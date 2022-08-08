@@ -7,51 +7,49 @@ inline namespace Core
 {
 inline namespace Intrusives
 {
+namespace Internal
+{
 	/**
 	*/
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	class IntrusiveForwardList final
+	class BasicIntrusiveForwardList
 	{
-	// Public inner types.
+	// Restrictions.
 	public:
 		static_assert( !std::is_reference_v<TValue>,	"Value type may not be reference type." );
 		static_assert( !std::is_const_v<TValue>,		"Value type may not be constant." );
 
-
-		// Type of stored values.
+	// Public inner types.
+	public:
+		// Stored value.
 		using Value = TValue;
 
-		// Iterator of view.
-		using Iterator = Internal::ForwardListIterator<TValue, SLOT_POINTER>;
+		// Reference to value.
+		using ValueReference = TValue&;
+
+		// Reference to constant value.
+		using ConstValueReference = const TValue&;
+
+		// Pointer to value.
+		using ValuePointer = TValue*;
+
+		// Pointer to constant value.
+		using ConstValuePointer = const TValue*;
 
 		// Iterator of view.
-		using ConstIterator = Internal::ForwardListConstIterator<TValue, SLOT_POINTER>;
+		using Iterator = ForwardListIterator<TValue, SLOT_POINTER>;
 
-	// Friendship interface.
-	public:
-		// 'Range-based for loop' interface, the `begin( __range )` statement.
-		friend inline Iterator begin( IntrusiveForwardList& range )							{ return range.GetBegin(); };
-
-		// 'Range-based for loop' interface, the `end( __range )` statement.
-		friend inline Iterator end( IntrusiveForwardList& range )							{ return range.GetEnd(); };
-
-		// 'Range-based for loop' interface, the `begin( __range )` statement.
-		friend inline ConstIterator begin( const IntrusiveForwardList& range )				{ return range.GetBegin(); };
-
-		// 'Range-based for loop' interface, the `end( __range )` statement.
-		friend inline ConstIterator end( const IntrusiveForwardList& range )				{ return range.GetEnd(); };
-
-		// 'Swap' interface.
-		friend inline void swap( IntrusiveForwardList& left, IntrusiveForwardList& right )	{ left.Swap( right ); };
+		// Iterator of view.
+		using ConstIterator = ForwardListConstIterator<TValue, SLOT_POINTER>;
 
 	// Lifetime management.
 	public:
-		inline IntrusiveForwardList()							= default;
-		inline IntrusiveForwardList( IntrusiveForwardList&& )	= default;
-		inline ~IntrusiveForwardList()							= default;
+		inline BasicIntrusiveForwardList()								= default;
+		inline BasicIntrusiveForwardList( BasicIntrusiveForwardList&& )	= default;
+		inline ~BasicIntrusiveForwardList()								= default;
 
 
-		inline IntrusiveForwardList& operator = ( IntrusiveForwardList&& )	= default;
+		inline BasicIntrusiveForwardList& operator = ( BasicIntrusiveForwardList&& )	= default;
 
 	// Public interface.
 	public:
@@ -107,6 +105,7 @@ inline namespace Intrusives
 	private:
 		Internal::SinglyLinkedList m_slots; // Inner container for intrusive slots.
 	};
+}
 }
 }
 }
