@@ -11,6 +11,10 @@ namespace Internal
 {
 	/**
 		@brief	Element slot for intrusive singly-linked list.
+
+		Such slots - are the main point of intrusive collections.
+		The target class, which should be used as value of intrusive collection, should store the field with this type.
+		Such field is used by intrusive collection to store the value of target class.
 	*/
 	class SinglyLinkedListSlot final : private Black::NonCopyable
 	{
