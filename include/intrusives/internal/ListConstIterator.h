@@ -22,6 +22,23 @@ namespace Internal
 		// Grant access to private state and constructor.
 		friend class ListIterator<TValue, SLOT_POINTER>;
 
+	// STL-complaint inner types.
+	public:
+		// Regular difference type.
+		using difference_type = ptrdiff_t;
+
+		// Viewed value.
+		using value_type = const TValue;
+
+		// Pointer to stored value.
+		using pointer = const TValue*;
+
+		// Reference to Viewed value.
+		using reference = const TValue&;
+
+		// Category of iterator.
+		using iterator_category = std::bidirectional_iterator_tag;
+
 	// Lifetime management.
 	public:
 		inline ListConstIterator()								= default;

@@ -19,6 +19,23 @@ namespace Internal
 		// Grant access to private state.
 		friend class BasicIntrusiveList<TValue, SLOT_POINTER>;
 
+	// STL-complaint inner types.
+	public:
+		// Regular difference type.
+		using difference_type = ptrdiff_t;
+
+		// Viewed value.
+		using value_type = TValue;
+
+		// Pointer to stored value.
+		using pointer = TValue*;
+
+		// Reference to Viewed value.
+		using reference = TValue&;
+
+		// Category of iterator.
+		using iterator_category = std::bidirectional_iterator_tag;
+
 	// Lifetime management.
 	public:
 		inline ListIterator()						= default;
