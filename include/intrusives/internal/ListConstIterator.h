@@ -54,11 +54,11 @@ namespace Internal
 
 	// Private lifetime management.
 	private:
-		inline explicit ListConstIterator( DoublyLinkedListIterator iterator );
+		inline explicit ListConstIterator( DoublyLinkedListCursor cursor );
 
 	// Private state.
 	private:
-		DoublyLinkedListIterator m_iterator; // Regular iterator for inner list type.
+		DoublyLinkedListCursor m_cursor; // Cursor for inner list.
 	};
 }
 }
