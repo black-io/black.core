@@ -45,7 +45,7 @@ namespace Internal
 		inline const bool operator != ( const ListIterator& other ) const;
 
 
-		inline operator ListConstIterator<TValue, SLOT_POINTER>() const { return ListConstIterator<TValue, SLOT_POINTER>{ m_iterator }; };
+		inline operator ListConstIterator<TValue, SLOT_POINTER>() const { return ListConstIterator<TValue, SLOT_POINTER>{ m_cursor }; };
 
 	// Private inner types.
 	private:
@@ -54,11 +54,11 @@ namespace Internal
 
 	// Private lifetime management.
 	private:
-		inline explicit ListIterator( DoublyLinkedListIterator iterator );
+		inline explicit ListIterator( DoublyLinkedListCursor cursor );
 
 	// Private state.
 	private:
-		DoublyLinkedListIterator m_iterator; // Regular iterator for inner list type.
+		DoublyLinkedListCursor m_cursor; // Cursor for inner list.
 	};
 }
 }
