@@ -10,7 +10,7 @@ inline namespace Intrusives
 namespace Internal
 {
 	/**
-		@brief	Regular iterator for constant forward list.
+		@brief	Regular iterator for constant intrusive forward list.
 	*/
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	class ForwardListConstIterator final

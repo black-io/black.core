@@ -8,6 +8,16 @@ inline namespace Core
 inline namespace Intrusives
 {
 	/**
+		@brief	Forward list.
+
+		Intrusive forward list repeats the functionality of standard forward list from STL, but does not use memory allocations.
+		The slot of value should be stored by value itself. List uses the pointer-to-member to access the slot.
+		Since the slot is stored by value and accessed by pointer, in same time the value may be stored only by one list that use same slot member.
+
+		This template declare the STL-compatible interface to allow use it with standard algorithms.
+
+		@tparam	TValue			Type of stored values.
+		@tparam	SLOT_POINTER	Pointer-to-member of slot to be used.
 	*/
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	class IntrusiveForwardList final

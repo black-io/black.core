@@ -10,6 +10,7 @@ inline namespace Intrusives
 namespace Internal
 {
 	/**
+		@brief	Regular iterator for intrusive list.
 	*/
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
 	class ListIterator final

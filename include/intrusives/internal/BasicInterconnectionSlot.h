@@ -10,6 +10,15 @@ inline namespace Intrusives
 namespace Internal
 {
 	/**
+		@brief	The most basic functionality for slot of interconnection.
+
+		The slots of interconnection are implemented as doubly-linked list slots.
+		The slot does not knows about the list where it attached. The slot can only operate with siblings in the same list.
+		Any regular slot of interconnection always has both siblings. In case the only one sibling is connected to slot,
+		the slot is considered as begin or end of list where it attached.
+
+		Objects of this type can't be directly created. As part of private functionality, basic slot may be used only as parent class
+		for true implementations of interconnection slot.
 	*/
 	class BasicInterconnectionSlot
 	{

@@ -10,6 +10,9 @@ inline namespace Intrusives
 namespace Internal
 {
 	/**
+		@brief	Interconnection slot with true functionality.
+
+		It manages the connection to `THost` and receives the calls of `Invalidate` function.
 	*/
 	template< typename THost >
 	class InterconnectionSlot : protected BasicInterconnectionSlot

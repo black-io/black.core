@@ -8,6 +8,17 @@ inline namespace Core
 inline namespace Intrusives
 {
 	/**
+		@brief	Interconnection host.
+
+		This type should be used as parent for target type, which objects are required to manage the slots referred to it.
+		Inner template `Slot` selects the functionality depending on whether the `Interconnection` is one of base types for `THost` type or not.
+		Some types of framework may require the functionality of interconnection slot. Such types are inherited from inner template `Slot`.
+
+		`Slot` represents the single point of interconnection. `Interconnection` represents the host, where slots are registered.
+		`Interconnection` is allowed to invalidate the hosted slots. On invalidation the slot become disconnected from interconnection.
+		For slot the invalidation means it no more connected to interconnection.
+
+		All this functionality allows to create managed links to objects, that automatically cleared on linked object destroyed.
 	*/
 	class Interconnection
 	{

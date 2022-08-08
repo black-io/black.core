@@ -10,6 +10,10 @@ inline namespace Intrusives
 namespace Internal
 {
 	/**
+		@brief	Interconnection slot with dummy functionality.
+
+		All the functionality of interconnection slot is just emulated.
+		This slot does not manage the interconnection and does not receive the calls of `Invalidate` function.
 	*/
 	template< typename THost >
 	class InterconnectionSlotDummy

@@ -11,6 +11,8 @@ namespace Internal
 {
 	/**
 		@brief	Intrusive container traits.
+
+		This traits used by intrusive containers to move between the value and slot for that value.
 	*/
 	template< typename TValue, typename TSlot, TSlot TValue::* MEMBER_POINTER >
 	class IntrusiveTraits final
