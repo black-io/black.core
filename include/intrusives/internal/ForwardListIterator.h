@@ -43,7 +43,7 @@ namespace Internal
 		inline const bool operator != ( const ForwardListIterator& other ) const;
 
 
-		inline operator ForwardListConstIterator<TValue, SLOT_POINTER>() const { return ForwardListConstIterator<TValue, SLOT_POINTER>{ m_iterator }; };
+		inline operator ForwardListConstIterator<TValue, SLOT_POINTER>() const { return ForwardListConstIterator<TValue, SLOT_POINTER>{ m_cursor }; };
 
 	// Private inner types.
 	private:
@@ -52,11 +52,11 @@ namespace Internal
 
 	// Private lifetime management.
 	private:
-		inline explicit ForwardListIterator( SinglyLinkedListIterator iterator );
+		inline explicit ForwardListIterator( SinglyLinkedListCursor cursor );
 
 	// Private state.
 	private:
-		SinglyLinkedListIterator m_iterator; // Regular iterator for inner list type.
+		SinglyLinkedListCursor m_cursor; // Cursor for inner list.
 	};
 }
 }
