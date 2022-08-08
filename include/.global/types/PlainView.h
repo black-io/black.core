@@ -10,6 +10,15 @@ inline namespace Global
 inline namespace Types
 {
 	/**
+		@brief	Plain view implementation.
+
+		Views are containers of unowned memory. Views only refers to contiguous block of memory where the types values are stored.
+		Typically, the view represents the part of some buffer.
+		View can refer to memory of mutable or constant values.
+
+		This template declare the STL-compatible interface to allow use it with standard algorithms.
+
+		@tparam	TBalue	Type of values in view.
 	*/
 	template< typename TValue >
 	class PlainView : public Black::StandardArrayFacade<Internal::PlainView<TValue>, false>
@@ -22,6 +31,17 @@ inline namespace Types
 
 		using Internal::PlainView<TValue>::GetValueAt;
 		using Internal::PlainView<TValue>::IsEmpty;
+
+	// Friendship interface.
+	public:
+		// 'Range-based for loop' interface, the `begin( __range )` statement.
+		friend inline Iterator begin( const PlainView& range )			{ return range.GetBegin(); };
+
+		// 'Range-based for loop' interface, the `end( __range )` statement.
+		friend inline Iterator end( const PlainView& range )			{ return range.GetEnd(); };
+
+		// 'Swap' interface.
+		friend inline void swap( PlainView& left, PlainView& right )	{ left.Swap( right ); };
 
 	// Public lifetime management.
 	public:

@@ -12,6 +12,13 @@ inline namespace Types
 namespace Internal
 {
 	/**
+		@brief	Plain view implementation.
+
+		Views are containers of unowned memory. Views only refers to contiguous block of memory where the types values are stored.
+		Typically, the view represents the part of some buffer.
+		View can refer to memory of mutable or constant values.
+
+		@tparam	TBalue	Type of values in view.
 	*/
 	template< typename TValue >
 	class PlainView
@@ -38,17 +45,6 @@ namespace Internal
 	public:
 		// Size of single store value.
 		static constexpr size_t VALUE_SIZE = sizeof( Value );
-
-	// Friendship interface.
-	public:
-		// 'Range-based for loop' interface, the `begin( __range )` statement.
-		friend inline Iterator begin( const PlainView& range )			{ return range.GetBegin(); };
-
-		// 'Range-based for loop' interface, the `end( __range )` statement.
-		friend inline Iterator end( const PlainView& range )			{ return range.GetEnd(); };
-
-		// 'Swap' interface.
-		friend inline void swap( PlainView& left, PlainView& right )	{ left.Swap( right ); };
 
 	// Construction interface.
 	public:
