@@ -45,17 +45,6 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline void PlainView<TValue>::FillWith( const Value& value )
-	{
-		CRET( IsEmpty() );
-
-		for( TValue* cursor = m_memory; cursor < ( m_memory + m_length ); ++cursor )
-		{
-			new( cursor ) TValue{ value };
-		}
-	}
-
-	template< typename TValue >
 	inline void PlainView<TValue>::Swap( PlainView& other )
 	{
 		using std::swap;

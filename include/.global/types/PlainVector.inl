@@ -134,17 +134,6 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline void PlainVector<TValue>::FillWith( ConstValueReference value )
-	{
-		CRET( IsEmpty() );
-
-		for( TValue* cursor = m_memory; cursor < ( m_memory + m_length ); ++cursor )
-		{
-			new( cursor ) TValue{ value };
-		}
-	}
-
-	template< typename TValue >
 	inline void PlainVector<TValue>::Swap( PlainVector<TValue>& other )
 	{
 		using std::swap;

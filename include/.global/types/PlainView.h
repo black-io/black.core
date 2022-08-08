@@ -68,9 +68,6 @@ namespace Internal
 		inline void Invalidate();
 
 
-		// Assign the hosted values to given one.
-		inline void FillWith( const Value& value );
-
 		// Swap the content of views.
 		inline void Swap( PlainView& other );
 

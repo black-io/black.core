@@ -103,9 +103,6 @@ namespace Internal
 		inline void ShrinkToFitLength();
 
 
-		// Assign the hosted values to given one.
-		inline void FillWith( ConstValueReference value );
-
 		// Swap the content of vectors.
 		inline void Swap( PlainVector& other );
 
