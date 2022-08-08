@@ -37,6 +37,8 @@
 
 #include ".global/stl/StandardArrayFacade.h"
 #include ".global/stl/StandardDynamicArrayFacade.h"
+#include ".global/stl/StandardForwardListFacade.h"
+#include ".global/stl/StandardListFacade.h"
 
 // Global types.
 #include ".global/core-guidelines/NotNull.h"
