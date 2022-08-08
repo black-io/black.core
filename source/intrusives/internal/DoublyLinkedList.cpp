@@ -129,7 +129,7 @@ namespace
 		--m_size;
 	}
 
-	void DoublyLinkedList::Insert( Iterator position, Slot& slot )
+	void DoublyLinkedList::Insert( Cursor position, Slot& slot )
 	{
 		if( position.IsEnd() )
 		{
@@ -159,7 +159,7 @@ namespace
 		++m_size;
 	}
 
-	void DoublyLinkedList::Erase( Iterator position )
+	void DoublyLinkedList::Erase( Cursor position )
 	{
 		EXPECTS_DEBUG( !IsEmpty() );
 		EXPECTS_DEBUG( position.IsValid() );

@@ -24,8 +24,8 @@ namespace Internal
 		// Regular slot of list.
 		using Slot = DoublyLinkedListSlot;
 
-		// Regular iterator of list.
-		using Iterator = DoublyLinkedListIterator;
+		// Regular cursor of list.
+		using Cursor = DoublyLinkedListCursor;
 
 	// Lifetime management.
 	public:
@@ -52,11 +52,11 @@ namespace Internal
 		// Remove the current tail from list. Expects that list is not empty.
 		void PopBack();
 
-		// Insert the slot before the given iterator. Expects the iterator is valid. Previous link of slot will be resolved safely.
-		void Insert( Iterator position, Slot& slot );
+		// Insert the slot before the given position. Expects the position is valid. Previous link of slot will be resolved safely.
+		void Insert( Cursor position, Slot& slot );
 
-		// Erase the slot by given iterator. Expects the iterator is valid.
-		void Erase( Iterator position );
+		// Erase the slot at given position. Expects the position is valid.
+		void Erase( Cursor position );
 
 
 		// Get the slot at the head of list. Expects that list is not empty.
@@ -65,11 +65,11 @@ namespace Internal
 		// Get the slot at the tail of list. Expects that list is not empty.
 		Slot& GetBackSlot() const;
 
-		// Get the iterator to beginning of list. May return invalid iterator.
-		inline Iterator GetBegin() const		{ return Iterator{ m_head }; };
+		// Get the cursor to beginning of list. May return invalid cursor.
+		inline Cursor GetBegin() const			{ return Cursor{ m_head }; };
 
-		// Get the iterator to ending of list. Always return invalid iterator.
-		inline Iterator GetEnd() const			{ return Iterator{ &m_end }; };
+		// Get the cursor to ending of list. Always return invalid cursor.
+		inline Cursor GetEnd() const			{ return Cursor{ &m_end }; };
 
 
 		// Get the size of list.
