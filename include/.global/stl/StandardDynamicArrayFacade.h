@@ -10,6 +10,13 @@ inline namespace Global
 inline namespace Stl
 {
 	/**
+		@brief	STL-like interface for dynamic array-like container. May be used to treat the custom array-like container as standard container.
+
+		This facade extends the `StandardArrayFacade` and allow to reserve the memory and resize the array.
+
+		@tparam	THost					Type of final host, where the facade used to add the functionality.
+		@tparam	TBase					Type of base class, where the initial functionality should defined.
+		@tparam	USE_CONST_PROPAGATION	Whether the const-propagation should be used.
 	*/
 	template< typename THost, typename TBase, const bool USE_CONST_PROPAGATION = true >
 	class StandardDynamicArrayFacade : public StandardArrayFacade<THost, TBase, USE_CONST_PROPAGATION>
