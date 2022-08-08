@@ -12,10 +12,11 @@ inline namespace Stl
 	/**
 		@brief	STL-like interface for array-like container. May be used to treat the custom array-like container as standard container.
 
+		@tparam	THost					Type of final host, where the facade used to add the functionality.
 		@tparam	TBase					Type of base class, where the initial functionality should defined.
 		@tparam	USE_CONST_PROPAGATION	Whether the const-propagation should be used.
 	*/
-	template< typename TBase, const bool USE_CONST_PROPAGATION = true >
+	template< typename THost, typename TBase, const bool USE_CONST_PROPAGATION = true >
 	class StandardArrayFacade : public TBase
 	{
 	// Public inner types.
@@ -126,7 +127,7 @@ inline namespace Stl
 		inline const size_type size() const							{ return TBase::GetLength(); };
 
 		// Exchanges the contents of the container with those of other.
-		inline void swap( TBase& other )							{ TBase::Swap( other ); };
+		inline void swap( THost& other )							{ TBase::Swap( other ); };
 	};
 
 	/**
@@ -134,10 +135,11 @@ inline namespace Stl
 
 		This branch doesn't use the const-propagation. The host container allows to access underlaying elements via constant context.
 
+		@tparam	THost	Type of final host, where the facade used to add the functionality.
 		@tparam	TBase	Type of host, where the functionality should be mixed in.
 	*/
-	template< typename TBase >
-	class StandardArrayFacade<TBase, false> : public TBase
+	template< typename THost, typename TBase >
+	class StandardArrayFacade<THost, TBase, false> : public TBase
 	{
 	// Public inner types.
 	public:
@@ -211,7 +213,7 @@ inline namespace Stl
 		inline const size_type size() const							{ return TBase::GetLength(); };
 
 		// Exchanges the contents of the container with those of other.
-		inline void swap( TBase& other )							{ TBase::Swap( other ); };
+		inline void swap( THost& other )							{ TBase::Swap( other ); };
 	};
 }
 }
