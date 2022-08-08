@@ -10,13 +10,13 @@ inline namespace Intrusives
 namespace Internal
 {
 	// To be used in friendship declarations.
-	class SinglyLinkedListIterator;
+	class SinglyLinkedListCursor;
 
 	// To be used in friendship declarations.
 	class SinglyLinkedList;
 
 	// To be used in friendship declarations.
-	class DoublyLinkedListIterator;
+	class DoublyLinkedListCursor;
 
 	// To be used in friendship declarations.
 	class DoublyLinkedList;
