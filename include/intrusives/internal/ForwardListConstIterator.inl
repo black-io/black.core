@@ -45,7 +45,7 @@ namespace Internal
 		CRET( m_cursor.IsEnd() != other.m_cursor.IsEnd(), false );
 		CRET( m_cursor.IsEnd(), true );
 		CRET( m_cursor.IsValid() != other.m_cursor.IsValid(), false );
-		return m_cursor.GetCurrentSlot() == other.m_cursor.GetCurrentSlot();
+		return m_cursor.GetSlot() == other.m_cursor.GetSlot();
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
