@@ -30,13 +30,13 @@ namespace Internal
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	inline void BasicIntrusiveForwardList<TValue, SLOT_POINTER>::InsertAfter( ConstIterator position, Value& value )
 	{
-		SinglyLinkedList::InsertAfter( position.m_iterator, Traits::GetSlot( value ) );
+		SinglyLinkedList::InsertAfter( position.m_cursor, Traits::GetSlot( value ) );
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	inline void BasicIntrusiveForwardList<TValue, SLOT_POINTER>::EraseAfter( ConstIterator position )
 	{
-		SinglyLinkedList::EraseAfter( position.m_iterator );
+		SinglyLinkedList::EraseAfter( position.m_cursor );
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >

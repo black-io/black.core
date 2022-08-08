@@ -42,13 +42,13 @@ namespace Internal
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
 	inline void BasicIntrusiveList<TValue, SLOT_POINTER>::Insert( ConstIterator position, Value& value )
 	{
-		DoublyLinkedList::Insert( position.m_iterator, Traits::GetSlot( value ) );
+		DoublyLinkedList::Insert( position.m_cursor, Traits::GetSlot( value ) );
 	}
 
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
 	inline void BasicIntrusiveList<TValue, SLOT_POINTER>::Erase( ConstIterator position )
 	{
-		DoublyLinkedList::Erase( position.m_iterator );
+		DoublyLinkedList::Erase( position.m_cursor );
 	}
 
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
