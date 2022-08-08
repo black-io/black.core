@@ -10,34 +10,34 @@ inline namespace Intrusives
 namespace Internal
 {
 	/**
-		@brief	Regular iterator for intrusive singly-linked list.
+		@brief	Regular cursor for intrusive singly-linked list.
 	*/
-	class SinglyLinkedListIterator final
+	class SinglyLinkedListCursor final
 	{
 	// Lifetime management.
 	public:
-		SinglyLinkedListIterator()											= default;
-		SinglyLinkedListIterator( const SinglyLinkedListIterator& other )	= default;
-		~SinglyLinkedListIterator() noexcept								= default;
+		SinglyLinkedListCursor()										= default;
+		SinglyLinkedListCursor( const SinglyLinkedListCursor& other )	= default;
+		~SinglyLinkedListCursor() noexcept								= default;
 
-		SinglyLinkedListIterator( SinglyLinkedListIterator&& other ) noexcept;
-		explicit SinglyLinkedListIterator( SinglyLinkedListSlot* slot ) noexcept;
+		SinglyLinkedListCursor( SinglyLinkedListCursor&& other ) noexcept;
+		explicit SinglyLinkedListCursor( SinglyLinkedListSlot* slot ) noexcept;
 
 
-		SinglyLinkedListIterator& operator = ( const SinglyLinkedListIterator& other )	= default;
+		SinglyLinkedListCursor& operator = ( const SinglyLinkedListCursor& other )	= default;
 
-		SinglyLinkedListIterator& operator = ( SinglyLinkedListIterator&& other ) noexcept;
+		SinglyLinkedListCursor& operator = ( SinglyLinkedListCursor&& other ) noexcept;
 
 	// Public interface.
 	public:
-		// Shift the iterator to next slot in list. Expects that the slot is valid.
+		// Shift the cursor to next slot in list. Expects that the slot is valid.
 		void ShiftNext();
 
 
-		// Whether the iterator still valid.
+		// Whether the cursor still valid.
 		const bool IsValid() const;
 
-		// Whether the iterator points to end of list.
+		// Whether the cursor points to end of list.
 		const bool IsEnd() const;
 
 
