@@ -23,7 +23,7 @@ inline namespace Stl
 	{
 	// Used inner types.
 	public:
-		using StandardArrayFacade<THost, TBase, USE_CONST_PROPAGATION>::size_type;
+		using typename StandardArrayFacade<THost, TBase, USE_CONST_PROPAGATION>::size_type;
 
 	// Public lifetime management.
 	public:
