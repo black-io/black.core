@@ -21,7 +21,7 @@ namespace Internal
 		@tparam	TBalue	Type of values in view.
 	*/
 	template< typename TValue >
-	class PlainView
+	class BasicPlainView
 	{
 	// Restrictions.
 	public:
@@ -48,15 +48,15 @@ namespace Internal
 
 	// Construction interface.
 	public:
-		inline PlainView()						= default;
-		inline PlainView( const PlainView& )	= default;
+		inline BasicPlainView()							= default;
+		inline BasicPlainView( const BasicPlainView& )	= default;
 
-		inline PlainView( PlainView&& other ) noexcept;
-		inline PlainView( ValuePointer memory, const size_t length );
+		inline BasicPlainView( BasicPlainView&& other ) noexcept;
+		inline BasicPlainView( ValuePointer memory, const size_t length );
 
 
-		inline PlainView& operator = ( const PlainView& ) = default;
-		inline PlainView& operator = ( PlainView&& other ) noexcept;
+		inline BasicPlainView& operator = ( const BasicPlainView& ) = default;
+		inline BasicPlainView& operator = ( BasicPlainView&& other ) noexcept;
 
 	// Public interface.
 	public:
@@ -65,7 +65,7 @@ namespace Internal
 
 
 		// Swap the content of views.
-		inline void Swap( PlainView& other );
+		inline void Swap( BasicPlainView& other );
 
 
 		// Checks the view is empty.

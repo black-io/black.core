@@ -20,7 +20,7 @@ namespace Internal
 		@tparam	TValue	Type of stored value.
 	*/
 	template< typename TValue >
-	class PlainVector
+	class BasicPlainVector
 	{
 	// Restrictions.
 	public:
@@ -58,21 +58,21 @@ namespace Internal
 
 	// Public lifetime management.
 	public:
-		inline PlainVector() = default;
+		inline BasicPlainVector() = default;
 
-		inline PlainVector( const PlainVector& other );
-		inline PlainVector( PlainVector&& other ) noexcept;
+		inline BasicPlainVector( const BasicPlainVector& other );
+		inline BasicPlainVector( BasicPlainVector&& other ) noexcept;
 
-		explicit inline PlainVector( const size_t length );
+		explicit inline BasicPlainVector( const size_t length );
 
-		inline PlainVector( const size_t length, ConstValueReference prototype );
-		inline PlainVector( ConstIterator begin, ConstIterator end );
+		inline BasicPlainVector( const size_t length, ConstValueReference prototype );
+		inline BasicPlainVector( ConstIterator begin, ConstIterator end );
 
-		inline ~PlainVector() noexcept;
+		inline ~BasicPlainVector() noexcept;
 
 
-		inline PlainVector& operator = ( const PlainVector& other );
-		inline PlainVector& operator = ( PlainVector&& other ) noexcept;
+		inline BasicPlainVector& operator = ( const BasicPlainVector& other );
+		inline BasicPlainVector& operator = ( BasicPlainVector&& other ) noexcept;
 
 	// Public interface.
 	public:
@@ -93,7 +93,7 @@ namespace Internal
 
 
 		// Swap the content of vectors.
-		inline void Swap( PlainVector& other );
+		inline void Swap( BasicPlainVector& other );
 
 
 		// Checks the container is empty.

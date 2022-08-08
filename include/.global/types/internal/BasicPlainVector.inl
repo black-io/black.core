@@ -12,7 +12,7 @@ inline namespace Types
 namespace Internal
 {
 	template< typename TValue >
-	inline PlainVector<TValue>::PlainVector( const PlainVector& other )
+	inline BasicPlainVector<TValue>::BasicPlainVector( const BasicPlainVector& other )
 	{
 		CRET( other.IsEmpty() );
 		SetLength( other.GetLength() );
@@ -20,7 +20,7 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline PlainVector<TValue>::PlainVector( PlainVector&& other ) noexcept
+	inline BasicPlainVector<TValue>::BasicPlainVector( BasicPlainVector&& other ) noexcept
 		: m_memory{ std::exchange( other.m_memory, nullptr ) }
 		, m_capacity{ std::exchange( other.m_capacity, 0 ) }
 		, m_length{ std::exchange( other.m_length, 0 ) }
@@ -28,33 +28,33 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline PlainVector<TValue>::PlainVector( const size_t length )
+	inline BasicPlainVector<TValue>::BasicPlainVector( const size_t length )
 	{
 		SetLength( length );
 	}
 
 	template< typename TValue >
-	inline PlainVector<TValue>::PlainVector( const size_t length, ConstValueReference prototype )
+	inline BasicPlainVector<TValue>::BasicPlainVector( const size_t length, ConstValueReference prototype )
 	{
 		SetCapacity( length );
 		ConstructValues( length, prototype );
 	}
 
 	template< typename TValue >
-	inline PlainVector<TValue>::PlainVector( ConstIterator begin, ConstIterator end )
+	inline BasicPlainVector<TValue>::BasicPlainVector( ConstIterator begin, ConstIterator end )
 	{
 		EXPECTS_DEBUG( ( !begin && !end ) || ( end >= begin ) );
 		CopyValues( begin, end - begin );
 	}
 
 	template< typename TValue >
-	inline PlainVector<TValue>::~PlainVector() noexcept
+	inline BasicPlainVector<TValue>::~BasicPlainVector() noexcept
 	{
 		Invalidate();
 	}
 
 	template< typename TValue >
-	inline PlainVector<TValue>& PlainVector<TValue>::operator=( const PlainVector<TValue>& other )
+	inline BasicPlainVector<TValue>& BasicPlainVector<TValue>::operator=( const BasicPlainVector<TValue>& other )
 	{
 		CRET( &other == this, *this );
 
@@ -66,7 +66,7 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline PlainVector<TValue>& PlainVector<TValue>::operator=( PlainVector<TValue>&& other ) noexcept
+	inline BasicPlainVector<TValue>& BasicPlainVector<TValue>::operator=( BasicPlainVector<TValue>&& other ) noexcept
 	{
 		CRET( &other == this, *this );
 
@@ -77,7 +77,7 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline void PlainVector<TValue>::Invalidate()
+	inline void BasicPlainVector<TValue>::Invalidate()
 	{
 		Black::SafeVectorDelete( m_memory );
 		m_length	= 0;
@@ -85,7 +85,7 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline void PlainVector<TValue>::SetLength( const size_t length )
+	inline void BasicPlainVector<TValue>::SetLength( const size_t length )
 	{
 		CRET( length == m_length );
 
@@ -98,14 +98,14 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline void PlainVector<TValue>::ReserveCapacity( const size_t capacity )
+	inline void BasicPlainVector<TValue>::ReserveCapacity( const size_t capacity )
 	{
 		CRET( capacity <= m_capacity );
 		SetCapacity( capacity );
 	}
 
 	template< typename TValue >
-	inline void PlainVector<TValue>::SetCapacity( const size_t capacity )
+	inline void BasicPlainVector<TValue>::SetCapacity( const size_t capacity )
 	{
 		CRET( capacity == m_capacity );
 
@@ -127,14 +127,14 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline void PlainVector<TValue>::ShrinkToFitLength()
+	inline void BasicPlainVector<TValue>::ShrinkToFitLength()
 	{
 		CRET( m_length == m_capacity );
 		SetCapacity( m_length );
 	}
 
 	template< typename TValue >
-	inline void PlainVector<TValue>::Swap( PlainVector<TValue>& other )
+	inline void BasicPlainVector<TValue>::Swap( BasicPlainVector<TValue>& other )
 	{
 		using std::swap;
 		swap( m_memory, other.m_memory );
@@ -143,26 +143,26 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline const bool PlainVector<TValue>::IsEmpty() const
+	inline const bool BasicPlainVector<TValue>::IsEmpty() const
 	{
 		return m_length == 0;
 	}
 
 	template< typename TValue >
-	inline const bool PlainVector<TValue>::IsInside( ConstIterator value ) const
+	inline const bool BasicPlainVector<TValue>::IsInside( ConstIterator value ) const
 	{
 		return ( value >= GetBegin() ) && ( value < GetEnd() );
 	}
 
 	template< typename TValue >
-	inline TValue& PlainVector<TValue>::GetValueAt( const size_t index )
+	inline TValue& BasicPlainVector<TValue>::GetValueAt( const size_t index )
 	{
 		EXPECTS_DEBUG( index < m_length );
 		return m_memory[ index ];
 	}
 
 	template< typename TValue >
-	inline const TValue& PlainVector<TValue>::GetValueAt( const size_t index ) const
+	inline const TValue& BasicPlainVector<TValue>::GetValueAt( const size_t index ) const
 	{
 		EXPECTS_DEBUG( index < m_length );
 		return m_memory[ index ];
@@ -170,7 +170,7 @@ namespace Internal
 
 	template< typename TValue >
 	template< typename... TArguments >
-	inline void PlainVector<TValue>::ConstructValues( const size_t length, const TArguments&... arguments )
+	inline void BasicPlainVector<TValue>::ConstructValues( const size_t length, const TArguments&... arguments )
 	{
 		EXPECTS_DEBUG( length != 0 );
 
@@ -184,7 +184,7 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline void PlainVector<TValue>::CopyValues( ConstValuePointer elements, const size_t elements_length )
+	inline void BasicPlainVector<TValue>::CopyValues( ConstValuePointer elements, const size_t elements_length )
 	{
 		EXPECTS_DEBUG( ( elements_length != 0 ) || !elements );
 

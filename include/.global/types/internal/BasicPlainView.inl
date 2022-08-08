@@ -12,14 +12,14 @@ inline namespace Types
 namespace Internal
 {
 	template< typename TValue >
-	inline PlainView<TValue>::PlainView( PlainView<TValue>&& other ) noexcept
+	inline BasicPlainView<TValue>::BasicPlainView( BasicPlainView<TValue>&& other ) noexcept
 		: m_memory{ std::exchange( other.m_memory, nullptr ) }
 		, m_length{ std::exchange( other.m_length, 0 ) }
 	{
 	}
 
 	template< typename TValue >
-	PlainView<TValue>::PlainView( ValuePointer memory, const size_t length )
+	BasicPlainView<TValue>::BasicPlainView( ValuePointer memory, const size_t length )
 		: m_memory{ memory }
 		, m_length{ length }
 	{
@@ -27,7 +27,7 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline PlainView<TValue>& PlainView<TValue>::operator=( PlainView<TValue>&& other ) noexcept
+	inline BasicPlainView<TValue>& BasicPlainView<TValue>::operator=( BasicPlainView<TValue>&& other ) noexcept
 	{
 		CRET( &other == this, *this );
 
@@ -38,14 +38,14 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline void PlainView<TValue>::Invalidate()
+	inline void BasicPlainView<TValue>::Invalidate()
 	{
 		m_memory	= nullptr;
 		m_length	= 0;
 	}
 
 	template< typename TValue >
-	inline void PlainView<TValue>::Swap( PlainView& other )
+	inline void BasicPlainView<TValue>::Swap( BasicPlainView& other )
 	{
 		using std::swap;
 		swap( m_memory, other.m_memory );
@@ -53,19 +53,19 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline const bool PlainView<TValue>::IsEmpty() const
+	inline const bool BasicPlainView<TValue>::IsEmpty() const
 	{
 		return m_length == 0;
 	}
 
 	template< typename TValue >
-	inline const bool PlainView<TValue>::IsInside( Iterator value ) const
+	inline const bool BasicPlainView<TValue>::IsInside( Iterator value ) const
 	{
 		return ( value >= GetBegin() ) && ( value < GetEnd() );
 	}
 
 	template< typename TValue >
-	inline TValue& PlainView<TValue>::GetValueAt( const size_t index ) const
+	inline TValue& BasicPlainView<TValue>::GetValueAt( const size_t index ) const
 	{
 		EXPECTS( index < m_length );
 		return m_memory[ index ];

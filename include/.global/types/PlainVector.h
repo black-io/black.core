@@ -20,20 +20,20 @@ inline namespace Types
 		@tparam	TValue	Type of stored value.
 	*/
 	template< typename TValue >
-	class PlainVector final : public Black::StandardDynamicArrayFacade<Internal::PlainVector<TValue>>
+	class PlainVector final : public Black::StandardDynamicArrayFacade<Internal::BasicPlainVector<TValue>>
 	{
 	// Public aliases.
 	public:
-		using typename Internal::PlainVector<TValue>::Iterator;
-		using typename Internal::PlainVector<TValue>::ConstIterator;
-		using typename Internal::PlainVector<TValue>::ConstValuePointer;
+		using typename Internal::BasicPlainVector<TValue>::Iterator;
+		using typename Internal::BasicPlainVector<TValue>::ConstIterator;
+		using typename Internal::BasicPlainVector<TValue>::ConstValuePointer;
 
 
-		using Internal::PlainVector<TValue>::GetValueAt;
-		using Internal::PlainVector<TValue>::IsEmpty;
-		using Internal::PlainVector<TValue>::GetMemory;
-		using Internal::PlainVector<TValue>::GetCapacity;
-		using Internal::PlainVector<TValue>::GetLength;
+		using Internal::BasicPlainVector<TValue>::GetValueAt;
+		using Internal::BasicPlainVector<TValue>::IsEmpty;
+		using Internal::BasicPlainVector<TValue>::GetMemory;
+		using Internal::BasicPlainVector<TValue>::GetCapacity;
+		using Internal::BasicPlainVector<TValue>::GetLength;
 
 	// Friendship interface.
 	public:
@@ -54,7 +54,7 @@ inline namespace Types
 
 	// Public lifetime management.
 	public:
-		using Black::StandardDynamicArrayFacade<Internal::PlainVector<TValue>>::StandardDynamicArrayFacade;
+		using Black::StandardDynamicArrayFacade<Internal::BasicPlainVector<TValue>>::StandardDynamicArrayFacade;
 
 
 		PlainVector( ConstValuePointer elements, const size_t length ) : PlainVector{ elements, elements + length } {};
