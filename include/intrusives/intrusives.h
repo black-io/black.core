@@ -23,11 +23,11 @@ namespace Internal
 
 // Internal stuff.
 #include "internal/SinglyLinkedListSlot.h"
-#include "internal/SinglyLinkedListIterator.h"
+#include "internal/SinglyLinkedListCursor.h"
 #include "internal/SinglyLinkedList.h"
 
 #include "internal/DoublyLinkedListSlot.h"
-#include "internal/DoublyLinkedListIterator.h"
+#include "internal/DoublyLinkedListCursor.h"
 #include "internal/DoublyLinkedList.h"
 
 #include "internal/IntrusiveTraits.h"
