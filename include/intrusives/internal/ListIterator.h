@@ -17,7 +17,7 @@ namespace Internal
 	// Friendship declarations.
 	public:
 		// Grant access to private state.
-		friend class Black::IntrusiveList<TValue, SLOT_POINTER>;
+		friend class BasicIntrusiveList<TValue, SLOT_POINTER>;
 
 	// Lifetime management.
 	public:

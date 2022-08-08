@@ -18,7 +18,7 @@ namespace Internal
 	// Friendship declarations.
 	public:
 		// Grant access to private state and constructor.
-		friend class Black::IntrusiveForwardList<TValue, SLOT_POINTER>;
+		friend class BasicIntrusiveForwardList<TValue, SLOT_POINTER>;
 
 		// Grant access to private state and constructor.
 		friend class ForwardListIterator<TValue, SLOT_POINTER>;
