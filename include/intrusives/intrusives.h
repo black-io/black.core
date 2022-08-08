@@ -39,10 +39,12 @@ namespace Internal
 
 #include "internal/ForwardListConstIterator.h"
 #include "internal/ForwardListIterator.h"
+#include "internal/BasicIntrusiveForwardList.h"
 #include "IntrusiveForwardList.h"
 
 #include "internal/ListConstIterator.h"
 #include "internal/ListIterator.h"
+#include "internal/BasicIntrusiveList.h"
 #include "IntrusiveList.h"
 
 #include "internal/BasicInterconnectionSlot.h"
@@ -53,11 +55,11 @@ namespace Internal
 // Deferred implementations
 #include "internal/InterconnectionSlot.inl"
 
-#include "IntrusiveList.inl"
+#include "internal/BasicIntrusiveList.inl"
 #include "internal/ListIterator.inl"
 #include "internal/ListConstIterator.inl"
 
-#include "IntrusiveForwardList.inl"
+#include "internal/BasicIntrusiveForwardList.inl"
 #include "internal/ForwardListIterator.inl"
 #include "internal/ForwardListConstIterator.inl"
 
