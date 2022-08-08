@@ -12,7 +12,7 @@ namespace Internal
 	/**
 	*/
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	class BasicIntrusiveForwardList
+	class BasicIntrusiveForwardList : private SinglyLinkedList
 	{
 	// Restrictions.
 	public:
@@ -47,9 +47,6 @@ namespace Internal
 		inline BasicIntrusiveForwardList()								= default;
 		inline BasicIntrusiveForwardList( BasicIntrusiveForwardList&& )	= default;
 		inline ~BasicIntrusiveForwardList()								= default;
-
-
-		inline BasicIntrusiveForwardList& operator = ( BasicIntrusiveForwardList&& )	= default;
 
 	// Public interface.
 	public:
@@ -100,10 +97,6 @@ namespace Internal
 	private:
 		// Traits for intrusive operations.
 		using Traits = Internal::IntrusiveTraits<TValue, Black::IntrusiveForwardListSlot, SLOT_POINTER>;
-
-	// Private state.
-	private:
-		Internal::SinglyLinkedList m_slots; // Inner container for intrusive slots.
 	};
 }
 }
