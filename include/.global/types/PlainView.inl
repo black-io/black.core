@@ -9,34 +9,27 @@ inline namespace Global
 {
 inline namespace Types
 {
-	template< typename TStoredType >
-	PlainView<TStoredType>::PlainView( PlainView<TStoredType>&& other )
+namespace Internal
+{
+	template< typename TValue >
+	inline PlainView<TValue>::PlainView( PlainView<TValue>&& other ) noexcept
+		: m_memory{ std::exchange( other.m_memory, nullptr ) }
+		, m_length{ std::exchange( other.m_length, 0 ) }
 	{
-		Swap( other );
 	}
 
-	template< typename TStoredType >
-	PlainView<TStoredType>::PlainView( typename PlainView<TStoredType>::Element* head, typename PlainView<TStoredType>::Element* tail )
-		: m_head{ head }
-		, m_tail{ tail }
-		, m_length{ static_cast<size_t>( tail - head ) }
-	{
-		EXPECTS( ( !head && !tail ) || ( tail >= head ) );
-	}
-
-	template< typename TStoredType >
-	PlainView<TStoredType>::PlainView( typename PlainView<TStoredType>::Element* head, const size_t length )
-		: m_head{ head }
-		, m_tail{ head + length }
+	template< typename TValue >
+	PlainView<TValue>::PlainView( ValuePointer memory, const size_t length )
+		: m_memory{ memory }
 		, m_length{ length }
 	{
-		EXPECTS( ( head != nullptr ) || ( length == 0 ) );
+		EXPECTS( ( memory != nullptr ) || ( length == 0 ) );
 	}
 
-	template< typename TStoredType >
-	inline PlainView<TStoredType>& PlainView<TStoredType>::operator=( PlainView<TStoredType>&& other )
+	template< typename TValue >
+	inline PlainView<TValue>& PlainView<TValue>::operator=( PlainView<TValue>&& other ) noexcept
 	{
-		CRET( *this == other, *this );
+		CRET( &other == this, *this );
 
 		Invalidate();
 		Swap( other );
@@ -44,53 +37,51 @@ inline namespace Types
 		return *this;
 	}
 
-	template< typename TStoredType >
-	inline void PlainView<TStoredType>::Invalidate()
+	template< typename TValue >
+	inline void PlainView<TValue>::Invalidate()
 	{
-		m_head		= nullptr;
-		m_tail		= nullptr;
+		m_memory	= nullptr;
 		m_length	= 0;
 	}
 
-	template< typename TStoredType >
-	inline void PlainView<TStoredType>::Swap( PlainView& other )
+	template< typename TValue >
+	inline void PlainView<TValue>::FillWith( const Value& value )
+	{
+		CRET( IsEmpty() );
+
+		for( TValue* cursor = m_memory; cursor < ( m_memory + m_length ); ++cursor )
+		{
+			new( cursor ) TValue{ value };
+		}
+	}
+
+	template< typename TValue >
+	inline void PlainView<TValue>::Swap( PlainView& other )
 	{
 		using std::swap;
-		swap( m_head, other.m_head );
-		swap( m_tail, other.m_tail );
+		swap( m_memory, other.m_memory );
 		swap( m_length, other.m_length );
 	}
 
-	template< typename TStoredType >
-	inline const bool PlainView<TStoredType>::IsEmpty() const
+	template< typename TValue >
+	inline const bool PlainView<TValue>::IsEmpty() const
 	{
 		return m_length == 0;
 	}
 
-	template< typename TStoredType >
-	inline const bool PlainView<TStoredType>::IsInside( Iterator value ) const
+	template< typename TValue >
+	inline const bool PlainView<TValue>::IsInside( Iterator value ) const
 	{
-		return ( value >= m_head ) && ( value < m_tail );
+		return ( value >= GetBegin() ) && ( value < GetEnd() );
 	}
 
-	template< typename TStoredType >
-	inline TStoredType& PlainView<TStoredType>::GetElement( const size_t index ) const
+	template< typename TValue >
+	inline TValue& PlainView<TValue>::GetValueAt( const size_t index ) const
 	{
 		EXPECTS( index < m_length );
-		return m_head[ index ];
+		return m_memory[ index ];
 	}
-
-	template< typename TStoredType >
-	inline const bool PlainView<TStoredType>::operator==( const PlainView<TStoredType>& other ) const
-	{
-		return ( m_head == other.m_head ) && ( m_length == other.m_length );
-	}
-
-	template< typename TStoredType >
-	inline const bool PlainView<TStoredType>::operator!=( const PlainView<TStoredType>& other ) const
-	{
-		return ( m_head != other.m_head ) || ( m_length != other.m_length );
-	}
+}
 }
 }
 }
