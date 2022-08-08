@@ -45,6 +45,16 @@ inline namespace Intrusives
 			Internal::BasicIntrusiveList<TValue, SLOT_POINTER>
 		>::StandardListFacade;
 
+
+		inline IntrusiveList& operator = ( IntrusiveList&& other )
+		{
+			// End the lifetime of current list.
+			IntrusiveList::~IntrusiveList();
+
+			// Start the lifetime of new list by moving the given `other`.
+			return *new( this ) IntrusiveList{ std::move( other ) };
+		}
+
 	// Public interface.
 	public:
 		inline explicit operator const bool () const	{ return !IsEmpty(); };
