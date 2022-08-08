@@ -30,10 +30,10 @@ namespace Internal
 		// Viewed value.
 		using value_type = const TValue;
 
-		// Pointer to stored value.
+		// Pointer to viewed value.
 		using pointer = const TValue*;
 
-		// Reference to Viewed value.
+		// Reference to viewed value.
 		using reference = const TValue&;
 
 		// Category of iterator.

@@ -27,10 +27,10 @@ namespace Internal
 		// Viewed value.
 		using value_type = TValue;
 
-		// Pointer to stored value.
+		// Pointer to viewed value.
 		using pointer = TValue*;
 
-		// Reference to Viewed value.
+		// Reference to viewed value.
 		using reference = TValue&;
 
 		// Category of iterator.
