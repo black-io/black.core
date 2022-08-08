@@ -20,7 +20,7 @@ inline namespace Types
 		@tparam	TValue	Type of stored value.
 	*/
 	template< typename TValue >
-	class PlainVector final : public Black::StandardDynamicArrayFacade<Internal::BasicPlainVector<TValue>>
+	class PlainVector final : public Black::StandardDynamicArrayFacade<PlainVector<TValue>, Internal::BasicPlainVector<TValue>>
 	{
 	// Public aliases.
 	public:
@@ -54,7 +54,7 @@ inline namespace Types
 
 	// Public lifetime management.
 	public:
-		using Black::StandardDynamicArrayFacade<Internal::BasicPlainVector<TValue>>::StandardDynamicArrayFacade;
+		using Black::StandardDynamicArrayFacade<PlainVector<TValue>, Internal::BasicPlainVector<TValue>>::StandardDynamicArrayFacade;
 
 
 		PlainVector( ConstValuePointer elements, const size_t length ) : PlainVector{ elements, elements + length } {};

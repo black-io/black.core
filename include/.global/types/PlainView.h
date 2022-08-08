@@ -21,7 +21,7 @@ inline namespace Types
 		@tparam	TBalue	Type of values in view.
 	*/
 	template< typename TValue >
-	class PlainView : public Black::StandardArrayFacade<Internal::BasicPlainView<TValue>, false>
+	class PlainView : public Black::StandardArrayFacade<PlainView<TValue>, Internal::BasicPlainView<TValue>, false>
 	{
 	// Public aliases.
 	public:
@@ -45,7 +45,7 @@ inline namespace Types
 
 	// Public lifetime management.
 	public:
-		using Black::StandardArrayFacade<Internal::BasicPlainView<TValue>, false>::StandardArrayFacade;
+		using Black::StandardArrayFacade<PlainView<TValue>, Internal::BasicPlainView<TValue>, false>::StandardArrayFacade;
 
 
 		PlainView( Iterator begin, Iterator end ) : PlainView{ begin, std::distance( begin, end ) } {};
