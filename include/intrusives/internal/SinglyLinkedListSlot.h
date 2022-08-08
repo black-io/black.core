@@ -21,7 +21,7 @@ namespace Internal
 	// Friendship declarations.
 	public:
 		// Grant the access to private interface.
-		friend class SinglyLinkedListIterator;
+		friend class SinglyLinkedListCursor;
 
 		// Grant the access to private interface.
 		friend class SinglyLinkedList;
