@@ -10,37 +10,37 @@ inline namespace Intrusives
 namespace Internal
 {
 	/**
-		@brief	Regular iterator for intrusive doubly-linked list.
+		@brief	Regular cursor for intrusive doubly-linked list.
 	*/
-	class DoublyLinkedListIterator final
+	class DoublyLinkedListCursor final
 	{
 	// Lifetime management.
 	public:
-		DoublyLinkedListIterator()											= default;
-		DoublyLinkedListIterator( const DoublyLinkedListIterator& other )	= default;
-		~DoublyLinkedListIterator() noexcept								= default;
+		DoublyLinkedListCursor()										= default;
+		DoublyLinkedListCursor( const DoublyLinkedListCursor& other )	= default;
+		~DoublyLinkedListCursor() noexcept								= default;
 
-		DoublyLinkedListIterator( DoublyLinkedListIterator&& other ) noexcept;
-		explicit DoublyLinkedListIterator( DoublyLinkedListSlot* slot ) noexcept;
+		DoublyLinkedListCursor( DoublyLinkedListCursor&& other ) noexcept;
+		explicit DoublyLinkedListCursor( DoublyLinkedListSlot* slot ) noexcept;
 
 
-		DoublyLinkedListIterator& operator = ( const DoublyLinkedListIterator& other )	= default;
+		DoublyLinkedListCursor& operator = ( const DoublyLinkedListCursor& other )	= default;
 
-		DoublyLinkedListIterator& operator = ( DoublyLinkedListIterator&& other ) noexcept;
+		DoublyLinkedListCursor& operator = ( DoublyLinkedListCursor&& other ) noexcept;
 
 	// Public interface.
 	public:
-		// Shift the iterator to previous slot in list.
+		// Shift the cursor to previous slot in list.
 		void ShiftBack();
 
-		// Shift the iterator to next slot in list.
+		// Shift the cursor to next slot in list.
 		void ShiftNext();
 
 
-		// Whether the iterator still valid.
+		// Whether the cursor still valid.
 		const bool IsValid() const;
 
-		// Whether the iterator points to end of list.
+		// Whether the cursor points to end of list.
 		const bool IsEnd() const;
 
 

@@ -12,51 +12,50 @@ namespace Internal
 namespace
 {
 	// Logging channel.
-	constexpr const char* LOG_CHANNEL = "Black/Intrusives/DoublyLinkedList/Iterator";
+	constexpr const char* LOG_CHANNEL = "Black/Intrusives/DoublyLinkedList/Cursor";
 }
 
 
-	DoublyLinkedListIterator::DoublyLinkedListIterator( DoublyLinkedListIterator&& other ) noexcept
+	DoublyLinkedListCursor::DoublyLinkedListCursor( DoublyLinkedListCursor&& other ) noexcept
 		: m_slot{ std::exchange( other.m_slot, nullptr ) }
 	{
 	}
 
-	DoublyLinkedListIterator::DoublyLinkedListIterator( DoublyLinkedListSlot* slot ) noexcept
+	DoublyLinkedListCursor::DoublyLinkedListCursor( DoublyLinkedListSlot* slot ) noexcept
 		: m_slot{ slot }
 	{
 	}
 
-	DoublyLinkedListIterator& DoublyLinkedListIterator::operator=( DoublyLinkedListIterator&& other ) noexcept
+	DoublyLinkedListCursor& DoublyLinkedListCursor::operator=( DoublyLinkedListCursor&& other ) noexcept
 	{
 		m_slot = std::exchange( other.m_slot, nullptr );
 		return *this;
 	}
 
-	void DoublyLinkedListIterator::ShiftBack()
+	void DoublyLinkedListCursor::ShiftBack()
 	{
 		EXPECTS_DEBUG( m_slot != nullptr );
 		EXPECTS_DEBUG( m_slot->m_previous != nullptr );
 		m_slot = m_slot->m_previous;
 	}
 
-	void DoublyLinkedListIterator::ShiftNext()
+	void DoublyLinkedListCursor::ShiftNext()
 	{
 		EXPECTS_DEBUG( IsValid() );
-		EXPECTS_DEBUG( m_slot->m_next != nullptr );
 		m_slot = m_slot->m_next;
 	}
 
-	const bool DoublyLinkedListIterator::IsValid() const
+	const bool DoublyLinkedListCursor::IsValid() const
 	{
 		return ( m_slot != nullptr ) && !m_slot->IsEndSlot();
 	}
 
-	const bool DoublyLinkedListIterator::IsEnd() const
+	const bool DoublyLinkedListCursor::IsEnd() const
 	{
 		return ( m_slot != nullptr ) && m_slot->IsEndSlot();
 	}
 
-	DoublyLinkedListSlot& DoublyLinkedListIterator::GetSlot() const
+	DoublyLinkedListSlot& DoublyLinkedListCursor::GetSlot() const
 	{
 		EXPECTS_DEBUG( IsValid() );
 		return *m_slot;
