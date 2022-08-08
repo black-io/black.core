@@ -46,15 +46,6 @@ namespace
 		Clear();
 	}
 
-	DoublyLinkedList& DoublyLinkedList::operator=( DoublyLinkedList&& other ) noexcept
-	{
-		// End the lifetime of current list.
-		DoublyLinkedList::~DoublyLinkedList();
-
-		// Start the lifetime of new list by moving the given `other`.
-		return *new( this ) DoublyLinkedList{ std::move( other ) };
-	}
-
 	void DoublyLinkedList::Clear()
 	{
 		CRET( IsEmpty() );

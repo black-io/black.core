@@ -12,7 +12,7 @@ namespace Internal
 	/**
 		@brief	Intrusive doubly-linked list.
 	*/
-	class DoublyLinkedList final : private Black::NonCopyable
+	class DoublyLinkedList : private Black::NonCopyable
 	{
 	// Friendship declarations.
 	public:
@@ -33,9 +33,6 @@ namespace Internal
 
 		DoublyLinkedList( DoublyLinkedList&& other ) noexcept;
 		~DoublyLinkedList() noexcept;
-
-
-		DoublyLinkedList& operator = ( DoublyLinkedList&& other ) noexcept;
 
 	// Public interface.
 	public:
