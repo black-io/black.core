@@ -85,7 +85,7 @@ namespace
 		--m_size;
 	}
 
-	void SinglyLinkedList::InsertAfter( Iterator position, Slot& slot )
+	void SinglyLinkedList::InsertAfter( Cursor position, Slot& slot )
 	{
 		EXPECTS_DEBUG( !IsEmpty() );
 		EXPECTS_DEBUG( position.IsValid() );
@@ -101,7 +101,7 @@ namespace
 		++m_size;
 	}
 
-	void SinglyLinkedList::EraseAfter( Iterator position )
+	void SinglyLinkedList::EraseAfter( Cursor position )
 	{
 		EXPECTS_DEBUG( !IsEmpty() );
 		EXPECTS_DEBUG( position.IsValid() );
@@ -167,7 +167,7 @@ namespace
 	{
 		EXPECTS_DEBUG( !slot.IsEndSlot() );
 
-		Iterator preceder{ GetBegin() };
+		Cursor preceder{ GetBegin() };
 		while( preceder->m_next != &slot )
 		{
 			preceder.ShiftNext();

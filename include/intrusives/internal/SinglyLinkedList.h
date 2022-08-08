@@ -24,8 +24,8 @@ namespace Internal
 		// Regular slot of list.
 		using Slot = SinglyLinkedListSlot;
 
-		// Regular iterator of list.
-		using Iterator = SinglyLinkedListIterator;
+		// Regular cursor of list.
+		using Cursor = SinglyLinkedListCursor;
 
 	// Lifetime management.
 	public:
@@ -46,21 +46,21 @@ namespace Internal
 		// Remove the current head slot from list. Expects that list is not empty.
 		void PopFront();
 
-		// Insert the slot after the given iterator. Expects the iterator is valid. Previous link of slot will be resolved safely.
-		void InsertAfter( Iterator position, Slot& slot );
+		// Insert the slot after the given position. Expects the position is valid. Previous link of slot will be resolved safely.
+		void InsertAfter( Cursor position, Slot& slot );
 
-		// Erase the slot after given iterator. Expects the iterator is valid.
-		void EraseAfter( Iterator position );
+		// Erase the slot after given position. Expects the position is valid.
+		void EraseAfter( Cursor position );
 
 
 		// Get the slot at the head of list. Expects that list is not empty.
 		Slot& GetFrontSlot() const;
 
-		// Get the iterator to beginning of list. May return invalid iterator.
-		inline Iterator GetBegin() const		{ return Iterator{ m_head }; };
+		// Get the cursor to beginning of list. May return invalid cursor.
+		inline Cursor GetBegin() const			{ return Cursor{ m_head }; };
 
-		// Get the iterator to ending of list. Always return invalid iterator.
-		inline Iterator GetEnd() const			{ return Iterator{ &m_end }; };
+		// Get the cursor to ending of list. Always return invalid cursor.
+		inline Cursor GetEnd() const			{ return Cursor{ &m_end }; };
 
 
 		// Get the size of list.
