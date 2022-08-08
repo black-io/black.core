@@ -83,8 +83,8 @@ inline namespace Intrusives
 
 	// Private non-state.
 	private:
-		mutable DummySlot	m_begin;
-		mutable DummySlot	m_end;
+		mutable DummySlot	m_begin;	// Beginning slot of internal list.
+		mutable DummySlot	m_end;		// Ending slot of internal list.
 	};
 }
 }
