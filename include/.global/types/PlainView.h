@@ -25,7 +25,6 @@ inline namespace Types
 	{
 	// Public aliases.
 	public:
-		using typename Internal::BasicPlainView<TValue>::Value;
 		using typename Internal::BasicPlainView<TValue>::Iterator;
 
 
@@ -55,26 +54,26 @@ inline namespace Types
 		PlainView( const PlainView<TOtherValue>& other ) : PlainView( other.GetBegin(), other.GetEnd() ) {};
 
 		template< size_t ARRAY_LENGTH >
-		PlainView( Value (&elements)[ ARRAY_LENGTH ] ) : PlainView{ elements, ARRAY_LENGTH } {};
+		PlainView( TValue (&elements)[ ARRAY_LENGTH ] ) : PlainView{ elements, ARRAY_LENGTH } {};
 
 		template< size_t ARRAY_LENGTH >
-		PlainView( std::array<Value, ARRAY_LENGTH>& elements ) : PlainView{ elements.data(), ARRAY_LENGTH } {};
+		PlainView( std::array<TValue, ARRAY_LENGTH>& elements ) : PlainView{ elements.data(), ARRAY_LENGTH } {};
 
 		template< typename TAllocator >
-		PlainView( std::vector<Value, TAllocator>& elements ) : PlainView{ elements.data(), elements.size() } {};
+		PlainView( std::vector<TValue, TAllocator>& elements ) : PlainView{ elements.data(), elements.size() } {};
 
 
 		template< typename TOtherValue, typename = std::enable_if_t<std::is_convertible_v<TOtherValue*, TValue*>> >
 		inline PlainView& operator = ( const PlainView<TOtherValue>& other )		{ return CopyAndSwap( *this, other ); };
 
 		template< size_t ARRAY_LENGTH >
-		inline PlainView& operator = ( Value elements[ ARRAY_LENGTH ] )				{ return CopyAndSwap( *this, elements ); };
+		inline PlainView& operator = ( TValue elements[ ARRAY_LENGTH ] )			{ return CopyAndSwap( *this, elements ); };
 
 		template< size_t ARRAY_LENGTH >
-		inline PlainView& operator = ( std::array<Value, ARRAY_LENGTH>& elements )	{ return CopyAndSwap( *this, elements ); };
+		inline PlainView& operator = ( std::array<TValue, ARRAY_LENGTH>& elements )	{ return CopyAndSwap( *this, elements ); };
 
 		template< typename TAllocator >
-		inline PlainView& operator = ( std::vector<Value, TAllocator>& elements )	{ return CopyAndSwap( *this, elements ); };
+		inline PlainView& operator = ( std::vector<TValue, TAllocator>& elements )	{ return CopyAndSwap( *this, elements ); };
 
 	// Public interface.
 	public:
