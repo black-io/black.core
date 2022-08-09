@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace List
+{
 	/**
 		@brief	Element slot for intrusive doubly-linked list.
 
@@ -70,6 +72,7 @@ namespace Internal
 		DoublyLinkedListSlot*	m_previous	= nullptr;	// The slot hosted before this.
 		DoublyLinkedListSlot*	m_next		= nullptr;	// The slot hosted after this.
 	};
+}
 }
 }
 }

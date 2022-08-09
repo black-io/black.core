@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace Interconnection
+{
 	/**
 		@brief	The most basic functionality for slot of interconnection.
 
@@ -82,6 +84,7 @@ namespace Internal
 		BasicInterconnectionSlot* m_previous	= nullptr;	// Previous slot in interconnection.
 		BasicInterconnectionSlot* m_next		= nullptr;	// Next slot in interconnection.
 	};
+}
 }
 }
 }

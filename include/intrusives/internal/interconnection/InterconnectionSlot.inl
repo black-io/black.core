@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace Interconnection
+{
 	template< typename THost >
 	inline InterconnectionSlot<THost>::InterconnectionSlot( const InterconnectionSlot& other )
 		: BasicInterconnectionSlot{ other }
@@ -46,6 +48,7 @@ namespace Internal
 	{
 		Detach();
 	}
+}
 }
 }
 }

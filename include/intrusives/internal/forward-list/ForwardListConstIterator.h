@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace ForwardList
+{
 	/**
 		@brief	Regular iterator for constant intrusive forward list.
 	*/
@@ -75,6 +77,7 @@ namespace Internal
 	private:
 		SinglyLinkedListCursor m_cursor; // Cursor for inner list.
 	};
+}
 }
 }
 }

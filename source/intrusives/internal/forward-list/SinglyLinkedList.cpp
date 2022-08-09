@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace ForwardList
+{
 namespace
 {
 	// Logging channel.
@@ -175,6 +177,7 @@ namespace
 
 		return *preceder;
 	}
+}
 }
 }
 }

@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace ForwardList
+{
 	/**
 		@brief	Intrusive singly-linked list.
 	*/
@@ -91,6 +93,7 @@ namespace Internal
 	private:
 		mutable SinglyLinkedListSlot	m_end{ *this };	// The end of list.
 	};
+}
 }
 }
 }

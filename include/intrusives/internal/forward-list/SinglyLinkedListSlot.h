@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace ForwardList
+{
 	/**
 		@brief	Element slot for intrusive singly-linked list.
 
@@ -69,6 +71,7 @@ namespace Internal
 		SinglyLinkedList*		m_host	= nullptr;	// The host list of slot.
 		SinglyLinkedListSlot*	m_next	= nullptr;	// The slot hosted after this.
 	};
+}
 }
 }
 }

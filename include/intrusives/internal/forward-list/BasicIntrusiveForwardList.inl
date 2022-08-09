@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace ForwardList
+{
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	inline void BasicIntrusiveForwardList<TValue, SLOT_POINTER>::Clear()
 	{
@@ -86,6 +88,7 @@ namespace Internal
 	{
 		return SinglyLinkedList::IsEmpty();
 	}
+}
 }
 }
 }

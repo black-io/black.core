@@ -22,13 +22,13 @@ namespace Internal
 #include "internal/forwards.h"
 
 // Internal stuff.
-#include "internal/SinglyLinkedListSlot.h"
-#include "internal/SinglyLinkedListCursor.h"
-#include "internal/SinglyLinkedList.h"
+#include "internal/forward-list/SinglyLinkedListSlot.h"
+#include "internal/forward-list/SinglyLinkedListCursor.h"
+#include "internal/forward-list/SinglyLinkedList.h"
 
-#include "internal/DoublyLinkedListSlot.h"
-#include "internal/DoublyLinkedListCursor.h"
-#include "internal/DoublyLinkedList.h"
+#include "internal/list/DoublyLinkedListSlot.h"
+#include "internal/list/DoublyLinkedListCursor.h"
+#include "internal/list/DoublyLinkedList.h"
 
 #include "internal/IntrusiveTraits.h"
 
@@ -37,30 +37,30 @@ namespace Internal
 #include "forwards.h"
 #include "internal/forwards.templates.h"
 
-#include "internal/ForwardListConstIterator.h"
-#include "internal/ForwardListIterator.h"
-#include "internal/BasicIntrusiveForwardList.h"
+#include "internal/forward-list/ForwardListConstIterator.h"
+#include "internal/forward-list/ForwardListIterator.h"
+#include "internal/forward-list/BasicIntrusiveForwardList.h"
 #include "IntrusiveForwardList.h"
 
-#include "internal/ListConstIterator.h"
-#include "internal/ListIterator.h"
-#include "internal/BasicIntrusiveList.h"
+#include "internal/list/ListConstIterator.h"
+#include "internal/list/ListIterator.h"
+#include "internal/list/BasicIntrusiveList.h"
 #include "IntrusiveList.h"
 
-#include "internal/BasicInterconnectionSlot.h"
-#include "internal/InterconnectionSlotDummy.h"
-#include "internal/InterconnectionSlot.h"
+#include "internal/interconnection/BasicInterconnectionSlot.h"
+#include "internal/interconnection/InterconnectionSlotDummy.h"
+#include "internal/interconnection/InterconnectionSlot.h"
 #include "Interconnection.h"
 
 // Deferred implementations
-#include "internal/InterconnectionSlot.inl"
+#include "internal/interconnection/InterconnectionSlot.inl"
 
-#include "internal/BasicIntrusiveList.inl"
-#include "internal/ListIterator.inl"
-#include "internal/ListConstIterator.inl"
+#include "internal/list/BasicIntrusiveList.inl"
+#include "internal/list/ListIterator.inl"
+#include "internal/list/ListConstIterator.inl"
 
-#include "internal/BasicIntrusiveForwardList.inl"
-#include "internal/ForwardListIterator.inl"
-#include "internal/ForwardListConstIterator.inl"
+#include "internal/forward-list/BasicIntrusiveForwardList.inl"
+#include "internal/forward-list/ForwardListIterator.inl"
+#include "internal/forward-list/ForwardListConstIterator.inl"
 
 #include "internal/IntrusiveTraits.inl"

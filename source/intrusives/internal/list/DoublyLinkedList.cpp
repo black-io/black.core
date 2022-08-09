@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace List
+{
 namespace
 {
 	// Logging channel.
@@ -229,6 +231,7 @@ namespace
 		EXPECTS_DEBUG( m_size > 0 );
 		--m_size;
 	}
+}
 }
 }
 }

@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace ForwardList
+{
 	/**
 		@brief	Regular cursor for intrusive singly-linked list.
 	*/
@@ -55,6 +57,7 @@ namespace Internal
 	private:
 		SinglyLinkedListSlot* m_slot = nullptr; // Currently observed slot in list.
 	};
+}
 }
 }
 }

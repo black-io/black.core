@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace List
+{
 	/**
 		@brief	Regular iterator for intrusive list.
 	*/
@@ -78,6 +80,7 @@ namespace Internal
 	private:
 		DoublyLinkedListCursor m_cursor; // Cursor for inner list.
 	};
+}
 }
 }
 }

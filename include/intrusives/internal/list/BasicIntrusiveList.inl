@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace List
+{
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
 	inline void BasicIntrusiveList<TValue, SLOT_POINTER>::Clear()
 	{
@@ -122,6 +124,7 @@ namespace Internal
 	{
 		return DoublyLinkedList::IsEmpty();
 	}
+}
 }
 }
 }

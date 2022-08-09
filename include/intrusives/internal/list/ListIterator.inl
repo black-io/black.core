@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace List
+{
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
 	inline ListIterator<TValue, SLOT_POINTER>& ListIterator<TValue, SLOT_POINTER>::operator++()
 	{
@@ -76,6 +78,7 @@ namespace Internal
 		: m_cursor{ std::move( cursor ) }
 	{
 	}
+}
 }
 }
 }

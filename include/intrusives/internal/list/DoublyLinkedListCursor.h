@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace List
+{
 	/**
 		@brief	Regular cursor for intrusive doubly-linked list.
 	*/
@@ -58,6 +60,7 @@ namespace Internal
 	private:
 		DoublyLinkedListSlot* m_slot = nullptr; // Currently observed slot in list.
 	};
+}
 }
 }
 }

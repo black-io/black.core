@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace ForwardList
+{
 namespace
 {
 	// Logging channel.
@@ -64,6 +66,7 @@ namespace
 	{
 		return ( m_host != nullptr ) && ( this == &m_host->m_end );
 	}
+}
 }
 }
 }

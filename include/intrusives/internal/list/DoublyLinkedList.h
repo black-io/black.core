@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace List
+{
 	/**
 		@brief	Intrusive doubly-linked list.
 	*/
@@ -96,6 +98,7 @@ namespace Internal
 	private:
 		mutable DoublyLinkedListSlot	m_end{ *this };	// The end of list, the element after the tail.
 	};
+}
 }
 }
 }

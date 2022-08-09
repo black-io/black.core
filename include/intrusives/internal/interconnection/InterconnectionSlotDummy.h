@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace Interconnection
+{
 	/**
 		@brief	Interconnection slot with dummy functionality.
 
@@ -40,6 +42,7 @@ namespace Internal
 		// Empty stub for functional symmetry.
 		virtual inline void Invalidate() = 0;
 	};
+}
 }
 }
 }

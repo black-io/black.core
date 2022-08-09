@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace ForwardList
+{
 	/**
 		@brief	Basic functionality of intrusive forward list.
 
@@ -106,6 +108,7 @@ namespace Internal
 		// Traits for intrusive operations.
 		using Traits = Internal::IntrusiveTraits<TValue, Black::IntrusiveForwardListSlot, SLOT_POINTER>;
 	};
+}
 }
 }
 }

@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace List
+{
 	/**
 		@brief	Basic functionality of intrusive list.
 
@@ -124,6 +126,7 @@ namespace Internal
 		// Traits for intrusive operations.
 		using Traits = Internal::IntrusiveTraits<TValue, Black::IntrusiveListSlot, SLOT_POINTER>;
 	};
+}
 }
 }
 }

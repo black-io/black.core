@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace Interconnection
+{
 namespace
 {
 	// Logging channel.
@@ -96,6 +98,7 @@ namespace
 		m_previous	= nullptr;
 		m_next		= nullptr;
 	}
+}
 }
 }
 }

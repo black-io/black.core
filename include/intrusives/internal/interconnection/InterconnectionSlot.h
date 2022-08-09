@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace Interconnection
+{
 	/**
 		@brief	Interconnection slot with true functionality.
 
@@ -38,6 +40,7 @@ namespace Internal
 		// Perform the disconnection from interconnection.
 		inline void Disconnect();
 	};
+}
 }
 }
 }

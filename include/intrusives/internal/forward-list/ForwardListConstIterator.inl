@@ -9,6 +9,8 @@ inline namespace Intrusives
 {
 namespace Internal
 {
+inline namespace ForwardList
+{
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
 	inline ForwardListConstIterator<TValue, SLOT_POINTER>& ForwardListConstIterator<TValue, SLOT_POINTER>::operator++()
 	{
@@ -59,6 +61,7 @@ namespace Internal
 		: m_cursor{ std::move( cursor ) }
 	{
 	}
+}
 }
 }
 }
