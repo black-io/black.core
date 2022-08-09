@@ -39,6 +39,9 @@ inline namespace Stl
 
 		// Resizes the container to contain count elements. Capacity may be modified as well.
 		inline void resize( const size_type new_size )			{ TBase::SetLength( new_size ); };
+
+		// Erases all elements from the container.
+		inline void clear()										{ TBase::SetLength( 0 ); };
 	};
 }
 }
