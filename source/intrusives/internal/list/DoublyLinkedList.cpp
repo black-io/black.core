@@ -20,7 +20,7 @@ namespace
 
 	DoublyLinkedList::DoublyLinkedList( DoublyLinkedList&& other ) noexcept
 		: m_head{ std::exchange( other.m_head, &other.m_end ) }
-		, m_size{ std::exchange( other.m_size, 0 ) }
+		, m_length{ std::exchange( other.m_length, 0 ) }
 	{
 		EXPECTS_DEBUG( m_head != nullptr );
 		if( m_head == &other.m_end )
@@ -62,7 +62,7 @@ namespace
 		}
 
 		m_end.m_previous	= nullptr;
-		m_size				= 0;
+		m_length				= 0;
 	}
 
 	void DoublyLinkedList::PushFront( Slot& slot )
@@ -74,7 +74,7 @@ namespace
 		slot.m_host			= this;
 		slot.m_next			= std::exchange( m_head, &slot );
 
-		++m_size;
+		++m_length;
 	}
 
 	void DoublyLinkedList::PopFront()
@@ -86,8 +86,8 @@ namespace
 		m_head->m_previous = nullptr;
 		slot->Reset();
 
-		EXPECTS_DEBUG( m_size > 0 );
-		--m_size;
+		EXPECTS_DEBUG( m_length > 0 );
+		--m_length;
 	}
 
 	void DoublyLinkedList::PushBack( Slot& slot )
@@ -107,7 +107,7 @@ namespace
 		slot.m_next			= &m_end;
 		m_end.m_previous	= &slot;
 
-		++m_size;
+		++m_length;
 	}
 
 	void DoublyLinkedList::PopBack()
@@ -127,8 +127,8 @@ namespace
 		m_end.m_previous		= new_tail;
 		new_tail->m_next		= &m_end;
 
-		EXPECTS_DEBUG( m_size > 0 );
-		--m_size;
+		EXPECTS_DEBUG( m_length > 0 );
+		--m_length;
 	}
 
 	void DoublyLinkedList::Insert( Cursor position, Slot& slot )
@@ -158,7 +158,7 @@ namespace
 		slot.m_previous				= std::exchange( slot_after->m_previous, &slot );
 		slot.m_next					= std::exchange( slot_before->m_next, &slot );
 
-		++m_size;
+		++m_length;
 	}
 
 	void DoublyLinkedList::Erase( Cursor position )
@@ -228,8 +228,8 @@ namespace
 
 		slot.Reset();
 
-		EXPECTS_DEBUG( m_size > 0 );
-		--m_size;
+		EXPECTS_DEBUG( m_length > 0 );
+		--m_length;
 	}
 }
 }

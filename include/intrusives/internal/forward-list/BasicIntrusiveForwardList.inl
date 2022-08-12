@@ -78,9 +78,9 @@ inline namespace ForwardList
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline const size_t BasicIntrusiveForwardList<TValue, SLOT_POINTER>::GetSize() const
+	inline const size_t BasicIntrusiveForwardList<TValue, SLOT_POINTER>::GetLength() const
 	{
-		return SinglyLinkedList::GetSize();
+		return SinglyLinkedList::GetLength();
 	}
 
 	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >

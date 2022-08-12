@@ -75,7 +75,7 @@ inline namespace List
 
 
 		// Get the size of list.
-		inline const size_t GetSize() const		{ return m_size; };
+		inline const size_t GetLength() const	{ return m_length; };
 
 
 		// Whether the list is empty or not.
@@ -91,8 +91,8 @@ inline namespace List
 
 	// Private state.
 	private:
-		DoublyLinkedListSlot*	m_head	= &m_end;		// The first hosted slot
-		size_t					m_size	= 0;			// Count of hosted slots.
+		DoublyLinkedListSlot*	m_head		= &m_end;	// The first hosted slot
+		size_t					m_length	= 0;		// Count of hosted slots.
 
 	// Private non-state.
 	private:

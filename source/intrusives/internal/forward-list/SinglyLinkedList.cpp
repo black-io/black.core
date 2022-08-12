@@ -20,7 +20,7 @@ namespace
 
 	SinglyLinkedList::SinglyLinkedList( SinglyLinkedList&& other ) noexcept
 		: m_head{ std::exchange( other.m_head, &other.m_end ) }
-		, m_size{ std::exchange( other.m_size, 0 ) }
+		, m_length{ std::exchange( other.m_length, 0 ) }
 	{
 		EXPECTS_DEBUG( m_head != nullptr );
 		if( m_head == &other.m_end )
@@ -63,7 +63,7 @@ namespace
 			slot->Reset();
 		}
 
-		m_size = 0;
+		m_length = 0;
 	}
 
 	void SinglyLinkedList::PushFront( Slot& slot )
@@ -73,7 +73,7 @@ namespace
 		slot.m_host	= this;
 		slot.m_next	= std::exchange( m_head, &slot );
 
-		++m_size;
+		++m_length;
 	}
 
 	void SinglyLinkedList::PopFront()
@@ -83,8 +83,8 @@ namespace
 		Slot* slot = std::exchange( m_head, m_head->m_next );
 		slot->Reset();
 
-		EXPECTS_DEBUG( m_size > 0 );
-		--m_size;
+		EXPECTS_DEBUG( m_length > 0 );
+		--m_length;
 	}
 
 	void SinglyLinkedList::InsertAfter( Cursor position, Slot& slot )
@@ -100,7 +100,7 @@ namespace
 		slot.m_host	= this;
 		slot.m_next	= std::exchange( slot_before->m_next, &slot );
 
-		++m_size;
+		++m_length;
 	}
 
 	void SinglyLinkedList::EraseAfter( Cursor position )
@@ -115,8 +115,8 @@ namespace
 		position->m_next	= slot->m_next;
 		slot->Reset();
 
-		EXPECTS_DEBUG( m_size > 0 );
-		--m_size;
+		EXPECTS_DEBUG( m_length > 0 );
+		--m_length;
 	}
 
 	SinglyLinkedList::Slot& SinglyLinkedList::GetFrontSlot() const
@@ -161,8 +161,8 @@ namespace
 
 		slot.Reset();
 
-		EXPECTS_DEBUG( m_size > 0 );
-		--m_size;
+		EXPECTS_DEBUG( m_length > 0 );
+		--m_length;
 	}
 
 	SinglyLinkedList::Slot& SinglyLinkedList::FindSlotBefore( Slot& slot ) const

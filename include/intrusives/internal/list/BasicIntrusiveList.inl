@@ -114,9 +114,9 @@ inline namespace List
 	}
 
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline const size_t BasicIntrusiveList<TValue, SLOT_POINTER>::GetSize() const
+	inline const size_t BasicIntrusiveList<TValue, SLOT_POINTER>::GetLength() const
 	{
-		return DoublyLinkedList::GetSize();
+		return DoublyLinkedList::GetLength();
 	}
 
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >

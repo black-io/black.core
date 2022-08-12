@@ -97,7 +97,7 @@ inline namespace ForwardList
 
 
 		// Get the size of list.
-		inline const size_t GetSize() const;
+		inline const size_t GetLength() const;
 
 
 		// Whether the list is empty.
