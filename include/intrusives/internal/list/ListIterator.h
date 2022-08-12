@@ -58,8 +58,8 @@ inline namespace List
 		inline ListIterator& operator -- ();
 		inline ListIterator operator -- ( int );
 
-		inline const TValue& operator * () const;
-		inline const TValue* operator -> () const;
+		inline TValue& operator * () const;
+		inline TValue* operator -> () const;
 
 		inline const bool operator == ( const ListIterator& other ) const;
 		inline const bool operator != ( const ListIterator& other ) const;

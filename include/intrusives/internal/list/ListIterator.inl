@@ -46,14 +46,14 @@ inline namespace List
 	}
 
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline const TValue& ListIterator<TValue, SLOT_POINTER>::operator*() const
+	inline TValue& ListIterator<TValue, SLOT_POINTER>::operator*() const
 	{
 		EXPECTS_DEBUG( m_cursor.IsValid() );
 		return Traits::GetValue( *m_cursor );
 	}
 
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline const TValue* ListIterator<TValue, SLOT_POINTER>::operator->() const
+	inline TValue* ListIterator<TValue, SLOT_POINTER>::operator->() const
 	{
 		return &operator*();
 	}
