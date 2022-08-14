@@ -64,7 +64,7 @@ inline namespace List
 		CRET( m_cursor.IsEnd() != other.m_cursor.IsEnd(), false );
 		CRET( m_cursor.IsEnd(), true );
 		CRET( m_cursor.IsValid() != other.m_cursor.IsValid(), false );
-		return m_cursor.GetSlot() == other.m_cursor.GetSlot();
+		return &m_cursor.GetSlot() == &other.m_cursor.GetSlot();
 	}
 
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
