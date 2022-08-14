@@ -101,17 +101,11 @@ inline namespace List
 		// Get the iterator to beginning of list. May return invalid iterator.
 		inline ConstIterator GetBegin() const;
 
-		// Get the iterator to beginning of list. May return invalid iterator.
-		inline ConstIterator GetConstBegin() const;
-
 		// Get the iterator to ending of list. May return invalid iterator.
 		inline Iterator GetEnd();
 
 		// Get the iterator to ending of list. May return invalid iterator.
 		inline ConstIterator GetEnd() const;
-
-		// Get the iterator to ending of list. May return invalid iterator.
-		inline ConstIterator GetConstEnd() const;
 
 
 		// Get the size of list.

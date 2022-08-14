@@ -90,12 +90,6 @@ inline namespace List
 	}
 
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveList<TValue, SLOT_POINTER>::ConstIterator BasicIntrusiveList<TValue, SLOT_POINTER>::GetConstBegin() const
-	{
-		return ConstIterator{ DoublyLinkedList::GetBegin() };
-	}
-
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
 	inline typename BasicIntrusiveList<TValue, SLOT_POINTER>::Iterator BasicIntrusiveList<TValue, SLOT_POINTER>::GetEnd()
 	{
 		return Iterator{ DoublyLinkedList::GetEnd() };
@@ -103,12 +97,6 @@ inline namespace List
 
 	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
 	inline typename BasicIntrusiveList<TValue, SLOT_POINTER>::ConstIterator BasicIntrusiveList<TValue, SLOT_POINTER>::GetEnd() const
-	{
-		return ConstIterator{ DoublyLinkedList::GetEnd() };
-	}
-
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveList<TValue, SLOT_POINTER>::ConstIterator BasicIntrusiveList<TValue, SLOT_POINTER>::GetConstEnd() const
 	{
 		return ConstIterator{ DoublyLinkedList::GetEnd() };
 	}
