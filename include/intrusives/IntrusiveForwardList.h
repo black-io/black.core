@@ -38,10 +38,10 @@ inline namespace Intrusives
 	{
 	// Public aliases.
 	public:
-		using typename Internal::BasicIntrusiveForwardList<TValue, SLOT_POINTER>::Iterator;
+		using typename Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::Iterator;
 
 
-		using Internal::BasicIntrusiveForwardList<TValue, SLOT_POINTER>::IsEmpty;
+		using Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::IsEmpty;
 
 	// Friendship interface.
 	public:
@@ -95,10 +95,10 @@ inline namespace Intrusives
 	{
 	// Public aliases.
 	public:
-		using typename Internal::BasicIntrusiveForwardList<TValue, SLOT_POINTER>::Iterator;
+		using typename Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::Iterator;
 
 
-		using Internal::BasicIntrusiveForwardList<TValue, SLOT_POINTER>::IsEmpty;
+		using Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::IsEmpty;
 
 	// Friendship interface.
 	public:
