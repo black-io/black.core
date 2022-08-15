@@ -30,7 +30,7 @@ namespace Internal
 #include "internal/list/DoublyLinkedListCursor.h"
 #include "internal/list/DoublyLinkedList.h"
 
-#include "internal/IntrusiveTraits.h"
+#include "internal/IntrusiveTypeTraits.h"
 
 // Intrusive containers.
 #include "aliases.h"
@@ -63,4 +63,4 @@ namespace Internal
 #include "internal/forward-list/ForwardListIterator.inl"
 #include "internal/forward-list/ForwardListConstIterator.inl"
 
-#include "internal/IntrusiveTraits.inl"
+#include "internal/IntrusiveTypeTraits.inl"
