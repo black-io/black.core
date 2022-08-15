@@ -11,80 +11,68 @@ namespace Internal
 {
 inline namespace ForwardList
 {
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveForwardList<TValue, SLOT_POINTER>::Clear()
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveForwardList<TValue, TTraits>::Clear()
 	{
 		SinglyLinkedList::Clear();
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveForwardList<TValue, SLOT_POINTER>::PushFront( Value& value )
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveForwardList<TValue, TTraits>::PushFront( Value& value )
 	{
-		SinglyLinkedList::PushFront( Traits::GetSlot( value ) );
+		SinglyLinkedList::PushFront( TTraits::GetSlot( value ) );
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveForwardList<TValue, SLOT_POINTER>::PopFront()
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveForwardList<TValue, TTraits>::PopFront()
 	{
 		SinglyLinkedList::PopFront();
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveForwardList<TValue, SLOT_POINTER>::InsertAfter( ConstIterator position, Value& value )
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveForwardList<TValue, TTraits>::InsertAfter( Iterator position, Value& value )
 	{
-		SinglyLinkedList::InsertAfter( position.m_cursor, Traits::GetSlot( value ) );
+		SinglyLinkedList::InsertAfter( position.m_cursor, TTraits::GetSlot( value ) );
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveForwardList<TValue, SLOT_POINTER>::EraseAfter( ConstIterator position )
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveForwardList<TValue, TTraits>::EraseAfter( Iterator position )
 	{
 		SinglyLinkedList::EraseAfter( position.m_cursor );
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveForwardList<TValue, SLOT_POINTER>::Value& BasicIntrusiveForwardList<TValue, SLOT_POINTER>::GetFirstValue()
+	template< typename TValue, typename TTraits >
+	inline typename BasicIntrusiveForwardList<TValue, TTraits>::Value& BasicIntrusiveForwardList<TValue, TTraits>::GetFirstValue()
 	{
-		return Traits::GetValue( SinglyLinkedList::GetFrontSlot() );
+		return TTraits::GetValue( SinglyLinkedList::GetFrontSlot() );
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline const typename BasicIntrusiveForwardList<TValue, SLOT_POINTER>::Value& BasicIntrusiveForwardList<TValue, SLOT_POINTER>::GetFirstValue() const
+	template< typename TValue, typename TTraits >
+	inline const typename BasicIntrusiveForwardList<TValue, TTraits>::Value& BasicIntrusiveForwardList<TValue, TTraits>::GetFirstValue() const
 	{
-		return Traits::GetValue( SinglyLinkedList::GetFrontSlot() );
+		return TTraits::GetValue( SinglyLinkedList::GetFrontSlot() );
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveForwardList<TValue, SLOT_POINTER>::Iterator BasicIntrusiveForwardList<TValue, SLOT_POINTER>::GetBegin()
+	template< typename TValue, typename TTraits >
+	inline typename BasicIntrusiveForwardList<TValue, TTraits>::Iterator BasicIntrusiveForwardList<TValue, TTraits>::GetBegin()
 	{
 		return Iterator{ SinglyLinkedList::GetBegin() };
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveForwardList<TValue, SLOT_POINTER>::ConstIterator BasicIntrusiveForwardList<TValue, SLOT_POINTER>::GetBegin() const
-	{
-		return ConstIterator{ SinglyLinkedList::GetBegin() };
-	}
-
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveForwardList<TValue, SLOT_POINTER>::Iterator BasicIntrusiveForwardList<TValue, SLOT_POINTER>::GetEnd()
+	template< typename TValue, typename TTraits >
+	inline typename BasicIntrusiveForwardList<TValue, TTraits>::Iterator BasicIntrusiveForwardList<TValue, TTraits>::GetEnd()
 	{
 		return Iterator{ SinglyLinkedList::GetEnd() };
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveForwardList<TValue, SLOT_POINTER>::ConstIterator BasicIntrusiveForwardList<TValue, SLOT_POINTER>::GetEnd() const
-	{
-		return ConstIterator{ SinglyLinkedList::GetEnd() };
-	}
-
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline const size_t BasicIntrusiveForwardList<TValue, SLOT_POINTER>::GetLength() const
+	template< typename TValue, typename TTraits >
+	inline const size_t BasicIntrusiveForwardList<TValue, TTraits>::GetLength() const
 	{
 		return SinglyLinkedList::GetLength();
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline const bool BasicIntrusiveForwardList<TValue, SLOT_POINTER>::IsEmpty() const
+	template< typename TValue, typename TTraits >
+	inline const bool BasicIntrusiveForwardList<TValue, TTraits>::IsEmpty() const
 	{
 		return SinglyLinkedList::IsEmpty();
 	}
