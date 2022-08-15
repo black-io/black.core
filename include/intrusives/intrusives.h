@@ -37,12 +37,10 @@ namespace Internal
 #include "forwards.h"
 #include "internal/forwards.templates.h"
 
-#include "internal/forward-list/ForwardListConstIterator.h"
 #include "internal/forward-list/ForwardListIterator.h"
 #include "internal/forward-list/BasicIntrusiveForwardList.h"
 #include "IntrusiveForwardList.h"
 
-#include "internal/list/ListConstIterator.h"
 #include "internal/list/ListIterator.h"
 #include "internal/list/BasicIntrusiveList.h"
 #include "IntrusiveList.h"
@@ -57,10 +55,8 @@ namespace Internal
 
 #include "internal/list/BasicIntrusiveList.inl"
 #include "internal/list/ListIterator.inl"
-#include "internal/list/ListConstIterator.inl"
 
 #include "internal/forward-list/BasicIntrusiveForwardList.inl"
 #include "internal/forward-list/ForwardListIterator.inl"
-#include "internal/forward-list/ForwardListConstIterator.inl"
 
 #include "internal/IntrusiveTypeTraits.inl"
