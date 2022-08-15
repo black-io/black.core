@@ -28,7 +28,7 @@ inline namespace Intrusives
 		@tparam	TValue			Type of stored values.
 		@tparam	SLOT_POINTER	Pointer-to-member of slot to be used.
 	*/
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
+	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
 	class IntrusiveList<TValue, SLOT_POINTER> final
 		: public Black::StandardListFacade<
 			IntrusiveList<TValue, SLOT_POINTER>,
@@ -38,10 +38,10 @@ inline namespace Intrusives
 	{
 	// Public aliases.
 	public:
-		using typename Internal::BasicIntrusiveList<TValue, SLOT_POINTER>::Iterator;
+		using typename Internal::BasicIntrusiveList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::Iterator;
 
 
-		using Internal::BasicIntrusiveList<TValue, SLOT_POINTER>::IsEmpty;
+		using Internal::BasicIntrusiveList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::IsEmpty;
 
 	// Friendship interface.
 	public:
@@ -85,7 +85,7 @@ inline namespace Intrusives
 		@tparam	TValueBase		Type of value base, where the container slot is placed.
 		@tparam	SLOT_POINTER	Pointer-to-member of slot to be used.
 	*/
-	template< typename TValue, typename TValueBase, Black::IntrusiveForwardListSlot TValueBase::* SLOT_POINTER >
+	template< typename TValue, typename TValueBase, Black::IntrusiveListSlot TValueBase::* SLOT_POINTER >
 	class IntrusiveList<TValue, SLOT_POINTER> final
 		: public Black::StandardListFacade<
 			IntrusiveList<TValue, SLOT_POINTER>,
@@ -95,10 +95,10 @@ inline namespace Intrusives
 	{
 	// Public aliases.
 	public:
-		using typename Internal::BasicIntrusiveList<TValue, SLOT_POINTER>::Iterator;
+		using typename Internal::BasicIntrusiveList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::Iterator;
 
 
-		using Internal::BasicIntrusiveList<TValue, SLOT_POINTER>::IsEmpty;
+		using Internal::BasicIntrusiveList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::IsEmpty;
 
 	// Friendship interface.
 	public:
