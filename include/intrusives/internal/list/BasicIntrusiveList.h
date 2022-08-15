@@ -41,7 +41,7 @@ inline namespace List
 		using ValuePointer = TValue*;
 
 		// Iterator of view.
-		using Iterator = Internal::ListIterator<TValue, SLOT_POINTER>;
+		using Iterator = Internal::ListIterator<TValue, TTraits>;
 
 	// Lifetime management.
 	public:
