@@ -12,11 +12,7 @@ namespace Internal
 inline namespace ForwardList
 {
 	// To be used in friendship declarations.
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	class ForwardListIterator;
-
-	// To be used in friendship declarations.
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
+	template< typename TValue, typename TTraits >
 	class BasicIntrusiveForwardList;
 }
 
@@ -24,11 +20,7 @@ inline namespace ForwardList
 inline namespace List
 {
 	// To be used in friendship declarations.
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	class ListIterator;
-
-	// To be used in friendship declarations.
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
+	template< typename TValue, typename TTraits >
 	class BasicIntrusiveList;
 }
 }
