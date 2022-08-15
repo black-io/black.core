@@ -75,22 +75,16 @@ inline namespace List
 
 
 		// Get the value at the head of list. Expects that list is not empty.
-		inline Value& GetFront();
-
-		// Get the value at the head of list. Expects that list is not empty.
-		inline const Value& GetFront() const;
+		inline Value& GetFront() const;
 
 		// Get the value at the tail of list. Expects that list is not empty.
-		inline Value& GetBack();
-
-		// Get the value at the tail of list. Expects that list is not empty.
-		inline const Value& GetBack() const;
+		inline Value& GetBack() const;
 
 		// Get the iterator to beginning of list. May return invalid iterator.
-		inline Iterator GetBegin();
+		inline Iterator GetBegin() const;
 
 		// Get the iterator to ending of list. May return invalid iterator.
-		inline Iterator GetEnd();
+		inline Iterator GetEnd() const;
 
 
 		// Get the size of list.

@@ -54,37 +54,25 @@ inline namespace List
 	}
 
 	template< typename TValue, typename TTraits >
-	inline typename BasicIntrusiveList<TValue, TTraits>::Value& BasicIntrusiveList<TValue, TTraits>::GetFront()
+	inline typename BasicIntrusiveList<TValue, TTraits>::Value& BasicIntrusiveList<TValue, TTraits>::GetFront() const
 	{
 		return TTraits::GetValue( DoublyLinkedList::GetFrontSlot() );
 	}
 
 	template< typename TValue, typename TTraits >
-	inline const typename BasicIntrusiveList<TValue, TTraits>::Value& BasicIntrusiveList<TValue, TTraits>::GetFront() const
-	{
-		return TTraits::GetValue( DoublyLinkedList::GetFrontSlot() );
-	}
-
-	template< typename TValue, typename TTraits >
-	inline typename BasicIntrusiveList<TValue, TTraits>::Value& BasicIntrusiveList<TValue, TTraits>::GetBack()
+	inline typename BasicIntrusiveList<TValue, TTraits>::Value& BasicIntrusiveList<TValue, TTraits>::GetBack() const
 	{
 		return TTraits::GetValue( DoublyLinkedList::GetBackSlot() );
 	}
 
 	template< typename TValue, typename TTraits >
-	inline const typename BasicIntrusiveList<TValue, TTraits>::Value& BasicIntrusiveList<TValue, TTraits>::GetBack() const
-	{
-		return TTraits::GetValue( DoublyLinkedList::GetBackSlot() );
-	}
-
-	template< typename TValue, typename TTraits >
-	inline typename BasicIntrusiveList<TValue, TTraits>::Iterator BasicIntrusiveList<TValue, TTraits>::GetBegin()
+	inline typename BasicIntrusiveList<TValue, TTraits>::Iterator BasicIntrusiveList<TValue, TTraits>::GetBegin() const
 	{
 		return Iterator{ DoublyLinkedList::GetBegin() };
 	}
 
 	template< typename TValue, typename TTraits >
-	inline typename BasicIntrusiveList<TValue, TTraits>::Iterator BasicIntrusiveList<TValue, TTraits>::GetEnd()
+	inline typename BasicIntrusiveList<TValue, TTraits>::Iterator BasicIntrusiveList<TValue, TTraits>::GetEnd() const
 	{
 		return Iterator{ DoublyLinkedList::GetEnd() };
 	}
