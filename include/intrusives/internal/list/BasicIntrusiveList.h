@@ -18,10 +18,10 @@ inline namespace List
 		The slot of value should be stored by value itself. List uses the pointer-to-member to access the slot.
 		Since the slot is stored by value and accessed by pointer, in same time the value may be stored only by one list that use same slot member.
 
-		@tparam	TValue			Type of stored values.
-		@tparam	SLOT_POINTER	Pointer-to-member of slot to be used.
+		@tparam	TValue	Type of stored values.
+		@tparam	TTraits	Type traits for container.
 	*/
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
+	template< typename TValue, typename TTraits >
 	class BasicIntrusiveList : private DoublyLinkedList
 	{
 	// Restrictions.
@@ -37,20 +37,11 @@ inline namespace List
 		// Reference to value.
 		using ValueReference = TValue&;
 
-		// Reference to constant value.
-		using ConstValueReference = const TValue&;
-
 		// Pointer to value.
 		using ValuePointer = TValue*;
 
-		// Pointer to constant value.
-		using ConstValuePointer = const TValue*;
-
 		// Iterator of view.
 		using Iterator = Internal::ListIterator<TValue, SLOT_POINTER>;
-
-		// Iterator of view.
-		using ConstIterator = Internal::ListConstIterator<TValue, SLOT_POINTER>;
 
 	// Lifetime management.
 	public:
@@ -77,10 +68,10 @@ inline namespace List
 		inline void PopBack();
 
 		// Insert the given value before the given position. Expects the iterator is valid. Safely detaches the value from previous list.
-		inline void Insert( ConstIterator position, Value& value );
+		inline void Insert( Iterator position, Value& value );
 
 		// Erase the value at given position. Expects the iterator is valid.
-		inline void Erase( ConstIterator position );
+		inline void Erase( Iterator position );
 
 
 		// Get the value at the head of list. Expects that list is not empty.
@@ -98,14 +89,8 @@ inline namespace List
 		// Get the iterator to beginning of list. May return invalid iterator.
 		inline Iterator GetBegin();
 
-		// Get the iterator to beginning of list. May return invalid iterator.
-		inline ConstIterator GetBegin() const;
-
 		// Get the iterator to ending of list. May return invalid iterator.
 		inline Iterator GetEnd();
-
-		// Get the iterator to ending of list. May return invalid iterator.
-		inline ConstIterator GetEnd() const;
 
 
 		// Get the size of list.
@@ -114,11 +99,6 @@ inline namespace List
 
 		// Whether the list is empty.
 		inline const bool IsEmpty() const;
-
-	// Private inner types.
-	private:
-		// Traits for intrusive operations.
-		using Traits = Internal::IntrusiveTraits<TValue, Black::IntrusiveListSlot, SLOT_POINTER>;
 	};
 }
 }

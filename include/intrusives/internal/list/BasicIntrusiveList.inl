@@ -11,104 +11,92 @@ namespace Internal
 {
 inline namespace List
 {
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveList<TValue, SLOT_POINTER>::Clear()
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveList<TValue, TTraits>::Clear()
 	{
 		DoublyLinkedList::Clear();
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveList<TValue, SLOT_POINTER>::PushFront( Value& value )
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveList<TValue, TTraits>::PushFront( Value& value )
 	{
-		DoublyLinkedList::PushFront( Traits::GetSlot( value ) );
+		DoublyLinkedList::PushFront( TTraits::GetSlot( value ) );
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveList<TValue, SLOT_POINTER>::PopFront()
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveList<TValue, TTraits>::PopFront()
 	{
 		DoublyLinkedList::PopFront();
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveList<TValue, SLOT_POINTER>::PushBack( Value& value )
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveList<TValue, TTraits>::PushBack( Value& value )
 	{
-		DoublyLinkedList::PushBack( Traits::GetSlot( value ) );
+		DoublyLinkedList::PushBack( TTraits::GetSlot( value ) );
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveList<TValue, SLOT_POINTER>::PopBack()
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveList<TValue, TTraits>::PopBack()
 	{
 		DoublyLinkedList::PopBack();
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveList<TValue, SLOT_POINTER>::Insert( ConstIterator position, Value& value )
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveList<TValue, TTraits>::Insert( Iterator position, Value& value )
 	{
-		DoublyLinkedList::Insert( position.m_cursor, Traits::GetSlot( value ) );
+		DoublyLinkedList::Insert( position.m_cursor, TTraits::GetSlot( value ) );
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline void BasicIntrusiveList<TValue, SLOT_POINTER>::Erase( ConstIterator position )
+	template< typename TValue, typename TTraits >
+	inline void BasicIntrusiveList<TValue, TTraits>::Erase( Iterator position )
 	{
 		DoublyLinkedList::Erase( position.m_cursor );
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveList<TValue, SLOT_POINTER>::Value& BasicIntrusiveList<TValue, SLOT_POINTER>::GetFront()
+	template< typename TValue, typename TTraits >
+	inline typename BasicIntrusiveList<TValue, TTraits>::Value& BasicIntrusiveList<TValue, TTraits>::GetFront()
 	{
-		return Traits::GetValue( DoublyLinkedList::GetFrontSlot() );
+		return TTraits::GetValue( DoublyLinkedList::GetFrontSlot() );
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline const typename BasicIntrusiveList<TValue, SLOT_POINTER>::Value& BasicIntrusiveList<TValue, SLOT_POINTER>::GetFront() const
+	template< typename TValue, typename TTraits >
+	inline const typename BasicIntrusiveList<TValue, TTraits>::Value& BasicIntrusiveList<TValue, TTraits>::GetFront() const
 	{
-		return Traits::GetValue( DoublyLinkedList::GetFrontSlot() );
+		return TTraits::GetValue( DoublyLinkedList::GetFrontSlot() );
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveList<TValue, SLOT_POINTER>::Value& BasicIntrusiveList<TValue, SLOT_POINTER>::GetBack()
+	template< typename TValue, typename TTraits >
+	inline typename BasicIntrusiveList<TValue, TTraits>::Value& BasicIntrusiveList<TValue, TTraits>::GetBack()
 	{
-		return Traits::GetValue( DoublyLinkedList::GetBackSlot() );
+		return TTraits::GetValue( DoublyLinkedList::GetBackSlot() );
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline const typename BasicIntrusiveList<TValue, SLOT_POINTER>::Value& BasicIntrusiveList<TValue, SLOT_POINTER>::GetBack() const
+	template< typename TValue, typename TTraits >
+	inline const typename BasicIntrusiveList<TValue, TTraits>::Value& BasicIntrusiveList<TValue, TTraits>::GetBack() const
 	{
-		return Traits::GetValue( DoublyLinkedList::GetBackSlot() );
+		return TTraits::GetValue( DoublyLinkedList::GetBackSlot() );
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveList<TValue, SLOT_POINTER>::Iterator BasicIntrusiveList<TValue, SLOT_POINTER>::GetBegin()
+	template< typename TValue, typename TTraits >
+	inline typename BasicIntrusiveList<TValue, TTraits>::Iterator BasicIntrusiveList<TValue, TTraits>::GetBegin()
 	{
 		return Iterator{ DoublyLinkedList::GetBegin() };
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveList<TValue, SLOT_POINTER>::ConstIterator BasicIntrusiveList<TValue, SLOT_POINTER>::GetBegin() const
-	{
-		return ConstIterator{ DoublyLinkedList::GetBegin() };
-	}
-
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveList<TValue, SLOT_POINTER>::Iterator BasicIntrusiveList<TValue, SLOT_POINTER>::GetEnd()
+	template< typename TValue, typename TTraits >
+	inline typename BasicIntrusiveList<TValue, TTraits>::Iterator BasicIntrusiveList<TValue, TTraits>::GetEnd()
 	{
 		return Iterator{ DoublyLinkedList::GetEnd() };
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline typename BasicIntrusiveList<TValue, SLOT_POINTER>::ConstIterator BasicIntrusiveList<TValue, SLOT_POINTER>::GetEnd() const
-	{
-		return ConstIterator{ DoublyLinkedList::GetEnd() };
-	}
-
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline const size_t BasicIntrusiveList<TValue, SLOT_POINTER>::GetLength() const
+	template< typename TValue, typename TTraits >
+	inline const size_t BasicIntrusiveList<TValue, TTraits>::GetLength() const
 	{
 		return DoublyLinkedList::GetLength();
 	}
 
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
-	inline const bool BasicIntrusiveList<TValue, SLOT_POINTER>::IsEmpty() const
+	template< typename TValue, typename TTraits >
+	inline const bool BasicIntrusiveList<TValue, TTraits>::IsEmpty() const
 	{
 		return DoublyLinkedList::IsEmpty();
 	}
