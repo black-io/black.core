@@ -14,13 +14,13 @@ inline namespace ForwardList
 	/**
 		@brief	Regular iterator for intrusive forward list.
 	*/
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
+	template< typename TValue, typename TTraits >
 	class ForwardListIterator final
 	{
 	// Friendship declarations.
 	public:
 		// Grant access to private state.
-		friend class BasicIntrusiveForwardList<TValue, SLOT_POINTER>;
+		friend class BasicIntrusiveForwardList<TValue, TTraits>;
 
 	// STL-complaint inner types.
 	public:
@@ -60,14 +60,6 @@ inline namespace ForwardList
 
 		inline const bool operator == ( const ForwardListIterator& other ) const;
 		inline const bool operator != ( const ForwardListIterator& other ) const;
-
-
-		inline operator ForwardListConstIterator<TValue, SLOT_POINTER>() const { return ForwardListConstIterator<TValue, SLOT_POINTER>{ m_cursor }; };
-
-	// Private inner types.
-	private:
-		// Traits for intrusive operations.
-		using Traits = IntrusiveTraits<TValue, Black::IntrusiveForwardListSlot, SLOT_POINTER>;
 
 	// Private lifetime management.
 	private:

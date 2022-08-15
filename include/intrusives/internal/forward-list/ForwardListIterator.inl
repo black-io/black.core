@@ -11,16 +11,16 @@ namespace Internal
 {
 inline namespace ForwardList
 {
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline ForwardListIterator<TValue, SLOT_POINTER>& ForwardListIterator<TValue, SLOT_POINTER>::operator++()
+	template< typename TValue, typename TTraits >
+	inline ForwardListIterator<TValue, TTraits>& ForwardListIterator<TValue, TTraits>::operator++()
 	{
 		EXPECTS_DEBUG( m_cursor.IsValid() );
 		m_cursor.ShiftNext();
 		return *this;
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline ForwardListIterator<TValue, SLOT_POINTER> ForwardListIterator<TValue, SLOT_POINTER>::operator++( int )
+	template< typename TValue, typename TTraits >
+	inline ForwardListIterator<TValue, TTraits> ForwardListIterator<TValue, TTraits>::operator++( int )
 	{
 		EXPECTS_DEBUG( m_cursor.IsValid() );
 		ForwardListIterator copy{ m_cursor };
@@ -28,21 +28,21 @@ inline namespace ForwardList
 		return copy;
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline TValue& ForwardListIterator<TValue, SLOT_POINTER>::operator*() const
+	template< typename TValue, typename TTraits >
+	inline TValue& ForwardListIterator<TValue, TTraits>::operator*() const
 	{
 		EXPECTS_DEBUG( m_cursor.IsValid() );
-		return Traits::GetValue( *m_cursor );
+		return TTraits::GetValue( *m_cursor );
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline TValue* ForwardListIterator<TValue, SLOT_POINTER>::operator->() const
+	template< typename TValue, typename TTraits >
+	inline TValue* ForwardListIterator<TValue, TTraits>::operator->() const
 	{
 		return &operator*();
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline const bool ForwardListIterator<TValue, SLOT_POINTER>::operator==( const ForwardListIterator& other ) const
+	template< typename TValue, typename TTraits >
+	inline const bool ForwardListIterator<TValue, TTraits>::operator==( const ForwardListIterator& other ) const
 	{
 		CRET( m_cursor.IsEnd() != other.m_cursor.IsEnd(), false );
 		CRET( m_cursor.IsEnd(), true );
@@ -50,14 +50,14 @@ inline namespace ForwardList
 		return &m_cursor.GetSlot() == &other.m_cursor.GetSlot();
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline const bool ForwardListIterator<TValue, SLOT_POINTER>::operator!=( const ForwardListIterator& other ) const
+	template< typename TValue, typename TTraits >
+	inline const bool ForwardListIterator<TValue, TTraits>::operator!=( const ForwardListIterator& other ) const
 	{
 		return !operator==( other );
 	}
 
-	template< typename TValue, Black::IntrusiveForwardListSlot TValue::* SLOT_POINTER >
-	inline ForwardListIterator<TValue, SLOT_POINTER>::ForwardListIterator( SinglyLinkedListCursor cursor )
+	template< typename TValue, typename TTraits >
+	inline ForwardListIterator<TValue, TTraits>::ForwardListIterator( SinglyLinkedListCursor cursor )
 		: m_cursor{ std::move( cursor ) }
 	{
 	}
