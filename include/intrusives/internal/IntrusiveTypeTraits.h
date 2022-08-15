@@ -81,10 +81,6 @@ namespace Internal
 		// Type traits for storage type.
 		using StorageTraits = IntrusiveTypeTraits<TStorage, SLOT_POINTER>;
 	};
-
-	// @TEMP: Alias to old implementation for current code.
-	template< typename TValue, typename TSlot, TSlot TValue::* SLOT_POINTER >
-	using IntrusiveTraits = IntrusiveTypeTraits<TValue, SLOT_POINTER>;
 }
 }
 }
