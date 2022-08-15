@@ -42,25 +42,19 @@ inline namespace ForwardList
 	}
 
 	template< typename TValue, typename TTraits >
-	inline typename BasicIntrusiveForwardList<TValue, TTraits>::Value& BasicIntrusiveForwardList<TValue, TTraits>::GetFirstValue()
+	inline typename BasicIntrusiveForwardList<TValue, TTraits>::Value& BasicIntrusiveForwardList<TValue, TTraits>::GetFirstValue() const
 	{
 		return TTraits::GetValue( SinglyLinkedList::GetFrontSlot() );
 	}
 
 	template< typename TValue, typename TTraits >
-	inline const typename BasicIntrusiveForwardList<TValue, TTraits>::Value& BasicIntrusiveForwardList<TValue, TTraits>::GetFirstValue() const
-	{
-		return TTraits::GetValue( SinglyLinkedList::GetFrontSlot() );
-	}
-
-	template< typename TValue, typename TTraits >
-	inline typename BasicIntrusiveForwardList<TValue, TTraits>::Iterator BasicIntrusiveForwardList<TValue, TTraits>::GetBegin()
+	inline typename BasicIntrusiveForwardList<TValue, TTraits>::Iterator BasicIntrusiveForwardList<TValue, TTraits>::GetBegin() const
 	{
 		return Iterator{ SinglyLinkedList::GetBegin() };
 	}
 
 	template< typename TValue, typename TTraits >
-	inline typename BasicIntrusiveForwardList<TValue, TTraits>::Iterator BasicIntrusiveForwardList<TValue, TTraits>::GetEnd()
+	inline typename BasicIntrusiveForwardList<TValue, TTraits>::Iterator BasicIntrusiveForwardList<TValue, TTraits>::GetEnd() const
 	{
 		return Iterator{ SinglyLinkedList::GetEnd() };
 	}

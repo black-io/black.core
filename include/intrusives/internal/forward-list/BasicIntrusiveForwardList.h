@@ -69,16 +69,13 @@ inline namespace ForwardList
 
 
 		// Get the value at the head of list. Expects that list is not empty.
-		inline Value& GetFirstValue();
-
-		// Get the value at the head of list. Expects that list is not empty.
-		inline const Value& GetFirstValue() const;
+		inline Value& GetFirstValue() const;
 
 		// Get the iterator to beginning of list. May return invalid iterator.
-		inline Iterator GetBegin();
+		inline Iterator GetBegin() const;
 
 		// Get the iterator to ending of list. May return invalid iterator.
-		inline Iterator GetEnd();
+		inline Iterator GetEnd() const;
 
 
 		// Get the size of list.
