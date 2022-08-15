@@ -14,13 +14,13 @@ inline namespace List
 	/**
 		@brief	Regular iterator for intrusive list.
 	*/
-	template< typename TValue, Black::IntrusiveListSlot TValue::* SLOT_POINTER >
+	template< typename TValue, typename TTraits >
 	class ListIterator final
 	{
 	// Friendship declarations.
 	public:
 		// Grant access to private state.
-		friend class BasicIntrusiveList<TValue, SLOT_POINTER>;
+		friend class BasicIntrusiveList<TValue, TTraits>;
 
 	// STL-complaint inner types.
 	public:
@@ -63,14 +63,6 @@ inline namespace List
 
 		inline const bool operator == ( const ListIterator& other ) const;
 		inline const bool operator != ( const ListIterator& other ) const;
-
-
-		inline operator ListConstIterator<TValue, SLOT_POINTER>() const { return ListConstIterator<TValue, SLOT_POINTER>{ m_cursor }; };
-
-	// Private inner types.
-	private:
-		// Traits for intrusive operations.
-		using Traits = IntrusiveTraits<TValue, Black::IntrusiveListSlot, SLOT_POINTER>;
 
 	// Private lifetime management.
 	private:
