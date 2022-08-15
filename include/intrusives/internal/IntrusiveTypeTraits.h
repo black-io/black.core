@@ -9,11 +9,27 @@ inline namespace Intrusives
 {
 namespace Internal
 {
-	template< typename TValue, auto MEMBER_POINTER >
+	/**
+		@brief	Type traits for intrusive containers.
+
+		This traits used by intrusive containers operate with element slots and elements.
+		Traits allow containers to store the values of one type and operate with container slot from the base type of one.
+
+		@tparam	TValue			Type of value stored by container.
+		@tparam	SLOT_POINTER	Pointer to class member with type of container slot.
+	*/
+	template< typename TValue, auto SLOT_POINTER >
 	class IntrusiveTypeTraits;
 
-	template< typename TValue, typename TSlot, TSlot TValue::* MEMBER_POINTER >
-	class IntrusiveTypeTraits<TValue, MEMBER_POINTER> final
+	/**
+		@brief	Type traits for case the container slot is stored by the container value type.
+
+		@tparam	TValue			Type of value stored by container.
+		@tparam	TSlot			Type of slot for container.
+		@tparam	SLOT_POINTER	Pointer to class member with type of container slot.
+	*/
+	template< typename TValue, typename TSlot, TSlot TValue::* SLOT_POINTER >
+	class IntrusiveTypeTraits<TValue, SLOT_POINTER> final
 	{
 	// Public static interface.
 	public:
@@ -32,11 +48,19 @@ namespace Internal
 	// Private constants.
 	private:
 		// Byte offset from object base address to slot member.
-		static inline const ptrdiff_t MEMBER_OFFSET = ptrdiff_t( &( ((TValue*)nullptr)->*MEMBER_POINTER ) );
+		static inline const ptrdiff_t SLOT_OFFSET = ptrdiff_t( &( ((TValue*)nullptr)->*SLOT_POINTER ) );
 	};
 
-	template< typename TValue, typename TStorage, typename TSlot, TSlot TStorage::* MEMBER_POINTER >
-	class IntrusiveTypeTraits<TValue, MEMBER_POINTER> final
+	/**
+		@brief	Type traits for case the container slot is stored by the base type of container value.
+
+		@tparam	TValue			Type of value stored by container.
+		@tparam	TStorage		Type of container slot storage, that should be the base type for value type.
+		@tparam	TSlot			Type of slot for container.
+		@tparam	SLOT_POINTER	Pointer to class member with type of container slot.
+	*/
+	template< typename TValue, typename TStorage, typename TSlot, TSlot TStorage::* SLOT_POINTER >
+	class IntrusiveTypeTraits<TValue, SLOT_POINTER> final
 	{
 	// Public interface.
 	public:
@@ -55,11 +79,12 @@ namespace Internal
 	// Private inner types.
 	private:
 		// Type traits for storage type.
-		using StorageTraits = IntrusiveTypeTraits<TStorage, MEMBER_POINTER>;
+		using StorageTraits = IntrusiveTypeTraits<TStorage, SLOT_POINTER>;
 	};
 
-	template< typename TValue, typename TSlot, TSlot TValue::* MEMBER_POINTER >
-	using IntrusiveTraits = IntrusiveTypeTraits<TValue, MEMBER_POINTER>;
+	// @TEMP: Alias to old implementation for current code.
+	template< typename TValue, typename TSlot, TSlot TValue::* SLOT_POINTER >
+	using IntrusiveTraits = IntrusiveTypeTraits<TValue, SLOT_POINTER>;
 }
 }
 }
