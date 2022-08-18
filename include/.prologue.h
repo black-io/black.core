@@ -5,7 +5,7 @@
 #include ".bootstrap/namespace.h"
 
 // Environment configuration.
-#include ".bootstrap/types.h"
+#include ".bootstrap/constants.h"
 #include ".bootstrap/configuration.h"
 
 // Persistent external stuff.
@@ -25,8 +25,8 @@
 #include ".global/logging/macros.h"
 
 // Most global stuff.
-#include ".bootstrap/constants.h"
-#include ".bootstrap/macros.h"
+#include ".global/types/constants.h"
+#include ".global/macros.h"
 #include ".global/algorithms/misc.h"
 #include ".global/algorithms/bytes.h"
 #include ".global/algorithms/chars.h"
