@@ -17,12 +17,12 @@ inline namespace Concurrency
 		/**
 			@see	Mutex::Lock()
 		*/
-		virtual void Lock() const override		{ m_mutex.lock(); };
+		virtual void Lock() const final override	{ m_mutex.lock(); };
 
 		/**
 			@see	Mutex::Unlock()
 		*/
-		virtual void Unlock() const override	{ m_mutex.unlock(); };
+		virtual void Unlock() const final override	{ m_mutex.unlock(); };
 
 	private:
 		mutable std::recursive_mutex	m_mutex;	// Mutex object.
