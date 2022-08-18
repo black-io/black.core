@@ -25,8 +25,8 @@
 #include ".global/logging/macros.h"
 
 // Most global stuff.
-#include ".global/types/constants.h"
 #include ".global/macros.h"
+#include ".global/types/constants.h"
 #include ".global/algorithms/misc.h"
 #include ".global/algorithms/bytes.h"
 #include ".global/algorithms/chars.h"
