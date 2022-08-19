@@ -16,3 +16,5 @@
 
 #include ".global/algorithms/chars.inl"
 #include ".global/algorithms/bytes.inl"
+
+#include ".bootstrap/constants.converting.inl"

@@ -12,6 +12,10 @@
 #include ".bootstrap/persistent-std.h"
 #include ".bootstrap/persistent-third-party.h"
 
+// Conversion support for bootstrap constants.
+#include ".bootstrap/internal/constants.h"
+#include ".bootstrap/constants.converting.h"
+
 // Logging basics.
 #include ".global/logging/forwards.h"
 #include ".global/logging/internal/constants.h"
