@@ -36,6 +36,16 @@ namespace Internal
 			"android",	// Black::PlatformType::Android
 			"ios",		// Black::PlatformType::Ios
 		};
+
+		// Ordinal list of platform types, since the values of enumeration are not sequential.
+		static inline constexpr Black::PlatformType VALUES[] {
+			Black::PlatformType::Unknown,
+			Black::PlatformType::WindowsDesktop,
+			Black::PlatformType::MacOs,
+			Black::PlatformType::Linux,
+			Black::PlatformType::Android,
+			Black::PlatformType::Ios,
+		};
 	};
 
 	/**

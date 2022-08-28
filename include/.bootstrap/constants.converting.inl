@@ -11,15 +11,9 @@ namespace Black
 
 		auto found_name = std::find( std::begin( BuildModeMappings::NAMES ), std::end( BuildModeMappings::NAMES ), source );
 		EXPECTS_DEBUG( found_name != std::end( BuildModeMappings::NAMES ) );
+		CRET( found_name == std::end( BuildModeMappings::NAMES ) );
 
-		if( found_name != std::end( BuildModeMappings::NAMES ) )
-		{
-			destination = static_cast<BuildMode>( std::distance( std::begin( BuildModeMappings::NAMES ), found_name ) );
-		}
-		else
-		{
-			destination = BuildMode::Release;
-		}
+		destination = static_cast<BuildMode>( std::distance( std::begin( BuildModeMappings::NAMES ), found_name ) );
 	}
 
 	inline void ConvertFromString( const std::string_view source, PlatformType& destination )
@@ -30,15 +24,10 @@ namespace Black
 
 		auto found_name = std::find( std::begin( PlatformTypeMappings::NAMES ), std::end( PlatformTypeMappings::NAMES ), source );
 		EXPECTS_DEBUG( found_name != std::end( PlatformTypeMappings::NAMES ) );
+		CRET( found_name == std::end( PlatformTypeMappings::NAMES ) );
 
-		if( found_name != std::end( PlatformTypeMappings::NAMES ) )
-		{
-			destination = static_cast<PlatformType>( std::distance( std::begin( PlatformTypeMappings::NAMES ), found_name ) );
-		}
-		else
-		{
-			destination = PlatformType::Unknown;
-		}
+		const size_t mapped_index = std::distance( std::begin( PlatformTypeMappings::NAMES ), found_name );
+		destination = PlatformTypeMappings::VALUES[ mapped_index ];
 	}
 
 	inline void ConvertFromString( const std::string_view source, PlatformEndianness& destination )
@@ -49,15 +38,9 @@ namespace Black
 
 		auto found_name = std::find( std::begin( PlatformEndiannessMappings::NAMES ), std::end( PlatformEndiannessMappings::NAMES ), source );
 		EXPECTS_DEBUG( found_name != std::end( PlatformEndiannessMappings::NAMES ) );
+		CRET( found_name == std::end( PlatformEndiannessMappings::NAMES ) );
 
-		if( found_name != std::end( PlatformEndiannessMappings::NAMES ) )
-		{
-			destination = static_cast<PlatformEndianness>( std::distance( std::begin( PlatformEndiannessMappings::NAMES ), found_name ) );
-		}
-		else
-		{
-			destination = PlatformEndianness::Unknown;
-		}
+		destination = static_cast<PlatformEndianness>( std::distance( std::begin( PlatformEndiannessMappings::NAMES ), found_name ) );
 	}
 
 	inline void ConvertToString( const BuildMode& source, std::string& destination )
@@ -67,7 +50,16 @@ namespace Black
 
 	inline void ConvertToString( const PlatformType& source, std::string& destination )
 	{
-		destination = Core::Bootstrap::Internal::PlatformTypeMappings::NAMES[ Black::GetEnumValue( source ) ];
+		// To simplify the name qualification.
+		using namespace Core::Bootstrap::Internal;
+
+
+		auto found_name = std::find( std::begin( PlatformTypeMappings::VALUES ), std::end( PlatformTypeMappings::VALUES ), source );
+		EXPECTS_DEBUG( found_name != std::end( PlatformTypeMappings::VALUES ) );
+		CRET( found_name == std::end( PlatformTypeMappings::VALUES ) );
+
+		const size_t mapped_index = std::distance( std::begin( PlatformTypeMappings::VALUES ), found_name );
+		destination = PlatformTypeMappings::NAMES[ mapped_index ];
 	}
 
 	inline void ConvertToString( const PlatformEndianness& source, std::string& destination )
