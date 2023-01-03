@@ -41,14 +41,14 @@ inline namespace ForwardList
 
 	// Lifetime management.
 	public:
-		inline ForwardListIterator()								= default;
-		inline ForwardListIterator( const ForwardListIterator& )	= default;
-		inline ForwardListIterator( ForwardListIterator&& )			= default;
-		inline ~ForwardListIterator()								= default;
+		inline ForwardListIterator()									= default;
+		inline ForwardListIterator( const ForwardListIterator& )		= default;
+		inline ForwardListIterator( ForwardListIterator&& ) noexcept	= default;
+		inline ~ForwardListIterator() noexcept							= default;
 
 
-		inline ForwardListIterator& operator = ( const ForwardListIterator& )	= default;
-		inline ForwardListIterator& operator = ( ForwardListIterator&& )		= default;
+		inline ForwardListIterator& operator = ( const ForwardListIterator& )		= default;
+		inline ForwardListIterator& operator = ( ForwardListIterator&& ) noexcept	= default;
 
 	// Public interface.
 	public:
