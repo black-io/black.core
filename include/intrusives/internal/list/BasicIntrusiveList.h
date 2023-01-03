@@ -22,7 +22,7 @@ inline namespace List
 		@tparam	TTraits	Type traits for container.
 	*/
 	template< typename TValue, typename TTraits >
-	class BasicIntrusiveList : private DoublyLinkedList
+	class BasicIntrusiveList : protected DoublyLinkedList
 	{
 	// Restrictions.
 	public:
@@ -45,9 +45,9 @@ inline namespace List
 
 	// Lifetime management.
 	public:
-		inline BasicIntrusiveList()							= default;
-		inline BasicIntrusiveList( BasicIntrusiveList&& )	= default;
-		inline ~BasicIntrusiveList()						= default;
+		inline BasicIntrusiveList()									= default;
+		inline BasicIntrusiveList( BasicIntrusiveList&& ) noexcept	= default;
+		inline ~BasicIntrusiveList() noexcept						= default;
 
 	// Public interface.
 	public:
