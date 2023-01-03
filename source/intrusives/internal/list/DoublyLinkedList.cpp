@@ -65,6 +65,39 @@ namespace
 		m_length				= 0;
 	}
 
+	void DoublyLinkedList::Swap( DoublyLinkedList& other )
+	{
+		using std::swap;
+
+		for( DoublyLinkedListSlot* slot = m_head; slot != &m_end; slot = slot->m_next )
+		{
+			slot->m_host = &other;
+		}
+
+		for( DoublyLinkedListSlot* slot = other.m_head; slot != &other.m_end; slot = slot->m_next )
+		{
+			slot->m_host = this;
+		}
+
+		swap( m_head, other.m_head );
+		swap( m_length, other.m_length );
+
+		DoublyLinkedListSlot* my_back		= other.m_end.m_previous;
+		DoublyLinkedListSlot* other_back	= m_end.m_previous;
+
+		if( my_back != nullptr )
+		{
+			my_back->m_next		= &m_end;
+			m_end.m_previous	= my_back;
+		}
+
+		if( other_back != nullptr )
+		{
+			other_back->m_next		= &other.m_end;
+			other.m_end.m_previous	= other_back;
+		}
+	}
+
 	void DoublyLinkedList::PushFront( Slot& slot )
 	{
 		slot.Detach();
