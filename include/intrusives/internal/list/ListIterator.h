@@ -41,14 +41,14 @@ inline namespace List
 
 	// Lifetime management.
 	public:
-		inline ListIterator()						= default;
-		inline ListIterator( const ListIterator& )	= default;
-		inline ListIterator( ListIterator&& )		= default;
-		inline ~ListIterator()						= default;
+		inline ListIterator()							= default;
+		inline ListIterator( const ListIterator& )		= default;
+		inline ListIterator( ListIterator&& ) noexcept	= default;
+		inline ~ListIterator() noexcept					= default;
 
 
-		inline ListIterator& operator = ( const ListIterator& )	= default;
-		inline ListIterator& operator = ( ListIterator&& )		= default;
+		inline ListIterator& operator = ( const ListIterator& )		= default;
+		inline ListIterator& operator = ( ListIterator&& ) noexcept	= default;
 
 	// Public interface.
 	public:
