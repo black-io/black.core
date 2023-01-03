@@ -66,6 +66,41 @@ namespace
 		m_length = 0;
 	}
 
+	void SinglyLinkedList::Swap( SinglyLinkedList& other )
+	{
+		using std::swap;
+
+
+		auto fix_slots = [](
+			SinglyLinkedListSlot* const begin,
+			SinglyLinkedListSlot* const end,
+			SinglyLinkedList* const new_host,
+			SinglyLinkedListSlot* const new_end
+		)
+		{
+			SinglyLinkedListSlot* last_slot = nullptr;
+
+			// Redirect the slots to other list.
+			for( SinglyLinkedListSlot* slot = begin; slot != end; slot = slot->m_next )
+			{
+				slot->m_host = new_host;
+				last_slot = slot;
+			}
+
+			// Fix the link to end slot for other.
+			if( last_slot != nullptr )
+			{
+				last_slot->m_next = new_end;
+			}
+		};
+
+		fix_slots( m_head, &m_end, &other, &other.m_end );
+		fix_slots( other.m_head, &other.m_end, this, &m_end );
+
+		swap( m_head, other.m_head );
+		swap( m_length, other.m_length );
+	}
+
 	void SinglyLinkedList::PushFront( Slot& slot )
 	{
 		slot.Detach();

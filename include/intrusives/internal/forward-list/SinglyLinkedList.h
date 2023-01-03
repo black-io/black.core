@@ -41,6 +41,9 @@ inline namespace ForwardList
 		// Clear the list and unlink all hosted slots.
 		void Clear();
 
+		// Swap the state with given other.
+		void Swap( SinglyLinkedList& other );
+
 
 		// Add the slot as new head. Previous link of slot will be resolved safely.
 		void PushFront( Slot& slot );
