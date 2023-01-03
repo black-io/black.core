@@ -24,13 +24,13 @@ inline namespace Interconnection
 		inline InterconnectionSlot() = default;
 
 		inline InterconnectionSlot( const InterconnectionSlot& other );
-		inline InterconnectionSlot( InterconnectionSlot&& other );
+		inline InterconnectionSlot( InterconnectionSlot&& other ) noexcept;
 
 		explicit inline InterconnectionSlot( const THost& host );
 
 	// Heirs lifetime management.
 	protected:
-		inline ~InterconnectionSlot();
+		inline ~InterconnectionSlot() noexcept;
 
 	// Heirs compatible interface.
 	protected:

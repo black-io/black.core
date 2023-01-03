@@ -18,8 +18,8 @@ inline namespace Interconnection
 	}
 
 	template< typename THost >
-	inline InterconnectionSlot<THost>::InterconnectionSlot( InterconnectionSlot&& other )
-		: BasicInterconnectionSlot{ std::move( static_cast<BasicInterconnectionSlot&>( other ) ) }
+	inline InterconnectionSlot<THost>::InterconnectionSlot( InterconnectionSlot&& other ) noexcept
+		: BasicInterconnectionSlot{ std::forward<BasicInterconnectionSlot&&>( other ) }
 	{
 		other.Invalidate();
 	}
@@ -31,7 +31,7 @@ inline namespace Interconnection
 	}
 
 	template< typename THost >
-	inline InterconnectionSlot<THost>::~InterconnectionSlot()
+	inline InterconnectionSlot<THost>::~InterconnectionSlot() noexcept
 	{
 		Disconnect();
 	}
