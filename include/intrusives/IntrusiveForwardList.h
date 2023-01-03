@@ -36,12 +36,20 @@ inline namespace Intrusives
 			false
 		>
 	{
+	// Most valuable private aliases.
+	private:
+		// Functional base of this type.
+		using ListBase = Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>;
+
+		// Direct base of this type.
+		using DirectBase = Black::StandardForwardListFacade<IntrusiveForwardList<TValue, SLOT_POINTER>, ListBase, false>;
+
 	// Public aliases.
 	public:
-		using typename Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::Iterator;
+		using typename ListBase::Iterator;
 
 
-		using Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::IsEmpty;
+		using ListBase::IsEmpty;
 
 	// Friendship interface.
 	public:
@@ -56,24 +64,27 @@ inline namespace Intrusives
 
 	// Public lifetime management.
 	public:
-		using Black::StandardForwardListFacade<
-			IntrusiveForwardList<TValue, SLOT_POINTER>,
-			Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>,
-			false
-		>::StandardForwardListFacade;
+		inline IntrusiveForwardList()			= default;
+		inline ~IntrusiveForwardList() noexcept	= default;
+
+		inline IntrusiveForwardList( IntrusiveForwardList&& other ) noexcept
+			: DirectBase{ std::forward<DirectBase&&>( other ) }
+		{
+		}
 
 
 		inline IntrusiveForwardList& operator = ( IntrusiveForwardList&& other ) noexcept
 		{
-			// End the lifetime of current list.
-			IntrusiveForwardList::~IntrusiveForwardList();
-
-			// Start the lifetime of new list by moving the given `other`.
-			return *new( this ) IntrusiveForwardList{ std::move( other ) };
+			IntrusiveForwardList{ std::move( other ) }.Swap( this );
+			return *this;
 		}
 
 	// Public interface.
 	public:
+		// Swap the state with given other.
+		inline void Swap( IntrusiveForwardList& other )	{ ListBase::Swap( other ); };
+
+
 		inline explicit operator const bool () const	{ return !IsEmpty(); };
 		inline const bool operator ! () const			{ return IsEmpty(); };
 	};
@@ -93,12 +104,20 @@ inline namespace Intrusives
 			false
 		>
 	{
+	// Most valuable private aliases.
+	private:
+		// Functional base of this type.
+		using ListBase = Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>;
+
+		// Direct base of this type.
+		using DirectBase = Black::StandardForwardListFacade<IntrusiveForwardList<TValue, SLOT_POINTER>, ListBase, false>;
+
 	// Public aliases.
 	public:
-		using typename Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::Iterator;
+		using typename ListBase::Iterator;
 
 
-		using Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>::IsEmpty;
+		using ListBase::IsEmpty;
 
 	// Friendship interface.
 	public:
@@ -113,24 +132,27 @@ inline namespace Intrusives
 
 	// Public lifetime management.
 	public:
-		using Black::StandardForwardListFacade<
-			IntrusiveForwardList<TValue, SLOT_POINTER>,
-			Internal::BasicIntrusiveForwardList<TValue, Internal::IntrusiveTypeTraits<TValue, SLOT_POINTER>>,
-			false
-		>::StandardForwardListFacade;
+		inline IntrusiveForwardList()			= default;
+		inline ~IntrusiveForwardList() noexcept	= default;
+
+		inline IntrusiveForwardList( IntrusiveForwardList&& other ) noexcept
+			: DirectBase{ std::forward<DirectBase&&>( other ) }
+		{
+		}
 
 
 		inline IntrusiveForwardList& operator = ( IntrusiveForwardList&& other ) noexcept
 		{
-			// End the lifetime of current list.
-			IntrusiveForwardList::~IntrusiveForwardList();
-
-			// Start the lifetime of new list by moving the given `other`.
-			return *new( this ) IntrusiveForwardList{ std::move( other ) };
+			IntrusiveForwardList{ std::move( other ) }.Swap( this );
+			return *this;
 		}
 
 	// Public interface.
 	public:
+		// Swap the state with given other.
+		inline void Swap( IntrusiveForwardList& other )	{ ListBase::Swap( other ); };
+
+
 		inline explicit operator const bool () const	{ return !IsEmpty(); };
 		inline const bool operator ! () const			{ return IsEmpty(); };
 	};
