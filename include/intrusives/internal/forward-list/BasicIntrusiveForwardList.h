@@ -22,7 +22,7 @@ inline namespace ForwardList
 		@tparam	TTraits	Type traits for container.
 	*/
 	template< typename TValue, typename TTraits >
-	class BasicIntrusiveForwardList : private SinglyLinkedList
+	class BasicIntrusiveForwardList : protected SinglyLinkedList
 	{
 	// Restrictions.
 	public:
@@ -45,9 +45,9 @@ inline namespace ForwardList
 
 	// Lifetime management.
 	public:
-		inline BasicIntrusiveForwardList()								= default;
-		inline BasicIntrusiveForwardList( BasicIntrusiveForwardList&& )	= default;
-		inline ~BasicIntrusiveForwardList()								= default;
+		inline BasicIntrusiveForwardList()											= default;
+		inline BasicIntrusiveForwardList( BasicIntrusiveForwardList&& ) noexcept	= default;
+		inline ~BasicIntrusiveForwardList() noexcept								= default;
 
 	// Public interface.
 	public:
