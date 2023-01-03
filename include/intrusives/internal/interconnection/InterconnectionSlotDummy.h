@@ -22,11 +22,11 @@ inline namespace Interconnection
 	{
 	// Lifetime management.
 	public:
-		inline InterconnectionSlotDummy()									= default;
-		inline InterconnectionSlotDummy( const InterconnectionSlotDummy& )	= default;
-		inline InterconnectionSlotDummy( InterconnectionSlotDummy&& )		= default;
+		inline InterconnectionSlotDummy()										= default;
+		inline InterconnectionSlotDummy( const InterconnectionSlotDummy& )		= default;
+		inline InterconnectionSlotDummy( InterconnectionSlotDummy&& ) noexcept	= default;
 
-		explicit inline InterconnectionSlotDummy( const THost& )			{};
+		explicit inline InterconnectionSlotDummy( const THost& )				{};
 
 	// Heirs lifetime management.
 	protected:
