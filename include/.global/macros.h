@@ -68,11 +68,6 @@
 #define CBRKW( CONDITION, CHANNEL, FORMAT, ... )			{ if( CONDITION ) [[unlikely]] { BLACK_LOG_WARNING( CHANNEL, FORMAT, ##__VA_ARGS__ ); break; } }
 
 
-// String from arbitrary expression.
-#define BLACK_STRING_MACRO( EXPRESSION )	#EXPRESSION
-#define BLACK_STRINGIFICATION( EXPRESSION )	BLACK_STRING_MACRO( EXPRESSION )
-
-
 // Regular expectation.
 #define EXPECTS( ... )																									\
 {																														\
