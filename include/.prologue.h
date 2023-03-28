@@ -6,6 +6,7 @@
 
 // Environment configuration.
 #include ".bootstrap/constants.h"
+#include ".bootstrap/macros.h"
 #include ".bootstrap/configuration.h"
 
 // Persistent external stuff.
