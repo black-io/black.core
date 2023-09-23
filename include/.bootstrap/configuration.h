@@ -16,10 +16,6 @@
 #define BLACK_ANDROID_PLATFORM			0
 #define BLACK_IOS_PLATFORM				0
 
-// Stub for name of target platform.
-// Should not be used out of preprocessor stage.
-#define BLACK_PLATFORM_NAME				unknown
-
 // Endianness boolean flag stubs.
 // This values may be used into `#if` checks.
 #define BLACK_BIG_ENDIAN				0
@@ -44,21 +40,12 @@
 #if( defined( _WIN32 ) )
 	#undef BLACK_WINDOWS_DESKTOP_PLATFORM
 	#define BLACK_WINDOWS_DESKTOP_PLATFORM	1
-
-	#undef BLACK_PLATFORM_NAME
-	#define BLACK_PLATFORM_NAME				windows
 #elif( defined( __MACOSX__ ) )
 	#undef BLACK_MAC_OS_PLATFORM
 	#define BLACK_MAC_OS_PLATFORM			1
-
-	#undef BLACK_PLATFORM_NAME
-	#define BLACK_PLATFORM_NAME				macos
 #elif( defined( __ANDROID__ ) )
 	#undef BLACK_ANDROID_PLATFORM
 	#define BLACK_ANDROID_PLATFORM			1
-
-	#undef BLACK_PLATFORM_NAME
-	#define BLACK_PLATFORM_NAME				android
 
 	// Force JNI to use standard plain types.
 	#define HAVE_INTTYPES_H					1
@@ -68,9 +55,6 @@
 #elif( defined( __iOS__ ) )
 	#undef BLACK_IOS_PLATFORM
 	#define BLACK_IOS_PLATFORM				1
-
-	#undef BLACK_PLATFORM_NAME
-	#define BLACK_PLATFORM_NAME				ios
 #else
 	#error Current platform is unspecified or not defined.
 #endif
@@ -138,11 +122,6 @@
 #else
 	#define BLACK_EXCEPTIONS_ENABLED	0
 #endif
-
-
-// Configure the common name of included platform-dependent code.
-// This macro may be used in `#include` directive.
-#define BLACK_CURRENT_PLATFORM_HEADER	BLACK_STRINGIFICATION( ../platform.BLACK_PLATFORM_NAME/platform.BLACK_PLATFORM_NAME.h )
 
 
 namespace Black
