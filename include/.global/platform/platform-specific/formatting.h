@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Platform
 {
 inline namespace PlatformSpecific
@@ -30,6 +32,7 @@ inline namespace PlatformSpecific
 		@retval	0				If no argument was read.
 	*/
 	const size_t ParseArgumentsList( const std::string_view source_buffer, const char* format, va_list arguments );
+}
 }
 }
 }

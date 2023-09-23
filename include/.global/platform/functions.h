@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Platform
 {
 	/**
@@ -108,6 +110,7 @@ inline namespace Platform
 		@retval	0				If no argument was read.
 	*/
 	inline const size_t ParseArguments( const std::string_view source_buffer, const char* format, ... );
+}
 }
 }
 }

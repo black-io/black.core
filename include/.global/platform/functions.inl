@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Platform
 {
 	template< typename TValue >

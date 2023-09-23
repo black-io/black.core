@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Platform
 {
 inline namespace PlatformSpecific
@@ -30,6 +32,7 @@ inline namespace PlatformSpecific
 		@param	content	The string to be shown in debugger.
 	*/
 	void SendDebuggerMessage( const Black::LogMessage& message, std::string&& content );
+}
 }
 }
 }
