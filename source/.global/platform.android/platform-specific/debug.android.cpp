@@ -50,7 +50,11 @@ inline namespace PlatformSpecific
 		{
 			std::string buffer;
 
-			if( !message.GetFilePath().empty() )
+			if( message.GetFilePath().empty() )
+			{
+				buffer = std::move( content );
+			}
+			else
 			{
 				buffer = Black::FormatString(
 					"{} ({}): - {}\n",
@@ -59,19 +63,15 @@ inline namespace PlatformSpecific
 					content
 				);
 			}
-			else
-			{
-				buffer = std::move( content );
-			}
 
-			// There is not zero termination in channel buffer.
+			// There is no zero termination in channel buffer.
 			const size_t channel_size = message.GetChannel().size();
 			char* log_tag = static_cast<char*>( alloca( channel_size + 1 ) );
 			Black::CopyMemory( log_tag, message.GetChannel().data(), channel_size );
 			log_tag[ channel_size ] = 0;
 
 			const android_LogPriority priority = ::TranslateLogCategory( message.GetCategory() );
-			__android_log_write( priority, log_tag, content.data() );
+			__android_log_write( priority, log_tag, buffer.data() );
 		}
 	}
 }
