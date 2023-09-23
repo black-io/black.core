@@ -27,7 +27,7 @@ namespace Internal
 }
 
 
-// Include the most fundamental platform stuff.
+// Include most fundamental platform stuff.
 #include "functions.h"
 #include "platform-specific/debug.h"
 #include "platform-specific/formatting.h"

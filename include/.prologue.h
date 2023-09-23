@@ -60,4 +60,4 @@
 #include ".global/types/EnumFlags.h"
 
 // Platform-specific definitions.
-#include "platform/platform.h"
+#include ".global/platform/platform.h"

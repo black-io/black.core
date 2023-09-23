@@ -81,3 +81,4 @@ inline namespace Platform
 }
 }
 }
+}

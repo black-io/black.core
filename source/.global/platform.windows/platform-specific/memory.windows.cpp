@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Platform
 {
 inline namespace PlatformSpecific
@@ -33,6 +35,7 @@ inline namespace PlatformSpecific
 	{
 		return ::memcmp( left_memory, right_memory, length ) == 0;
 	}
+}
 }
 }
 }

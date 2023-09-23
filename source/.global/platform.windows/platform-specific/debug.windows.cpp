@@ -26,6 +26,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Platform
 {
 inline namespace PlatformSpecific
@@ -78,6 +80,7 @@ inline namespace PlatformSpecific
 			::OutputDebugStringA( buffer.data() );
 		}
 	}
+}
 }
 }
 }

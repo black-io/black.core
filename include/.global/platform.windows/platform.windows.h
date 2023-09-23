@@ -16,7 +16,7 @@ inline namespace Global
 {
 inline namespace Platform
 {
-// Windows desktop platform definitions.
+// Microsoft Windows Desktop platform definitions.
 inline namespace WindowsDesktop
 {
 

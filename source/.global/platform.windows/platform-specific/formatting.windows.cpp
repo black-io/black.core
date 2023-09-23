@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Platform
 {
 inline namespace PlatformSpecific
@@ -21,6 +23,7 @@ inline namespace PlatformSpecific
 	{
 		return std::max<int32_t>( ::vsscanf_s( source_buffer.data(), format, arguments ), 0 );
 	}
+}
 }
 }
 }
