@@ -5,6 +5,8 @@ namespace Black
 {
 inline namespace Core
 {
+inline namespace Global
+{
 inline namespace Platform
 {
 namespace Internal
@@ -28,6 +30,7 @@ namespace Internal
 			instance->Release();
 		}
 	};
+}
 }
 }
 }
