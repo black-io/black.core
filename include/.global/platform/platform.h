@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Global
 {
-// Core platform subsystem.
+// Platform-oriented definitions.
 inline namespace Platform
 {
 // Platform-specific definitions.
@@ -16,7 +16,7 @@ inline namespace PlatformSpecific
 
 }
 
-// Internal definitions for platforms.
+// Internal platform-oriented definitions.
 namespace Internal
 {
 
