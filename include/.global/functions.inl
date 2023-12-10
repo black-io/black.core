@@ -7,8 +7,6 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Platform
-{
 	template< typename TValue >
 	inline void CopyMemory( TValue& dest_ref, const TValue& source_ref )
 	{
@@ -78,7 +76,6 @@ inline namespace Platform
 		va_end( arguments );
 		return result;
 	}
-}
 }
 }
 }
