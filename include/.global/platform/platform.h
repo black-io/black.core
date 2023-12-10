@@ -7,31 +7,20 @@ inline namespace Core
 {
 inline namespace Global
 {
-// Platform-oriented definitions.
-inline namespace Platform
-{
 // Platform-specific definitions.
-inline namespace PlatformSpecific
-{
-
-}
-
-// Internal platform-oriented definitions.
-namespace Internal
+namespace Platform
 {
 
 }
 }
 }
 }
-}
 
 
-// Include most fundamental platform stuff.
-#include "functions.h"
-#include "platform-specific/debug.h"
-#include "platform-specific/formatting.h"
-#include "platform-specific/memory.h"
+// Forward declarations of platform-specific stuff.
+#include "functions.debug.h"
+#include "functions.formatting.h"
+#include "functions.memory.h"
 
 // Select the implementation of platform-specific code.
 #if( BLACK_WINDOWS_DESKTOP_PLATFORM )
@@ -49,4 +38,3 @@ namespace Internal
 #endif
 
 // Deferred implementations.
-#include "functions.inl"

@@ -2,6 +2,8 @@
 
 
 // Deferred inline implementations.
+#include ".global/functions.inl"
+
 #include ".global/logging/LogMessage.inl"
 #include ".global/logging/internal/MessageFormat.inl"
 #include ".global/logging/internal/MessageChannel.inl"

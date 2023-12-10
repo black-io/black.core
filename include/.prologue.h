@@ -59,5 +59,11 @@
 #include ".global/types/EnumFlags.internal.h"
 #include ".global/types/EnumFlags.h"
 
-// Platform-specific definitions.
+// First layer of platform-agnostic types. Cross-platform basic definitions.
+#include ".global/functions.h"
+
+// Second layer of platform-agnostic types. Platform-specific declarations.
 #include ".global/platform/platform.h"
+
+// Third layer of platform-agnostic types. Public platform-specific stuff.
+// None here.
