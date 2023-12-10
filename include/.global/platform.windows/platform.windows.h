@@ -14,11 +14,12 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Platform
-{
 // Microsoft Windows Desktop platform definitions.
 inline namespace WindowsDesktop
 {
+// Internal platform-related stuff for Microsoft Windows Desktop platform.
+namespace Internal
+{
 
 }
 }
@@ -27,6 +28,13 @@ inline namespace WindowsDesktop
 }
 
 
-// Common platform-related stuff.
+// Internal stuff.
 #include "internal/ComObjectReleaser.h"
+
+// Platform-specific stuff.
+#include "functions.debug.windows.h"
+#include "functions.formatting.windows.h"
+#include "functions.memory.windows.h"
+
+#include "functions.h"
 #include "com-pointers.h"
