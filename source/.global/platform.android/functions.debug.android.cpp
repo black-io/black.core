@@ -2,6 +2,14 @@
 #include <black/core/algorithms.h>
 
 
+namespace Black
+{
+inline namespace Core
+{
+inline namespace Global
+{
+namespace Platform
+{
 namespace
 {
 	const android_LogPriority TranslateLogCategory( const Black::LogMessage::Category category )
@@ -22,29 +30,23 @@ namespace
 }
 
 
-namespace Black
-{
-inline namespace Core
-{
-inline namespace Platform
-{
-inline namespace PlatformSpecific
-{
-	void SendDebugString( std::string_view content )
+	template<>
+	void SendDebugString<Black::PlatformType::Android>( std::string_view content )
 	{
 		if constexpr( Black::BUILD_CONFIGURATION == Black::BuildMode::Debug )
 		{
 			const size_t content_length = content.size();
 			char* const string_buffer	= static_cast<char*>( alloca( content_length + 1 ) );
 
-			CopyMemory( string_buffer, content.data(), content_length );
+			CopyMemory<Black::BUILD_PLATFORM>( string_buffer, content.data(), content_length );
 			string_buffer[ content_length ] = 0;
 
 			__android_log_write( ANDROID_LOG_DEBUG, "Black/Debugging", string_buffer );
 		}
 	}
 
-	void SendDebuggerMessage( const Black::LogMessage& message, std::string&& content )
+	template<>
+	void SendDebuggerMessage<Black::PlatformType::Android>( const Black::LogMessage& message, std::string&& content )
 	{
 		if constexpr( Black::BUILD_CONFIGURATION == Black::BuildMode::Debug )
 		{
@@ -70,7 +72,7 @@ inline namespace PlatformSpecific
 			Black::CopyMemory( log_tag, message.GetChannel().data(), channel_size );
 			log_tag[ channel_size ] = 0;
 
-			const android_LogPriority priority = ::TranslateLogCategory( message.GetCategory() );
+			const android_LogPriority priority = TranslateLogCategory( message.GetCategory() );
 			__android_log_write( priority, log_tag, buffer.data() );
 		}
 	}

@@ -12,15 +12,23 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Platform
-{
 // Google Android platform definitions.
 inline namespace Android
 {
-	// JNI version, used by Black framework.
-	inline constexpr int32_t JNI_VERSION = JNI_VERSION_1_6;
+// Internal platform-related stuff for Google Android platform.
+namespace Internal
+{
+
 }
 }
 }
 }
 }
+
+
+// Platform-specific stuff.
+#include "constants.h"
+
+#include "functions.debug.android.h"
+#include "functions.formatting.android.h"
+#include "functions.memory.android.h"

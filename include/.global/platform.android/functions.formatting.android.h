@@ -10,7 +10,7 @@ inline namespace Global
 namespace Platform
 {
 	/**
-		@brief	Format the `arguments` into `target_buffer` according to `format` specification in terms of Windows desktop platform.
+		@brief	Format the `arguments` into `target_buffer` according to `format` specification in terms of Google Android platform.
 
 		May cause potentially unsafe behavior if invalid arguments passed.
 
@@ -23,10 +23,10 @@ namespace Platform
 		@retval	empty view		In case the arguments can not be formated into target buffer.
 	*/
 	template<>
-	std::string_view FormatArgumentsList<Black::PlatformType::WindowsDesktop>( Black::PlainView<char> target_buffer, const char* format, va_list arguments );
+	std::string_view FormatArgumentsList<Black::PlatformType::Android>( Black::PlainView<char> target_buffer, const char* format, va_list arguments );
 
 	/**
-		@brief	Read the `arguments` from `source_buffer` according to `format` specification in terms of Windows desktop platform.
+		@brief	Read the `arguments` from `source_buffer` according to `format` specification in terms of Google Android platform.
 
 		May cause potentially unsafe behavior if invalid arguments passed.
 
@@ -39,7 +39,7 @@ namespace Platform
 		@retval	0				If no argument was read.
 	*/
 	template<>
-	const size_t ParseArgumentsList<Black::PlatformType::WindowsDesktop>( const std::string_view source_buffer, const char* format, va_list arguments );
+	const size_t ParseArgumentsList<Black::PlatformType::Android>( const std::string_view source_buffer, const char* format, va_list arguments );
 }
 }
 }

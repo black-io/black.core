@@ -10,7 +10,7 @@ inline namespace Global
 namespace Platform
 {
 	/**
-		@brief	Copies memory from source pointer to destination pointer in terms of Windows desktop platform.
+		@brief	Copies memory from source pointer to destination pointer in terms of Google Android platform.
 
 		May cause potentially unsafe behavior if invalid arguments passed.
 
@@ -21,10 +21,10 @@ namespace Platform
 		@param	length			Number of bytes to be copied.
 	*/
 	template<>
-	void CopyMemory<Black::PlatformType::WindowsDesktop>( void* dest_memory, const void* source_memory, const size_t length );
+	void CopyMemory<Black::PlatformType::Android>( void* dest_memory, const void* source_memory, const size_t length );
 
 	/**
-		@brief	Fill every byte of `memory` with `pattern` in terms of Windows desktop platform.
+		@brief	Fill every byte of `memory` with `pattern` in terms of Google Android platform.
 
 		May cause potentially unsafe behavior if invalid arguments passed.
 
@@ -35,10 +35,10 @@ namespace Platform
 		@param	length	Number of bytes in `memory` to be filled.
 	*/
 	template<>
-	void FillMemory<Black::PlatformType::WindowsDesktop>( void* memory, const int32_t pattern, const size_t length );
+	void FillMemory<Black::PlatformType::Android>( void* memory, const int32_t pattern, const size_t length );
 
 	/**
-		@brief	Fill every byte of `memory` with zero value in terms of Windows desktop platform.
+		@brief	Fill every byte of `memory` with zero value in terms of Google Android platform.
 
 		May cause potentially unsafe behavior if invalid arguments passed.
 
@@ -48,10 +48,10 @@ namespace Platform
 		@param	length	Number of bytes in `memory` to be filled.
 	*/
 	template<>
-	void ZeroMemory<Black::PlatformType::WindowsDesktop>( void* memory, const size_t length );
+	void ZeroMemory<Black::PlatformType::Android>( void* memory, const size_t length );
 
 	/**
-		@brief	Fill every byte of `memory` with zero value in terms of Windows desktop platform.
+		@brief	Fill every byte of `memory` with zero value in terms of Google Android platform.
 
 		May cause potentially unsafe behavior if invalid arguments passed.
 
@@ -62,10 +62,10 @@ namespace Platform
 		@param	length	Number of bytes in `memory` to be filled.
 	*/
 	template<>
-	void SecuredZeroMemory<Black::PlatformType::WindowsDesktop>( void* memory, const size_t length );
+	void SecuredZeroMemory<Black::PlatformType::Android>( void* memory, const size_t length );
 
 	/**
-		@brief	Compare the two memory blocks checking its identity in terms of Windows desktop platform.
+		@brief	Compare the two memory blocks checking its identity in terms of Google Android platform.
 
 		May cause potentially unsafe behavior if invalid arguments passed.
 
@@ -77,7 +77,7 @@ namespace Platform
 		@return					The value returned is flag that the left and right memory streams is equal.
 	*/
 	template<>
-	const bool IsMemoryEqual<Black::PlatformType::WindowsDesktop>( const void* left_memory, const void* right_memory, const size_t length );
+	const bool IsMemoryEqual<Black::PlatformType::Android>( const void* left_memory, const void* right_memory, const size_t length );
 }
 }
 }

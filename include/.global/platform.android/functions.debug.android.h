@@ -10,7 +10,7 @@ inline namespace Global
 namespace Platform
 {
 	/**
-		@brief	Send the string to debugger in terms of Windows desktop platform.
+		@brief	Send the string to debugger in terms of Google Android platform.
 
 		The function works only in Debug mode and can be used to write some text into debugger log.
 		The `content` data will be represented as single line text.
@@ -20,10 +20,10 @@ namespace Platform
 		@param	content	The string to be shown in debugger.
 	*/
 	template<>
-	void SendDebugString<Black::PlatformType::WindowsDesktop>( std::string_view content );
+	void SendDebugString<Black::PlatformType::Android>( std::string_view content );
 
 	/**
-		@brief	Send the logging message to debugger in terms of Windows desktop platform.
+		@brief	Send the logging message to debugger in terms of Google Android platform.
 
 		The function works only in Debug mode and can be used to write some text into debugger log.
 		The `content` data will be represented as single line text.
@@ -35,7 +35,7 @@ namespace Platform
 		@param	content	The string to be shown in debugger.
 	*/
 	template<>
-	void SendDebuggerMessage<Black::PlatformType::WindowsDesktop>( const Black::LogMessage& message, std::string&& content );
+	void SendDebuggerMessage<Black::PlatformType::Android>( const Black::LogMessage& message, std::string&& content );
 }
 }
 }
