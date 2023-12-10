@@ -2,6 +2,14 @@
 #include <black/core/algorithms.h>
 
 
+namespace Black
+{
+inline namespace Core
+{
+inline namespace Global
+{
+namespace Platform
+{
 namespace
 {
 	std::string_view GetLogCategoryName( const Black::LogMessage::Category category )
@@ -22,17 +30,8 @@ namespace
 }
 
 
-namespace Black
-{
-inline namespace Core
-{
-inline namespace Global
-{
-inline namespace Platform
-{
-inline namespace PlatformSpecific
-{
-	void SendDebugString( std::string_view content )
+	template<>
+	void SendDebugString<Black::PlatformType::WindowsDesktop>( std::string_view content )
 	{
 		if constexpr( Black::BUILD_CONFIGURATION == Black::BuildMode::Debug )
 		{
@@ -42,7 +41,7 @@ inline namespace PlatformSpecific
 
 			auto buffer_cleaner = Black::ScopeLeaveHandler{ [string_buffer]() { _freea( string_buffer ); } };
 
-			CopyMemory( string_buffer, content.data(), content_length );
+			CopyMemory<Black::BUILD_PLATFORM>( string_buffer, content.data(), content_length );
 			string_buffer[ content_length ]		= '\n';
 			string_buffer[ content_length + 1 ]	= 0;
 
@@ -50,7 +49,8 @@ inline namespace PlatformSpecific
 		}
 	}
 
-	void SendDebuggerMessage( const Black::LogMessage& message, std::string&& content )
+	template<>
+	void SendDebuggerMessage<Black::PlatformType::WindowsDesktop>( const Black::LogMessage& message, std::string&& content )
 	{
 		if constexpr( Black::BUILD_CONFIGURATION == Black::BuildMode::Debug )
 		{
@@ -60,7 +60,7 @@ inline namespace PlatformSpecific
 			{
 				buffer = Black::FormatString(
 					"[{}|{}]\t- {}\n",
-					::GetLogCategoryName( message.GetCategory() ),
+					GetLogCategoryName( message.GetCategory() ),
 					message.GetChannel(),
 					content
 				);
@@ -71,7 +71,7 @@ inline namespace PlatformSpecific
 					"{} ({}): [{}|{}]\t- {}\n",
 					message.GetFilePath(),
 					message.GetFileLine(),
-					::GetLogCategoryName( message.GetCategory() ),
+					GetLogCategoryName( message.GetCategory() ),
 					message.GetChannel(),
 					content
 				);
@@ -80,7 +80,6 @@ inline namespace PlatformSpecific
 			::OutputDebugStringA( buffer.data() );
 		}
 	}
-}
 }
 }
 }

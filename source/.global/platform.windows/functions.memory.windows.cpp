@@ -7,35 +7,37 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Platform
+namespace Platform
 {
-inline namespace PlatformSpecific
-{
-	void CopyMemory( void* dest_memory, const void* source_memory, const size_t length )
+	template<>
+	void CopyMemory<Black::PlatformType::WindowsDesktop>( void* dest_memory, const void* source_memory, const size_t length )
 	{
 		::memcpy_s( dest_memory, length, source_memory, length );
 	}
 
-	void FillMemory( void* memory, const int32_t pattern, const size_t length )
+	template<>
+	void FillMemory<Black::PlatformType::WindowsDesktop>( void* memory, const int32_t pattern, const size_t length )
 	{
 		::memset( memory, pattern, length );
 	}
 
-	void ZeroMemory( void* memory, const size_t length )
+	template<>
+	void ZeroMemory<Black::PlatformType::WindowsDesktop>( void* memory, const size_t length )
 	{
 		::RtlZeroMemory( memory, length );
 	}
 
-	void SecuredZeroMemory( void* memory, const size_t length )
+	template<>
+	void SecuredZeroMemory<Black::PlatformType::WindowsDesktop>( void* memory, const size_t length )
 	{
 		::RtlSecureZeroMemory( memory, length );
 	}
 
-	const bool IsMemoryEqual( const void* left_memory, const void* right_memory, const size_t length )
+	template<>
+	const bool IsMemoryEqual<Black::PlatformType::WindowsDesktop>( const void* left_memory, const void* right_memory, const size_t length )
 	{
 		return ::memcmp( left_memory, right_memory, length ) == 0;
 	}
-}
 }
 }
 }
