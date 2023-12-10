@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Platform
+inline namespace WindowsDesktop
 {
 namespace Internal
 {

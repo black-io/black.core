@@ -7,8 +7,6 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Platform
-{
 inline namespace WindowsDesktop
 {
 	// Regular unique pointer for COM objects.
@@ -22,7 +20,6 @@ inline namespace WindowsDesktop
 	// Regular shared pointer for COM objects.
 	template< typename TClass >
 	using SharedComPointer = std::shared_ptr<TClass>;
-}
 }
 }
 }
