@@ -57,12 +57,13 @@ inline namespace Algorithms
 	/**
 		@brief	Transform the byte-order of value from native to requested.
 		This function does nothing if native byte-order is same as requested.
-		@param	value		The value to be transformed.
-		@tparam	TValue		Type of value to transform.
-		@tparam	ENDIANNESS	The requested endianness.
-		return				The value returned is an transformed representation of input value.
+		@param	value				The value to be transformed.
+		@tparam	TValue				Type of value to transform.
+		@tparam	ENDIANNESS			The requested endianness.
+		@tparam	VALUE_ENDIANNESS	The source endianness of `value`. By default it considered as `Black::BUILD_ENDIANNESS`.
+		return						The value returned is an transformed representation of input value.
 	*/
-	template< Black::PlatformEndianness ENDIANNESS, typename TValue >
+	template< Black::PlatformEndianness ENDIANNESS, Black::PlatformEndianness VALUE_ENDIANNESS = Black::BUILD_ENDIANNESS, typename TValue >
 	inline const TValue GetTransformedEndianness( const TValue value );
 }
 }

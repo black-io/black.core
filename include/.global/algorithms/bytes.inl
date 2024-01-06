@@ -57,14 +57,15 @@ inline namespace Algorithms
 		return *reinterpret_cast<const uint64_t*>( bytes );
 	}
 
-	template< PlatformEndianness ENDIANNESS, typename TValue >
+	template< PlatformEndianness ENDIANNESS, Black::PlatformEndianness VALUE_ENDIANNESS, typename TValue >
 	inline const TValue GetTransformedEndianness( const TValue value )
 	{
 		constexpr size_t value_length = sizeof( TValue );
+
 		static_assert( std::is_integral_v<TValue>, "The type of value have to be an integer." );
 		static_assert( value_length > 1, "Size of value may not be less than 2 bytes." );
 
-		CRET( ENDIANNESS == Black::BUILD_ENDIANNESS, value );
+		CRET( ENDIANNESS == VALUE_ENDIANNESS, value );
 
 		TValue result;
 
