@@ -85,12 +85,13 @@ inline namespace Types
 	{
 	// Allowed operations.
 	public:
-		inline NonCopyConstructible()							= default;
-		inline NonCopyConstructible( NonCopyConstructible&& )	= default;
+		inline NonCopyConstructible()									= default;
+		inline NonCopyConstructible( NonCopyConstructible&& ) noexcept	= default;
+		inline ~NonCopyConstructible() noexcept							= default;
 
 
-		inline NonCopyConstructible& operator = ( const NonCopyConstructible& )	= default;
-		inline NonCopyConstructible& operator = ( NonCopyConstructible&& )		= default;
+		inline NonCopyConstructible& operator = ( const NonCopyConstructible& )		= default;
+		inline NonCopyConstructible& operator = ( NonCopyConstructible&& ) noexcept	= default;
 
 	// Denied operations.
 	private:
@@ -103,12 +104,13 @@ inline namespace Types
 	{
 	// Allowed operations.
 	public:
-		inline NonCopyAssignable()								= default;
-		inline NonCopyAssignable( const NonCopyAssignable& )	= default;
-		inline NonCopyAssignable( NonCopyAssignable&& )			= default;
+		inline NonCopyAssignable()									= default;
+		inline NonCopyAssignable( const NonCopyAssignable& )		= default;
+		inline NonCopyAssignable( NonCopyAssignable&& ) noexcept	= default;
+		inline ~NonCopyAssignable() noexcept						= default;
 
 
-		inline NonCopyAssignable& operator = ( NonCopyAssignable&& ) = default;
+		inline NonCopyAssignable& operator = ( NonCopyAssignable&& ) noexcept	= default;
 
 	// Denied operations.
 	private:
@@ -121,16 +123,17 @@ inline namespace Types
 	{
 	// Allowed operations.
 	public:
-		inline NonMoveConstructible()								= default;
-		inline NonMoveConstructible( const NonMoveConstructible& )	= default;
+		inline NonMoveConstructible()										= default;
+		inline NonMoveConstructible( const NonMoveConstructible& ) noexcept	= default;
+		inline ~NonMoveConstructible() noexcept								= default;
 
 
-		inline NonMoveConstructible& operator = ( const NonMoveConstructible& )	= default;
-		inline NonMoveConstructible& operator = ( NonMoveConstructible&& )		= default;
+		inline NonMoveConstructible& operator = ( const NonMoveConstructible& )		= default;
+		inline NonMoveConstructible& operator = ( NonMoveConstructible&& ) noexcept	= default;
 
 	// Denied operations.
 	private:
-		inline NonMoveConstructible( NonMoveConstructible&& ) = delete;
+		inline NonMoveConstructible( NonMoveConstructible&& ) noexcept = delete;
 	};
 
 	// Generic tag to prohibit move-assignment of derived types.
@@ -139,16 +142,17 @@ inline namespace Types
 	{
 	// Allowed operations.
 	public:
-		inline NonMoveAssignable()								= default;
-		inline NonMoveAssignable( const NonMoveAssignable& )	= default;
-		inline NonMoveAssignable( NonMoveAssignable&& )			= default;
+		inline NonMoveAssignable()									= default;
+		inline NonMoveAssignable( const NonMoveAssignable& )		= default;
+		inline NonMoveAssignable( NonMoveAssignable&& ) noexcept	= default;
+		inline ~NonMoveAssignable() noexcept						= default;
 
 
 		inline NonMoveAssignable& operator = ( const NonMoveAssignable& ) = default;
 
 	// Denied operations.
 	private:
-		inline NonMoveAssignable& operator = ( NonMoveAssignable&& ) = delete;
+		inline NonMoveAssignable& operator = ( NonMoveAssignable&& ) noexcept = delete;
 	};
 
 	// Generic tag to prohibit copy-construction and copy-assignment of derived types.
@@ -157,11 +161,12 @@ inline namespace Types
 	{
 	// Allowed operations.
 	public:
-		inline NonCopyable()				= default;
-		inline NonCopyable( NonCopyable&& )	= default;
+		inline NonCopyable()							= default;
+		inline NonCopyable( NonCopyable&& ) noexcept	= default;
+		inline ~NonCopyable() noexcept					= default;
 
 
-		inline NonCopyable& operator = ( NonCopyable&& ) = default;
+		inline NonCopyable& operator = ( NonCopyable&& ) noexcept = default;
 
 	// Denied operations.
 	private:
@@ -179,16 +184,17 @@ inline namespace Types
 	public:
 		inline NonMovable()						= default;
 		inline NonMovable( const NonMovable& )	= default;
+		inline ~NonMovable() noexcept			= default;
 
 
 		inline NonMovable& operator = ( const NonMovable& ) = default;
 
 	// Denied operations.
 	private:
-		inline NonMovable( NonMovable&& ) = delete;
+		inline NonMovable( NonMovable&& ) noexcept = delete;
 
 
-		inline NonMovable& operator = ( NonMovable&& ) = delete;
+		inline NonMovable& operator = ( NonMovable&& ) noexcept = delete;
 	};
 
 	// Generic tag to prohibit copy/move construction/assignment of derived types.
@@ -197,16 +203,17 @@ inline namespace Types
 	{
 	// Allowed operations.
 	public:
-		NonTransferable() = default;
+		inline NonTransferable()			= default;
+		inline ~NonTransferable() noexcept	= default;
 
 	// Denied operations.
 	private:
-		NonTransferable( const NonTransferable& )	= delete;
-		NonTransferable( NonTransferable&& )		= delete;
+		inline NonTransferable( const NonTransferable& )		= delete;
+		inline NonTransferable( NonTransferable&& ) noexcept	= delete;
 
 
-		NonTransferable& operator = ( const NonTransferable& )	= delete;
-		NonTransferable& operator = ( NonTransferable&& )		= delete;
+		inline NonTransferable& operator = ( const NonTransferable& )		= delete;
+		inline NonTransferable& operator = ( NonTransferable&& ) noexcept	= delete;
 	};
 
 
@@ -234,9 +241,9 @@ inline namespace Types
 			int32_t		hi;				// Upper 4-byte part of total size.
 		};
 
-		Size64() = default;
-		Size64( const int64_t value ) : value{ value } {};
-		Size64( const uint32_t lo_part, const int32_t hi_part )
+		inline Size64()													= default;
+		inline Size64( const int64_t value )							: value{ value } {};
+		inline Size64( const uint32_t lo_part, const int32_t hi_part )
 		{
 			lo = lo_part;
 			hi = hi_part;
@@ -256,13 +263,13 @@ inline namespace Types
 	{
 	// Construction and assignment.
 	public:
-		ScopeLeaveHandler()									= delete;
-		ScopeLeaveHandler( const ScopeLeaveHandler& )		= default;
-		ScopeLeaveHandler( ScopeLeaveHandler&& )			= default;
+		inline ScopeLeaveHandler()									= delete;
+		inline ScopeLeaveHandler( const ScopeLeaveHandler& )		= default;
+		inline ScopeLeaveHandler( ScopeLeaveHandler&& ) noexcept	= default;
 
-		explicit ScopeLeaveHandler( TFunction function )	: m_function{ std::move( function ) } {};
+		explicit inline ScopeLeaveHandler( TFunction function )		: m_function{ std::move( function ) } {};
 
-		~ScopeLeaveHandler()
+		inline ~ScopeLeaveHandler()
 		{
 			CRET( m_is_canceled );
 			m_function();
@@ -280,7 +287,7 @@ inline namespace Types
 	// Private state.
 	private:
 		TFunction	m_function;					// The function to be executed.
-		bool		m_is_canceled	= false;	// Whether the function should be executed.
+		bool		m_is_canceled	= false;	// Whether the function should not be executed.
 	};
 
 	// Locale holder accepts the new locale through the constructor, uses it on construction and returns the previous locale only on destruction.
@@ -288,9 +295,9 @@ inline namespace Types
 	{
 	// Construction and destruction.
 	public:
-		explicit SystemLocaleHolder( const std::string& new_locale )	: SystemLocaleHolder{ new_locale.data() } {};
-		explicit SystemLocaleHolder( const char* new_locale )			: m_old_locale{ std::setlocale( LC_ALL, new_locale ) } {};
-		~SystemLocaleHolder()
+		explicit inline SystemLocaleHolder( const std::string& new_locale )	: SystemLocaleHolder{ new_locale.data() } {};
+		explicit inline SystemLocaleHolder( const char* new_locale )		: m_old_locale{ std::setlocale( LC_ALL, new_locale ) } {};
+		inline ~SystemLocaleHolder()
 		{
 			CRET( m_old_locale == nullptr );
 			std::setlocale( LC_ALL, m_old_locale );
