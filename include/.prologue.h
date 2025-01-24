@@ -31,11 +31,13 @@
 
 // Most global stuff.
 #include ".global/macros.h"
+
 #include ".global/types/constants.h"
 #include ".global/algorithms/misc.h"
 #include ".global/algorithms/bytes.h"
 #include ".global/algorithms/chars.h"
 #include ".global/algorithms/memory.h"
+
 #include ".global/types/generic-types.h"
 #include ".global/types/generic-types.aliasing.h"
 #include ".global/algorithms/time.h"
@@ -54,6 +56,9 @@
 #include ".global/types/RingBuffer.h"
 #include ".global/types/DebugName.h"
 #include ".global/types/ScopedPointer.h"
+#include ".global/types/Monad.forwards.h"
+#include ".global/types/Monad.internal.h"
+#include ".global/types/Monad.h"
 
 #include ".global/types/EnumFlags.struct.h"
 #include ".global/types/EnumFlags.internal.h"
