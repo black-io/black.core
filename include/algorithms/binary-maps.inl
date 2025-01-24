@@ -8,7 +8,7 @@ inline namespace Core
 inline namespace Algorithms
 {
 	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool IsItemPresent( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key )
+	inline const bool HasItem( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key )
 	{
 		return storage.find( key ) != storage.end();
 	}

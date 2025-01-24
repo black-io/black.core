@@ -66,7 +66,7 @@ const LogMessageRegistry::MessageId LogMessageRegistry::GetUniqueId( const Black
 	{
 		// Regular ENSURES and EXPECTS could not be used in this area due to recursion in logging usage.
 		// So only thin debugging constructions may be used.
-		if( Black::IsItemPresent( registry.m_messages_map, message_id ) )
+		if( Black::HasItem( registry.m_messages_map, message_id ) )
 		{
 			Black::SendDebugString( "Logging message identification looks not unique!" );
 			BLACK_DEBUG_BREAK();

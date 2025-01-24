@@ -8,7 +8,7 @@ inline namespace Core
 inline namespace Algorithms
 {
 	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool IsItemPresent( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
+	inline const bool HasItem( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
 	{
 		return storage.find( item ) != storage.end();
 	}

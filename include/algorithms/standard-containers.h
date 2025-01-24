@@ -17,7 +17,7 @@ inline namespace Algorithms
 		@return				`true` if storage contain the item.
 	*/
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline const bool IsItemPresent( const TStorage<TItem, TAllocator>& storage, const TItem& item );
+	inline const bool HasItem( const TStorage<TItem, TAllocator>& storage, const TItem& item );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -28,7 +28,7 @@ inline namespace Algorithms
 		@return					`true` if storage contain the item.
 	*/
 	template< typename TItem, size_t ARRAY_LENGTH >
-	inline const bool IsItemPresent( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item );
+	inline const bool HasItem( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -38,7 +38,7 @@ inline namespace Algorithms
 		@return					`true` if storage contain the item.
 	*/
 	template< typename TItem >
-	inline const bool IsItemPresent( const PlainView<TItem>& storage, const TItem& item );
+	inline const bool HasItem( const PlainView<TItem>& storage, const TItem& item );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -48,7 +48,7 @@ inline namespace Algorithms
 		@return					`true` if storage contain the item.
 	*/
 	template< typename TItem >
-	inline const bool IsItemPresent( const PlainVector<TItem>& storage, const TItem& item );
+	inline const bool HasItem( const PlainVector<TItem>& storage, const TItem& item );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -60,7 +60,7 @@ inline namespace Algorithms
 		@return				`true` if storage contain the item.
 	*/
 	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool IsItemPresent( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item );
+	inline const bool HasItem( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -73,7 +73,7 @@ inline namespace Algorithms
 		@return				`true` if storage contain the item.
 	*/
 	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool IsItemPresent( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key );
+	inline const bool HasItem( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key );
 
 	/**
 		@brief	Check that the item storage contains the item.
@@ -87,7 +87,7 @@ inline namespace Algorithms
 		@return				`true` if storage contain the item.
 	*/
 	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator >
-	inline const bool IsItemPresent( const std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key );
+	inline const bool HasItem( const std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key );
 
 	/**
 		@brief	Uniquely insert the item into storage.

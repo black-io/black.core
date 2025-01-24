@@ -8,25 +8,25 @@ inline namespace Core
 inline namespace Algorithms
 {
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline const bool IsItemPresent( const TStorage<TItem, TAllocator>& storage, const TItem& item )
+	inline const bool HasItem( const TStorage<TItem, TAllocator>& storage, const TItem& item )
 	{
 		return std::find( std::begin( storage ), std::end( storage ), item ) != std::end( storage );
 	}
 
 	template< typename TItem, size_t ARRAY_LENGTH >
-	inline const bool IsItemPresent( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item )
+	inline const bool HasItem( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item )
 	{
 		return std::find( std::begin( storage ), std::end( storage ), item ) != std::end( storage );
 	}
 
 	template< typename TItem >
-	inline const bool IsItemPresent( const PlainView<TItem>& storage, const TItem& item )
+	inline const bool HasItem( const PlainView<TItem>& storage, const TItem& item )
 	{
 		return std::find( std::begin( storage ), std::end( storage ), item ) != std::end( storage );
 	}
 
 	template< typename TItem >
-	inline const bool IsItemPresent( const PlainVector<TItem>& storage, const TItem& item )
+	inline const bool HasItem( const PlainVector<TItem>& storage, const TItem& item )
 	{
 		return std::find( std::begin( storage ), std::end( storage ), item ) != std::end( storage );
 	}
@@ -35,7 +35,7 @@ inline namespace Algorithms
 	inline const bool UniqueAdd( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item )
 	{
 		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
-		CRET( IsItemPresent( storage, item ), false );
+		CRET( HasItem( storage, item ), false );
 		storage.emplace_back( std::forward<TNewItem>( item ) );
 		return true;
 	}
