@@ -72,21 +72,21 @@ namespace Internal
 	template< typename TValue >
 	inline TValue& MonadValue<TValue>::GetValue() &
 	{
-		ENSURES( HasValue() );
+		ENSURES_DEBUG( HasValue() );
 		return m_storage->value;
 	}
 
 	template< typename TValue >
 	inline const TValue& MonadValue<TValue>::GetValue() const &
 	{
-		ENSURES( HasValue() );
+		ENSURES_DEBUG( HasValue() );
 		return m_storage->value;
 	}
 
 	template< typename TValue >
 	inline TValue MonadValue<TValue>::GetValue() &&
 	{
-		ENSURES( HasValue() );
+		ENSURES_DEBUG( HasValue() );
 		TValue result{ std::forward<ForwardingValue>( m_storage->value ) };
 		DisposeStorage();
 		return result;
