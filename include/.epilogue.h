@@ -5,6 +5,7 @@
 #include ".global/functions.inl"
 
 #include ".global/types/Monad.inl"
+#include ".global/types/internal/MonadValue.inl"
 #include ".global/types/RingBuffer.inl"
 #include ".global/types/PlainVector.operations.inl"
 #include ".global/types/internal/BasicPlainVector.inl"

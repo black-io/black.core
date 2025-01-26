@@ -58,6 +58,7 @@
 #include ".global/types/ScopedPointer.h"
 #include ".global/types/Monad.forwards.h"
 #include ".global/types/Monad.internal.h"
+#include ".global/types/internal/MonadValue.h"
 #include ".global/types/Monad.h"
 
 #include ".global/types/EnumFlags.struct.h"
