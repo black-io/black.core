@@ -52,9 +52,7 @@ const MessageFormatRegistry::FormatId MessageFormatRegistry::GetUniqueId( std::s
 	// Check twice the stored location to be identical.
 	if( Black::BUILD_CONFIGURATION == Black::BuildMode::Debug )
 	{
-		Black::FindItem(
-			registry.m_formats_map,
-			format_id,
+		Black::FindItem( registry.m_formats_map, format_id ).AndThen(
 			[&format]( const FormatSlot& slot )
 			{
 				// Regular ENSURES and EXPECTS could not be used in this area due to recursion in logging usage.
@@ -78,9 +76,7 @@ std::string_view MessageFormatRegistry::GetFormat( const FormatId format_id )
 
 	// Thread-safe access.
 	const Black::MutexLock lock{ GetMutex() };
-	Black::FindItem(
-		GetRegistry().m_formats_map,
-		format_id,
+	Black::FindItem( GetRegistry().m_formats_map, format_id ).AndThen(
 		[&result]( const FormatSlot& slot )
 		{
 			result = slot.format;

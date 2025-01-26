@@ -54,9 +54,7 @@ const MessageLocationRegistry::LocationId MessageLocationRegistry::GetUniqueId( 
 	// Check twice the stored location to be identical.
 	if( Black::BUILD_CONFIGURATION == Black::BuildMode::Debug )
 	{
-		Black::FindItem(
-			GetRegistry().m_locations_map,
-			location_id,
+		Black::FindItem( GetRegistry().m_locations_map, location_id ).AndThen(
 			[&function_name, &file_path, file_line]( const LocationSlot& slot )
 			{
 				// Regular ENSURES and EXPECTS could not be used in this area due to recursion in logging usage.
@@ -92,9 +90,7 @@ std::string_view MessageLocationRegistry::GetFunctionName( const LocationId loca
 
 	// Thread-safe access.
 	const Black::MutexLock lock{ GetMutex() };
-	Black::FindItem(
-		GetRegistry().m_locations_map,
-		location_id,
+	Black::FindItem( GetRegistry().m_locations_map, location_id ).AndThen(
 		[&result]( const LocationSlot& slot )
 		{
 			result = slot.function_name;
@@ -110,9 +106,7 @@ std::string_view MessageLocationRegistry::GetFilePath( const LocationId location
 
 	// Thread-safe access.
 	const Black::MutexLock lock{ GetMutex() };
-	Black::FindItem(
-		GetRegistry().m_locations_map,
-		location_id,
+	Black::FindItem( GetRegistry().m_locations_map, location_id ).AndThen(
 		[&result]( const LocationSlot& slot )
 		{
 			result = slot.file_path;
@@ -128,9 +122,7 @@ const size_t MessageLocationRegistry::GetFileLine( const LocationId location_id 
 
 	// Thread-safe access.
 	const Black::MutexLock lock{ GetMutex() };
-	Black::FindItem(
-		GetRegistry().m_locations_map,
-		location_id,
+	Black::FindItem( GetRegistry().m_locations_map, location_id ).AndThen(
 		[&result]( const LocationSlot& slot )
 		{
 			result = slot.file_line;

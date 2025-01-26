@@ -42,9 +42,7 @@ void LogMessageRegistry::SetMessageEnabled( const MessageId message_id, const bo
 {
 	// Thread-safe access.
 	const Black::MutexLock lock{ GetMutex() };
-	Black::FindItem(
-		GetRegistry().m_messages_map,
-		message_id,
+	Black::FindItem( GetRegistry().m_messages_map, message_id ).AndThen(
 		[is_enabled]( MessageSlot& slot )
 		{
 			slot.is_enabled = is_enabled;
@@ -83,9 +81,7 @@ const bool LogMessageRegistry::IsMessageEnabled( const MessageId message_id )
 
 	// Thread-safe access.
 	const Black::MutexLock lock{ GetMutex() };
-	Black::FindItem(
-		GetRegistry().m_messages_map,
-		message_id,
+	Black::FindItem( GetRegistry().m_messages_map, message_id ).AndThen(
 		[&result]( const MessageSlot& slot )
 		{
 			result = slot.is_enabled;

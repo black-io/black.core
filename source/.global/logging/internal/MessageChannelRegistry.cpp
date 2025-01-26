@@ -58,9 +58,7 @@ void MessageChannelRegistry::SetChannelEnabled( const ChannelId channel_id, cons
 {
 	// Thread-safe access.
 	const Black::MutexLock lock{ GetMutex() };
-	Black::FindItem(
-		GetRegistry().m_channels_map,
-		channel_id,
+	Black::FindItem( GetRegistry().m_channels_map, channel_id ).AndThen(
 		[is_enabled]( ChannelSlot& slot )
 		{
 			GetRegistry().SetChannelEnabled( slot, is_enabled );
@@ -78,9 +76,7 @@ const MessageChannelRegistry::ChannelId MessageChannelRegistry::GetUniqueId( std
 	if( Black::BUILD_CONFIGURATION == Black::BuildMode::Debug )
 	{
 		const ChannelId channel_id = BuildId( log_channel );
-		Black::FindItem(
-			registry.m_channels_map,
-			channel_id,
+		Black::FindItem( registry.m_channels_map, channel_id ).AndThen(
 			[&log_channel]( const ChannelSlot& slot )
 			{
 				// Regular ENSURES and EXPECTS could not be used in this area due to recursion in logging usage.
@@ -103,9 +99,7 @@ std::string_view MessageChannelRegistry::GetChannel( const ChannelId channel_id 
 
 	// Thread-safe access.
 	const Black::MutexLock lock{ GetMutex() };
-	Black::FindItem(
-		GetRegistry().m_channels_map,
-		channel_id,
+	Black::FindItem( GetRegistry().m_channels_map, channel_id ).AndThen(
 		[&result]( const ChannelSlot& slot )
 		{
 			result = slot.channel;
@@ -121,9 +115,7 @@ const bool MessageChannelRegistry::IsChannelEnabled( const ChannelId channel_id 
 
 	// Thread-safe access.
 	const Black::MutexLock lock{ GetMutex() };
-	Black::FindItem(
-		GetRegistry().m_channels_map,
-		channel_id,
+	Black::FindItem( GetRegistry().m_channels_map, channel_id ).AndThen(
 		[&result]( const ChannelSlot& slot )
 		{
 			result = slot.is_enabled;
