@@ -39,7 +39,7 @@ inline namespace Types
 		inline Monad( Monad&& other ) noexcept	: m_value{ std::move( other.m_value ) } {};
 		inline ~Monad() noexcept				= default;
 
-		explicit inline Monad( Value value )	: m_value{ std::move( value ) } {};
+		explicit inline Monad( Value value )	: m_value{ std::forward<Internal::MonadForwardingValue<Value>>( value ) } {};
 
 
 		inline Monad<TValue>& operator = ( const Monad<TValue>& other )		{ return Black::CopyAndSwap( *this, other ); };
@@ -66,7 +66,7 @@ inline namespace Types
 			@return			The value returned is another monad, that definitely carried the value.
 		*/
 		[[ nodiscard ]]
-		inline Monad<TValue> ThisOr( const Value& value ) const &;
+		inline Monad<TValue> OrUse( const Value& value ) const &;
 
 		/**
 			@brief	Clarify the stored value.
@@ -79,7 +79,7 @@ inline namespace Types
 			@return			The value returned is another monad, that definitely carried the value.
 		*/
 		[[ nodiscard ]]
-		inline Monad<TValue> ThisOr( Value value ) &&;
+		inline Monad<TValue> OrUse( Value value ) &&;
 
 		/**
 			@brief	Transform the value, if carried.
@@ -87,8 +87,8 @@ inline namespace Types
 			Allows to change the type of carried value. It often suitable when costly conversion should be performed on indeterminate value.
 			The `function` will not be invoked in case of empty monad.
 
-			@tparam	TFunction	Type of transformation function.
 			@param	function	The function to transform the carried value.
+			@tparam	TFunction	Type of transformation function.
 			@return				The value returned is another monad, which carries the transformed value.
 			@retval	{}			Empty monad will be returned in case of empty monad being transformed.
 		*/
@@ -102,8 +102,8 @@ inline namespace Types
 			Allows to change the type of carried value. It often suitable when costly conversion should be performed on indeterminate value.
 			The `function` will not be invoked in case of empty monad.
 
-			@tparam	TFunction	Type of transformation function.
 			@param	function	The function to transform the carried value.
+			@tparam	TFunction	Type of transformation function.
 			@return				The value returned is another monad, which carries the transformed value.
 			@retval	{}			Empty monad will be returned in case of empty monad being transformed.
 		*/
@@ -117,14 +117,14 @@ inline namespace Types
 			In fact, this one allows to consume the carried value somehow.
 			The `function` will not be invoked in case of empty monad. So the result of function also covered by monad, which now may be ignored.
 
-			@tparam	TFunction	Type of transformation function.
 			@param	consumer	The function to consume the carried value.
+			@tparam	TFunction	Type of transformation function.
 			@return				The value returned is another monad, which carries the result of consumption.
 			@retval	{}			Empty monad will be returned in case of empty monad being transformed.
 		*/
 		template< typename TFunction >
 		[[ maybe_unused ]]
-		inline auto Feed( TFunction&& consumer ) const & -> Internal::MonadOrVoid<TFunction, Value>;
+		inline auto AndThen( TFunction&& consumer ) const & -> Internal::MonadOrVoid<TFunction, Value>;
 
 		/**
 			@brief	Use carried value to feed the given function.
@@ -132,18 +132,18 @@ inline namespace Types
 			In fact, this one allows to consume the carried value somehow.
 			The `function` will not be invoked in case of empty monad. So the result of function also covered by monad, which now may be ignored.
 
-			@tparam	TFunction	Type of transformation function.
 			@param	consumer	The function to consume the carried value.
+			@tparam	TFunction	Type of transformation function.
 			@return				The value returned is another monad, which carries the result of consumption.
 			@retval	{}			Empty monad will be returned in case of empty monad being transformed.
 		*/
 		template< typename TFunction >
 		[[ maybe_unused ]]
-		inline auto Feed( TFunction&& consumer ) && -> Internal::MonadOrVoid<TFunction, Value&&>;
+		inline auto AndThen( TFunction&& consumer ) && -> Internal::MonadOrVoid<TFunction, Value&&>;
 
 	// Private state.
 	private:
-		std::optional<Value> m_value; // Storage for carried value.
+		Internal::MonadValue<Value> m_value; // Storage for carried value.
 	};
 }
 }

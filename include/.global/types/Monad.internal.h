@@ -28,6 +28,9 @@ namespace Internal
 	// Type selector. Represents the regular monad or void type.
 	template< typename TFunction, typename TValue >
 	using MonadOrVoid = typename MonadSelector<std::invoke_result_t<TFunction, TValue>>::Type;
+
+	template< typename TValue >
+	using MonadForwardingValue = std::conditional_t<std::is_lvalue_reference_v<TValue>, TValue&, TValue&&>;
 }
 }
 }

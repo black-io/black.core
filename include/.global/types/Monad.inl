@@ -12,27 +12,27 @@ inline namespace Types
 	template< typename TValue >
 	inline void Monad<TValue>::Clear()
 	{
-		m_value.reset();
+		m_value.Clear();
 	}
 
 	template< typename TValue >
 	inline void Monad<TValue>::Swap( Monad<TValue>& other )
 	{
-		std::swap( m_value, other.m_value );
+		m_value.Swap( other.m_value );
 	}
 
 	template< typename TValue >
 	[[ nodiscard ]]
-	inline Monad<TValue> Monad<TValue>::ThisOr( const Monad<TValue>::Value& value ) const &
+	inline Monad<TValue> Monad<TValue>::OrUse( const Monad<TValue>::Value& value ) const &
 	{
-		return Monad<Value>{ m_value.value_or( value ) };
+		return Monad<Value>{ m_value.GetValue( value ) };
 	}
 
 	template< typename TValue >
 	[[ nodiscard ]]
-	inline Monad<TValue> Monad<TValue>::ThisOr( Monad<TValue>::Value value ) &&
+	inline Monad<TValue> Monad<TValue>::OrUse( Monad<TValue>::Value value ) &&
 	{
-		return Monad<Value>{ std::move( m_value ).value_or( std::move( value ) ) };
+		return Monad<Value>{ std::move( m_value ).getValue( std::move( value ) ) };
 	}
 
 	template< typename TValue >
@@ -42,9 +42,9 @@ inline namespace Types
 	{
 		using OtherMonad = Monad<std::invoke_result_t<TFunction, Monad<TValue>::Value>>;
 
-		if( m_value.has_value() )
+		if( m_value.HasValue() )
 		{
-			return OtherMonad{ transformer( m_value.value_or( Value{} ) ) };
+			return OtherMonad{ transformer( m_value.GetValue() ) };
 		}
 
 		return OtherMonad{};
@@ -57,9 +57,9 @@ inline namespace Types
 	{
 		using OtherMonad = Monad<std::invoke_result_t<TFunction, Monad<TValue>::Value>>;
 
-		if( m_value.has_value() )
+		if( m_value.HasValue() )
 		{
-			return OtherMonad{ transformer( std::move( m_value ).value_or( Value{} ) ) };
+			return OtherMonad{ transformer( std::move( m_value ).getValue() ) };
 		}
 
 		return OtherMonad{};
@@ -68,54 +68,54 @@ inline namespace Types
 	template< typename TValue >
 	template< typename TFunction >
 	[[ maybe_unused ]]
-	inline auto Monad<TValue>::Feed( TFunction&& consumer ) const & -> Internal::MonadOrVoid<TFunction, Monad<TValue>::Value>
+	inline auto Monad<TValue>::AndThen( TFunction&& consumer ) const & -> Internal::MonadOrVoid<TFunction, Monad<TValue>::Value>
 	{
 		using Result = Internal::MonadOrVoid<TFunction, Monad<TValue>::Value>;
 
 		if constexpr( std::is_void_v<Result> )
 		{
-			if( !m_value.has_value() )
+			if( m_value.IsEmpty() )
 			{
 				return;
 			}
 
-			consumer( m_value.value_or( Value{} ) );
+			consumer( m_value.GetValue() );
 		}
 		else
 		{
-			if( !m_value.has_value() )
+			if( m_value.IsEmpty() )
 			{
 				return Result{};
 			}
 
-			return Result{ consumer( m_value.value_or( Value{} ) ) };
+			return Result{ consumer( m_value.GetValue() ) };
 		}
 	}
 
 	template< typename TValue >
 	template< typename TFunction >
 	[[ maybe_unused ]]
-	inline auto Monad<TValue>::Feed( TFunction&& consumer ) && -> Internal::MonadOrVoid<TFunction, Monad<TValue>::Value&&>
+	inline auto Monad<TValue>::AndThen( TFunction&& consumer ) && -> Internal::MonadOrVoid<TFunction, Monad<TValue>::Value&&>
 	{
 		using Result = Internal::MonadOrVoid<TFunction, Monad<TValue>::Value>;
 
 		if constexpr( std::is_void_v<Result> )
 		{
-			if( !m_value.has_value() )
+			if( m_value.IsEmpty() )
 			{
 				return;
 			}
 
-			consumer( std::move( m_value ).value_or( Value{} ) );
+			consumer( std::move( m_value ).GetValue() );
 		}
 		else
 		{
-			if( !m_value.has_value() )
+			if( m_value.IsEmpty() )
 			{
 				return Result{};
 			}
 
-			return Result{ consumer( std::move( m_value ).value_or( Value{} ) ) };
+			return Result{ consumer( std::move( m_value ).GetValue() ) };
 		}
 	}
 }
