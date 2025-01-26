@@ -43,39 +43,33 @@ inline namespace Algorithms
 	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
 	inline TItem& FindItem( std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key, TItem& default_result )
 	{
-		auto found_item = storage.find( key );
-		return ( found_item != storage.end() )? found_item->second : default_result;
+		const auto found_slot = storage.find( key );
+		return ( found_slot != storage.end() )? found_slot->second : default_result;
 	}
 
 	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
 	inline const TItem& FindItem( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key, const TItem& default_result )
 	{
-		auto found_item = storage.find( key );
-		return ( found_item != storage.end() )? found_item->second : default_result;
+		const auto found_slot = storage.find( key );
+		return ( found_slot != storage.end() )? found_slot->second : default_result;
 	}
 
-	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator, typename TFunction >
-	inline const bool FindItem( std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key, TFunction on_found )
+	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
+	inline Monad<TItem&> FindItem( std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key )
 	{
-		static_assert( std::is_invocable_v<TFunction, TItem&>, "The callback `on_found` can't be used with given storage." );
+		const auto found_slot = storage.find( key );
+		CRET( found_slot == storage.end(), {} );
 
-		auto found_item = storage.find( key );
-		CRET( found_item == storage.end(), false );
-
-		on_found( found_item->second );
-		return true;
+		return Monad<TItem&>{ found_slot->second };
 	}
 
-	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator, typename TFunction >
-	inline const bool FindItem( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key, TFunction on_found )
+	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
+	inline Monad<const TItem&> FindItem( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key )
 	{
-		static_assert( std::is_invocable_v<TFunction, const TItem&>, "The callback `on_found` can't be used with given storage." );
+		const auto found_slot = storage.find( key );
+		CRET( found_slot == storage.end(), {} );
 
-		auto found_item = storage.find( key );
-		CRET( found_item == storage.end(), false );
-
-		on_found( found_item->second );
-		return true;
+		return Monad<const TItem&>{ found_slot->second };
 	}
 }
 }

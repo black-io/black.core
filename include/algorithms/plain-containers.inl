@@ -57,7 +57,7 @@ inline namespace Algorithms
 		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
 		static_assert(
 			std::is_invocable_r_v<const bool, TPredicate, const std::decay_t<TStoredItem>&, const std::decay_t<TNewItem>&>,
-			"Used predicate should meets the requirement of signature `const bool ( const TStoredItem&, const TNewItem& )`."
+			"Used predicate should meet the requirement of signature `const bool ( const TStoredItem&, const TNewItem& )`."
 		);
 
 		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item, predicate );
@@ -94,7 +94,7 @@ inline namespace Algorithms
 		static_assert( std::is_same_v<std::decay_t<TStoredItem>, std::decay_t<TNewItem>>, "Item of such type can't be added into storage." );
 		static_assert(
 			std::is_invocable_r_v<const bool, TPredicate, const std::decay_t<TStoredItem>&, const std::decay_t<TNewItem>&>,
-			"Used predicate should meets the requirement of signature `const bool ( const TStoredItem&, const TNewItem& )`."
+			"Used predicate should meet the requirement of signature `const bool ( const TStoredItem&, const TNewItem& )`."
 		);
 
 		auto found_slot = std::upper_bound( std::begin( storage ), std::end( storage ), item, predicate );
@@ -152,6 +152,238 @@ inline namespace Algorithms
 		CRET( storage.IsEmpty() );
 		std::for_each( std::begin( storage ), std::end( storage ), []( TItem* item ){ delete item; } );
 		storage.clear();
+	}
+
+	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline TItem& FindItem( TStorage<TItem, TAllocator>& storage, const TItem& item, TItem& default_result )
+	{
+		CRET( std::empty( storage ), default_result );
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		return ( found_slot != std::end( storage ) )? *found_slot : default_result;
+	}
+
+	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline const TItem& FindItem( const TStorage<TItem, TAllocator>& storage, const TItem& item, const TItem& default_result )
+	{
+		CRET( std::empty( storage ), default_result );
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		return ( found_slot != std::end( storage ) )? *found_slot : default_result;
+	}
+
+	template< typename TItem, size_t ARRAY_LENGTH >
+	inline TItem& FindItem( TItem (&storage)[ ARRAY_LENGTH ], const TItem& item, TItem& default_result )
+	{
+		CRET( std::empty( storage ), default_result );
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		return ( found_slot != std::end( storage ) )? *found_slot : default_result;
+	}
+
+	template< typename TItem, size_t ARRAY_LENGTH >
+	inline const TItem& FindItem( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item, const TItem& default_result )
+	{
+		CRET( std::empty( storage ), default_result );
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		return ( found_slot != std::end( storage ) )? *found_slot : default_result;
+	}
+
+	template< typename TItem >
+	inline TItem& FindItem( PlainView<TItem>& storage, const TItem& item, TItem& default_result )
+	{
+		CRET( std::empty( storage ), default_result );
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		return ( found_slot != std::end( storage ) )? *found_slot : default_result;
+	}
+
+	template< typename TItem >
+	inline const TItem& FindItem( const PlainView<TItem>& storage, const TItem& item, const TItem& default_result )
+	{
+		CRET( std::empty( storage ), default_result );
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		return ( found_slot != std::end( storage ) )? *found_slot : default_result;
+	}
+
+	template< typename TItem >
+	inline TItem& FindItem( PlainVector<TItem>& storage, const TItem& item, TItem& default_result )
+	{
+		CRET( std::empty( storage ), default_result );
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		return ( found_slot != std::end( storage ) )? *found_slot : default_result;
+	}
+
+	template< typename TItem >
+	inline const TItem& FindItem( const PlainVector<TItem>& storage, const TItem& item, const TItem& default_result )
+	{
+		CRET( std::empty( storage ), default_result );
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		return ( found_slot != std::end( storage ) )? *found_slot : default_result;
+	}
+
+	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline Monad<TItem&> FindItem( TStorage<TItem, TAllocator>& storage, const TItem& item )
+	{
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
+	inline Monad<const TItem&> FindItem( const TStorage<TItem, TAllocator>& storage, const TItem& item )
+	{
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<const TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, typename TAllocator, typename TCriteria, template< typename, typename > class TStorage >
+	inline Monad<TItem&> FindItem( TStorage<TItem, TAllocator>& storage, TCriteria&& criteria )
+	{
+		static_assert(
+			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
+			"Used criteria should meet the requirement of signature `const bool ( const TItem& )`."
+		);
+
+		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, typename TAllocator, typename TCriteria, template< typename, typename > class TStorage >
+	inline Monad<const TItem&> FindItem( const TStorage<TItem, TAllocator>& storage, TCriteria&& criteria )
+	{
+		static_assert(
+			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
+			"Used criteria should meet the requirement of signature `const bool ( const TItem& )`."
+		);
+
+		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<const TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, size_t ARRAY_LENGTH >
+	inline Monad<TItem&> FindItem( TItem (&storage)[ ARRAY_LENGTH ], const TItem& item )
+	{
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, size_t ARRAY_LENGTH >
+	inline Monad<const TItem&> FindItem( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item )
+	{
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<const TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, size_t ARRAY_LENGTH, typename TCriteria >
+	inline Monad<TItem&> FindItem( TItem (&storage)[ ARRAY_LENGTH ], TCriteria&& criteria )
+	{
+		static_assert(
+			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
+			"Used criteria should meet the requirement of signature `const bool ( const TItem& )`."
+		);
+
+		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, size_t ARRAY_LENGTH, typename TCriteria >
+	inline Monad<const TItem&> FindItem( const TItem (&storage)[ ARRAY_LENGTH ], TCriteria&& criteria )
+	{
+		static_assert(
+			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
+			"Used criteria should meet the requirement of signature `const bool ( const TItem& )`."
+		);
+
+		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<const TItem&>{ *found_slot };
+	}
+
+	template< typename TItem >
+	inline Monad<TItem&> FindItem( PlainView<TItem>& storage, const TItem& item )
+	{
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<TItem&>{ *found_slot };
+	}
+
+	template< typename TItem >
+	inline Monad<const TItem&> FindItem( const PlainView<TItem>& storage, const TItem& item )
+	{
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<const TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, typename TCriteria >
+	inline Monad<TItem&> FindItem( PlainView<TItem>& storage, TCriteria&& criteria )
+	{
+		static_assert(
+			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
+			"Used criteria should meet the requirement of signature `const bool ( const TItem& )`."
+		);
+
+		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, typename TCriteria >
+	inline Monad<const TItem&> FindItem( const PlainView<TItem>& storage, TCriteria&& criteria )
+	{
+		static_assert(
+			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
+			"Used criteria should meet the requirement of signature `const bool ( const TItem& )`."
+		);
+
+		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<const TItem&>{ *found_slot };
+	}
+
+	template< typename TItem >
+	inline Monad<TItem&> FindItem( PlainVector<TItem>& storage, const TItem& item )
+	{
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<TItem&>{ *found_slot };
+	}
+
+	template< typename TItem >
+	inline Monad<const TItem&> FindItem( const PlainVector<TItem>& storage, const TItem& item )
+	{
+		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<const TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, typename TCriteria >
+	inline Monad<TItem&> FindItem( PlainVector<TItem>& storage, TCriteria&& criteria )
+	{
+		static_assert(
+			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
+			"Used criteria should meet the requirement of signature `const bool ( const TItem& )`."
+		);
+
+		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, typename TCriteria >
+	inline Monad<const TItem&> FindItem( const PlainVector<TItem>& storage, TCriteria&& criteria )
+	{
+		static_assert(
+			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
+			"Used criteria should meet the requirement of signature `const bool ( const TItem& )`."
+		);
+
+		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
+		CRET( found_slot == std::end( storage ), {} );
+		return Monad<const TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >

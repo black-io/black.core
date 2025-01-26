@@ -28,6 +28,38 @@ inline namespace Algorithms
 		storage.erase( found_item );
 		return true;
 	}
+
+	template< typename TItem, typename TPredicate, typename TAllocator >
+	inline TItem& FindItem( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item, TItem& default_result )
+	{
+		const auto found_slot = storage.find( item );
+		return ( found_slot != storage.end() )? *found_slot : default_result;
+	}
+
+	template< typename TItem, typename TPredicate, typename TAllocator >
+	inline const TItem& FindItem( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item, const TItem& default_result )
+	{
+		const auto found_slot = storage.find( item );
+		return ( found_slot != storage.end() )? *found_slot : default_result;
+	}
+
+	template< typename TItem, typename TPredicate, typename TAllocator >
+	inline Monad<TItem&> FindItem( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
+	{
+		const auto found_slot = storage.find( item );
+		CRET( found_slot == storage.end(), {} );
+
+		return Monad<TItem&>{ *found_slot };
+	}
+
+	template< typename TItem, typename TPredicate, typename TAllocator >
+	inline Monad<const TItem&> FindItem( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
+	{
+		const auto found_slot = storage.find( item );
+		CRET( found_slot == storage.end(), {} );
+
+		return Monad<const TItem&>{ *found_slot };
+	}
 }
 }
 }
