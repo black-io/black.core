@@ -9,6 +9,126 @@ inline namespace Global
 {
 inline namespace Algorithms
 {
+namespace Internal
+{
+	// Common template for method binding provider.
+	template< typename TSignature >
+	class MethodBindingProvider;
+
+	// Terminal path to bind the regular methods.
+	template< typename THost, typename TResult, typename... TArguments >
+	class MethodBindingProvider<TResult (THost::*)( TArguments... )> final
+	{
+	public:
+		// Perform the binding.
+		template< TResult (THost::*METHOD)( TArguments... ) >
+		static inline auto Bind( THost& host )
+		{
+			class Delegate final
+			{
+			public:
+				inline Delegate() = delete;
+				inline ~Delegate() = default;
+
+				explicit inline Delegate( THost& host ) : m_host{ host } {};
+
+			public:
+				inline TResult operator ()( TArguments&&... arguments ) const { return (m_host.*METHOD)( std::forward<TArguments>( arguments )... ); };
+
+			private:
+				THost& m_host;
+			};
+
+			return Delegate{ host };
+		};
+	};
+
+	// Terminal path to bind the methods with constant context.
+	template< typename THost, typename TResult, typename... TArguments >
+	class MethodBindingProvider<TResult (THost::*)( TArguments... ) const> final
+	{
+	public:
+		// Perform the binding.
+		template< TResult (THost::*METHOD)( TArguments... ) const >
+		static inline auto Bind( const THost& host )
+		{
+			class Delegate final
+			{
+			public:
+				inline Delegate() = delete;
+				inline ~Delegate() = default;
+
+				explicit inline Delegate( const THost& host ) : m_host{ host } {};
+
+			public:
+				inline TResult operator ()( TArguments&&... arguments ) const { return (m_host.*METHOD)( std::forward<TArguments>( arguments )... ); };
+
+			private:
+				const THost& m_host;
+			};
+
+			return Delegate{ host };
+		};
+	};
+
+	// Terminal path to bind the methods with volatile context.
+	template< typename THost, typename TResult, typename... TArguments >
+	class MethodBindingProvider<TResult (THost::*)( TArguments... ) volatile> final
+	{
+	public:
+		// Perform the binding.
+		template< TResult (THost::*METHOD)( TArguments... ) volatile >
+		static inline auto Bind( const THost& host )
+		{
+			class Delegate final
+			{
+			public:
+				inline Delegate() = delete;
+				inline ~Delegate() = default;
+
+				explicit inline Delegate( volatile THost& host ) : m_host{ host } {};
+
+			public:
+				inline TResult operator ()( TArguments&&... arguments ) const { return (m_host.*METHOD)( std::forward<TArguments>( arguments )... ); };
+
+			private:
+				volatile THost& m_host;
+			};
+
+			return Delegate{ host };
+		};
+	};
+
+	// Terminal path to bind the methods with constant and volatile context.
+	template< typename THost, typename TResult, typename... TArguments >
+	class MethodBindingProvider<TResult (THost::*)( TArguments... ) const volatile> final
+	{
+	public:
+		// Perform the binding.
+		template< TResult (THost::*METHOD)( TArguments... ) const volatile >
+		static inline auto Bind( const volatile THost& host )
+		{
+			class Delegate final
+			{
+			public:
+				inline Delegate() = delete;
+				inline ~Delegate() = default;
+
+				explicit inline Delegate( const volatile THost& host ) : m_host{ host } {};
+
+			public:
+				inline TResult operator ()( TArguments&&... arguments ) const { return (m_host.*METHOD)( std::forward<TArguments>( arguments )... ); };
+
+			private:
+				const volatile THost& m_host;
+			};
+
+			return Delegate{ host };
+		};
+	};
+}
+
+
 	/**
 		@brief	Converts value of enumeration type to its underlying type value.
 		@param	value			Te value to be converted.
@@ -40,6 +160,22 @@ inline namespace Algorithms
 		swap( left, vicar );
 
 		return left;
+	}
+
+	/**
+		@brief	Bind the pointer to method with host to be called.
+		This function simplifies the process of using the algorithms when the method should be used inside.
+		Typically the writer should create lambda-function with `this` in captures and some signature to call the method.
+		With this function one can just pass the result into algorithm.
+		@tparam	METHOD_POINTER	Pointer to arbitrary method.
+		@tparam	THost			Type of host object to call the given method for.
+		@param	host			Arbitrary host object for given method to be called.
+		@return					The value returned is functional object, which can be used in standard algorithms.
+	*/
+	template< auto METHOD_POINTER, typename THost >
+	inline auto BindMethod( THost& host )
+	{
+		return Internal::MethodBindingProvider<decltype( METHOD_POINTER )>::Bind<METHOD_POINTER>( host );
 	}
 }
 }
