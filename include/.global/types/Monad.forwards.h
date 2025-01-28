@@ -11,7 +11,7 @@ inline namespace Types
 {
 	// Forward declaration to simplify the template definition.
 	template< typename TValue >
-	class Monad;
+	class Hypothetical;
 }
 }
 }

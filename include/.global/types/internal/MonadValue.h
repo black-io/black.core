@@ -11,28 +11,28 @@ inline namespace Types
 {
 namespace Internal
 {
-	// Template of monad value.
+	// Template of Hypothetical value.
 	template< typename TValue >
-	class MonadValue final
+	class HypotheticalValue final
 	{
 	// Friendship interface.
 	public:
-		friend inline void swap( MonadValue& left, MonadValue& right ) { left.Swap( right ); };
+		friend inline void swap( HypotheticalValue& left, HypotheticalValue& right ) { left.Swap( right ); };
 
 	// Public lifetime management.
 	public:
-		inline MonadValue() noexcept = default;
-		inline MonadValue( const MonadValue& other ) noexcept;
-		inline MonadValue( MonadValue&& other ) noexcept;
-		inline ~MonadValue() noexcept;
+		inline HypotheticalValue() noexcept = default;
+		inline HypotheticalValue( const HypotheticalValue& other ) noexcept;
+		inline HypotheticalValue( HypotheticalValue&& other ) noexcept;
+		inline ~HypotheticalValue() noexcept;
 
-		explicit inline MonadValue( TValue value ) noexcept;
+		explicit inline HypotheticalValue( TValue value ) noexcept;
 
 
-		inline MonadValue& operator = ( const MonadValue& other ) noexcept	{ return Black::CopyAndSwap( *this, other ); };
-		inline MonadValue& operator = ( MonadValue&& other ) noexcept		{ return Black::CopyAndSwap( *this, std::move( other ) ); };
+		inline HypotheticalValue& operator = ( const HypotheticalValue& other ) noexcept	{ return Black::CopyAndSwap( *this, other ); };
+		inline HypotheticalValue& operator = ( HypotheticalValue&& other ) noexcept		{ return Black::CopyAndSwap( *this, std::move( other ) ); };
 
-		inline MonadValue& operator = ( TValue value ) noexcept				{ return Black::CopyAndSwap( *this, std::move( value ) ); };
+		inline HypotheticalValue& operator = ( TValue value ) noexcept				{ return Black::CopyAndSwap( *this, std::move( value ) ); };
 
 	// Public interface.
 	public:
@@ -40,7 +40,7 @@ namespace Internal
 		inline void Clear();
 
 		// Perform the swap of states with other one.
-		inline void Swap( MonadValue& other );
+		inline void Swap( HypotheticalValue& other );
 
 		// Get the reference to stored value.
 		inline TValue& GetValue() &;
@@ -77,8 +77,8 @@ namespace Internal
 		// Raw memory buffer for value storage.
 		using ValueBuffer = std::byte[ sizeof( ValueStorage ) ];
 
-		// Within movable context this type instructs the monad to move or pass the value out.
-		using ForwardingValue = MonadForwardingValue<TValue>;
+		// Within movable context this type instructs the Hypothetical to move or pass the value out.
+		using ForwardingValue = HypotheticalForwardingValue<TValue>;
 
 	// Private interface.
 	private:

@@ -11,26 +11,26 @@ inline namespace Types
 {
 namespace Internal
 {
-	// Common deduction path. The inner type is regular monad.
+	// Common deduction path. The inner type is regular Hypothetical.
 	template< typename TResult >
-	struct MonadSelector final
+	struct HypotheticalSelector final
 	{
-		using Type = Monad<TResult>;
+		using Type = Hypothetical<TResult>;
 	};
 
 	// Terminal path of deduction. The inner type is void.
 	template<>
-	struct MonadSelector<void> final
+	struct HypotheticalSelector<void> final
 	{
 		using Type = void;
 	};
 
-	// Type selector. Represents the regular monad or void type.
+	// Type selector. Represents the regular Hypothetical or void type.
 	template< typename TFunction, typename TValue >
-	using MonadOrVoid = typename MonadSelector<std::invoke_result_t<TFunction, TValue>>::Type;
+	using HypotheticalOrVoid = typename HypotheticalSelector<std::invoke_result_t<TFunction, TValue>>::Type;
 
 	template< typename TValue >
-	using MonadForwardingValue = std::conditional_t<std::is_lvalue_reference_v<TValue>, TValue&, TValue&&>;
+	using HypotheticalForwardingValue = std::conditional_t<std::is_lvalue_reference_v<TValue>, TValue&, TValue&&>;
 }
 }
 }
