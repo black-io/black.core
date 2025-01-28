@@ -32,7 +32,7 @@ inline namespace Types
 	[[ nodiscard ]]
 	inline Monad<TValue> Monad<TValue>::OrUse( Monad<TValue>::Value value ) &&
 	{
-		return Monad<Value>{ std::move( m_value ).getValue( std::move( value ) ) };
+		return Monad<Value>{ std::move( m_value ).GetValue( std::move( value ) ) };
 	}
 
 	template< typename TValue >
