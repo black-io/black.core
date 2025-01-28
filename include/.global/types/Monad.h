@@ -10,9 +10,9 @@ inline namespace Global
 inline namespace Types
 {
 	/**
-		@brief	Template of regular Hypothetical.
+		@brief	Hypothetical value.
 
-		This template implements the canonical implementation of Hypothetical idiom.
+		This template implements the behavior of hypothetical value. It considered hypothetical because of no one can clarify the state of value directly.
 		One can't just retrieve the value from Hypothetical. Instead, only the function can be used to get access to the carried value.
 		The function used to retrieve the value, once being called, can use or consume the value, depending on its signature.
 
@@ -80,6 +80,40 @@ inline namespace Types
 		*/
 		[[ nodiscard ]]
 		inline Hypothetical<TValue> OrUse( Value value ) &&;
+
+		/**
+			@brief	Clarify the stored value.
+
+			The result of call depends on fact this Hypothetical stores the value.
+			In case of empty Hypothetical, the value will be retrieved from `getter`.
+			In case of stored value, it will be used to construct the result and the `value` will be ignored.
+
+			This overload introduces the optimization, where new value will be constructed only if no value is carried.
+
+			@tparam	TFunction	Type of getter-function.
+			@param	getter		The getter-function, that will be used to get the new value to be stored.
+			@return				The value returned is another Hypothetical, that definitely carried the value.
+		*/
+		template< typename TFunction >
+		[[ nodiscard ]]
+		inline auto OrUse( TFunction&& getter ) const & -> std::enable_if_t<!std::is_same_v<std::decay_t<TValue>, std::decay_t<TFunction>>, Hypothetical<TValue>>;
+
+		/**
+			@brief	Clarify the stored value.
+
+			The result of call depends on fact this Hypothetical stores the value.
+			In case of empty Hypothetical, the value will be retrieved from `getter`.
+			In case of stored value, it will be used to construct the result and the `value` will be ignored.
+
+			This overload introduces the optimization, where new value will be constructed only if no value is carried.
+
+			@tparam	TFunction	Type of getter-function.
+			@param	getter		The getter-function, that will be used to get the new value to be stored.
+			@return				The value returned is another Hypothetical, that definitely carried the value.
+		*/
+		template< typename TFunction >
+		[[ nodiscard ]]
+		inline auto OrUse( TFunction&& getter ) && -> std::enable_if_t<!std::is_same_v<std::decay_t<TValue>, std::decay_t<TFunction>>, Hypothetical<TValue>>;
 
 		/**
 			@brief	Transform the value, if carried.

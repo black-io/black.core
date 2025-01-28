@@ -38,6 +38,38 @@ inline namespace Types
 	template< typename TValue >
 	template< typename TFunction >
 	[[ nodiscard ]]
+	inline auto Hypothetical<TValue>::OrUse(
+		TFunction&& getter
+	) const & -> std::enable_if_t<!std::is_same_v<std::decay_t<TValue>, std::decay_t<TFunction>>, Hypothetical<TValue>>
+	{
+		static_assert(
+			std::is_invocable_r_v<TValue, TFunction>,
+			"Used getter should meet the requirement of signature `Value ()`."
+		);
+
+		CRET( m_value.IsEmpty(), Hypothetical<Value>{ getter() } );
+		return Hypothetical<Value>{ m_value.GetValue() };
+	}
+
+	template< typename TValue >
+	template< typename TFunction >
+	[[ nodiscard ]]
+	inline auto Hypothetical<TValue>::OrUse(
+		TFunction&& getter
+	) && -> std::enable_if_t<!std::is_same_v<std::decay_t<TValue>, std::decay_t<TFunction>>, Hypothetical<TValue>>
+	{
+		static_assert(
+			std::is_invocable_r_v<TValue, TFunction>,
+			"Used getter should meet the requirement of signature `Value ()`."
+		);
+
+		CRET( m_value.IsEmpty(), Hypothetical<Value>{ getter() } );
+		return Hypothetical<Value>{ std::move( m_value ).GetValue() };
+	}
+
+	template< typename TValue >
+	template< typename TFunction >
+	[[ nodiscard ]]
 	inline auto Hypothetical<TValue>::Transform( TFunction&& transformer ) const & -> Hypothetical<std::invoke_result_t<TFunction, Hypothetical<TValue>::Value>>
 	{
 		using OtherHypothetical = Hypothetical<std::invoke_result_t<TFunction, Hypothetical<TValue>::Value>>;
@@ -59,7 +91,7 @@ inline namespace Types
 
 		if( m_value.HasValue() )
 		{
-			return OtherHypothetical{ transformer( std::move( m_value ).getValue() ) };
+			return OtherHypothetical{ transformer( std::move( m_value ).GetValue() ) };
 		}
 
 		return OtherHypothetical{};
