@@ -235,7 +235,10 @@ inline namespace Algorithms
 	}
 
 	template< typename TItem, typename TAllocator, typename TCriteria, template< typename, typename > class TStorage >
-	inline Monad<TItem&> FindItem( TStorage<TItem, TAllocator>& storage, TCriteria&& criteria )
+	inline auto FindItem(
+		TStorage<TItem, TAllocator>& storage,
+		TCriteria&& criteria
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -248,7 +251,10 @@ inline namespace Algorithms
 	}
 
 	template< typename TItem, typename TAllocator, typename TCriteria, template< typename, typename > class TStorage >
-	inline Monad<const TItem&> FindItem( const TStorage<TItem, TAllocator>& storage, TCriteria&& criteria )
+	inline auto FindItem(
+		const TStorage<TItem, TAllocator>& storage,
+		TCriteria&& criteria
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -277,7 +283,10 @@ inline namespace Algorithms
 	}
 
 	template< typename TItem, size_t ARRAY_LENGTH, typename TCriteria >
-	inline Monad<TItem&> FindItem( TItem (&storage)[ ARRAY_LENGTH ], TCriteria&& criteria )
+	inline auto FindItem(
+		TItem (&storage)[ ARRAY_LENGTH ],
+		TCriteria&& criteria
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -290,7 +299,10 @@ inline namespace Algorithms
 	}
 
 	template< typename TItem, size_t ARRAY_LENGTH, typename TCriteria >
-	inline Monad<const TItem&> FindItem( const TItem (&storage)[ ARRAY_LENGTH ], TCriteria&& criteria )
+	inline auto FindItem(
+		const TItem (&storage)[ ARRAY_LENGTH ],
+		TCriteria&& criteria
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -319,7 +331,10 @@ inline namespace Algorithms
 	}
 
 	template< typename TItem, typename TCriteria >
-	inline Monad<TItem&> FindItem( PlainView<TItem>& storage, TCriteria&& criteria )
+	inline auto FindItem(
+		PlainView<TItem>& storage,
+		TCriteria&& criteria
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -332,7 +347,10 @@ inline namespace Algorithms
 	}
 
 	template< typename TItem, typename TCriteria >
-	inline Monad<const TItem&> FindItem( const PlainView<TItem>& storage, TCriteria&& criteria )
+	inline auto FindItem(
+		const PlainView<TItem>& storage,
+		TCriteria&& criteria
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -361,7 +379,10 @@ inline namespace Algorithms
 	}
 
 	template< typename TItem, typename TCriteria >
-	inline Monad<TItem&> FindItem( PlainVector<TItem>& storage, TCriteria&& criteria )
+	inline auto FindItem(
+		PlainVector<TItem>& storage,
+		TCriteria&& criteria
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -374,7 +395,10 @@ inline namespace Algorithms
 	}
 
 	template< typename TItem, typename TCriteria >
-	inline Monad<const TItem&> FindItem( const PlainVector<TItem>& storage, TCriteria&& criteria )
+	inline auto FindItem(
+		const PlainVector<TItem>& storage,
+		TCriteria&& criteria
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
