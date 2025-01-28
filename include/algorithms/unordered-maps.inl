@@ -55,21 +55,21 @@ inline namespace Algorithms
 	}
 
 	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator >
-	inline Monad<TItem&> FindItem( std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key )
+	inline Hypothetical<TItem&> FindItem( std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key )
 	{
 		const auto found_slot = storage.find( key );
 		CRET( found_slot == storage.end(), {} );
 
-		return Monad<TItem&>{ found_slot->second };
+		return Hypothetical<TItem&>{ found_slot->second };
 	}
 
 	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator >
-	inline Monad<const TItem&> FindItem( const std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key )
+	inline Hypothetical<const TItem&> FindItem( const std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key )
 	{
 		const auto found_slot = storage.find( key );
 		CRET( found_slot == storage.end(), {} );
 
-		return Monad<const TItem&>{ found_slot->second };
+		return Hypothetical<const TItem&>{ found_slot->second };
 	}
 
 }

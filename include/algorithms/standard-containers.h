@@ -240,6 +240,21 @@ inline namespace Algorithms
 	inline const bool RemoveItem( TStorage<TItem, TAllocator>& storage, const TItem& item );
 
 	/**
+		@brief	Removes the first found item from storage.
+		@param	storage		The storage to inspect.
+		@param	item		The item to be removed.
+		@tparam	TItem		Type of storage content and type of item as well.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TStorage	Template of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` if item was removed.
+	*/
+	template< typename TItem, typename TAllocator, typename TCriteria, template< typename, typename > class TStorage >
+	inline auto RemoveItem(
+		TStorage<TItem, TAllocator>& storage,
+		TCriteria&& criteria
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, const bool>;
+
+	/**
 		@brief	Removes the first found item from presorted storage, keeping the storage sorted.
 		@param	storage		The storage to inspect.
 		@param	item		The item to be removed.
@@ -563,11 +578,11 @@ inline namespace Algorithms
 		@tparam	TItem			Type of storage content and type of item as well.
 		@tparam	TAllocator		Allocator used by storage.
 		@tparam	TStorage		Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline Monad<TItem&> FindItem( TStorage<TItem, TAllocator>& storage, const TItem& item );
+	inline Hypothetical<TItem&> FindItem( TStorage<TItem, TAllocator>& storage, const TItem& item );
 
 	/**
 		@brief	Find the item in given storage.
@@ -577,11 +592,11 @@ inline namespace Algorithms
 		@tparam	TItem			Type of storage content and type of item as well.
 		@tparam	TAllocator		Allocator used by storage.
 		@tparam	TStorage		Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline Monad<const TItem&> FindItem( const TStorage<TItem, TAllocator>& storage, const TItem& item );
+	inline Hypothetical<const TItem&> FindItem( const TStorage<TItem, TAllocator>& storage, const TItem& item );
 
 	/**
 		@brief	Find the item in given storage.
@@ -592,14 +607,14 @@ inline namespace Algorithms
 		@tparam	TAllocator		Allocator used by storage.
 		@tparam	TCriteria		Type of criteria function.
 		@tparam	TStorage		Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, typename TAllocator, typename TCriteria, template< typename, typename > class TStorage >
 	inline auto FindItem(
 		TStorage<TItem, TAllocator>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>;
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<TItem&>>;
 
 	/**
 		@brief	Find the item in given storage.
@@ -610,14 +625,14 @@ inline namespace Algorithms
 		@tparam	TAllocator		Allocator used by storage.
 		@tparam	TCriteria		Type of criteria function.
 		@tparam	TStorage		Type of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, typename TAllocator, typename TCriteria, template< typename, typename > class TStorage >
 	inline auto FindItem(
 		const TStorage<TItem, TAllocator>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>;
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<const TItem&>>;
 
 	/**
 		@brief	Find the item in given storage.
@@ -626,11 +641,11 @@ inline namespace Algorithms
 		@param	item			The item to be found.
 		@tparam	TItem			Type of storage content and type of item as well.
 		@tparam	ARRAY_LENGTH	Number of elements in storage.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, size_t ARRAY_LENGTH >
-	inline Monad<TItem&> FindItem( TItem (&storage)[ ARRAY_LENGTH ], const TItem& item );
+	inline Hypothetical<TItem&> FindItem( TItem (&storage)[ ARRAY_LENGTH ], const TItem& item );
 
 	/**
 		@brief	Find the item in given storage.
@@ -639,11 +654,11 @@ inline namespace Algorithms
 		@param	item			The item to be found.
 		@tparam	TItem			Type of storage content and type of item as well.
 		@tparam	ARRAY_LENGTH	Number of elements in storage.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, size_t ARRAY_LENGTH >
-	inline Monad<const TItem&> FindItem( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item );
+	inline Hypothetical<const TItem&> FindItem( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item );
 
 	/**
 		@brief	Find the item in given storage.
@@ -653,14 +668,14 @@ inline namespace Algorithms
 		@tparam	TItem			Type of storage content.
 		@tparam	ARRAY_LENGTH	Number of elements in storage.
 		@tparam	TCriteria		Type of criteria function.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, size_t ARRAY_LENGTH, typename TCriteria >
 	inline auto FindItem(
 		TItem (&storage)[ ARRAY_LENGTH ],
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>;
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<TItem&>>;
 
 	/**
 		@brief	Find the item in given storage.
@@ -670,14 +685,14 @@ inline namespace Algorithms
 		@tparam	TItem			Type of storage content.
 		@tparam	ARRAY_LENGTH	Number of elements in storage.
 		@tparam	TCriteria		Type of criteria function.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, size_t ARRAY_LENGTH, typename TCriteria >
 	inline auto FindItem(
 		const TItem (&storage)[ ARRAY_LENGTH ],
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>;
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<const TItem&>>;
 
 	/**
 		@brief	Find the item in given storage.
@@ -685,11 +700,11 @@ inline namespace Algorithms
 		@param	storage			The storage to look up.
 		@param	item			The item to be found.
 		@tparam	TItem			Type of storage content and type of item as well.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem >
-	inline Monad<TItem&> FindItem( PlainView<TItem>& storage, const TItem& item );
+	inline Hypothetical<TItem&> FindItem( PlainView<TItem>& storage, const TItem& item );
 
 	/**
 		@brief	Find the item in given storage.
@@ -697,11 +712,11 @@ inline namespace Algorithms
 		@param	storage			The storage to look up.
 		@param	item			The item to be found.
 		@tparam	TItem			Type of storage content and type of item as well.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem >
-	inline Monad<const TItem&> FindItem( const PlainView<TItem>& storage, const TItem& item );
+	inline Hypothetical<const TItem&> FindItem( const PlainView<TItem>& storage, const TItem& item );
 
 	/**
 		@brief	Find the item in given storage.
@@ -710,14 +725,14 @@ inline namespace Algorithms
 		@param	criteria		Function-like predicate, used as criteria to determine the item to be found.
 		@tparam	TItem			Type of storage content.
 		@tparam	TCriteria		Type of criteria function.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, typename TCriteria >
 	inline auto FindItem(
 		PlainView<TItem>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>;
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<TItem&>>;
 
 	/**
 		@brief	Find the item in given storage.
@@ -726,14 +741,14 @@ inline namespace Algorithms
 		@param	criteria		Function-like predicate, used as criteria to determine the item to be found.
 		@tparam	TItem			Type of storage content.
 		@tparam	TCriteria		Type of criteria function.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, typename TCriteria >
 	inline auto FindItem(
 		const PlainView<TItem>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>;
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<const TItem&>>;
 
 	/**
 		@brief	Find the item in given storage.
@@ -741,11 +756,11 @@ inline namespace Algorithms
 		@param	storage			The storage to look up.
 		@param	item			The item to be found.
 		@tparam	TItem			Type of storage content and type of item as well.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem >
-	inline Monad<TItem&> FindItem( PlainVector<TItem>& storage, const TItem& item );
+	inline Hypothetical<TItem&> FindItem( PlainVector<TItem>& storage, const TItem& item );
 
 	/**
 		@brief	Find the item in given storage.
@@ -753,11 +768,11 @@ inline namespace Algorithms
 		@param	storage			The storage to look up.
 		@param	item			The item to be found.
 		@tparam	TItem			Type of storage content and type of item as well.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem >
-	inline Monad<const TItem&> FindItem( const PlainVector<TItem>& storage, const TItem& item );
+	inline Hypothetical<const TItem&> FindItem( const PlainVector<TItem>& storage, const TItem& item );
 
 	/**
 		@brief	Find the item in given storage.
@@ -766,14 +781,14 @@ inline namespace Algorithms
 		@param	criteria		Function-like predicate, used as criteria to determine the item to be found.
 		@tparam	TItem			Type of storage content.
 		@tparam	TCriteria		Type of criteria function.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, typename TCriteria >
 	inline auto FindItem(
 		PlainVector<TItem>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>;
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<TItem&>>;
 
 	/**
 		@brief	Find the item in given storage.
@@ -782,14 +797,14 @@ inline namespace Algorithms
 		@param	criteria		Function-like predicate, used as criteria to determine the item to be found.
 		@tparam	TItem			Type of storage content.
 		@tparam	TCriteria		Type of criteria function.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, typename TCriteria >
 	inline auto FindItem(
 		const PlainVector<TItem>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>;
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<const TItem&>>;
 
 	/**
 		@brief	Find the item in given storage.
@@ -799,11 +814,11 @@ inline namespace Algorithms
 		@tparam	TItem			Type of storage content and type of item as well.
 		@tparam	TPredicate		Predicate used by storage.
 		@tparam	TAllocator		Allocator used by storage.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline Monad<TItem&> FindItem( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item );
+	inline Hypothetical<TItem&> FindItem( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item );
 
 	/**
 		@brief	Find the item in given storage.
@@ -813,45 +828,45 @@ inline namespace Algorithms
 		@tparam	TItem			Type of storage content and type of item as well.
 		@tparam	TPredicate		Predicate used by storage.
 		@tparam	TAllocator		Allocator used by storage.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline Monad<const TItem&> FindItem( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item );
+	inline Hypothetical<const TItem&> FindItem( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item );
 
 	/**
 		@brief	Find the item in given storage.
-		This function looks for `key` in `storage` and represents the result as monad.
+		This function looks for `key` in `storage` and represents the result as Hypothetical.
 		@param	storage			The storage to look up.
 		@param	key				The key for item to be found.
 		@tparam	TKey			Type of keys used by storage.
 		@tparam	TItem			Type of storage content.
 		@tparam	TPredicate		Predicate used by storage.
 		@tparam	TAllocator		Allocator used by storage.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
-	inline Monad<TItem&> FindItem( std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key );
+	inline Hypothetical<TItem&> FindItem( std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key );
 
 	/**
 		@brief	Find the item in given storage.
-		This function looks for `key` in `storage` and represents the result as monad.
+		This function looks for `key` in `storage` and represents the result as Hypothetical.
 		@param	storage			The storage to look up.
 		@param	key				The key for item to be found.
 		@tparam	TKey			Type of keys used by storage.
 		@tparam	TItem			Type of storage content.
 		@tparam	TPredicate		Predicate used by storage.
 		@tparam	TAllocator		Allocator used by storage.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TKey, typename TItem, typename TPredicate, typename TAllocator >
-	inline Monad<const TItem&> FindItem( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key );
+	inline Hypothetical<const TItem&> FindItem( const std::map<TKey, TItem, TPredicate, TAllocator>& storage, const TKey& key );
 
 	/**
 		@brief	Find the item in given storage.
-		This function looks for `key` in `storage` and represents the result as monad.
+		This function looks for `key` in `storage` and represents the result as Hypothetical.
 		@param	storage			The storage to look up.
 		@param	key				The key for item to be found.
 		@tparam	TKey			Type of keys used by storage.
@@ -859,15 +874,15 @@ inline namespace Algorithms
 		@tparam	THash			Hash used by storage.
 		@tparam	TPredicate		Predicate used by storage.
 		@tparam	TAllocator		Allocator used by storage.
-		@return					The value returned is monad with reference to found value.
+		@return					The value returned is Hypothetical with reference to found value.
 		@retval	{}				In case of no item found in storage.
 	*/
 	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator >
-	inline Monad<TItem&> FindItem( std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key );
+	inline Hypothetical<TItem&> FindItem( std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key );
 
 	/**
 		@brief	Find the item in given storage.
-		This function looks for `key` in `storage` and represents the result as monad.
+		This function looks for `key` in `storage` and represents the result as Hypothetical.
 		@param	storage			The storage to look up.
 		@param	key				The key for item to find.
 		@tparam	TKey			Type of keys used by storage.
@@ -875,10 +890,10 @@ inline namespace Algorithms
 		@tparam	THash			Hash used by storage.
 		@tparam	TPredicate		Predicate used by storage.
 		@tparam	TAllocator		Allocator used by storage.
-		@return					The value returned is monad with reference to found value or empty monad.
+		@return					The value returned is Hypothetical with reference to found value or empty Hypothetical.
 	*/
 	template< typename TKey, typename TItem, typename THash, typename TPredicate, typename TAllocator >
-	inline Monad<const TItem&> FindItem( const std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key );
+	inline Hypothetical<const TItem&> FindItem( const std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key );
 
 	/**
 		@brief	Get the position of `item` in `storage`.

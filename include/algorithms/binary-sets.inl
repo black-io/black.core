@@ -44,21 +44,21 @@ inline namespace Algorithms
 	}
 
 	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline Monad<TItem&> FindItem( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
+	inline Hypothetical<TItem&> FindItem( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
 	{
 		const auto found_slot = storage.find( item );
 		CRET( found_slot == storage.end(), {} );
 
-		return Monad<TItem&>{ *found_slot };
+		return Hypothetical<TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline Monad<const TItem&> FindItem( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
+	inline Hypothetical<const TItem&> FindItem( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item )
 	{
 		const auto found_slot = storage.find( item );
 		CRET( found_slot == storage.end(), {} );
 
-		return Monad<const TItem&>{ *found_slot };
+		return Hypothetical<const TItem&>{ *found_slot };
 	}
 }
 }

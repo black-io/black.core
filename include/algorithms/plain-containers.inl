@@ -114,6 +114,25 @@ inline namespace Algorithms
 		return true;
 	}
 
+	template< typename TItem, typename TAllocator, typename TCriteria, template< typename, typename > class TStorage >
+	inline auto RemoveItem(
+		TStorage<TItem, TAllocator>& storage,
+		TCriteria&& criteria
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, const bool>
+	{
+		static_assert(
+			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
+			"Used criteria should meet the requirement of signature `const bool ( const TItem& )`."
+		);
+
+		CRET( storage.empty(), false );
+		auto found_item = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
+		CRET( found_item == std::end( storage ), false );
+
+		storage.erase( found_item );
+		return true;
+	}
+
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
 	inline const bool RemoveItemSorted( TStorage<TItem, TAllocator>& storage, const TItem& item )
 	{
@@ -219,26 +238,26 @@ inline namespace Algorithms
 	}
 
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline Monad<TItem&> FindItem( TStorage<TItem, TAllocator>& storage, const TItem& item )
+	inline Hypothetical<TItem&> FindItem( TStorage<TItem, TAllocator>& storage, const TItem& item )
 	{
 		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<TItem&>{ *found_slot };
+		return Hypothetical<TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
-	inline Monad<const TItem&> FindItem( const TStorage<TItem, TAllocator>& storage, const TItem& item )
+	inline Hypothetical<const TItem&> FindItem( const TStorage<TItem, TAllocator>& storage, const TItem& item )
 	{
 		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<const TItem&>{ *found_slot };
+		return Hypothetical<const TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, typename TAllocator, typename TCriteria, template< typename, typename > class TStorage >
 	inline auto FindItem(
 		TStorage<TItem, TAllocator>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -247,14 +266,14 @@ inline namespace Algorithms
 
 		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<TItem&>{ *found_slot };
+		return Hypothetical<TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, typename TAllocator, typename TCriteria, template< typename, typename > class TStorage >
 	inline auto FindItem(
 		const TStorage<TItem, TAllocator>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<const TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -263,30 +282,30 @@ inline namespace Algorithms
 
 		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<const TItem&>{ *found_slot };
+		return Hypothetical<const TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, size_t ARRAY_LENGTH >
-	inline Monad<TItem&> FindItem( TItem (&storage)[ ARRAY_LENGTH ], const TItem& item )
+	inline Hypothetical<TItem&> FindItem( TItem (&storage)[ ARRAY_LENGTH ], const TItem& item )
 	{
 		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<TItem&>{ *found_slot };
+		return Hypothetical<TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, size_t ARRAY_LENGTH >
-	inline Monad<const TItem&> FindItem( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item )
+	inline Hypothetical<const TItem&> FindItem( const TItem (&storage)[ ARRAY_LENGTH ], const TItem& item )
 	{
 		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<const TItem&>{ *found_slot };
+		return Hypothetical<const TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, size_t ARRAY_LENGTH, typename TCriteria >
 	inline auto FindItem(
 		TItem (&storage)[ ARRAY_LENGTH ],
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -295,14 +314,14 @@ inline namespace Algorithms
 
 		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<TItem&>{ *found_slot };
+		return Hypothetical<TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, size_t ARRAY_LENGTH, typename TCriteria >
 	inline auto FindItem(
 		const TItem (&storage)[ ARRAY_LENGTH ],
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<const TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -311,30 +330,30 @@ inline namespace Algorithms
 
 		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<const TItem&>{ *found_slot };
+		return Hypothetical<const TItem&>{ *found_slot };
 	}
 
 	template< typename TItem >
-	inline Monad<TItem&> FindItem( PlainView<TItem>& storage, const TItem& item )
+	inline Hypothetical<TItem&> FindItem( PlainView<TItem>& storage, const TItem& item )
 	{
 		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<TItem&>{ *found_slot };
+		return Hypothetical<TItem&>{ *found_slot };
 	}
 
 	template< typename TItem >
-	inline Monad<const TItem&> FindItem( const PlainView<TItem>& storage, const TItem& item )
+	inline Hypothetical<const TItem&> FindItem( const PlainView<TItem>& storage, const TItem& item )
 	{
 		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<const TItem&>{ *found_slot };
+		return Hypothetical<const TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, typename TCriteria >
 	inline auto FindItem(
 		PlainView<TItem>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -343,14 +362,14 @@ inline namespace Algorithms
 
 		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<TItem&>{ *found_slot };
+		return Hypothetical<TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, typename TCriteria >
 	inline auto FindItem(
 		const PlainView<TItem>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<const TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -359,30 +378,30 @@ inline namespace Algorithms
 
 		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<const TItem&>{ *found_slot };
+		return Hypothetical<const TItem&>{ *found_slot };
 	}
 
 	template< typename TItem >
-	inline Monad<TItem&> FindItem( PlainVector<TItem>& storage, const TItem& item )
+	inline Hypothetical<TItem&> FindItem( PlainVector<TItem>& storage, const TItem& item )
 	{
 		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<TItem&>{ *found_slot };
+		return Hypothetical<TItem&>{ *found_slot };
 	}
 
 	template< typename TItem >
-	inline Monad<const TItem&> FindItem( const PlainVector<TItem>& storage, const TItem& item )
+	inline Hypothetical<const TItem&> FindItem( const PlainVector<TItem>& storage, const TItem& item )
 	{
 		const auto found_slot = std::find( std::begin( storage ), std::end( storage ), item );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<const TItem&>{ *found_slot };
+		return Hypothetical<const TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, typename TCriteria >
 	inline auto FindItem(
 		PlainVector<TItem>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<TItem&>>
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -391,14 +410,14 @@ inline namespace Algorithms
 
 		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<TItem&>{ *found_slot };
+		return Hypothetical<TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, typename TCriteria >
 	inline auto FindItem(
 		const PlainVector<TItem>& storage,
 		TCriteria&& criteria
-	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Monad<const TItem&>>
+	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<const TItem&>>
 	{
 		static_assert(
 			std::is_invocable_r_v<const bool, TCriteria, const std::decay_t<TItem>&>,
@@ -407,7 +426,7 @@ inline namespace Algorithms
 
 		const auto found_slot = std::find_if( std::begin( storage ), std::end( storage ), std::forward<TCriteria>( criteria ) );
 		CRET( found_slot == std::end( storage ), {} );
-		return Monad<const TItem&>{ *found_slot };
+		return Hypothetical<const TItem&>{ *found_slot };
 	}
 
 	template< typename TItem, typename TAllocator, template< typename, typename > class TStorage >
