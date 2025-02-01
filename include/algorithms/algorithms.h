@@ -19,6 +19,7 @@ namespace Internal
 
 
 #include "standard-containers.h"
+#include "core-containers.h"
 
 #include "text-containers.internal.h"
 #include "text-containers.functions.h"
@@ -33,6 +34,7 @@ namespace Internal
 #include "text-containers.inl"
 #include "text-containers.joining.inl"
 #include "text-containers.splitting.inl"
+#include "core-containers.inl"
 #include "plain-containers.inl"
 #include "binary-sets.inl"
 #include "binary-maps.inl"
