@@ -487,21 +487,6 @@ inline namespace Algorithms
 		@retval	default_value	In case of no `item` found in `storage`.
 	*/
 	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline TItem& FindItem( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item, TItem& default_result );
-
-	/**
-		@brief	Find the item in given storage.
-		This function uses the `item` to find the equivalent inside of storage.
-		@param	storage			The storage to look up.
-		@param	item			The item to be found.
-		@param	default_result	Value to be returned in case the item not found in storage.
-		@tparam	TItem			Type of storage content and type of item as well.
-		@tparam	TPredicate		Predicate used by storage.
-		@tparam	TAllocator		Allocator used by storage.
-		@return					The value returned is first found in storage.
-		@retval	default_value	In case of no `item` found in `storage`.
-	*/
-	template< typename TItem, typename TPredicate, typename TAllocator >
 	inline const TItem& FindItem( const std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item, const TItem& default_result );
 
 	/**
@@ -805,20 +790,6 @@ inline namespace Algorithms
 		const PlainVector<TItem>& storage,
 		TCriteria&& criteria
 	) -> std::enable_if_t<!std::is_same_v<std::decay_t<TItem>, std::decay_t<TCriteria>>, Hypothetical<const TItem&>>;
-
-	/**
-		@brief	Find the item in given storage.
-		This function uses the `item` to find the equivalent inside of storage.
-		@param	storage			The storage to look up.
-		@param	item			The item to be found.
-		@tparam	TItem			Type of storage content and type of item as well.
-		@tparam	TPredicate		Predicate used by storage.
-		@tparam	TAllocator		Allocator used by storage.
-		@return					The value returned is Hypothetical with reference to found value.
-		@retval	{}				In case of no item found in storage.
-	*/
-	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline Hypothetical<TItem&> FindItem( std::set<TItem, TPredicate, TAllocator>& storage, const TItem& item );
 
 	/**
 		@brief	Find the item in given storage.
