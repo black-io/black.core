@@ -88,9 +88,8 @@ namespace Internal
 	template< typename TBitStorage >
 	inline void BitAdapter<TBitStorage>::Swap( BitAdapter<TBitStorage>& other )
 	{
-		using std::swap;
-		swap( m_storage, other.m_storage );
-		swap( m_bit_mask, other.m_bit_mask );
+		Black::Swap( m_storage, other.m_storage );
+		Black::Swap( m_bit_mask, other.m_bit_mask );
 	}
 
 	template< typename TBitStorage >

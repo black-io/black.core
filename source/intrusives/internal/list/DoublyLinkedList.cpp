@@ -67,8 +67,6 @@ namespace
 
 	void DoublyLinkedList::Swap( DoublyLinkedList& other )
 	{
-		using std::swap;
-
 		for( DoublyLinkedListSlot* slot = m_head; slot != &m_end; slot = slot->m_next )
 		{
 			slot->m_host = &other;
@@ -79,8 +77,8 @@ namespace
 			slot->m_host = this;
 		}
 
-		swap( m_head, other.m_head );
-		swap( m_length, other.m_length );
+		Black::Swap( m_head, other.m_head );
+		Black::Swap( m_length, other.m_length );
 
 		DoublyLinkedListSlot* my_back		= other.m_end.m_previous;
 		DoublyLinkedListSlot* other_back	= m_end.m_previous;

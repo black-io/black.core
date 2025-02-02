@@ -88,8 +88,7 @@ namespace Internal
 		}
 
 		// After replacement is done, the result just may be exchanged with the initial string buffer.
-		using std::swap;
-		swap( string_buffer, result );
+		Black::Swap( string_buffer, result );
 	}
 
 	template< typename TStringBuffer, typename TOutStorage >
@@ -193,7 +192,7 @@ namespace Internal
 		const size_t result_position	= std::distance( buffer_view.begin(), found_begin );
 		const size_t result_length		= std::distance( found_begin, found_end );
 		TStringBuffer buffer{ buffer_view.substr( result_position, result_length ) };
-		std::swap( string_buffer, buffer );
+		Black::Swap( string_buffer, buffer );
 	}
 }
 }

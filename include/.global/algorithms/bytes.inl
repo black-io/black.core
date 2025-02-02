@@ -74,7 +74,7 @@ inline namespace Algorithms
 
 		for( size_t index = 0; index < ( value_length / 2 ); ++index )
 		{
-			std::swap( bytes[ index ], bytes[ value_length - 1 - index ] );
+			Black::Swap( bytes[ index ], bytes[ value_length - 1 - index ] );
 		}
 
 		std::memcpy( &result, bytes, value_length );

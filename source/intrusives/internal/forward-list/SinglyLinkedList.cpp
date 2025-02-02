@@ -68,9 +68,6 @@ namespace
 
 	void SinglyLinkedList::Swap( SinglyLinkedList& other )
 	{
-		using std::swap;
-
-
 		auto fix_slots = [](
 			SinglyLinkedListSlot* const begin,
 			SinglyLinkedListSlot* const end,
@@ -97,8 +94,8 @@ namespace
 		fix_slots( m_head, &m_end, &other, &other.m_end );
 		fix_slots( other.m_head, &other.m_end, this, &m_end );
 
-		swap( m_head, other.m_head );
-		swap( m_length, other.m_length );
+		Black::Swap( m_head, other.m_head );
+		Black::Swap( m_length, other.m_length );
 	}
 
 	void SinglyLinkedList::PushFront( Slot& slot )

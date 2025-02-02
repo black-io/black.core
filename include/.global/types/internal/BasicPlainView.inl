@@ -47,9 +47,8 @@ namespace Internal
 	template< typename TValue >
 	inline void BasicPlainView<TValue>::Swap( BasicPlainView& other )
 	{
-		using std::swap;
-		swap( m_memory, other.m_memory );
-		swap( m_length, other.m_length );
+		Black::Swap( m_memory, other.m_memory );
+		Black::Swap( m_length, other.m_length );
 	}
 
 	template< typename TValue >

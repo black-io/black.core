@@ -191,10 +191,9 @@ namespace Internal
 	template< typename TBitStorage >
 	inline void BitIterator<TBitStorage>::Swap( self_type& other )
 	{
-		using std::swap;
-		swap( m_head, other.m_head );
-		swap( m_bit_length, other.m_bit_length );
-		swap( m_bit_index, other.m_bit_index );
+		Black::Swap( m_head, other.m_head );
+		Black::Swap( m_bit_length, other.m_bit_length );
+		Black::Swap( m_bit_index, other.m_bit_index );
 	}
 
 	template< typename TBitStorage >

@@ -33,8 +33,7 @@ namespace Internal
 	public:
 		friend inline void swap( StaticListIterator& left, StaticListIterator& right )
 		{
-			using std::swap;
-			swap( left.m_current_node, right.m_current_node );
+			Black::Swap( left.m_current_node, right.m_current_node );
 		}
 
 	// Construction and assignment.

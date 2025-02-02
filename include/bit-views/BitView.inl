@@ -134,9 +134,8 @@ inline namespace BitViews
 	template< typename TBitStorage >
 	inline void BitView<TBitStorage>::Swap( BitView<TBitStorage>& other )
 	{
-		using std::swap;
-		swap( m_head, other.m_head );
-		swap( m_bit_length, other.m_bit_length );
+		Black::Swap( m_head, other.m_head );
+		Black::Swap( m_bit_length, other.m_bit_length );
 	}
 }
 }
