@@ -39,6 +39,198 @@ inline namespace Algorithms
 	inline const bool HasItem( const PlainVector<TItem>& storage, const TItem& item );
 
 	/**
+		@brief	Whether all of elements in storage are `true`.
+		Covers the `std::all_of`.
+		@param	storage			The storage to check.
+		@tparam	ARRAY_LENGTH	Number of elements in storage.
+		@return					`true` only if all of elements are `true`. `false` in other way.
+	*/
+	template< size_t ARRAY_LENGTH >
+	inline const bool AllOf( const bool (&storage)[ ARRAY_LENGTH ] );
+
+	/**
+		@brief	Whether the `predicate` return `true` for all of elements in `storage`.
+		Covers the `std::all_of`.
+		@param	storage			The storage to check.
+		@param	predicate		The predicate to be used on elements.
+		@tparam	ARRAY_LENGTH	Number of elements in storage.
+		@tparam	TItem			Type of storage content.
+		@tparam	TPredicate		Type of predicate.
+		@return					`true` only if predicate return `true` for all elements. `false` in other way.
+	*/
+	template< typename TItem, typename TPredicate, size_t ARRAY_LENGTH >
+	inline const bool AllOf( const TItem (&storage)[ ARRAY_LENGTH ], TPredicate&& predicate );
+
+	/**
+		@brief	Whether all of elements in storage are `true`.
+		Covers the `std::all_of`.
+		@param	storage	The storage to check.
+		@return			`true` only if all of elements are `true`. `false` in other way.
+	*/
+	inline const bool AllOf( const PlainView<bool>& storage );
+
+	/**
+		@brief	Whether the `predicate` return `true` for all of elements in `storage`.
+		Covers the `std::all_of`.
+		@param	storage		The storage to check.
+		@param	predicate	The predicate to be used on elements.
+		@tparam	TItem		Type of storage content.
+		@tparam	TPredicate	Type of predicate.
+		@return				`true` only if predicate return `true` for all elements. `false` in other way.
+	*/
+	template< typename TItem, typename TPredicate >
+	inline const bool AllOf( const PlainView<TItem>& storage, TPredicate&& predicate );
+
+	/**
+		@brief	Whether all of elements in storage are `true`.
+		Covers the `std::all_of`.
+		@param	storage	The storage to check.
+		@return			`true` only if all of elements are `true`. `false` in other way.
+	*/
+	inline const bool AllOf( const PlainVector<bool>& storage );
+
+	/**
+		@brief	Whether the `predicate` return `true` for all of elements in `storage`.
+		Covers the `std::all_of`.
+		@param	storage		The storage to check.
+		@param	predicate	The predicate to be used on elements.
+		@tparam	TItem		Type of storage content.
+		@tparam	TPredicate	Type of predicate.
+		@return				`true` only if predicate return `true` for all elements. `false` in other way.
+	*/
+	template< typename TItem, typename TPredicate >
+	inline const bool AllOf( const PlainVector<TItem>& storage, TPredicate&& predicate );
+
+	/**
+		@brief	Whether any of elements in storage is `true`.
+		Covers the `std::any_of`.
+		@param	storage			The storage to check.
+		@tparam	ARRAY_LENGTH	Number of elements in storage.
+		@return					`true` if at last one element is `true`. `false` in other way.
+	*/
+	template< size_t ARRAY_LENGTH >
+	inline const bool AnyOf( const bool (&storage)[ ARRAY_LENGTH ] );
+
+	/**
+		@brief	Whether the `predicate` return `true` at last for single element in `storage`.
+		Covers the `std::any_of`.
+		@param	storage			The storage to check.
+		@param	predicate		The predicate to be used on elements.
+		@tparam	ARRAY_LENGTH	Number of elements in storage.
+		@tparam	TItem			Type of storage content.
+		@tparam	TPredicate		Type of predicate.
+		@return					`true` if `predicate` return `true` at last for single element. `false` in other way.
+	*/
+	template< typename TItem, typename TPredicate, size_t ARRAY_LENGTH >
+	inline const bool AnyOf( const TItem (&storage)[ ARRAY_LENGTH ], TPredicate&& predicate );
+
+	/**
+		@brief	Whether any of elements in storage is `true`.
+		Covers the `std::any_of`.
+		@param	storage	The storage to check.
+		@return			`true` if at last one element is `true`. `false` in other way.
+	*/
+	inline const bool AnyOf( const PlainView<bool>& storage );
+
+	/**
+		@brief	Whether the `predicate` return `true` at last for single element in `storage`.
+		Covers the `std::any_of`.
+		@param	storage		The storage to check.
+		@param	predicate	The predicate to be used on elements.
+		@tparam	TItem		Type of storage content.
+		@tparam	TPredicate	Type of predicate.
+		@return				`true` if `predicate` return `true` at last for single element. `false` in other way.
+	*/
+	template< typename TItem, typename TPredicate >
+	inline const bool AnyOf( const PlainView<TItem>& storage, TPredicate&& predicate );
+
+	/**
+		@brief	Whether any of elements in storage is `true`.
+		Covers the `std::any_of`.
+		@param	storage	The storage to check.
+		@return			`true` if at last one element is `true`. `false` in other way.
+	*/
+	inline const bool AnyOf( const PlainVector<bool>& storage );
+
+	/**
+		@brief	Whether the `predicate` return `true` at last for single element in `storage`.
+		Covers the `std::any_of`.
+		@param	storage		The storage to check.
+		@param	predicate	The predicate to be used on elements.
+		@tparam	TItem		Type of storage content.
+		@tparam	TPredicate	Type of predicate.
+		@return				`true` if `predicate` return `true` at last for single element. `false` in other way.
+	*/
+	template< typename TItem, typename TPredicate >
+	inline const bool AnyOf( const PlainVector<TItem>& storage, TPredicate&& predicate );
+
+	/**
+		@brief	Whether the storage consists of no `true` elements.
+		Covers the `std::none_of`.
+		@param	storage			The storage to check.
+		@tparam	ARRAY_LENGTH	Number of elements in storage.
+		@return					`true` only if no `true` elements in `storage`. `false` in other way.
+	*/
+	template< size_t ARRAY_LENGTH >
+	inline const bool NoneOf( const bool (&storage)[ ARRAY_LENGTH ] );
+
+	/**
+		@brief	Whether `predicate` return only `false` for all elements in `storage`.
+		Covers the `std::none_of`.
+		@param	storage			The storage to check.
+		@param	predicate		The predicate to be used on elements.
+		@tparam	ARRAY_LENGTH	Number of elements in storage.
+		@tparam	TItem			Type of storage content.
+		@tparam	TPredicate		Type of predicate.
+		@return					`true` only if `predicate` does not return `true` for any element. `false` in other way.
+	*/
+	template< typename TItem, typename TPredicate, size_t ARRAY_LENGTH >
+	inline const bool NoneOf( const TItem (&storage)[ ARRAY_LENGTH ], TPredicate&& predicate );
+
+	/**
+		@brief	Whether the storage consists of no `true` elements.
+		Covers the `std::none_of`.
+		@param	storage		The storage to check.
+		@param	predicate	The predicate to be used on elements.
+		@tparam	TItem		Type of storage content.
+		@tparam	TPredicate	Type of predicate.
+		@return				`true` only if no `true` elements in `storage`. `false` in other way.
+	*/
+	inline const bool NoneOf( const PlainView<bool>& storage );
+
+	/**
+		@brief	Whether `predicate` return only `false` for all elements in `storage`.
+		Covers the `std::none_of`.
+		@param	storage		The storage to check.
+		@param	predicate	The predicate to be used on elements.
+		@tparam	TItem		Type of storage content.
+		@tparam	TPredicate	Type of predicate.
+		@return				`true` only if `predicate` does not return `true` for any element. `false` in other way.
+	*/
+	template< typename TItem, typename TPredicate >
+	inline const bool NoneOf( const PlainView<TItem>& storage, TPredicate&& predicate );
+
+	/**
+		@brief	Whether the storage consists of no `true` elements.
+		Covers the `std::none_of`.
+		@param	storage	The storage to check.
+		@return			`true` only if no `true` elements in `storage`. `false` in other way.
+	*/
+	inline const bool NoneOf( const PlainVector<bool>& storage );
+
+	/**
+		@brief	Whether `predicate` return only `false` for all elements in `storage`.
+		Covers the `std::none_of`.
+		@param	storage		The storage to check.
+		@param	predicate	The predicate to be used on elements.
+		@tparam	TItem		Type of storage content.
+		@tparam	TPredicate	Type of predicate.
+		@return				`true` only if `predicate` does not return `true` for any element. `false` in other way.
+	*/
+	template< typename TItem, typename TPredicate >
+	inline const bool NoneOf( const PlainVector<TItem>& storage, TPredicate&& predicate );
+
+	/**
 		@brief	Clear the storage, deleting the stored content.
 		This function may be used for cases if container used to store raw pointers.
 		@param	storage		The storage to clear.

@@ -13,6 +13,60 @@ inline namespace Algorithms
 		return std::find( std::begin( storage ), std::end( storage ), item ) != std::end( storage );
 	}
 
+	template< typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool AllOf( const TStorage<bool, TAllocator>& storage )
+	{
+		return std::all_of( std::begin( storage ), std::end( storage ), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TAllocator, typename TPredicate, template< typename, typename > class TStorage >
+	inline const bool AllOf( const TStorage<TItem, TAllocator>& storage, TPredicate&& predicate )
+	{
+		return std::all_of( std::begin( storage ), std::end( storage ), std::forward<TPredicate>( predicate ) );
+	}
+
+	template< typename TItem, typename TSetPredicate, typename TAllocator, typename TPredicate >
+	inline const bool AllOf( const std::set<TItem, TSetPredicate, TAllocator>& storage, TPredicate&& predicate )
+	{
+		return std::all_of( storage.begin(), storage.end(), std::forward<TPredicate>( predicate ) );
+	}
+
+	template< typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool AnyOf( const TStorage<bool, TAllocator>& storage )
+	{
+		return std::any_of( std::begin( storage ), std::end( storage ), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TAllocator, typename TPredicate, template< typename, typename > class TStorage >
+	inline const bool AnyOf( const TStorage<TItem, TAllocator>& storage, TPredicate&& predicate )
+	{
+		return std::any_of( std::begin( storage ), std::end( storage ), std::forward<TPredicate>( predicate ) );
+	}
+
+	template< typename TItem, typename TSetPredicate, typename TAllocator, typename TPredicate >
+	inline const bool AnyOf( const std::set<TItem, TSetPredicate, TAllocator>& storage, TPredicate&& predicate )
+	{
+		return std::any_of( storage.begin(), storage.end(), std::forward<TPredicate>( predicate ) );
+	}
+
+	template< typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool NoneOf( const TStorage<bool, TAllocator>& storage )
+	{
+		return std::none_of( std::begin( storage ), std::end( storage ), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TAllocator, typename TPredicate, template< typename, typename > class TStorage >
+	inline const bool NoneOf( const TStorage<TItem, TAllocator>& storage, TPredicate&& predicate )
+	{
+		return std::none_of( std::begin( storage ), std::end( storage ), std::forward<TPredicate>( predicate ) );
+	}
+
+	template< typename TItem, typename TPredicate, typename TAllocator >
+	inline const bool NoneOf( const std::set<TItem, TPredicate, TAllocator>& storage, TPredicate&& predicate )
+	{
+		return std::none_of( storage.begin(), storage.end(), std::forward<TPredicate>( predicate ) );
+	}
+
 	template< typename TStoredItem, typename TNewItem, typename TAllocator, template< typename, typename > class TStorage >
 	inline const bool UniqueAdd( TStorage<TStoredItem, TAllocator>& storage, TNewItem&& item )
 	{

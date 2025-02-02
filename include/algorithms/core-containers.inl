@@ -25,6 +25,108 @@ inline namespace Algorithms
 		return std::find( std::begin( storage ), std::end( storage ), item ) != std::end( storage );
 	}
 
+	template< size_t ARRAY_LENGTH >
+	inline const bool AllOf( const bool (&storage)[ ARRAY_LENGTH ] )
+	{
+		return std::all_of( std::begin( storage ), std::end( storage ), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TPredicate, size_t ARRAY_LENGTH >
+	inline const bool AllOf( const TItem (&storage)[ ARRAY_LENGTH ], TPredicate&& predicate )
+	{
+		return std::all_of( std::begin( storage ), std::end( storage ), std::forward<TPredicate>( predicate ) );
+	}
+
+	inline const bool AllOf( const PlainView<bool>& storage )
+	{
+		return std::all_of( storage.begin(), storage.end(), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TPredicate >
+	inline const bool AllOf( const PlainView<TItem>& storage, TPredicate&& predicate )
+	{
+		return std::all_of( storage.begin(), storage.end(), std::forward<TPredicate>( predicate ) );
+	}
+
+	inline const bool AllOf( const PlainVector<bool>& storage )
+	{
+		return std::all_of( storage.begin(), storage.end(), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TPredicate >
+	inline const bool AllOf( const PlainVector<TItem>& storage, TPredicate&& predicate )
+	{
+		return std::all_of( storage.begin(), storage.end(), std::forward<TPredicate>( predicate ) );
+	}
+
+	template< size_t ARRAY_LENGTH >
+	inline const bool AnyOf( const bool (&storage)[ ARRAY_LENGTH ] )
+	{
+		return std::any_of( std::begin( storage ), std::end( storage ), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TPredicate, size_t ARRAY_LENGTH >
+	inline const bool AnyOf( const TItem (&storage)[ ARRAY_LENGTH ], TPredicate&& predicate )
+	{
+		return std::any_of( std::begin( storage ), std::end( storage ), std::forward<TPredicate>( predicate ) );
+	}
+
+	inline const bool AnyOf( const PlainView<bool>& storage )
+	{
+		return std::any_of( storage.begin(), storage.end(), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TPredicate >
+	inline const bool AnyOf( const PlainView<TItem>& storage, TPredicate&& predicate )
+	{
+		return std::any_of( storage.begin(), storage.end(), std::forward<TPredicate>( predicate ) );
+	}
+
+	inline const bool AnyOf( const PlainVector<bool>& storage )
+	{
+		return std::any_of( storage.begin(), storage.end(), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TPredicate >
+	inline const bool AnyOf( const PlainVector<TItem>& storage, TPredicate&& predicate )
+	{
+		return std::any_of( storage.begin(), storage.end(), std::forward<TPredicate>( predicate ) );
+	}
+
+	template< size_t ARRAY_LENGTH >
+	inline const bool NoneOf( const bool (&storage)[ ARRAY_LENGTH ] )
+	{
+		return std::none_of( std::begin( storage ), std::end( storage ), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TPredicate, size_t ARRAY_LENGTH >
+	inline const bool NoneOf( const TItem (&storage)[ ARRAY_LENGTH ], TPredicate&& predicate )
+	{
+		return std::none_of( std::begin( storage ), std::end( storage ), std::forward<TPredicate>( predicate ) );
+	}
+
+	inline const bool NoneOf( const PlainView<bool>& storage )
+	{
+		return std::none_of( storage.begin(), storage.end(), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TPredicate >
+	inline const bool NoneOf( const PlainView<TItem>& storage, TPredicate&& predicate )
+	{
+		return std::none_of( storage.begin(), storage.end(), std::forward<TPredicate>( predicate ) );
+	}
+
+	inline const bool NoneOf( const PlainVector<bool>& storage )
+	{
+		return std::none_of( storage.begin(), storage.end(), []( const bool value ) { return value; } );
+	}
+
+	template< typename TItem, typename TPredicate >
+	inline const bool NoneOf( const PlainVector<TItem>& storage, TPredicate&& predicate )
+	{
+		return std::none_of( storage.begin(), storage.end(), std::forward<TPredicate>( predicate ) );
+	}
+
 	template< typename TItem >
 	inline void DeletePointersAndClear( PlainVector<TItem*>& storage )
 	{

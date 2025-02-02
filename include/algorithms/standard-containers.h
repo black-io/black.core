@@ -59,6 +59,123 @@ inline namespace Algorithms
 	inline const bool HasItem( const std::unordered_map<TKey, TItem, THash, TPredicate, TAllocator>& storage, const TKey& key );
 
 	/**
+		@brief	Whether all of elements in storage are `true`.
+		Covers the `std::all_of`.
+		@param	storage		The storage to check.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TStorage	Template of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` only if all of elements are `true`. `false` in other way.
+	*/
+	template< typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool AllOf( const TStorage<bool, TAllocator>& storage );
+
+	/**
+		@brief	Whether the `predicate` return `true` for all of elements in `storage`.
+		Covers the `std::all_of`.
+		@param	storage		The storage to check.
+		@param	predicate	The predicate to be used on elements.
+		@tparam	TItem		Type of storage content.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TPredicate	Type of predicate.
+		@tparam	TStorage	Template of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` only if all of elements are `true`. `false` in other way.
+	*/
+	template< typename TItem, typename TAllocator, typename TPredicate, template< typename, typename > class TStorage >
+	inline const bool AllOf( const TStorage<TItem, TAllocator>& storage, TPredicate&& predicate );
+
+	/**
+		@brief	Whether the `predicate` return `true` for all of elements in `storage`.
+		Covers the `std::all_of`.
+		@param	storage			The storage to check.
+		@param	predicate		The predicate to be used on elements.
+		@tparam	TItem			Type of storage content.
+		@tparam	TSetPredicate	Predicate used by storage.
+		@tparam	TAllocator		Allocator used by storage.
+		@tparam	TPredicate		Type of predicate.
+		@return					`true` only if all of elements are `true`. `false` in other way.
+	*/
+	template< typename TItem, typename TSetPredicate, typename TAllocator, typename TPredicate >
+	inline const bool AllOf( const std::set<TItem, TSetPredicate, TAllocator>& storage, TPredicate&& predicate );
+
+	/**
+		@brief	Whether any of elements in storage is `true`.
+		Covers the `std::any_of`.
+		@param	storage		The storage to check.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TStorage	Template of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` if at last one element is `true`. `false` in other way.
+	*/
+	template< typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool AnyOf( const TStorage<bool, TAllocator>& storage );
+
+	/**
+		@brief	Whether the `predicate` return `true` at last for single element in `storage`.
+		Covers the `std::any_of`.
+		@param	storage		The storage to check.
+		@param	predicate	The predicate to be used on elements.
+		@tparam	TItem		Type of storage content.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TPredicate	Type of predicate.
+		@tparam	TStorage	Template of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` if at last one element is `true`. `false` in other way.
+	*/
+	template< typename TItem, typename TAllocator, typename TPredicate, template< typename, typename > class TStorage >
+	inline const bool AnyOf( const TStorage<TItem, TAllocator>& storage, TPredicate&& predicate );
+
+	/**
+		@brief	Whether the `predicate` return `true` at last for single element in `storage`.
+		Covers the `std::any_of`.
+		@param	storage			The storage to check.
+		@param	predicate		The predicate to be used on elements.
+		@tparam	TItem			Type of storage content.
+		@tparam	TSetPredicate	Predicate used by storage.
+		@tparam	TAllocator		Allocator used by storage.
+		@tparam	TPredicate		Type of predicate.
+		@return					`true` if at last one element is `true`. `false` in other way.
+	*/
+	template< typename TItem, typename TSetPredicate, typename TAllocator, typename TPredicate >
+	inline const bool AnyOf( const std::set<TItem, TSetPredicate, TAllocator>& storage, TPredicate&& predicate );
+
+	/**
+		@brief	Whether the storage consists of no `true` elements.
+		Covers the `std::none_of`.
+		@param	storage		The storage to check.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TStorage	Template of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` only if no `true` elements in `storage`. `false` in other way.
+	*/
+	template< typename TAllocator, template< typename, typename > class TStorage >
+	inline const bool NoneOf( const TStorage<bool, TAllocator>& storage );
+
+	/**
+		@brief	Whether `predicate` return only `false` for all elements in `storage`.
+		Covers the `std::none_of`.
+		@param	storage		The storage to check.
+		@param	predicate	The predicate to be used on elements.
+		@tparam	TItem		Type of storage content.
+		@tparam	TAllocator	Allocator used by storage.
+		@tparam	TPredicate	Type of predicate.
+		@tparam	TStorage	Template of storage implementation (compatible with `std::vector`, `std::list` and `std::deque`).
+		@return				`true` only if no `true` elements in `storage`. `false` in other way.
+	*/
+	template< typename TItem, typename TAllocator, typename TPredicate, template< typename, typename > class TStorage >
+	inline const bool NoneOf( const TStorage<TItem, TAllocator>& storage, TPredicate&& predicate );
+
+	/**
+		@brief	Whether `predicate` return only `false` for all elements in `storage`.
+		Covers the `std::none_of`.
+		@param	storage			The storage to check.
+		@param	predicate		The predicate to be used on elements.
+		@tparam	TItem			Type of storage content.
+		@tparam	TSetPredicate	Predicate used by storage.
+		@tparam	TAllocator		Allocator used by storage.
+		@tparam	TPredicate		Type of predicate.
+		@return					`true` only if no `true` elements in `storage`. `false` in other way.
+	*/
+	template< typename TItem, typename TPredicate, typename TAllocator >
+	inline const bool NoneOf( const std::set<TItem, TPredicate, TAllocator>& storage, TPredicate&& predicate );
+
+	/**
 		@brief	Uniquely insert the item into storage.
 		Does nothing if `item` already in `storage`.
 		@param	storage		The storage to add.
