@@ -58,6 +58,9 @@ inline namespace BitViews
 		// Invalidate the view making it empty.
 		inline void Invalidate();
 
+		// Swap the content with other bit view.
+		inline void Swap( BitView& other );
+
 
 		// Whether the view carries some bit stream.
 		inline const bool IsValid() const;
@@ -126,11 +129,6 @@ inline namespace BitViews
 		inline iterator end() const							{ return GetTail(); };
 		inline pointer data() const							{ return GetData(); };
 		inline size_type size() const						{ return GetLength(); };
-
-	// Private interface.
-	private:
-		// Swap the content with other bit view.
-		inline void Swap( BitView& other );
 
 	// Private state.
 	private:

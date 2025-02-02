@@ -37,6 +37,13 @@ inline namespace BitViews
 	}
 
 	template< typename TBitStorage >
+	inline void BitView<TBitStorage>::Swap( BitView<TBitStorage>& other )
+	{
+		Black::Swap( m_head, other.m_head );
+		Black::Swap( m_bit_length, other.m_bit_length );
+	}
+
+	template< typename TBitStorage >
 	inline const bool BitView<TBitStorage>::IsValid() const
 	{
 		return m_head != nullptr;
@@ -129,13 +136,6 @@ inline namespace BitViews
 	inline const bool BitView<TBitStorage>::operator != ( const BitView& other ) const
 	{
 		return ( m_head != other.m_head ) || ( m_bit_length != other.m_bit_length );
-	}
-
-	template< typename TBitStorage >
-	inline void BitView<TBitStorage>::Swap( BitView<TBitStorage>& other )
-	{
-		Black::Swap( m_head, other.m_head );
-		Black::Swap( m_bit_length, other.m_bit_length );
 	}
 }
 }
