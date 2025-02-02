@@ -43,6 +43,10 @@ namespace Internal
 
 	// Public interface.
 	public:
+		// Swap the state with given iterator.
+		inline void Swap( self_type& other );
+
+
 		// Get the head of stream.
 		inline TBitStorage* const GetStreamHead() const;
 
@@ -86,9 +90,6 @@ namespace Internal
 
 	// Private interface.
 	private:
-		// Swap the state with given iterator.
-		inline void Swap( self_type& other );
-
 		// Invalidate the iterator.
 		inline void Invalidate();
 

@@ -47,6 +47,14 @@ namespace Internal
 	}
 
 	template< typename TBitStorage >
+	inline void BitIterator<TBitStorage>::Swap( self_type& other )
+	{
+		Black::Swap( m_head, other.m_head );
+		Black::Swap( m_bit_length, other.m_bit_length );
+		Black::Swap( m_bit_index, other.m_bit_index );
+	}
+
+	template< typename TBitStorage >
 	inline TBitStorage* const BitIterator<TBitStorage>::GetStreamHead() const
 	{
 		return m_head;
@@ -186,14 +194,6 @@ namespace Internal
 	inline const bool BitIterator<TBitStorage>::operator <= ( const self_type& other ) const
 	{
 		return ( m_head == other.m_head ) && ( m_bit_index <= other.m_bit_index );
-	}
-
-	template< typename TBitStorage >
-	inline void BitIterator<TBitStorage>::Swap( self_type& other )
-	{
-		Black::Swap( m_head, other.m_head );
-		Black::Swap( m_bit_length, other.m_bit_length );
-		Black::Swap( m_bit_index, other.m_bit_index );
 	}
 
 	template< typename TBitStorage >
