@@ -128,6 +128,10 @@ namespace Internal
 		// Invalidate the state of bit index.
 		inline void Invalidate();
 
+		// Swap the state with other adapter.
+		inline void Swap( BitAdapter& other );
+
+
 		// Whether the bit index is valid.
 		inline const bool IsValid() const;
 
@@ -139,15 +143,13 @@ namespace Internal
 		inline const bool operator == ( const BitAdapter& other ) const;
 		inline const bool operator != ( const BitAdapter& other ) const;
 
-	// Private interface.
+	// Private inner types.
 	private:
 		// Mutable type of bit storage.
 		using MutableBitStorage = std::remove_const_t<TBitStorage>;
 
-
-		// Swap the state with other adapter.
-		inline void Swap( BitAdapter& other );
-
+	// Private interface.
+	private:
 		// Validate the given bit index via storage restrictions.
 		static inline const size_t ValidateBitIndex( const size_t bit_index );
 

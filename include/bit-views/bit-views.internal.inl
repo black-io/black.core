@@ -50,6 +50,13 @@ namespace Internal
 	}
 
 	template< typename TBitStorage >
+	inline void BitAdapter<TBitStorage>::Swap( BitAdapter<TBitStorage>& other )
+	{
+		Black::Swap( m_storage, other.m_storage );
+		Black::Swap( m_bit_mask, other.m_bit_mask );
+	}
+
+	template< typename TBitStorage >
 	inline const bool BitAdapter<TBitStorage>::IsValid() const
 	{
 		return m_storage != nullptr;
@@ -83,13 +90,6 @@ namespace Internal
 	inline const bool BitAdapter<TBitStorage>::operator != ( const BitAdapter<TBitStorage>& other ) const
 	{
 		return ( m_storage != other.m_storage ) || ( m_bit_mask != other.m_bit_mask );
-	}
-
-	template< typename TBitStorage >
-	inline void BitAdapter<TBitStorage>::Swap( BitAdapter<TBitStorage>& other )
-	{
-		Black::Swap( m_storage, other.m_storage );
-		Black::Swap( m_bit_mask, other.m_bit_mask );
 	}
 
 	template< typename TBitStorage >
