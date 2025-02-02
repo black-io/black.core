@@ -90,7 +90,7 @@ inline namespace Intrusives
 	};
 
 	/**
-		@brief	Partial specialization of intrusive forward list, where the slot is placed at the base type of container element.
+		@brief	Partial specialization of intrusive list, where the slot is placed at the base type of container element.
 
 		@tparam	TValue			Type of stored values.
 		@tparam	TValueBase		Type of value base, where the container slot is placed.
