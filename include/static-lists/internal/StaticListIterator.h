@@ -31,6 +31,7 @@ namespace Internal
 
 	// Friendship interface.
 	public:
+		// Swap the content of iterators.
 		friend inline void swap( StaticListIterator& left, StaticListIterator& right )
 		{
 			Black::Swap( left.m_current_node, right.m_current_node );
@@ -52,7 +53,9 @@ namespace Internal
 
 	// Public interface.
 	public:
+		// Get the current node the iterator points.
 		inline StaticListCommonNode<TInterface>* GetNode() const;
+
 
 		inline self_type& operator ++ ();
 		inline self_type operator ++ ( int );
