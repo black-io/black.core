@@ -172,8 +172,8 @@ inline namespace Algorithms
 		@tparam	TPredicate		Type of predicate.
 		@return					`true` only if no `true` elements in `storage`. `false` in other way.
 	*/
-	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool NoneOf( const std::set<TItem, TPredicate, TAllocator>& storage, TPredicate&& predicate );
+	template< typename TItem, typename TSetPredicate, typename TAllocator, typename TPredicate >
+	inline const bool NoneOf( const std::set<TItem, TSetPredicate, TAllocator>& storage, TPredicate&& predicate );
 
 	/**
 		@brief	Uniquely insert the item into storage.

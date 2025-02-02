@@ -61,8 +61,8 @@ inline namespace Algorithms
 		return std::none_of( std::begin( storage ), std::end( storage ), std::forward<TPredicate>( predicate ) );
 	}
 
-	template< typename TItem, typename TPredicate, typename TAllocator >
-	inline const bool NoneOf( const std::set<TItem, TPredicate, TAllocator>& storage, TPredicate&& predicate )
+	template< typename TItem, typename TSetPredicate, typename TAllocator, typename TPredicate >
+	inline const bool NoneOf( const std::set<TItem, TSetPredicate, TAllocator>& storage, TPredicate&& predicate )
 	{
 		return std::none_of( storage.begin(), storage.end(), std::forward<TPredicate>( predicate ) );
 	}
