@@ -126,6 +126,32 @@ namespace Internal
 			return Delegate{ host };
 		};
 	};
+
+	// Common deduction path. The value does not implements the `Swap` method, so it may be `Swappable` or friendly to `std::swap`.
+	template< typename TValue, typename = void >
+	class SwapPolicy final
+	{
+	public:
+		// Perform the swapping via `std::swap` or `Swappable` idiom.
+		static inline void Swap( TValue& left, TValue& right )
+		{
+			using std::swap;
+
+			swap( left, right );
+		}
+	};
+
+	// Terminal deduction path. The value implements `Swap` method with valid signature.
+	template< typename TValue >
+	class SwapPolicy<TValue, std::enable_if_t<std::is_invocable_r_v<void, decltype( &TValue::Swap ), TValue&>>> final
+	{
+	public:
+		// Perform the swapping via `TValue::Swap` method.
+		static inline void Swap( TValue& left, TValue& right )
+		{
+			left.Swap( right );
+		}
+	};
 }
 
 
@@ -176,6 +202,36 @@ namespace Internal
 	inline auto BindMethod( THost& host )
 	{
 		return Internal::MethodBindingProvider<decltype( METHOD_POINTER )>::Bind<METHOD_POINTER>( host );
+	}
+
+	/**
+		@brief	Exchange the state of given values.
+		Internally uses the `std::swap` and `Swappable` idiom, or uses `TValue::Swap` method if accessible.
+		@tparam	TValue	Type of given values.
+		@param	left	First value to exchange the state.
+		@param	right	Second value to exchange the state.
+	*/
+	template< typename TValue >
+	inline void Swap( TValue& left, TValue& right )
+	{
+		Internal::SwapPolicy<TValue>::Swap( left, right );
+	}
+
+	/**
+		@brief	Exchange the state of given arrays.
+		Internally uses the `Black::Swap`.
+		@tparam	TValue			Type of given values.
+		@tparam	ARRAY_LENGTH	Length of given arrays.
+		@param	left			First array to exchange the state.
+		@param	right			Second array to exchange the state.
+	*/
+	template< typename TValue, const size_t ARRAY_LENGTH >
+	inline void Swap( TValue (&left)[ ARRAY_LENGTH ], TValue (&right)[ ARRAY_LENGTH ] )
+	{
+		for( size_t index = 0; index < ARRAY_LENGTH; ++index )
+		{
+			Swap( left[ index ], right[ index ] );
+		}
 	}
 }
 }
