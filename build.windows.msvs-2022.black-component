@@ -1,0 +1,12 @@
+# Propagate the global settings.
+__include__:
+  - '.black-settings'
+
+# The most valuable settings.
+__include__:
+  - '../platform.windows.black-settings'
+  - '../properties.windows.black-settings'
+
+# Source code settings.
+__include__:
+  - 'c++.black-settings'
