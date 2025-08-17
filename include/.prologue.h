@@ -33,14 +33,14 @@
 #include ".global/macros.h"
 
 #include ".global/types/constants.h"
-#include ".global/algorithms/misc.h"
-#include ".global/algorithms/bytes.h"
-#include ".global/algorithms/chars.h"
-#include ".global/algorithms/memory.h"
+#include ".global/generic-functions/misc.h"
+#include ".global/generic-functions/bytes.h"
+#include ".global/generic-functions/chars.h"
+#include ".global/generic-functions/memory.h"
 
 #include ".global/types/generic-types.h"
 #include ".global/types/generic-types.aliasing.h"
-#include ".global/algorithms/time.h"
+#include ".global/generic-functions/time.h"
 
 #include ".global/stl/StandardArrayFacade.h"
 #include ".global/stl/StandardDynamicArrayFacade.h"

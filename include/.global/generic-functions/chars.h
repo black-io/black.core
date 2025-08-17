@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Algorithms
+inline namespace GenericFunctions
 {
 	/**
 		@brief	Whether the candidate character is one of alphabetic or numeric characters.

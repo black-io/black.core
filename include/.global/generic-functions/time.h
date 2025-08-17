@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Algorithms
+inline namespace GenericFunctions
 {
 	/**
 		@brief	Translation from `std::chrono` time into `Black::Time` seconds.

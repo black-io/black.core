@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Algorithms
+inline namespace GenericFunctions
 {
 	template< typename TChar >
 	inline const bool IsAlphaNumeric( const TChar candidate )

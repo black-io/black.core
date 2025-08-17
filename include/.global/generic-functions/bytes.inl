@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Algorithms
+inline namespace GenericFunctions
 {
 	template<>
 	inline uint16_t GetPackedBytes<Black::PlatformEndianness::LittleEndian>( const uint8_t b1, const uint8_t b2 )

@@ -7,7 +7,7 @@ inline namespace Core
 {
 inline namespace Global
 {
-inline namespace Algorithms
+inline namespace GenericFunctions
 {
 	/**
 		@brief	Allow to check whether the value has only one significant bit.

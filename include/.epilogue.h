@@ -12,8 +12,8 @@
 #include ".global/types/PlainView.operations.inl"
 #include ".global/types/internal/BasicPlainView.inl"
 
-#include ".global/algorithms/chars.inl"
-#include ".global/algorithms/bytes.inl"
+#include ".global/generic-functions/chars.inl"
+#include ".global/generic-functions/bytes.inl"
 
 #include ".global/logging/LogMessage.inl"
 #include ".global/logging/internal/MessageFormat.inl"
