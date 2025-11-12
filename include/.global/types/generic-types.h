@@ -28,6 +28,7 @@ inline namespace Types
 	enum class Hash64 : uint64_t;
 
 
+	// TODO: Get rid of this template.
 	// Trivial common selection between Debug and Non-debug implementations.
 	template< typename RelaseImplementation, typename DebugImplementation >
 	using BuildModeDependent = std::conditional_t<Black::BUILD_CONFIGURATION == Black::BuildMode::Release, RelaseImplementation, DebugImplementation>;
