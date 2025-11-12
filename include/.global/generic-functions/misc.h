@@ -33,7 +33,7 @@ namespace Internal
 				explicit inline Delegate( THost& host ) : m_host{ host } {};
 
 			public:
-				inline TResult operator ()( TArguments&&... arguments ) const { return (m_host.*METHOD)( std::forward<TArguments>( arguments )... ); };
+				inline TResult operator ()( TArguments... arguments ) const { return (m_host.*METHOD)( std::forward<TArguments>( arguments )... ); };
 
 			private:
 				THost& m_host;
@@ -61,7 +61,7 @@ namespace Internal
 				explicit inline Delegate( const THost& host ) : m_host{ host } {};
 
 			public:
-				inline TResult operator ()( TArguments&&... arguments ) const { return (m_host.*METHOD)( std::forward<TArguments>( arguments )... ); };
+				inline TResult operator ()( TArguments... arguments ) const { return (m_host.*METHOD)( std::forward<TArguments>( arguments )... ); };
 
 			private:
 				const THost& m_host;
@@ -89,7 +89,7 @@ namespace Internal
 				explicit inline Delegate( volatile THost& host ) : m_host{ host } {};
 
 			public:
-				inline TResult operator ()( TArguments&&... arguments ) const { return (m_host.*METHOD)( std::forward<TArguments>( arguments )... ); };
+				inline TResult operator ()( TArguments... arguments ) const { return (m_host.*METHOD)( std::forward<TArguments>( arguments )... ); };
 
 			private:
 				volatile THost& m_host;
@@ -232,6 +232,28 @@ namespace Internal
 		{
 			Swap( left[ index ], right[ index ] );
 		}
+	}
+
+	/**
+		@brief	Whether the given status represents failure of function returned it.
+
+		@param	status	The status to be tested.
+		@return			`true` in case the status represents failure.
+	*/
+	inline const bool IsFailed( const Black::BooleanStatus status )
+	{
+		return status == Black::BooleanStatus::Failure;
+	}
+
+	/**
+		@brief	Whether the given status represents success of function returned it.
+
+		@param	status	The status to be tested.
+		@return			`true` in case the status represents success.
+	*/
+	inline const bool IsSucceeded( const Black::BooleanStatus status )
+	{
+		return status == Black::BooleanStatus::Success;
 	}
 }
 }
