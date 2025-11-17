@@ -80,6 +80,53 @@ inline namespace Types
 		*/
 		Black::PlainView<std::byte> ReadBuffer( Black::PlainView<std::byte> buffer ) const;
 
+		/**
+			@brief	Feed the given `buffer` of given `length` with stored data.
+
+			Instead of `ReadBuffer` method, this one does not shift the buffer.
+			One should use `ReadBuffer` or `SkipUnreadLength` methods to
+
+			@param	buffer			The buffer to be filled with stored data.
+			@param	buffer_length	Length of given `buffer`.
+			@return					The value returned is the length of stored in `buffer` data.
+		*/
+		const size_t PeekBuffer( Black::NotNull<void*> const buffer, const size_t buffer_length ) const;
+
+		/**
+			@brief	Feed the given `buffer` with stored data.
+
+			Instead of `ReadBuffer` method, this one does not shift the buffer.
+			One should use `ReadBuffer` or `SkipUnreadLength` methods to
+
+			@param	buffer	The buffer to be filled with stored data.
+			@return			The value returned is partition of `buffer` filled with data.
+		*/
+		Black::PlainView<std::byte> PeekBuffer( Black::PlainView<std::byte> buffer ) const;
+
+		// Skip the unread length of bytes.
+		void SkipUnreadLength( const size_t unread_length );
+
+		/**
+			@brief	Perform the transaction of writing the solid partition of data into buffer.
+
+			This method allows user of ring buffer use solid partition of buffer memory to perform the write operation.
+			Commonly this method helps to directly read from streams to ring buffer.
+
+			This method predicts the continuous write. `write_function` may be repeatedly called if given memory view filled completely in last call.
+			Method expects the `write_function` to satisfy the common signature: `std::optional<Black::PlainView<std::byte>> ( Black::PlainView<std::byte> )`.
+			Ring buffer will use the view of its solid memory partition as argument of `write_function`.
+			Ring buffer expects the `write_function` will return empty optional as sign of no memory was written to partition.
+
+			In case of `write_function` fills some memory of partition, it should return view of filled memory as its result.
+			Ring buffer will use this view to commit the write operation.
+
+			@tparam	TWriteFunction	Type of function, commonly similar to .
+			@param	write_function	This function will be used to fill the given to it memory view with desired data.
+			@return					`Success` if transaction committed at the end. `Failure` in other cases.
+		*/
+		template< typename TWriteFunction >
+		inline Black::BooleanStatus PerformWriteTransaction( TWriteFunction&& write_function );
+
 
 		// Get the total capacity of buffer.
 		inline const size_t GetCapacity() const	{ return m_buffer.GetLength(); };
