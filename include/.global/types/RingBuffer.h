@@ -17,9 +17,9 @@ inline namespace Types
 
 		This buffer does not own or control the underlying memory buffer. It just organize the data in buffer.
 		Each time the buffer is re-initialized, the data stored before initialization considered lost.
-		Ring buffer can't be copied, but may be moved or invalidated using default-initialized other object.
+		One may copy the buffer to perform the behavior of transactions.
 	*/
-	class RingBuffer final : private Black::NonCopyable
+	class RingBuffer final
 	{
 	// Friendship declarations.
 	public:
@@ -29,12 +29,14 @@ inline namespace Types
 	// Public lifetime management.
 	public:
 		RingBuffer() noexcept;
+		RingBuffer( const RingBuffer& other ) noexcept;
 		RingBuffer( RingBuffer&& other ) noexcept;
 		~RingBuffer() noexcept;
 
 		explicit RingBuffer( Black::PlainView<std::byte> buffer ) noexcept;
 
 
+		RingBuffer& operator = ( const RingBuffer& other ) noexcept;
 		RingBuffer& operator = ( RingBuffer&& other ) noexcept;
 
 	// Public interface.
@@ -81,30 +83,13 @@ inline namespace Types
 		Black::PlainView<std::byte> ReadBuffer( Black::PlainView<std::byte> buffer ) const;
 
 		/**
-			@brief	Feed the given `buffer` of given `length` with stored data.
+			@brief	Skip the certain length of unread data.
 
-			Instead of `ReadBuffer` method, this one does not shift the buffer.
-			One should use `ReadBuffer` or `SkipUnreadLength` methods to
+			This method performs like `ReadBuffer` except there no buffer is read. Unread data of given length will be skipped.
 
-			@param	buffer			The buffer to be filled with stored data.
-			@param	buffer_length	Length of given `buffer`.
-			@return					The value returned is the length of stored in `buffer` data.
+			@param	skip_length	The length of unread data to skip.
 		*/
-		const size_t PeekBuffer( Black::NotNull<void*> const buffer, const size_t buffer_length ) const;
-
-		/**
-			@brief	Feed the given `buffer` with stored data.
-
-			Instead of `ReadBuffer` method, this one does not shift the buffer.
-			One should use `ReadBuffer` or `SkipUnreadLength` methods to
-
-			@param	buffer	The buffer to be filled with stored data.
-			@return			The value returned is partition of `buffer` filled with data.
-		*/
-		Black::PlainView<std::byte> PeekBuffer( Black::PlainView<std::byte> buffer ) const;
-
-		// Skip the unread length of bytes.
-		void SkipUnreadLength( const size_t unread_length );
+		void SkipUnread( const size_t skip_length );
 
 		/**
 			@brief	Perform the transaction of writing the solid partition of data into buffer.

@@ -11,6 +11,14 @@ inline namespace Types
 {
 	RingBuffer::RingBuffer() noexcept = default;
 
+	RingBuffer::RingBuffer( const RingBuffer& other ) noexcept
+		: m_buffer{ other.m_buffer }
+		, m_write_head{ other.m_write_head }
+		, m_read_head{ other.m_read_head }
+		, m_is_wrapped{ other.m_is_wrapped }
+	{
+	}
+
 	RingBuffer::RingBuffer( RingBuffer&& other ) noexcept
 		: m_buffer{ std::move( other.m_buffer ) }
 		, m_write_head{ std::exchange( other.m_write_head, nullptr ) }
@@ -26,6 +34,13 @@ inline namespace Types
 		, m_write_head{ m_buffer.GetMemory() }
 		, m_read_head{ m_buffer.GetMemory() }
 	{
+	}
+
+	RingBuffer& RingBuffer::operator=( const RingBuffer& other ) noexcept
+	{
+		RingBuffer temporary{ other };
+		temporary.Swap( *this );
+		return *this;
 	}
 
 	RingBuffer& RingBuffer::operator=( RingBuffer&& other ) noexcept
@@ -116,51 +131,21 @@ inline namespace Types
 		return result;
 	}
 
-	const size_t RingBuffer::PeekBuffer( Black::NotNull<void*> const buffer, const size_t buffer_length ) const
+	void RingBuffer::SkipUnread( const size_t skip_length )
 	{
-		// Store the state of buffer.
-		std::byte* const read_head = m_read_head;
-		const bool is_wrapped = m_is_wrapped;
-
-		// Use the guard to load previous state.
-		const auto revert_operation = Black::ScopeLeaveHandler{
-			[this, read_head, is_wrapped]()
-			{
-				m_read_head = read_head;
-				m_is_wrapped = is_wrapped;
-			}
-		};
-
-		// Now perform the regular reading.
-		return ReadBuffer( buffer, buffer_length );
-	}
-
-	Black::PlainView<std::byte> RingBuffer::PeekBuffer( Black::PlainView<std::byte> buffer ) const
-	{
-		Black::PlainView<std::byte> result;
-
-		const size_t readden_length = PeekBuffer( buffer.GetMemory(), buffer.GetLength() );
-		CRET( readden_length == 0, result );
-
-		result = { buffer.GetMemory(), readden_length };
-		return result;
-	}
-
-	void RingBuffer::SkipUnreadLength( const size_t unread_length )
-	{
-		if( unread_length >= GetLength() )
+		if( skip_length >= GetLength() )
 		{
 			Rewind();
 			return;
 		}
 
-		size_t skept_length = 0;
-		while( skept_length < unread_length )
+		size_t skipped_length = 0;
+		while( skipped_length < skip_length )
 		{
-			const size_t partition_length = std::min( GetReadPartitionLength(), unread_length - skept_length );
+			const size_t partition_length = std::min( GetReadPartitionLength(), skip_length - skipped_length );
 			ENSURES_DEBUG( partition_length > 0 );
 
-			skept_length += partition_length;
+			skipped_length += partition_length;
 			CommitReading( partition_length );
 		}
 	}
