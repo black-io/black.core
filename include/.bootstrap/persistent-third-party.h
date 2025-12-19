@@ -3,4 +3,4 @@
 
 // Most core third-party libraries.
 #include <fmt/format.h>
-#include <fmt/ostream.h>
+#include <fmt/xchar.h>
