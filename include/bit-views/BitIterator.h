@@ -25,7 +25,7 @@ namespace Internal
 
 	// Friendship interface.
 	public:
-		inline void swap( self_type& left, self_type& right )	{ left.Swap( right ); };
+		friend inline void swap( self_type& left, self_type& right )	{ left.Swap( right ); };
 
 	// Construction and assignment.
 	public:
