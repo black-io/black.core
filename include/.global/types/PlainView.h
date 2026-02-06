@@ -30,6 +30,9 @@ inline namespace Types
 
 		using Internal::BasicPlainView<TValue>::GetValueAt;
 		using Internal::BasicPlainView<TValue>::IsEmpty;
+		using Internal::BasicPlainView<TValue>::GetLength;
+		using Internal::BasicPlainView<TValue>::GetBegin;
+		using Internal::BasicPlainView<TValue>::GetEnd;
 
 	// Friendship interface.
 	public:
@@ -77,7 +80,36 @@ inline namespace Types
 
 	// Public interface.
 	public:
-		inline TValue& operator [] ( const size_t index ) const	{ return GetValueAt( index ); };
+		/**
+			@brief	Get the sub-view produced from this one by truncating the `length` elements from tail.
+
+			@param	length	Number of elements to be skipped backward from end of this view.
+			@return			The value returned is new view with same begin, but shorter length.
+			@retval	{}		In case the given `length` is more or equal to the length of this view.
+		*/
+		inline PlainView TruncateSuffix( const size_t length ) const;
+
+		/**
+			@brief	Get the sub-view produced from this one by truncating the `length` elements from head.
+
+			@param	length	Number of elements to be skipped toward from begin of this view.
+			@return			The value returned is new view with same end, but shorter length.
+			@retval	{}		In case the given `length` is more or equal to the length of this view.
+		*/
+		inline PlainView TruncatePrefix( const size_t length ) const;
+
+		/**
+			@brief	Get the sub-view, that begins from `begin_index` of this view and count the `length` elements.
+
+			@param	begin_index		Ordinal index in this view to become the begin of sub-view.
+			@param	length			Number of elements in sub-view.
+			@return					The value returned is new view over some consecutive elements of this view.
+			@retval	{}				In case the `begin_index` points out of view or `length` is zero.
+		*/
+		inline PlainView GetSubview( const size_t begin_index, const size_t length ) const;
+
+
+		inline TValue& operator [] ( const size_t index ) const		{ return GetValueAt( index ); };
 
 
 		inline explicit operator const bool () const			{ return !IsEmpty(); };

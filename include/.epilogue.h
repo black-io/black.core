@@ -10,6 +10,7 @@
 #include ".global/types/PlainVector.operations.inl"
 #include ".global/types/internal/BasicPlainVector.inl"
 #include ".global/types/PlainView.operations.inl"
+#include ".global/types/PlainView.inl"
 #include ".global/types/internal/BasicPlainView.inl"
 
 #include ".global/generic-functions/chars.inl"
