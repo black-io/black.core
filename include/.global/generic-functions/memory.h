@@ -49,15 +49,32 @@ inline namespace GenericFunctions
 	/**
 		@brief		Get the aligned pointer.
 		@warning	This function never checks `pointer` or `align`. All checks must be done before call.
-		@tparam	TPointerType	The type of given and returned pointer.
-		@param	pointer			The pointer to align.
-		@param	align			The alignment in bytes.
-		@return					The value returned is an aligned `pointer`, which will be greater or equal to original `pointer`.
+		@tparam	TValue	Type of value given and returned by pointer.
+		@param	pointer	The pointer to align.
+		@param	align	The alignment in bytes.
+		@return			The value returned is an aligned `pointer`, which will be greater or equal to original `pointer`.
 	*/
-	template< typename TPointer >
-	inline TPointer* GetAlignedPointer( TPointer* pointer, const size_t align )
+	template< typename TValue >
+	inline TValue* GetAlignedPointer( TValue* const pointer, const size_t align )
 	{
-		return reinterpret_cast<TPointer*>( ( reinterpret_cast<std::uintptr_t>( pointer ) + ( align - 1 ) ) & ~( align - 1 ) );
+		return reinterpret_cast<TValue*>( ( reinterpret_cast<std::uintptr_t>( pointer ) + ( align - 1 ) ) & ~( align - 1 ) );
+	}
+
+	/**
+		@brief	Get the offset of member-field in some arbitrary class or structure.
+		@tparam	THost	Type of host, where the field shout be located.
+		@tparam	TValue	Type of field.
+		@param	field	Given pointer to member-field, which offset should be returned.
+		@return			The value returned is valid offset in bytes of given `field` inside of host's memory.
+	*/
+	template< typename THost, typename TValue >
+	constexpr const size_t GetFieldOffset( TValue THost::* const field )
+	{
+		static_assert( std::is_member_pointer_v<decltype( field )>, "Type of given value should be of pointer to member field." );
+		static_assert( std::is_class_v<THost>, "Type of host should be the class or structure." );
+
+		// Literally the `offsetof`, but some compilers fail to compile the `offsetof( THost, field )` code.
+		return (size_t)( &( ((const THost*)nullptr)->*field ) );
 	}
 }
 }
