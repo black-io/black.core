@@ -11,7 +11,7 @@ inline namespace Types
 {
 	/**
 		@brief	Storage for bit flags based on corresponded enumeration type.
-		The enumerations with bit-mask values may be passed to `TEnumeration` as is of via `Black::BitmaskEnumeration` template instantiation.
+		The enumerations with bit-mask values may be passed to `TEnumeration` as is or via `Black::BitmaskEnumeration` template instantiation.
 		The enumerations with ordinal values should be passed via `Black::OrdinalEnumeration` instantiation.
 
 		The `TProjection` template parameter may be used to represent the bits as structured information.
