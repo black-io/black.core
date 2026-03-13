@@ -9,6 +9,44 @@ inline namespace Global
 {
 inline namespace GenericFunctions
 {
+	template< typename TValue >
+	inline constexpr bool IsSingleBitValue( const TValue value )
+	{
+		static_assert( std::is_integral_v<TValue>, "Type of value should be one of integral types." );
+
+		return ( value != 0 ) && ( ( value & ( value - 1 ) ) == 0 );
+	}
+
+	template< typename TValue >
+	inline constexpr TValue CeilPowerOfTwo( const TValue value )
+	{
+		static_assert( std::is_integral_v<TValue>, "Type of value should be one of integral types." );
+		static_assert( std::is_unsigned_v<TValue>, "Type of value should be unsigned." );
+
+		TValue result = value - 1;
+
+		result |= result >> 1;
+		result |= result >> 2;
+		result |= result >> 4;
+
+		if constexpr( sizeof( TValue ) > 1 )
+		{
+			result |= result >> 8;
+		}
+
+		if constexpr( sizeof( TValue ) > 2 )
+		{
+			result |= result >> 16;
+		}
+
+		if constexpr( sizeof( TValue ) > 4 )
+		{
+			result |= result >> 32;
+		}
+
+		return result + 1;
+	}
+
 	template<>
 	inline uint16_t GetPackedBytes<Black::PlatformEndianness::LittleEndian>( const uint8_t b1, const uint8_t b2 )
 	{

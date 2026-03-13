@@ -18,11 +18,21 @@ inline namespace GenericFunctions
 		@return			The value returned represents whether the value consists of single bit or not.
 	*/
 	template< typename TValue >
-	inline constexpr auto IsSingleBitValue( const TValue value )
-	{
-		static_assert( std::is_integral_v<TValue>, "Type of value should be one of integral types." );
-		return value == ( value & ~( value - 1 ) );
-	}
+	inline constexpr bool IsSingleBitValue( const TValue value );
+
+	/**
+		@brief	Get the smallest PoT value, that is not less then given `value`.
+
+		PoT (Power of Two) value are that ones, where only one bit is set. Such value may be obtained by shifting left the `1` by number of bits.
+		This function produces the nearest PoT value, that is equal or greater the given `value`.
+
+		@tparam	TValue	Type of given value and result as well. Should be one of integral types: int, char, bool e.t.c.
+		@param	value	The value to be round up.
+		@return			The value returned is PoT value that fits the given `value`.
+		@retval	value	In case the given `value` already PoT.
+	*/
+	template< typename TValue >
+	inline constexpr TValue CeilPowerOfTwo( const TValue value );
 
 	/**
 		@brief	Packs 2 bytes into single 2-byte value.
