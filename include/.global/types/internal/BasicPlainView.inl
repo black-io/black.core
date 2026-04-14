@@ -64,9 +64,26 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline TValue& BasicPlainView<TValue>::GetValueAt( const size_t index ) const
+	inline typename BasicPlainView<TValue>::ValueReference BasicPlainView<TValue>::GetFirstValue() const
+	{
+		ENSURES_DEBUG( m_memory != nullptr );
+		ENSURES_DEBUG( m_length > 0 );
+		return *m_memory;
+	}
+
+	template< typename TValue >
+	inline typename BasicPlainView<TValue>::ValueReference BasicPlainView<TValue>::GetLastValue() const
+	{
+		ENSURES_DEBUG( m_memory != nullptr );
+		ENSURES_DEBUG( m_length > 0 );
+		return GetValueAt( m_length - 1 );
+	}
+
+	template< typename TValue >
+	inline typename BasicPlainView<TValue>::ValueReference BasicPlainView<TValue>::GetValueAt( const size_t index ) const
 	{
 		EXPECTS( index < m_length );
+		ENSURES_DEBUG( m_memory != nullptr );
 		return m_memory[ index ];
 	}
 }

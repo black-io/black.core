@@ -154,16 +154,50 @@ namespace Internal
 	}
 
 	template< typename TValue >
-	inline TValue& BasicPlainVector<TValue>::GetValueAt( const size_t index )
+	inline typename BasicPlainVector<TValue>::ValueReference BasicPlainVector<TValue>::GetFirstValue()
+	{
+		ENSURES_DEBUG( m_memory != nullptr );
+		ENSURES_DEBUG( m_length > 0 );
+		return *m_memory;
+	}
+
+	template< typename TValue >
+	inline typename BasicPlainVector<TValue>::ConstValueReference BasicPlainVector<TValue>::GetFirstValue() const
+	{
+		ENSURES_DEBUG( m_memory != nullptr );
+		ENSURES_DEBUG( m_length > 0 );
+		return *m_memory;
+	}
+
+	template< typename TValue >
+	inline typename BasicPlainVector<TValue>::ValueReference BasicPlainVector<TValue>::GetLastValue()
+	{
+		ENSURES_DEBUG( m_memory != nullptr );
+		ENSURES_DEBUG( m_length > 0 );
+		return GetValueAt( m_length - 1 );
+	}
+
+	template< typename TValue >
+	inline typename BasicPlainVector<TValue>::ConstValueReference BasicPlainVector<TValue>::GetLastValue() const
+	{
+		ENSURES_DEBUG( m_memory != nullptr );
+		ENSURES_DEBUG( m_length > 0 );
+		return GetValueAt( m_length - 1 );
+	}
+
+	template< typename TValue >
+	inline typename BasicPlainVector<TValue>::ValueReference BasicPlainVector<TValue>::GetValueAt( const size_t index )
 	{
 		EXPECTS_DEBUG( index < m_length );
+		ENSURES_DEBUG( m_memory != nullptr );
 		return m_memory[ index ];
 	}
 
 	template< typename TValue >
-	inline const TValue& BasicPlainVector<TValue>::GetValueAt( const size_t index ) const
+	inline typename BasicPlainVector<TValue>::ConstValueReference BasicPlainVector<TValue>::GetValueAt( const size_t index ) const
 	{
 		EXPECTS_DEBUG( index < m_length );
+		ENSURES_DEBUG( m_memory != nullptr );
 		return m_memory[ index ];
 	}
 

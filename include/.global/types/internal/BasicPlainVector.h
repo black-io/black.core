@@ -103,6 +103,18 @@ namespace Internal
 		inline const bool IsInside( ConstIterator value ) const;
 
 
+		// Get the most first element of stored memory.
+		inline ValueReference GetFirstValue();
+
+		// Get the most first element of stored memory.
+		inline ConstValueReference GetFirstValue() const;
+
+		// Get the most last element of stored memory.
+		inline ValueReference GetLastValue();
+
+		// Get the most last element of stored memory.
+		inline ConstValueReference GetLastValue() const;
+
 		// Get the value at position.
 		inline ValueReference GetValueAt( const size_t index );
 
