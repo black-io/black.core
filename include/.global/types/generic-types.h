@@ -46,6 +46,12 @@ inline namespace Types
 	// Tagging object to mark the operation variant, that will use in-place construction.
 	inline constexpr ConstructInplace CONSTRUCT_INPLACE = {};
 
+	// Tagging type to mark the operation valiant, where the arguments should not be transformed before storing.
+	enum class StoreAsIs;
+
+	// Tagging object to mark the operation valiant, where the arguments should not be transformed before storing.
+	inline constexpr StoreAsIs STORE_AS_IS = {};
+
 
 	// Regular bit storage for requested number of bits. The number of bits should be 8, 16, 32 or 64 only.
 	template< size_t MAX_BITS >
