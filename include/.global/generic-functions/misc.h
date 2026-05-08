@@ -201,7 +201,7 @@ namespace Internal
 	template< auto METHOD_POINTER, typename THost >
 	inline auto BindMethod( THost& host )
 	{
-		return Internal::MethodBindingProvider<decltype( METHOD_POINTER )>::Bind<METHOD_POINTER>( host );
+		return Internal::MethodBindingProvider<decltype( METHOD_POINTER )>::template Bind<METHOD_POINTER>( host );
 	}
 
 	/**
